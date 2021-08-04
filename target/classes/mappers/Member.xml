@@ -7,6 +7,11 @@
   	<select id="getMember" resultType="MemberDto">
   		SELECT * FROM MEMBER
   	</select>
+
+	<select id="idCheck" resultType="boolean">
+		SELECT COUNT(*) FROM MEMBER WHERE ID = #{id}
+	</select>
+
   </mapper>
   
   

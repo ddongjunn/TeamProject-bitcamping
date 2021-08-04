@@ -7,6 +7,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  	<typeAliases>
 
         <typeAlias type="com.camping.bit.dto.MemberDto" alias="MemberDto" />
-		
-    </typeAliases>	
+
+    </typeAliases>
 </configuration>
