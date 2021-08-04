@@ -6,7 +6,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
  	<typeAliases>
 
+        <!-- 동준 -->
         <typeAlias type="com.camping.bit.dto.MemberDto" alias="MemberDto" />
-		
+
+        <!-- 효경 -->
+        <typeAlias type="com.camping.bit.dto.CampingListDto" alias = "CampingListDto"/>
+        <typeAlias type="com.camping.bit.dto.CampingDetailDto" alias = "CampingDetailDto"/>
+
     </typeAliases>	
 </configuration>
