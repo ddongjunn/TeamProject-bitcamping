@@ -1,3 +1,7 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: djlee
@@ -6,15 +10,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%
-    String str = (String) request.getParameter("info");
-    System.out.println(str);
+
 %>
+
 <html>
 <head>
     <title>회원가입</title>
-    <link rel="stylesheet" href="/resources/css/snsRegi.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/snsRegi.css">
 </head>
 <body>
 <!-- wrapper -->
@@ -28,8 +31,8 @@
             <h3 class="join_title">
                 <label for="nickname">닉네임</label>
             </h3>
-            <span class="box int_id">
-                        <input type="text" id="id" class="int" maxlength="20">
+            <span class="box int_nickname">
+                        <input type="text" id="nickname" class="int" maxlength="20">
                     </span>
             <span class="error_next_box"></span>
         </div>
@@ -38,7 +41,7 @@
         <div>
             <h3 class="join_title"><label for="name">이름</label></h3>
             <span class="box int_name">
-                        <input type="text" id="name" class="int" maxlength="20">
+                        <input type="text" id="name" class="int" maxlength="20" value="${info.name}">
                     </span>
             <span class="error_next_box"></span>
         </div>
@@ -51,7 +54,7 @@
                 <!-- BIRTH_YY -->
                 <div id="bir_yy">
                             <span class="box">
-                                <input type="text" id="yy" class="int" maxlength="4" placeholder="년(4자)">
+                                <input type="text" id="yy" class="int" maxlength="4" placeholder="년(4자)" value="${info.birthyear}">
                             </span>
                 </div>
 
@@ -59,19 +62,11 @@
                 <div id="bir_mm">
                             <span class="box">
                                 <select id="mm" class="sel">
-                                    <option>월</option>
-                                    <option value="01">1</option>
-                                    <option value="02">2</option>
-                                    <option value="03">3</option>
-                                    <option value="04">4</option>
-                                    <option value="05">5</option>
-                                    <option value="06">6</option>
-                                    <option value="07">7</option>
-                                    <option value="08">8</option>
-                                    <option value="09">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
+
+                                    <c:forEach begin="1" end="12" varStatus="status">
+                                        <option value="${status.index}" <c:if test="${ fn:substring(info.birthday, 1, 2) == status.index }">selected</c:if> > ${status.index} </option>
+                                    </c:forEach>
+
                                 </select>
                             </span>
                 </div>
@@ -79,7 +74,8 @@
                 <!-- BIRTH_DD -->
                 <div id="bir_dd">
                             <span class="box">
-                                <input type="text" id="dd" class="int" maxlength="2" placeholder="일">
+                                <c:set var="dd" value="${fn:substring( info.birthday,5 ,6 )}" />
+                                <input type="text" id="dd" class="int" maxlength="2" placeholder="일" value="${dd}">
                             </span>
                 </div>
 
@@ -89,9 +85,9 @@
 
         <!-- EMAIL -->
         <div>
-            <h3 class="join_title"><label for="email">본인확인 이메일<span class="optional">(선택)</span></label></h3>
+            <h3 class="join_title"><label for="email">이메일</label></h3>
             <span class="box int_email">
-                        <input type="text" id="email" class="int" maxlength="100" placeholder="선택입력">
+                        <input type="text" id="email" class="int" maxlength="100" placeholder="선택입력" value="${info.email}">
                     </span>
             <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
         </div>
@@ -100,7 +96,7 @@
         <div>
             <h3 class="join_title"><label for="phoneNo">휴대전화</label></h3>
             <span class="box int_mobile">
-                        <input type="tel" id="mobile" class="int" maxlength="16" placeholder="전화번호 입력">
+                        <input type="tel" id="mobile" class="int" maxlength="16" placeholder="전화번호 입력" value="${info.mobile}">
                     </span>
             <span class="error_next_box"></span>
         </div>
@@ -117,6 +113,7 @@
 
     </div> <!-- content-->
 </div> <!-- wrapper -->
+
 <%--<div>
     <form id="frm">
         <table>
