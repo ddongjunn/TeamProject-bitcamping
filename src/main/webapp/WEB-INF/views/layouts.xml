@@ -14,7 +14,7 @@
 
 	<!-- 동준 -->
 	<definition name="login.tiles" extends="main.tiles">
-		<put-attribute name="login" value="/WEB-INF/views/login/login.jsp" />
+		<put-attribute name="main" value="/WEB-INF/views/login/login.jsp" />
 	</definition>
 
 	<definition name="snsRegi.tiles" extends="main.tiles">

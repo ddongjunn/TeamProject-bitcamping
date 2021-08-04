@@ -9,12 +9,10 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <!-- 동준 -->
         <typeAlias type="com.camping.bit.dto.MemberDto" alias="MemberDto" />
 
-
         <!-- 효경 -->
         <typeAlias type="com.camping.bit.dto.CampingListDto" alias = "CampingListDto"/>
         <typeAlias type="com.camping.bit.dto.CampingDetailDto" alias = "CampingDetailDto"/>
-        <typeAlias type="com.camping.bit.dto.CampingParam" alias = "CampingParam"/>
+        <typeAlias type = "com.camping.bit.dto.CampingParam" alias = "CampingParam"/>
 
     </typeAliases>	
-
 </configuration>

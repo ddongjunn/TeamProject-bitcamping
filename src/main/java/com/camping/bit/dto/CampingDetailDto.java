@@ -1,5 +1,7 @@
 package com.camping.bit.dto;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ import lombok.ToString;
 @Getter
 @NoArgsConstructor
 @ToString
-public class CampingDetailDto {
+public class CampingDetailDto implements Serializable{
 
 	private int contentid;
 	private String intro;

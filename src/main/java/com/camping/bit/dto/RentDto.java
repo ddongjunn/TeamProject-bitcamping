@@ -1,5 +1,7 @@
 package com.camping.bit.dto;
 
-public class RentDto {
+import java.io.Serializable;
+
+public class RentDto implements Serializable{
 
 }
