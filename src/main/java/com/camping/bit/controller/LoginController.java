@@ -20,7 +20,7 @@ import com.camping.bit.oauth.bo.NaverLoginBO;
 @Controller
 @RequestMapping(value = "/login/*")
 public class LoginController {
-
+	//st
     /* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
     private String apiResult = null;
