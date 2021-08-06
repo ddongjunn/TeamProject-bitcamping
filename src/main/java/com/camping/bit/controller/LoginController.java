@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import com.camping.bit.oauth.bo.NaverLoginBO;
-//test
+import org.springframework.web.bind.annotation.ResponseBody;
+
 @Controller
 @RequestMapping(value = "/login/*")
 public class LoginController {
@@ -45,7 +46,6 @@ public class LoginController {
         /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 
-        System.out.println("네이버:" + naverAuthUrl);
         // 네이버
         model.addAttribute("url", naverAuthUrl);
 
@@ -86,8 +86,8 @@ public class LoginController {
             return "main.tiles";
         }
 
+        model.addAttribute("sns_type","naver");
         model.addAttribute("info", response_obj);
-        System.out.println("controller res " + response_obj);
         return "snsRegi.tiles";
 
         /*
@@ -105,4 +105,5 @@ public class LoginController {
 
         return "/member/login";
     }
+
 }

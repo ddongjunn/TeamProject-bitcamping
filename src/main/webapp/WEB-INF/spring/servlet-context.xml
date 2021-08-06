@@ -15,7 +15,7 @@
 	<mvc:annotation-driven />
 	
 	<!--  https://pangtrue.tistory.com/143  -->
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/resources/**" location="/resources/" />
 		 
 	 <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
       <property name="definitions">

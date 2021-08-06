@@ -8,6 +8,11 @@
 </head>
 <body>
 
+<a href="/rent/regi.do">상품 등록</a>
+
+<br>
+<br>
+
 상품 목록 들어갈 자리
 
 </body>
