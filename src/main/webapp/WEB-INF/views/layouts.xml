@@ -42,6 +42,10 @@
 	<definition name="productRegi.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_regi.jsp"/>
 	</definition>
+	
+	<definition name="productDetail.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
+	</definition>
 
 	<!-- 민경 -->
 	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
@@ -59,6 +63,8 @@
 	<!-- 게시판 글쓰기 -->
 	<definition name="boardwrite.tiles" extends="community.tiles">
 		<put-attribute name="body" value="/WEB-INF/views/community/community-boardwrite.jsp"/>
-	</definition>	
+	</definition>
+
+
 	
 </tiles-definitions>
