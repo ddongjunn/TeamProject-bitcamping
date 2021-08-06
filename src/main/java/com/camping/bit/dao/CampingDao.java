@@ -30,4 +30,7 @@ public interface CampingDao {
 	//캠핑장 intro 가져오기
 	public String getCampingIntro(int contentid);
 
+	//캠핑장 총 갯수
+	public int getCampingCount(CampingParam param);
+
 }

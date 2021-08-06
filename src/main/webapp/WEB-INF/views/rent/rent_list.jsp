@@ -8,7 +8,13 @@
 </head>
 <body>
 
+<br>
+<br>
+
 <a href="/rent/regi.do">상품 등록</a>
+<a href="/rent/detail.do">상품 상세</a>
+<a href="/rent/noPermission.do">접근 권한 없음</a>
+
 
 <br>
 <br>

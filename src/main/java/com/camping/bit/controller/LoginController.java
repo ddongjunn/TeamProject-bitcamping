@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
+import com.camping.bit.service.MemberService;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import com.camping.bit.oauth.bo.NaverLoginBO;
-//test
+import org.springframework.web.bind.annotation.ResponseBody;
+
 @Controller
 @RequestMapping(value = "/login/*")
 public class LoginController {
-	//st
+
+    @Autowired
+    private MemberService service;
+
     /* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
     private String apiResult = null;
@@ -41,7 +46,6 @@ public class LoginController {
         /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
 
-        System.out.println("네이버:" + naverAuthUrl);
         // 네이버
         model.addAttribute("url", naverAuthUrl);
 
@@ -53,8 +57,9 @@ public class LoginController {
 
         System.out.println("여기는 callback");
         OAuth2AccessToken oauthToken;
-        oauthToken = naverLoginBO.getAccessToken(session, code, state);
         // 1. 로그인 사용자 정보를 읽어온다.
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+
         apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
         /**
          * apiResult json 구조 {"resultcode":"00", "message":"success",
@@ -70,23 +75,28 @@ public class LoginController {
         // 3. 데이터 파싱
         // Top레벨 단계 _response 파싱
         JSONObject response_obj = (JSONObject)jsonObj.get("response");
+        // response의 id값 파싱
         String id = (String)response_obj.get("id");
-        System.out.println("id" + id );
-        // response의 nickname값 파싱
 
+        //신규회원인지 기존회원인지 검사
+        boolean result = service.idCheck(id);
+        System.out.println("result = " + result);
 
+        if(result){
+            return "main.tiles";
+        }
+
+        model.addAttribute("sns_type","naver");
+        model.addAttribute("info", response_obj);
+        return "snsRegi.tiles";
+
+        /*
         // 4.파싱 닉네임 세션으로 저장
         //session.setAttribute("sessionId", nickname); // 세션 생성
         model.addAttribute("result", apiResult);
         return "main.tiles";
+        */
     }
-       /* JSONParser parser = new JSONParser();
-        Object obj = parser.parse(apiResult);
-        JSONObject json = (JSONObject) obj;
-        String id = (String) json.get("id");
-
-        System.out.println("id" + id);*/
-
 
     @RequestMapping(value = "logout.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String logout(HttpSession session) {
@@ -95,4 +105,5 @@ public class LoginController {
 
         return "/member/login";
     }
+
 }

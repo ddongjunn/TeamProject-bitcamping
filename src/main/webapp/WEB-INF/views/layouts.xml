@@ -13,7 +13,12 @@
 </definition>
 
 	<!-- 동준 -->
-	<definition name="login.tiles" template="/WEB-INF/views/login/login.jsp">
+	<definition name="login.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/login/login.jsp" />
+	</definition>
+
+	<definition name="snsRegi.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/login/snsRegi.jsp" />
 	</definition>
 
 	<!-- 효경 -->
@@ -24,10 +29,26 @@
 	<definition name = "campingdetail.tiles" extends = "main.tiles">
 		<put-attribute name="main" value = "/WEB-INF/views/camping/campingdetail.jsp"/>
 	</definition>
+	
+	<definition name = "campingmap.tiles" extends = "main.tiles">
+		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingmap.jsp"/>
+	</definition>
 
 	<!-- 영신 -->
 	<definition name="rentList.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_list.jsp"/>
+	</definition>
+	
+	<definition name="productRegi.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/rent/rent_regi.jsp"/>
+	</definition>
+	
+	<definition name="productDetail.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
+	</definition>
+
+	<definition name="productDetail.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
 	</definition>
 
 	<!-- 민경 -->
@@ -38,5 +59,16 @@
 		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
 
+	<!-- 가입인사게시판 -->
+	<definition name="hello.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/community-hello.jsp"/>
+	</definition>
+	
+	<!-- 게시판 글쓰기 -->
+	<definition name="boardwrite.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/community-boardwrite.jsp"/>
+	</definition>
 
+
+	
 </tiles-definitions>

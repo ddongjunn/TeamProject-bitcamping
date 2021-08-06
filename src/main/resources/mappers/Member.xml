@@ -7,6 +7,19 @@
   	<select id="getMember" resultType="MemberDto">
   		SELECT * FROM MEMBER
   	</select>
+
+	<select id="idCheck" resultType="boolean">
+		SELECT COUNT(*) FROM MEMBER WHERE ID = #{id}
+	</select>
+
+	<select id="nicknameCheck" resultType="boolean">
+		SELECT COUNT(*) FROM MEMBER WHERE NICKNAME = #{nickname}
+	</select>
+
+	<select id="emailCheck" resultType="boolean">
+		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
+	</select>
+
   </mapper>
   
   

@@ -11,7 +11,7 @@ import com.camping.bit.dto.MemberDto;
 import com.camping.bit.service.MemberService;
 
 @Controller
-public class MainContorller {
+public class MainController {
 	
 	@Autowired
 	private MemberService service;
@@ -21,6 +21,5 @@ public class MainContorller {
 
 		return "main.tiles";
 	}
-	
-	
+
 }
