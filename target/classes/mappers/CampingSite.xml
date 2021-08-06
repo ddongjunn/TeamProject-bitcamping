@@ -11,23 +11,9 @@
   	<select id = "getCampingList" parameterType = "CampingParam" resultType = "CampingListDto">
   		SELECT * FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY FIRSTIMAGEURL) AS RNUM, 
-		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, READCOUNT, LIKECOUNT
+		CONTENTID, FACLTNM, ADDR1
 		FROM CAMPING_LIST 
 		WHERE 1=1
-			<if test="sorting!=null and sorting !=''">
-				<if test = "sorting=='create'">
-					ORDER BY CREATEDTIME DESC
-				</if>
-				<if test = "sorting=='update'">
-					ORDER BY MODIFIEDTIME DESC
-				</if>
-				<if test = "sorting=='read'">
-					ORDER BY READCOUNT DESC
-				</if>
-				<if test = "sorting=='like'">
-					ORDER BY LIKECOUNT DESC
-				</if>
-			</if>
 		ORDER BY FIRSTIMAGEURL ASC)
 		WHERE RNUM BETWEEN ${start} AND ${end}
   	</select>
@@ -37,29 +23,9 @@
   		SELECT * FROM CAMPING_DETAIL WHERE CONTENTID = #{contentid}
   	</select>
   	
-  	<!-- 캠핑장 상세화면용 리스트정보 끌어오기 -->
-  	<select id="getCampingListForDetail" parameterType = "java.lang.Integer" resultType="CampingListDto">
-  		SELECT * FROM CAMPING_LIST WHERE CONTENTID = #{contentid}
-  	</select>
-  	
   	<!-- 캠핑장 총 갯수 구하기 -->
 	<select id = "getCampingCount" parameterType = "CampingParam" resultType="java.lang.Integer">
-		SELECT NVL(COUNT(*),0) FROM CAMPING_LIST
+	SELECT NVL(COUNT(*),0) 
+	FROM CAMPING_LIST
 	</select>
-	
-	<!-- 캠핑장 클릭시 조회수 증가시키기 -->
-	<update id="getCampingReadcount" parameterType = "java.lang.Integer" >
-		UPDATE CAMPING_LIST SET READCOUNT=READCOUNT+1 WHERE CONTENTID = #{contentid} 
-	</update>
-	
-	<!-- 캠핑장 세부 사진 가져오기 -->
-	<select id = "getCampingImage" parameterType = "java.lang.Integer" resultType = "CampingImageDto">
-		SELECT * FROM CAMPING_IMG WHERE CONTENTID = #{contentid}
-	</select>
-	
-	<!-- 캠핑장 intro 가져오기 -->
-	<select id = "getCampingIntro" parameterType = "java.lang.Integer" resultType = "java.lang.String">
-		SELECT INTRO FROM CAMPING_INTRO WHERE CONTENTID = #{contentid}
-	</select>
-	
   </mapper>
