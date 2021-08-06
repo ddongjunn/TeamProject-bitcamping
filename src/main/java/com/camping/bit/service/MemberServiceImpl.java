@@ -23,4 +23,14 @@ public class MemberServiceImpl implements MemberService{
 	public boolean idCheck(String id) {
 		return dao.idCheck(id);
 	}
+
+	@Override
+	public boolean nicknameCheck(String nickname) {
+		return dao.nicknameCheck(nickname);
+	}
+
+	@Override
+	public boolean emailCheck(String email) {
+		return dao.emailCheck(email);
+	}
 }
