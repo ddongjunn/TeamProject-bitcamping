@@ -1,8 +1,8 @@
-package com.camping.bit.dao;
+package com.camping.bit.service;
 
 import com.camping.bit.dto.ProductDetailDto;
 
-public interface RentDao {
-	
+public interface RentService {
+
 	public void regiAf(ProductDetailDto dto);
 }
