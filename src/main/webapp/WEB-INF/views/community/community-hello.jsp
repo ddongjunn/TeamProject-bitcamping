@@ -1,18 +1,27 @@
+<%@page import="com.camping.bit.dto.CommunityDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
+<%-- <%
+List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("helloboardlist"); // 짐받음
+%> --%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<title>가입인사게시판</title>
 </head>
 <body>
 
 <h1>가입인사게시판</h1>
 
+
+
 <!-- 글 작성 리스트 틀-->
-<table>
+<table border="1">
 <colgroup>
 	<col style="width:5%;" />
 	<col style="width:auto;" />
@@ -26,9 +35,14 @@
 	
 </tr>
 </thead>
+ 	<c:if test="${empty helloboardlist}">
+		<tr>
+			<td colspan="3">작성된 글이 없습니다</td>
+		</tr>
+	</c:if>
+	
+
 </table>
-
-
 
 <!-- 글검색 -->
 <select id="searchType">
@@ -42,16 +56,15 @@
 
 <!-- 글쓰기 버튼 -->
 <div align="right">
-<a href="boardwrite.do">글쓰기</a>
+ <a href="boardwrite.do?type=가입인사">글쓰기</a> 
 </div>
-
-
 
 
 <script type="text/javascript">
 function searchBtn() {
 	alert("검색버튼 실행");
 }
+
 </script>
 
 
