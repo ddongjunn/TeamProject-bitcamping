@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+    <mapper namespace="com.camping.bit.dao.CampingDao">
+    <!-- 캠핑장 리스트 출력 -->
+  	<!-- <select id="getCampingList" parameterType = "CampingListDto" resultType="CampingListDto">
+  		SELECT * FROM CAMPING_LIST ORDER BY FIRSTIMAGEURL ASC
+  	</select> -->
+  	<select id = "getCampingList" parameterType = "CampingParam" resultType = "CampingListDto">
+  		SELECT * FROM
+		(SELECT ROW_NUMBER()OVER(ORDER BY FIRSTIMAGEURL) AS RNUM, 
+		CONTENTID, FACLTNM, ADDR1
+		FROM CAMPING_LIST 
+		WHERE 1=1
+		ORDER BY FIRSTIMAGEURL ASC)
+		WHERE RNUM BETWEEN ${start} AND ${end}
+  	</select>
+  	
+  	<!-- 캠핑장 상세화면 출력 -->
+  	 <select id="getCampingDetail" parameterType = "java.lang.Integer" resultType="CampingDetailDto">
+  		SELECT * FROM CAMPING_DETAIL WHERE CONTENTID = #{contentid}
+  	</select>
+  	
+  	<!-- 캠핑장 총 갯수 구하기 -->
+	<select id = "getCampingCount" parameterType = "CampingParam" resultType="java.lang.Integer">
+	SELECT NVL(COUNT(*),0) 
+	FROM CAMPING_LIST
+	</select>
+  </mapper>
