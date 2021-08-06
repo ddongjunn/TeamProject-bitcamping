@@ -70,7 +70,7 @@ input {
     font-family: Dotum,'돋움',Helvetica,sans-serif;
 }
 
-.box.int_id {
+/*.box.int_id {
     padding-right: 110px;
 }
 
@@ -80,7 +80,7 @@ input {
 
 .box.int_pass_check {
     padding-right: 40px;
-}
+}*/
 
 .step_url {
     /*@naver.com*/

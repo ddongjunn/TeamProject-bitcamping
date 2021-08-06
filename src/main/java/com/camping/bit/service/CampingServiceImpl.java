@@ -26,11 +26,9 @@ public class CampingServiceImpl implements CampingService {
 		return dao.getCampingDetail(contentid);
 	}
 
-	@Override //캠핑장 갯수 구하기 
+	@Override //캠핑장 갯수 구하기
 	public int getCampingCount(CampingParam param) {
 		return dao.getCampingCount(param);
 	}
-	
-	
-	
+
 }
