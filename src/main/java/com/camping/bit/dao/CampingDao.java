@@ -33,4 +33,7 @@ public interface CampingDao {
 	//캠핑장 총 갯수
 	public int getCampingCount(CampingParam param);
 
+	//캠핑장 총 갯수
+	public int getCampingCount(CampingParam param);
+
 }

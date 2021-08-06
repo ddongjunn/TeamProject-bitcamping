@@ -70,7 +70,11 @@ input {
     font-family: Dotum,'돋움',Helvetica,sans-serif;
 }
 
+<<<<<<< HEAD
 .box.int_id {
+=======
+/*.box.int_id {
+>>>>>>> c5b2902ff3a47f6c5c5bf111e7664faf28563c00
     padding-right: 110px;
 }
 
@@ -80,7 +84,11 @@ input {
 
 .box.int_pass_check {
     padding-right: 40px;
+<<<<<<< HEAD
 }
+=======
+}*/
+>>>>>>> c5b2902ff3a47f6c5c5bf111e7664faf28563c00
 
 .step_url {
     /*@naver.com*/
