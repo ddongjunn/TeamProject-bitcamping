@@ -47,6 +47,10 @@
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
 	</definition>
 
+	<definition name="productDetail.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
+	</definition>
+
 	<!-- 민경 -->
 	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />

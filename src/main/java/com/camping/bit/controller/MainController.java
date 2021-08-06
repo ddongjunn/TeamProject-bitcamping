@@ -21,6 +21,5 @@ public class MainController {
 
 		return "main.tiles";
 	}
-	
-	
+
 }
