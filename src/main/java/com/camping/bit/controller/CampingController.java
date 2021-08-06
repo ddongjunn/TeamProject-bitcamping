@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.camping.bit.dto.CampingDetailDto;
+import com.camping.bit.dto.CampingImageDto;
 import com.camping.bit.dto.CampingListDto;
 import com.camping.bit.dto.CampingParam;
 import com.camping.bit.service.CampingService;
@@ -51,19 +52,28 @@ public class CampingController {
 	@RequestMapping(value = "campingdetail.do", method = RequestMethod.GET)
 	public String campingdetail(Model model, int contentid) throws Exception {
 		
-		CampingDetailDto dto = service.getCampingDetail(contentid);
-		model.addAttribute("campingdetail", dto);
-				
+		CampingDetailDto detaildto = service.getCampingDetail(contentid);
+		CampingListDto listdto = service.getCampingListForDetail(contentid);
+		List<CampingImageDto> imagedto = service.getCampingImage(contentid);
+		String intro = service.getCampingIntro(contentid);
+		model.addAttribute("campingdetail", detaildto);
+		model.addAttribute("campinglistfordetail", listdto);
+		model.addAttribute("campingimage", imagedto);
+		model.addAttribute("campingintro", intro);
 		return "campingdetail.tiles";		
 	}
 	
 	//지도 화면 
 	@RequestMapping(value = "campingmap.do", method = RequestMethod.GET)
 	public String campingmap() throws Exception{
-		
 		return "campingmap.tiles";
 	}
 
-	
+	//조회수 증가
+	@RequestMapping(value = "getCampingReadcount.do", method = RequestMethod.GET)
+	public String getCampingReadcount(int contentid) throws Exception{
+		service.getCampingReadcount(contentid);
+		return "redirect:/campinglist.do";
+	}
 	
 }
