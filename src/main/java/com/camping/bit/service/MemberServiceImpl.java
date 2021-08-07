@@ -15,8 +15,8 @@ public class MemberServiceImpl implements MemberService{
 	MemberDao dao;
 
 	@Override
-	public List<MemberDto> getMember() {
-		return dao.getMember();
+	public MemberDto getMember(String id) {
+		return dao.getMember(id);
 	}
 
 	@Override
@@ -32,5 +32,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public boolean emailCheck(String email) {
 		return dao.emailCheck(email);
+	}
+
+	@Override
+	public void addMember(MemberDto dto) {
+		dao.addMember(dto);
 	}
 }

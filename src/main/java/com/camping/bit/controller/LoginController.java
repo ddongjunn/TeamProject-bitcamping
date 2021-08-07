@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
 
+import com.camping.bit.dto.MemberDto;
 import com.camping.bit.service.MemberService;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
@@ -55,7 +56,6 @@ public class LoginController {
     @RequestMapping(value = "callback-naver.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
 
-        System.out.println("여기는 callback");
         OAuth2AccessToken oauthToken;
         // 1. 로그인 사용자 정보를 읽어온다.
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -80,9 +80,14 @@ public class LoginController {
 
         //신규회원인지 기존회원인지 검사
         boolean result = service.idCheck(id);
-        System.out.println("result = " + result);
+
+        System.out.println("id" + id);
+        System.out.println("아이디검사 : " + result);
 
         if(result){
+            MemberDto dto = service.getMember(id);
+            System.out.println("로그인 = " + dto.toString());
+            session.setAttribute("login",dto);
             return "main.tiles";
         }
 
