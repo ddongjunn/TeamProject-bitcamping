@@ -1,10 +1,6 @@
 package com.camping.bit.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
 @Setter
@@ -17,11 +13,10 @@ public class MemberDto {
  private String pwd;
  private String username;
  private String nickname;
- private String birth;
  private String phone;
  private String email;
- private String createDate;
- private String snsType;
+ private String create_Date;
+ private String sns_Type;
  private int auth;
 
 }

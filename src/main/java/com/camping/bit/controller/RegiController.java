@@ -31,13 +31,8 @@ public class RegiController {
     }
 
     @PostMapping(value = "addMember.do")
-    public String addMember(HttpSession session, MemberDto dto, @RequestParam String yy, @RequestParam String mm, @RequestParam String dd) {
+    public String addMember(HttpSession session, MemberDto dto) {
 
-        //생년월일 설정
-        String twomm = Util.two(mm);
-        String twodd = Util.two(dd);
-        String birth = yy + "-" + twomm + "-" + twodd;
-        dto.setBirth(birth);
         System.out.println(dto.toString());
 
         service.addMember(dto);
