@@ -33,11 +33,15 @@ public class RegiController {
     @PostMapping(value = "addMember.do")
     public String addMember(HttpSession session, MemberDto dto) {
 
-        System.out.println(dto.toString());
-
         service.addMember(dto);
         session.setAttribute("login",dto);
 
         return "main.tiles";
+    }
+
+    @RequestMapping(value = "normal.do", method = { RequestMethod.GET })
+    public String regiMember() {
+
+        return "normal.tiles";
     }
 }

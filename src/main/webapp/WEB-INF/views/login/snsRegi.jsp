@@ -20,26 +20,26 @@
 </head>
 <body>
 <form id="frm" method="post" action="/regi/addMember.do">
-    <div class="wrap">
-        <div class="login">
-            <h2>회원가입</h2>
+    <div class="snsRegi_wrap">
+        <div class="snsRegi_login">
+            <h2>비트캠핑</h2>
 
-            <div class="login_id">
+            <div class="snsRegi_login_id">
                 <h4>닉네임</h4>
-                <input type="text" name="nickname" id="nickname" placeholder="2~10자의 한글, 영문, 숫자만 사용 가능합니다." maxlength="10" value="${info.nickname2}">
+                <input type="text" name="nickname" id="nickname" placeholder="2~10자의 한글, 영문, 숫자만 사용 가능합니다." maxlength="10" value="${info.nickname}">
                 <span class="error_next_box"></span>
             </div>
-            <div class="login_id">
+            <div class="snsRegi_login_id">
                 <h4>이름</h4>
                 <input type="text" name="username" id="name" placeholder="한글, 영문 사용 가능합니다.(특수기호, 공백 사용 불가)" maxlength="20" value="${info.name}">
                 <span class="error_next_box"></span>
             </div>
-            <div class="login_id">
+            <div class="snsRegi_login_id">
                 <h4>이메일</h4>
                 <input type="email" name="email" id="email" placeholder="@까지 정확하게 입력해주세요." maxlength="50" value="${info.email}" >
                 <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
             </div>
-            <div class="login_id">
+            <div class="snsRegi_login_id">
                 <h4>휴대전화</h4>
                 <c:choose>
                     <c:when test="${info.mobile == null}">
@@ -52,8 +52,8 @@
                 </c:choose>
                 <span class="error_next_box"></span>
             </div>
-            <div class="submit">
-                <input type="button" name="btnJoin" value="회원가입">
+            <div class="snsRegi_submit">
+                <input class="btnJoin" name="btnJoin" value="회원가입">
             </div>
         </div>
     </div>

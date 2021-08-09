@@ -44,20 +44,25 @@ public class LoginController {
     private void setKakaoLoginBO(KakaoLoginBO kakaoLoginBO) { this.kakaoLoginBO = kakaoLoginBO; }
 
 
-    @RequestMapping(value = "login.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String login(Model model, HttpSession session) {
-        /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+    @RequestMapping(value = "naver.do", method = { RequestMethod.POST })
+    public String naverLogin(Model model, HttpSession session) {
+        //* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 *//*
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
         // 네이버
         model.addAttribute("naverUrl", naverAuthUrl);
 
+        return "redirect:" + naverAuthUrl;
+    }
+
+    @RequestMapping(value = "kakao.do", method = { RequestMethod.POST })
+    public String kakaoLogin(Model model, HttpSession session) {
         //카카오 URL
         String kakaoAuthUrl = kakaoLoginBO.getUrl();
 
         //카카오
         model.addAttribute("kakaoUrl", kakaoAuthUrl);
 
-        return "login.tiles";
+        return "redirect:" + kakaoAuthUrl;
     }
 
     @RequestMapping(value = "callback-naver.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -91,6 +96,7 @@ public class LoginController {
         if(result){
             MemberDto dto = service.getMember(id);
             System.out.println("로그인 = " + dto.toString());
+            session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
             session.setAttribute("login",dto);
             return "main.tiles";
         }
@@ -109,14 +115,13 @@ public class LoginController {
 
         String id = info.get("id");
 
-        info.put("nickname2","test");
-
         //신규회원인지 기존회원인지 검사
         boolean result = service.idCheck(id);
 
         if(result){
             MemberDto dto = service.getMember(id);
             System.out.println("로그인 = " + dto.toString());
+            session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
             session.setAttribute("access_Token", access_Token);
             session.setAttribute("login",dto);
             return "main.tiles";
@@ -131,17 +136,22 @@ public class LoginController {
     @RequestMapping(value = "logout.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String logout(HttpSession session) {
         MemberDto dto = (MemberDto) session.getAttribute("login");
-        String sns_Type = dto.getSns_Type();
 
-        if(sns_Type.equals("kakao")){
+        System.out.println("logout : " + dto.toString());
+        if(dto.getSns_Type().equals("null")){
+            System.out.println("getSns_Type null");
+            session.removeAttribute("login");
+        }
+        else if(dto.getSns_Type().equals("kakao")){
+            System.out.println("getSns_Type kakao");
             kakaoLoginBO.kakaoLogout((String)session.getAttribute("access_Token"));
             session.removeAttribute("access_Token");
         }
 
-        session.removeAttribute("login");
         session.invalidate();
 
-        return "main.tiles";
+        return "redirect:/";
+
     }
 
 }
