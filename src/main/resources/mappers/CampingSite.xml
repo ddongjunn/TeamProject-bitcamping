@@ -13,23 +13,33 @@
 		(SELECT ROW_NUMBER()OVER(ORDER BY FIRSTIMAGEURL) AS RNUM, 
 		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, READCOUNT, LIKECOUNT
 		FROM CAMPING_LIST 
-		WHERE 1=1
-			<if test="sorting!=null and sorting !=''">
-				<if test = "sorting=='create'">
-					ORDER BY CREATEDTIME DESC
-				</if>
-				<if test = "sorting=='update'">
-					ORDER BY MODIFIEDTIME DESC
-				</if>
-				<if test = "sorting=='read'">
-					ORDER BY READCOUNT DESC
-				</if>
-				<if test = "sorting=='like'">
-					ORDER BY LIKECOUNT DESC
-				</if>
-			</if>
-		ORDER BY FIRSTIMAGEURL ASC)
-		WHERE RNUM BETWEEN ${start} AND ${end}
+		WHERE 1=1 
+		<if test="searchDo != null and searchDo !=''">
+    	AND DONM in	
+        <foreach item="item" index="index" collection="searchDo" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+		</if>
+		
+		ORDER BY
+			<choose>
+				<when test = "sorting=='create'">
+					CREATEDTIME DESC)
+				</when>
+				<when test = "sorting=='update'">
+					MODIFIEDTIME DESC)
+				</when>
+				<when test = "sorting=='read'">
+					READCOUNT DESC)
+				</when>
+				<when test = "sorting=='like'">
+					LIKECOUNT DESC)
+				</when>
+				<otherwise>
+					FIRSTIMAGEURL ASC)
+				</otherwise>
+			</choose>
+			WHERE RNUM BETWEEN ${start} AND ${end}
   	</select>
   	
   	<!-- 캠핑장 상세화면 출력 -->

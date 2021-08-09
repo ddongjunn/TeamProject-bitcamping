@@ -1,6 +1,7 @@
 package com.camping.bit.dto;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class CampingParam implements Serializable{
 	
@@ -8,17 +9,19 @@ public class CampingParam implements Serializable{
 	private int start;
 	private int end;
 	private String sorting;
+	private String[] searchDo;
 	
 	public CampingParam() {
 		
 	}
 
-	public CampingParam(int pageNumber, int start, int end, String sorting) {
+	public CampingParam(int pageNumber, int start, int end, String sorting, String[] searchDo) {
 		super();
 		this.pageNumber = pageNumber;
 		this.start = start;
 		this.end = end;
 		this.sorting = sorting;
+		this.searchDo = searchDo;
 	}
 
 	public int getPageNumber() {
@@ -53,9 +56,18 @@ public class CampingParam implements Serializable{
 		this.sorting = sorting;
 	}
 
+	public String[] getSearchDo() {
+		return searchDo;
+	}
+
+	public void setSearchDo(String[] searchDo) {
+		this.searchDo = searchDo;
+	}
+
 	@Override
 	public String toString() {
 		return "CampingParam [pageNumber=" + pageNumber + ", start=" + start + ", end=" + end + ", sorting=" + sorting
-				+ "]";
+				+ ", searchDo=" + Arrays.toString(searchDo) + "]";
 	}
+
 }

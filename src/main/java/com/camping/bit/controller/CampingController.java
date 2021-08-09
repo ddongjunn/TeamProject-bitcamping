@@ -16,7 +16,7 @@ import com.camping.bit.service.CampingService;
 
 @Controller
 @RequestMapping(value="/csite/*")
-public class CampingController {
+public class CampingController{
 
 	@Autowired
 	CampingService service;
@@ -56,6 +56,7 @@ public class CampingController {
 		CampingListDto listdto = service.getCampingListForDetail(contentid);
 		List<CampingImageDto> imagedto = service.getCampingImage(contentid);
 		String intro = service.getCampingIntro(contentid);
+		
 		model.addAttribute("campingdetail", detaildto);
 		model.addAttribute("campinglistfordetail", listdto);
 		model.addAttribute("campingimage", imagedto);
