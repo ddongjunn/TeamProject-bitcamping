@@ -14,8 +14,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class CommunityDto implements Serializable{
-	 private int seq;	
-	 private String id;			// 작성자
+	 private int community_seq;	
+	 private String user_id;			// 작성자
 	 private String bbstype;	// 작성글 구분(자유게시판, 캠핑후기, 가입인사, 캠퍼구인, 삽니다, 팝니다)	
 	 
 	 private String title;		// 제목
