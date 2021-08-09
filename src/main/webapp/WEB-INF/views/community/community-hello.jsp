@@ -3,10 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
-<%-- <%
-List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("helloboardlist"); // 짐받음
-%> --%>
+<%-- <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> --%>
 
 <!DOCTYPE html>
 <html>
@@ -40,7 +37,21 @@ List<CommunityDto> list = (List<CommunityDto>)request.getAttribute("helloboardli
 			<td colspan="3">작성된 글이 없습니다</td>
 		</tr>
 	</c:if>
-	
+	<c:if test="${!empty helloboardlist}">
+		<c:forEach var="list" items="${helloboardlist}">
+			<tr>
+				<td>${list.community_seq }</td>
+				<td><a href="/community/detail.do?community_seq=${list.community_seq }">${list.title }</a></td>
+				<td>${list.user_id }</td>
+				<td>${list.readcount }</td>
+				<td> <%-- ${list.wdate } --%></td>
+				
+				<!-- 작성일 들어갈곳 -->
+				<%-- 	 <fmt:setLocale value="en_US" scope="session"/> 
+					 <fmt:formatDate value="${list.wdate }" pattern="yyyy/MM/dd"/>    --%>
+			</tr>
+		</c:forEach>
+	</c:if>
 
 </table>
 

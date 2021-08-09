@@ -8,10 +8,7 @@
 </head>
 <body>
 
-<a href="hello.do">가입인사</a><br>
-<a href="free.do">자유게시판</a><br>
-<a href="deal.do">중고거래</a><br>
-<a href="group.do">캠퍼모집</a><br>
-<a href="review.do">캠핑후기</a><br>
+<h1>캠퍼모집 게시판</h1>
+
 </body>
 </html>

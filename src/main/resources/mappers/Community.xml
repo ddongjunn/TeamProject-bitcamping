@@ -4,10 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.camping.bit.dao.CommunityDao">
-
+	
+	<!-- 가입인사 게시글 리스트 -->
  	<select id="helloboardlist" resultType="CommunityDto">
   		SELECT * FROM COMMUNITY_BBS
   		ORDER BY COMMUNITY_SEQ DESC
+  	</select>
+  	
+  	<!-- 글작성후 db에 저장 -->
+  	<!-- dto받은거 db에 넣어주는 쿼리문 작성 id값은 dao 메소드명이랑 일치, dto파라미터타입 -> db에 넣는것, 리절트타입은 db에서 받아오겠다는것 //#{id}-->
+	<insert id="boardwriteAf" parameterType="CommunityDto">
+		INSERT INTO COMMUNITY_BBS(
+		COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, RECOMMEND, DEL, FILE_SEQ, bbstype)
+		VALUES(COMMUNITY_BBS_SEQ.NEXTVAL, 'aaa', #{title}, SYSDATE, #{content}, 0, 0, 0, 0, #{bbstype})
+	</insert>
+  	
+  	<!-- 글 상세조회 -->
+  	<select id="boardDetail" resultType="CommunityDto"> <!-- parameterType="int" -->
+  		SELECT * FROM COMMUNITY_BBS
+  		WHERE COMMUNITY_SEQ = #{community_seq}
   	</select>
   	
 </mapper>

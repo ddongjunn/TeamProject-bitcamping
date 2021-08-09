@@ -68,7 +68,9 @@
 	<definition name="boardwrite.tiles" extends="community.tiles">
 		<put-attribute name="body" value="/WEB-INF/views/community/community-boardwrite.jsp"/>
 	</definition>
+	
 
-
+	
+	
 	
 </tiles-definitions>

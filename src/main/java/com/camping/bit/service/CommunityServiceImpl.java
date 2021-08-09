@@ -18,4 +18,16 @@ public class CommunityServiceImpl implements CommunityService{
 	public List<CommunityDto> helloboardlist() {
 		return dao.helloboardlist();
 	}
+	
+	// dto값을 받아서 dao로 넘겨 : 구체적인 내용
+	@Override
+	public void boardwriteAf(CommunityDto dto) {
+		dao.boardwriteAf(dto);
+	}
+	
+	// 게시글 상세보기
+	@Override
+	public int boardDetail(int community_seq) {
+		return dao.boardDetail(community_seq);
+	}
 }
