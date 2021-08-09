@@ -206,7 +206,6 @@
         let nameStatus = nameCheck();
         let mobileStatus = checkPhoneNum();
 
-        alert('button click');
 
         if(!nicknameStatus){
             $('#nickname').focus();
