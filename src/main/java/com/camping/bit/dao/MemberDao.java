@@ -6,11 +6,13 @@ import com.camping.bit.dto.MemberDto;
 
 public interface MemberDao {
 	
-	public List<MemberDto> getMember();
+	public MemberDto getMember(String id);
 
 	public boolean idCheck(String id);
 
     public boolean nicknameCheck(String nickname);
 
     public boolean emailCheck(String email);
+
+    public void addMember(MemberDto dto);
 }

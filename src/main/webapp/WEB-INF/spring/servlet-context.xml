@@ -38,4 +38,5 @@
 	<mvc:default-servlet-handler/>
 
     <beans:bean id="naverLoginBo" class="com.camping.bit.oauth.bo.NaverLoginBO"/>
+    <beans:bean id="kakaoLoginBo" class="com.camping.bit.oauth.bo.KakaoLoginBO"/>
 </beans>

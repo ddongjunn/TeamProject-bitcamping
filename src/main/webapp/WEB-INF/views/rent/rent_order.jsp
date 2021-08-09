@@ -8,8 +8,7 @@
 </head>
 <body>
 
-<div style="clear: both;">
-    footer
-</div>
+상품 결제 페이지
 
+</body>
 </html>

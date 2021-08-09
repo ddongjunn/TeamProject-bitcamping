@@ -13,7 +13,7 @@
 }
 </style>
 
-<form name="regi_frm" method="post" action="/rent/RegiAf.do" enctype="multipart/form-data">
+<form name="regi_frm" method="post" action="/rent/regiAf.do" enctype="multipart/form-data">
 	<table border="1" style="width: 700px; margin: auto; padding: 30px;">
 	
 		<thead>
@@ -26,31 +26,31 @@
 			<tr>
 				<td>
 					<span class="table_head">상품명</span><br>
-					<input type="text" name="productName" style="width: 80%" placeholder="3인용 초보자 세트" required>
+					<input type="text" name="productName" style="width: 80%" placeholder="3인용 초보자 세트" maxlength="100" required>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span class="table_head">한줄 설명</span><br>
-					<input type="text" name="productDesc" style="width: 80%" placeholder="캠핑 초보를 위한 구성!" required>
+					<input type="text" name="productDesc" style="width: 80%" placeholder="캠핑 초보를 위한 구성!" maxlength="400" required>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span class="table_head">기본 구성</span><br>
-					<input type="text" name="baseItem" style="width: 80%" placeholder="[듀랑고]에어미니 타프 스타터세트, [스탠리]클래식 포어 오버 커피 드리퍼 세트, ...">
+					<input type="text" name="baseItem" style="width: 80%" placeholder="[듀랑고]에어미니 타프 스타터세트, [스탠리]클래식 포어 오버 커피 드리퍼 세트, ..." maxlength="400" required>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span class="table_head">가격</span><br>
-					<input type="text" name="productPrice" style="width: 80px;" pattern="^[0-9]+$" maxlength="9" oninvalid="this.setCustomValidity('숫자를 입력하세요')" required> 원
+					<input type="text" name="productPrice" style="width: 80px;" pattern="^[0-9]+$" maxlength="8" oninvalid="this.setCustomValidity('숫자를 입력하세요')" required> 원
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<span class="table_head">재고</span><br>
-					<input type="text" name="productStock" style="width: 80px;" pattern="^[0-9]+$" maxlength="9" oninvalid="this.setCustomValidity('숫자를 입력하세요')" required> 개
+					<input type="text" name="productStock" style="width: 80px;" pattern="^[0-9]+$" maxlength="8" oninvalid="this.setCustomValidity('숫자를 입력하세요')" required> 개
 				</td>
 			</tr>
 			<tr>
@@ -97,8 +97,9 @@
 				<td>
 					<span class="table_head">상세 설명</span><br>
 					<div id="summernote_box" style="width: 800px; margin: auto;">
-			  			<textarea id="summernote" name="editordata" placeholder="상품 설명을 입력해 주세요."></textarea>
-					</div>			
+			  			<textarea id="summernote" name="content" ></textarea>
+					</div>
+
 				</td>
 			</tr>
 		</tbody>
@@ -117,57 +118,45 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
-	
-	/* summernote */
-	$(function(){
+	$(document).ready(function() {
+		
+		/* summernote 설정 */
 		$('#summernote').summernote({
-			height: 400,
-			toolbar: [
-			    // [groupName, [list of button]]
-			    ['fontname', ['fontname']],
-			    ['fontsize', ['fontsize']],
-			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			    ['color', ['forecolor','color']],
-			    ['table', ['table']],
-			    ['para', ['paragraph']],
-			    ['height', ['height']],
-			    ['insert',['picture','link','video']],
-			    ['view', ['help']]
-			  ],
+			height: 600,
 			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
 			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
-	
+			
 			callbacks: {
-				onImageUpload: function(files, editor, welEditable) {
-		            for (var i = files.length - 1; i >= 0; i--) {
-		             sendFile(files[i], this);
-		            }
-				}
-			}
+		         onImageUpload: function(files, editor, welEditable) {
+		               for (var i = files.length - 1; i >= 0; i--) {
+		                  sendFile(files[i], this);
+		               }
+		           }
+		      }
 		});
 	});
-
-	function sendFile(file, el) {
-		
-		var form_data = new FormData();		
-		form_data.append('file', file);		
-		$.ajax({
-	        data: form_data,
-	        type: "POST",
-	        url: './profileImage.mpf',
-	        cache: false,
-	        contentType: false,
-	        enctype: 'multipart/form-data',
-	        processData: false,
-	        success: function(img_name) {
-	          $(el).summernote('editor.insertImage', img_name);
-	        }
-		});
-	}
 	
-	/* thumbnail */
+	/* summernote 파일 저장 */
+	function sendFile(file, el) {
+		var form_data = new FormData();
+      	form_data.append('file', file);
+      	$.ajax({
+        	data: form_data,
+        	type: 'POST',
+        	url: '/summernote/upload.do',
+        	cache: false,
+        	contentType: false,
+        	enctype: 'multipart/form-data',
+        	processData: false,
+        	success: function(img_name) {
+          		$(el).summernote('editor.insertImage', img_name);
+        	}
+      	});     	
+    }
+
+	
+	/* thumbnail 미리보기*/
 	function readImage(input) {
 	    // 인풋 태그에 파일이 있는 경우
 	    if(input.files && input.files[0]) {
@@ -188,6 +177,4 @@ $(document).ready(function() {
 	inputImage.addEventListener("change", e => {
 	    readImage(e.target)
 	});
-	
-});
 </script>
