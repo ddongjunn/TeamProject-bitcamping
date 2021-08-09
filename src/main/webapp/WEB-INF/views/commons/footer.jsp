@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-footer
-</body>
+
+<div style="clear: both;">
+    footer
+</div>
+
 </html>
