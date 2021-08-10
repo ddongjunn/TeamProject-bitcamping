@@ -14,5 +14,7 @@ public interface MemberDao {
 
     public boolean emailCheck(String email);
 
+    public boolean login(MemberDto dto);
+
     public void addMember(MemberDto dto);
 }

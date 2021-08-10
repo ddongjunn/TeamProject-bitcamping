@@ -61,6 +61,4 @@ checkAll.addEventListener("click", (e) => {
 
 submitButton.addEventListener("click",evt => {
    regiModalOff();
-   console.log("button click");
-    $('html, body').css({'overflow': 'auto', 'height': '100%'}); //scroll hidden 해제 $('#element').off('scroll touchmove mousewheel'); // 터치무브 및 마우스휠 스크롤 가능
 });

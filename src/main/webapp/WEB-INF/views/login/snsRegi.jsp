@@ -53,7 +53,7 @@
                 <span class="error_next_box"></span>
             </div>
             <div class="snsRegi_submit">
-                <input class="btnJoin" name="btnJoin" value="회원가입">
+                <input type="button" class="join" id="submit" name="btnJoin" value="회원가입">
             </div>
         </div>
     </div>
@@ -87,6 +87,8 @@
         $(document).on("keyup", "#mobile", function () {
             $(this).val($(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, "$1-$2-$3").replace("--", "-"));
         });
+
+        function NotReload(){ if( (event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) { event.keyCode = 0; event.cancelBubble = true; event.returnValue = false; } } document.onkeydown = NotReload;
 
     });
 

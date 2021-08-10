@@ -30,11 +30,22 @@ public class RegiController {
         return service.emailCheck(email);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "idCheck.do", method = { RequestMethod.GET })
+    public boolean idCheck(String id) {
+
+        return service.idCheck(id);
+    }
+
     @PostMapping(value = "addMember.do")
     public String addMember(HttpSession session, MemberDto dto) {
 
+        System.out.println("addMember :  " + dto.toString());
+
         service.addMember(dto);
-        session.setAttribute("login",dto);
+        if(!dto.getSns_Type().equals("none")) {
+            session.setAttribute("login", dto);
+        }
 
         return "main.tiles";
     }

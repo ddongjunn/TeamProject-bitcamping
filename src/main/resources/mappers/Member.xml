@@ -20,9 +20,21 @@
 		SELECT COUNT(*) FROM MEMBER WHERE EMAIL = #{email}
 	</select>
 
+	<select id="login" parameterType="MemberDto" resultType="boolean">
+		SELECT COUNT(*) FROM MEMBER WHERE ID = #{id} AND PASSWORD = #{pwd}
+	</select>
+
 	<insert id="addMember" parameterType="MemberDto">
-		INSERT INTO MEMBER (ID, USERNAME, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE, AUTH)
-		VALUES (#{id}, #{username}, #{nickname}, #{phone}, #{email}, SYSDATE, #{sns_Type}, 0)
+		<choose>
+			<when test='sns_Type.equals("none")'>
+				INSERT INTO MEMBER (ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE, AUTH)
+				VALUES (#{id}, #{username}, #{pwd}, #{nickname}, #{phone}, #{email}, SYSDATE, #{sns_Type}, 0)
+			</when>
+			<otherwise>
+				INSERT INTO MEMBER (ID, USERNAME, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE, AUTH)
+				VALUES (#{id}, #{username}, #{nickname}, #{phone}, #{email}, SYSDATE, #{sns_Type}, 0)
+			</otherwise>
+		</choose>
 	</insert>
 
   </mapper>

@@ -13,7 +13,7 @@
     <title>Title</title>
 </head>
 
-<div id="modal_regi" class="modal-overlay" style="position: relative; z-index: -5">
+<div id="modal_regi" class="modal-overlay" style="position: relative; z-index: 100">
     <div class="modal-window">
         <%--<div class="close-area"><a href="#">X</a></div>--%>
         <div class="title">
@@ -111,30 +111,44 @@
 </div>
 
 
-
 <form id="frm" method="post" action="/regi/addMember.do">
-    <div class="wrapper" style="position: relative; z-index: -10">
+    <div class="wrapper" style="position: relative; z-index: 0">
         <div class="login">
             <h2>비트캠핑</h2>
 
             <div class="login_id">
+                <h4>아이디</h4>
+                <input type="text" name="id" id="id" placeholder="4~15자의 영문 소문자, 숫자만 사용 가능합니다." maxlength="20" >
+                <span class="error_next_box"></span>
+            </div>
+            <div class="login_pw">
+                <h4>비밀번호</h4>
+                <input type="password" name="pwd" id="pwd" placeholder="영문 대 소문+숫자+특수문자 8~16자리" maxlength="16" value="">
+                <span class="error_next_box"></span>
+            </div>
+            <div class="login_pw">
+                <h4>비밀번호 재확인</h4>
+                <input type="password" name="pwd2" id="pwd2" placeholder="비밀번호를 다시 입력해 주세요." maxlength="16" value="">
+                <span class="error_next_box"></span>
+            </div>
+            <div class="login_id">
                 <h4>닉네임</h4>
-                <input type="text" name="nickname" id="nickname" placeholder="2~10자의 한글, 영문, 숫자만 사용 가능합니다." maxlength="10" value="">
+                <input type="text" name="nickname" id="nickname" placeholder="한글, 영문만 사용 가능합니다. (특수기호, 공백 사용 불가)" maxlength="20" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_id">
                 <h4>이름</h4>
-                <input type="text" name="username" id="name" placeholder="한글, 영문 사용 가능합니다.(특수기호, 공백 사용 불가)" maxlength="20" value="">
+                <input type="text" name="username" id="name" placeholder="한글, 영문만 사용 가능합니다. (특수기호, 공백 사용 불가)" maxlength="20" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_id">
                 <h4>이메일</h4>
-                <input type="email" name="email" id="email" placeholder="@까지 정확하게 입력해주세요." maxlength="50" value="" >
+                <input type="email" name="email" id="email" placeholder="@까지 정확하게 입력해주세요. (수신 가능 이메일)" maxlength="50" value="" >
                 <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
             </div>
             <div class="login_id">
                 <h4>휴대전화</h4>
-                <input type="text" id="mobile" class="int" maxlength="13" name="phone" placeholder="숫자만 입력해주세요." value="" >
+                <input type="text" id="mobile" class="int" maxlength="13" name="phone" placeholder="'-' 제외 숫자만 입력해주세요.'" value="" >
                 <span class="error_next_box"></span>
             </div>
             <div class="submit">
@@ -142,52 +156,280 @@
             </div>
         </div>
     </div>
-    <input type="hidden" name="sns_Type" value="${sns_type}">
-    <input type="hidden" name="id" value="${info.id}">
+    <input type="hidden" name="sns_Type" value="none">
 </form>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        const modal_regi = document.getElementById("modal_regi")
 
-        regiModalOn();
+        const modal_regi = document.getElementById("modal_regi");
+        modal_regi.style.display = "flex";
+        $('html, body').css({'overflow': 'hidden', 'height': '100%'});
 
     });
 
-    function regiModalOn() {
-        modal_regi.style.display = "flex"
-        $('html, body').css({'overflow': 'hidden', 'height': '100%'}); // 모달팝업 중 html,body의 scroll을 hidden시킴
-    }
-    function regiIsModalOn() {
-        return modal_regi.style.display === "flex"
-    }
-
     function regiModalOff() {
         modal_regi.style.display = "none"
+        $('html, body').css({'overflow': 'auto', 'height': '100%'});
     }
 
-/*    const btnModal = document.getElementById("btn-modal")
-    btnModal.addEventListener("click", e => {
-        regiModalOn();
-    })
+    let error = document.querySelectorAll('.error_next_box');
+    let emailStatus = false;
+    let nicknameStatus = false;
+    let idStatus = false;
 
-    const closeBtn = modal.querySelector(".close-area")
-    closeBtn.addEventListener("click", e => {
-        regiModalOff();
-    })
+    $(document).ready(function () {
 
-    modal_regi.addEventListener("click", e => {
-        const evTarget = e.target
-        if(evTarget.classList.contains("modal-overlay")) {
-            regiModalOff();
+        $('#id').blur(function () {
+            checkId();
+        });
+        $('#pwd').blur(function () {
+            checkPw();
+            comparePw();
+        })
+        $('#pwd2').blur(function () {
+           comparePw();
+        });
+
+        $('#name').blur(function () {
+            nameCheck();
+        });
+        $('#mobile').blur(function () {
+            checkPhoneNum();
+        });
+        $('#email').blur(function () {
+            isEmailCorrect();
+        });
+        $('#nickname').blur(function () {
+            checkNickname();
+        });
+
+        $(document).on("keyup", "#mobile", function () {
+            $(this).val($(this).val().replace(/[^0-9]/g, "").replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})$/, "$1-$2-$3").replace("--", "-"));
+        });
+
+    });
+
+    function checkId() {
+        var idPattern = /^[a-zA-Z0-9]{4,12}$/;
+        if($('#id').val() === "") {
+            error[0].innerHTML = "필수 정보입니다.";
+            error[0].style.display = "block";
+            idStatus = false;
+        } else if(!idPattern.test($('#id').val())) {
+            error[0].innerHTML = "4~15자의 영문 소문자, 숫자만 사용 가능합니다.";
+            error[0].style.color = "#ff0000";
+            error[0].style.display = "block";
+            idStatus = false;
+        } else {
+            $.ajax({
+                url: "/regi/idCheck.do",
+                data: {'id': $('#id').val()},
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    if (data === false) {
+                        error[0].innerHTML = "멋진 아이디네요!";
+                        error[0].style.color = "#08A600";
+                        error[0].style.display = "block";
+                        idStatus = true;
+                    } else {
+                        error[0].innerHTML = "이미 존재하는 아이디입니다!";
+                        error[0].style.color = "#ff0000";
+                        error[0].style.display = "block";
+                        idStatus = false;
+                    }
+                },
+                error: function () {
+
+                }
+            });
         }
-    })
+    }
 
-    window.addEventListener("keyup", e => {
-        if(regiIsModalOn() && e.key === "Escape") {
-            regiModalOff();
+    function checkPw() {
+        var pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
+        if($('#pwd').val() === "") {
+            error[1].innerHTML = "필수 정보입니다.";
+            error[1].style.display = "block";
+            return false;
+        } else if(!pwPattern.test($('#pwd').val())) {
+            error[1].innerHTML = "8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.";
+            error[1].style.color = "#ff0000";
+            error[1].style.display = "block";
+            return false;
+        } else {
+            error[1].innerHTML = "사용 가능합니다.";
+            error[1].style.color = "#08A600";
+            error[1].style.display = "block";
+            return true;
         }
-    })*/
+    }
+
+    function comparePw() {
+        if($('#pwd2').val() === "") {
+            error[2].innerHTML = "필수 정보입니다.";
+            error[2].style.color = "#ff0000";
+            error[2].style.display = "block";
+            return false;
+        }
+
+        if($('#pwd2').val() === $('#pwd').val() && $('#pwd2').val() !== "") {
+            error[2].innerHTML = "일치합니다.";
+            error[2].style.color = "#08A600";
+            error[2].style.display = "block";
+            return true;
+        } else if($('#pwd2').val() !== $('#pwd').val()) {
+            error[2].innerHTML = "비밀번호가 일치하지 않습니다.";
+            error[2].style.color = "#ff0000";
+            error[2].style.display = "block";
+            return false;
+        }
+
+    }
+
+    function nameCheck() {
+        let namePattern = /^[가-힣a-zA-Z]+$/;
+        if ($('#name').val() === "") {
+            error[4].innerHTML = "필수 정보입니다.";
+            error[4].style.display = "block";
+            return false;
+        } else if (!namePattern.test($('#name').val()) || $('#name').val().indexOf(" ") > -1) {
+            error[4].innerHTML = "한글과 영문 대 소문자를 사용하세요. (특수기호, 공백 사용 불가)";
+            error[4].style.display = "block";
+            return false;
+        } else {
+            error[4].style.display = "none";
+            return true;
+        }
+    }
+
+    //닉네임 검사
+    function checkNickname() {
+        let nicknamePattern =  RegExp(/^[가-힣a-zA-Z0-9]{2,10}$/);
+
+        if ($('#nickname').val() === "") {
+            error[3].innerHTML = "필수 정보입니다.";
+            error[3].style.color = "#ff0000";
+            error[3].style.display = "block";
+            nicknameStatus = false;
+        } else if (!nicknamePattern.test($('#nickname').val())) {
+            error[3].innerHTML = "2~10자의 한글, 영문, 숫자만 사용 가능합니다.";
+            error[3].style.color = "#ff0000";
+            error[3].style.display = "block";
+            nicknameStatus = false;
+        } else {
+            $.ajax({
+                url: "/regi/nicknameCheck.do",
+                data: {'nickname': $('#nickname').val()},
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    if (data === false) {
+                        error[3].innerHTML = "사용 가능한 닉네임입니다!";
+                        error[3].style.color = "#08A600";
+                        error[3].style.display = "block";
+                        nicknameStatus = true;
+                    } else {
+                        error[3].innerHTML = "이미 존재하는 닉네임입니다!";
+                        error[3].style.color = "#ff0000";
+                        error[3].style.display = "block";
+                        nicknameStatus = false;
+                    }
+                },
+                error: function () {
+
+                }
+            });
+        }
+
+    }
+
+    function checkPhoneNum() {
+        var isPhoneNum = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
+
+        if ($('#mobile').val() === "") {
+            error[6].innerHTML = "필수 정보입니다.";
+            error[6].style.display = "block";
+            return false;
+        } else if (!isPhoneNum.test($('#mobile').val())) {
+            error[6].innerHTML = "형식에 맞지 않는 번호입니다.";
+            error[6].style.display = "block";
+            return false;
+        } else {
+            error[6].style.display = "none";
+            return true;
+        }
+    }
+
+    function isEmailCorrect() {
+        var emailPattern = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/i;
+
+        if ($('#email').val() === "") {
+            error[5].innerHTML = "필수 정보입니다.";
+            error[5].style.color = "#ff0000";
+            error[5].style.display = "block";
+            emailStatus = false;
+        } else if (!emailPattern.test($('#email').val())) {
+            error[5].innerHTML = "형식에 맞지 않는 이메일입니다.";
+            error[5].style.color = "#ff0000";
+            error[5].style.display = "block";
+            emailStatus = false;
+        } else {
+            $.ajax({
+                url: "/regi/emailCheck.do",
+                data: {'email': $('#email').val()},
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    if (data === false) {
+                        error[5].innerHTML = "사용 가능한 이메일입니다!";
+                        error[5].style.color = "#08A600";
+                        error[5].style.display = "block";
+                        emailStatus = true;
+                    } else {
+                        error[5].innerHTML = "이미 존재하는 이메일입니다!";
+                        error[5].style.color = "#ff0000";
+                        error[5].style.display = "block";
+                        emailStatus = false;
+                    }
+                },
+                error: function () {
+
+                }
+            });
+
+        }
+    }
+
+    $('input[name=btnJoin]').click(function () {
+        let nameStatus = nameCheck();
+        let mobileStatus = checkPhoneNum();
+        let pwdStatus = checkPw();
+        let pwd2Status = comparePw();
+
+        if (!idStatus) {
+            $('#id').focus();
+        } else if (!pwdStatus) {
+            $('#pwd').focus();
+        } else if (!pwd2Status) {
+            $('#pwd2').focus();
+        } else if (!nicknameStatus) {
+            $('#nickname').focus();
+        } else if (!nameStatus) {
+            $('#name').focus();
+        } else if (!emailStatus) {
+            $('#email').focus();
+        } else if (!mobileStatus) {
+            $('#mobile').focus();
+        } else {
+            $('#frm').submit();
+        }
+
+    });
+
+
+
 
 </script>
 </body>

@@ -139,11 +139,11 @@ public class LoginController {
 
         System.out.println("logout : " + dto.toString());
         if(dto.getSns_Type().equals("null")){
-            System.out.println("getSns_Type null");
+
             session.removeAttribute("login");
         }
         else if(dto.getSns_Type().equals("kakao")){
-            System.out.println("getSns_Type kakao");
+
             kakaoLoginBO.kakaoLogout((String)session.getAttribute("access_Token"));
             session.removeAttribute("access_Token");
         }
@@ -154,4 +154,16 @@ public class LoginController {
 
     }
 
+    @ResponseBody
+    @RequestMapping(value="normal.do", method = {RequestMethod.POST})
+    public boolean login(HttpSession session, MemberDto dto){
+
+        if(service.login(dto)){
+            MemberDto member = service.getMember(dto.getId());
+            session.setAttribute("login",member);
+            return true;
+        }
+
+        return false;
+    }
 }

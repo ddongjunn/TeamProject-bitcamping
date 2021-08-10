@@ -32,7 +32,7 @@
 		href="cs.do">고객센터</a>
 </div>
 
-<div id="login_modal" class="login_modal-overlay">
+<div id="login_modal" class="login_modal-overlay" style="z-index: 200">
 	<div class="login_modal-window">
 		<div class="login_modal_close-area"><span id="close">X</span></div>
 		<div class="login_modal_title">
@@ -53,22 +53,22 @@
 					</div>
 					<div class="modal_login_id">
 						<h4>아이디</h4>
-						<input type="email" name="" id="" placeholder="Email">
+						<input type="email" name="" id="id" placeholder="Email">
 					</div>
 					<div class="modal_login_pw">
 						<h4>비밀번호</h4>
-						<input type="password" name="" id="" placeholder="Password">
+						<input type="password" name="" id="pwd" placeholder="Password">
 					</div>
 					<div class="modal_login_etc">
 						<div class="checkbox">
-							<input type="checkbox" name="" id=""> 아이디 저장
+
 						</div>
 						<div class="modal_forgot_pw">
-							<a href="">비밀번호 찾기</a>
+							<a href="">아이디/비밀번호 찾기</a>
 						</div>
 					</div>
 					<div class="modal_submit">
-						<input type="submit" value="로그인" style="margin-bottom: 15px">
+						<input type="submit" id="loginBtn" value="로그인" style="margin-bottom: 15px">
 						<a href="/regi/normal.do"><input type="button" value="회원가입"></a>
 					</div>
 			</div>
@@ -89,6 +89,7 @@
 	}
 	function modalOff() {
 		modal.style.display = "none"
+		$('html, body').css({'overflow': 'auto', 'height': '100%'});
 	}
 
 	const btnModal = document.getElementById("header_login");
@@ -116,6 +117,33 @@
 			modalOff();
 		}
 	})
+
+	$('#loginBtn').click(function () {
+		if($('#id').val().trim() === ""){
+			alert('아이디를 입력해주세요.');
+			return;
+		}else if($('#pwd').val().trim() === ""){
+			alert('비밀번호를 입력해주세요.');
+			return;
+		}
+
+		$.ajax({
+			url: "/login/normal.do",
+			data: {'id': $('#id').val(), 'pwd' : $('#pwd').val()},
+			type: "post",
+			dataType: "json",
+			success: function (data) {
+				if(data){
+					location.href="/";
+					return;
+				}
+				alert('아이디와 비밀번호를 확인해주세요.');
+			},
+			error: function ( error ) {
+
+			}
+		});
+	});
 
 </script>
 
