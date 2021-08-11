@@ -47,8 +47,8 @@
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
 	</definition>
 
-	<definition name="productDetail.tiles" extends="main.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
+	<definition name="productOrder.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/rent/rent_order.jsp"/>
 	</definition>
 
 	<!-- 민경 -->

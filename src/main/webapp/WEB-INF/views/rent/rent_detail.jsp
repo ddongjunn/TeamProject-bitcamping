@@ -9,187 +9,289 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="/resources/css/rentDetail.css" />
-<link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900" rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script src="./jquery-ui-1.12.1/datepicker-ko.js"></script> -->
 </head>
 <body>
 
-<section class="product">
-	<div class="product__photo">
-		<div class="photo-container">
-			<div class="photo-main">
-				<!-- <div class="controls">
-					<i class="material-icons">share</i>
-					<i class="material-icons">favorite_border</i>
-				</div> -->
-				<img src="/resources/upload/${item.thumbnailName}" style="max-width: 700px; max-height: 550px;" alt="상품 썸네일 이미지">
+<form action="/rent/order.do" method="post">
+	<section class="product" id="productinfo">
+		<div class="product__photo">
+			<div class="photo-container">
+				<div class="photo-main">
+					<img src="/resources/upload/${item.thumbnail_Name}" style="max-width: 700px; max-height: 550px;" alt="상품 썸네일 이미지">
+					<input type="hidden" name="product_Seq" value="${item.product_Seq}">
+				</div>
 			</div>
-			<!-- <div class="photo-album">
-				<ul>
-					<li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png" alt="green apple"></li>
-					<li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303532/codepen/delicious-apples/half-apple.png" alt="half apple"></li>
-					<li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303160/codepen/delicious-apples/green-apple-flipped.png" alt="green apple"></li>
-					<li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303708/codepen/delicious-apples/apple-top.png" alt="apple top"></li>
-				</ul>
-			</div> -->
 		</div>
-	</div>
-	<div class="product__info">
-		<div class="title">
-			<h1>${item.productName}</h1>
-			<span>${item.productDesc}</span>
-		</div>
-		<div class="description">
-			<h3>기본 포함 상품</h3>
-				<span>${item.baseItem }</span>
-		</div>
-		<div class="price">
-			2박3일 <br>
-			<span><fmt:formatNumber value="${item.productPrice }" type="number"/>원~</span>
-		</div>
-		<div class="variant">
+		<div class="product__info">
+			<div class="title">
+				<h1>${item.product_Name}</h1>
+				<span>${item.product_Desc}</span>
+			</div>
+			<hr class="hr">
+			<div class="description">
+				<h4>기본 포함 상품</h4>
+					<span>${item.base_Item}</span>
+			</div>
+			<hr class="hr">
+			<div class="price">
+				2박3일 기준<br>
+				<span><fmt:formatNumber value="${item.product_Price}" type="number"/>원~</span>
+				<input id="product_Price" type="hidden" value="${item.product_Price}">
+			</div>
+			<hr class="hr">
+			<div class="variant">
 				<h4>대여 기간</h4>
-				<select style="width: 60%;">
-					<option value="" selected>2박 3일</option>
-					<option>3박 4일</option>
-					<option>4박 5일</option>
-					<option>5박 6일</option>
+				<select id="rent_Seq" name="rent_Seq" onchange="totalcount()" style="width: 60%;">
+					<c:forEach items="${rent}" var="rent">
+						<c:if test="${rent.rent_Price eq 0}">
+							<option value="${rent.rent_Seq}" data-rentDays="${rent.rent_Days}" data-rentPrice="${rent.rent_Price}" selected>${rent.rent_Name}</option>
+						</c:if>
+						<c:if test="${rent.rent_Price ne 0}">
+							<option value="${rent.rent_Seq}" data-rentDays="${rent.rent_Days}" data-rentPrice="${rent.rent_Price}">${rent.rent_Name}</option>
+						</c:if>
+					</c:forEach>
 				</select>
 				<h4>대여 일자</h4>
-				<input id="datepicker" type="date"><br>
-				<span style="color: gray">반납 예정일 : 2021년 8월 23일</span>
-		</div>
-		<c:if test="${item.includeLight eq 1 or item.includeGrill eq 1}">
-			<div class="variant">
-				<h4>추가 옵션 선택</h4>
-				<c:if test="${item.includeLight eq 1}">
-					<h3>조명 추가</h3>
-					<select style="width: 60%;">
-						<option value="" selected disabled hidden>선택안함</option>
-						<option>옵션1</option>
-						<option>옵션2</option>
-						<option>옵션3</option>
-					</select><br>
-				</c:if>
-				<c:if test="${item.includeLight eq 1}">
-					<h3>화로 추가</h3>
-					<select style="width: 60%;">
-						<option value="" selected disabled hidden>선택안함</option>
-						<option>옵션1</option>
-						<option>옵션2</option>
-						<option>옵션3</option>
-					</select>
-				</c:if>
+				<input id="rent_Sdate" name="rent_Sdate" type="text" placeholder="시작 날짜 선택" autocomplete="off" required> ~ <input id="rent_Edate" name="rent_Edate" type="text" placeholder="반납일 자동 지정" autocomplete="off" readonly="readonly">
+				<span style="font-size: 12px">
+					<br>대여시작일은 일주일 뒤부터 지정 가능합니다
+					<br>
+				</span>
 			</div>
-		</c:if>
+			<c:if test="${item.include_Light eq 1 or item.include_Grill eq 1}">
+				<hr class="hr">
+				<div class="variant">
+					<h4>추가 옵션 선택</h4>
+					<c:if test="${item.include_Light eq 1}">
+						<h3>조명 추가</h3>
+						<select id="option1_Seq" name="option1_Seq" style="width: 60%;">
+							<option value="0" selected>선택안함</option>
+							<c:forEach items="${option}" var="option">
+								<c:if test="${option.option_Type eq 1}">
+									<option value="${option.option_Seq}" data-optionPrice="${option.option_Price}">${option.option_Name}</option>
+								</c:if>
+							</c:forEach>
+						</select><br>
+					</c:if>
+					<c:if test="${item.include_Grill eq 1}">
+						<h3>화로 추가</h3>
+						<select id="option2_Seq" name="option2_Seq" style="width: 60%;">
+							<option value="0" selected>선택안함</option>
+							<c:forEach items="${option}" var="option">
+								<c:if test="${option.option_Type eq 2}">
+									<option value="${option.option_Seq}" data-optionPrice="${option.option_Price}">${option.option_Name}</option>
+								</c:if>
+							</c:forEach>
+						</select>
+					</c:if>
+				</div>
+			</c:if>
+			<hr class="hr">
+			<div class="total">
+				<span style="font-weight: bold;">
+					총 주문 금액 : <span id="totalprice" style="font-size: 18px"><fmt:formatNumber value="${item.product_Price}" type="number"/></span> 원
+					<input type="hidden" id="total_Price" name="product_Price" value="${item.product_Price}">
+				</span>
+				<div class="quantity-picker is-small">
+					<button type="button" id="button-minus" class="button-minus">-</button>
+					<input type="number" id="quantity" name="quantity" min="1" max="10" value="1" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" readonly />
+					<button type="button" id="button-plus" class="button-plus">+</button>
+				</div>
+				
+			</div>
+			<hr class="hr">
+			<button type="submit" class="buy--btn1">이 제품 대여하기</button>
+		</div>
+	</section>
+</form>
 
-		<button class="buy--btn">바로 구매하기</button>
-	</div>
-</section>
+<nav id="content">
+	<ul>
+		<li><a href="#">상품 선택</a></li>
+		<li><a href="#content">상품 상세</a></li>
+		<li><a href="#review">상품 리뷰</a></li>
+		<li><a href="#qna">Q&A</a></li>
+	</ul>
+</nav>
 
-<div style="height: 800px; background-color: #dddddd; margin: 100px; padding: 100px;">
+<div style="height: auto; background-color: #dddddd; margin: 100px; padding: 100px;">
 	${item.content}
 </div>
 
-<%-- <div class="info-box" style="display: flex; justify-content: center; align-items: center;">
-	<div style="float: left; width: 500px; height: 500px; background-color: gray">
-		대표이미지 들어갈 자리
-	</div>
-	
-	<div>
-		<table border="1" style="height: 500px;">
-			<colgroup>
-				<col width="100px">
-				<col width="400px">
-			</colgroup>
-			<thead>
-				<tr>
-					<td	colspan="2">
-						상품명 입니다
-					</td>
-				</tr>
-				<tr>
-					<td	colspan="2">
-						상품 한줄 설명 입니다
-					</td>
-				</tr>
-				<tr>
-					<td	colspan="2">
-						상품 가격 입니다
-					</td>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						조명 선택
-					</td>
-					<td>
-						<select style="width: 100%;">
-							<option value="" selected disabled hidden>선택안함</option>
-							<option>옵션1</option>
-							<option>옵션2</option>
-							<option>옵션3</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						화로 선택
-					</td>
-					<td>
-						<select style="width: 100%;">
-							<option value="" selected disabled hidden>선택안함</option>
-							<option>옵션1</option>
-							<option>옵션2</option>
-							<option>옵션3</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						대여기간
-					</td>
-					<td>
-						<select style="width: 100%;">
-							<option value="" selected>2박 3일</option>
-							<option>3박 4일</option>
-							<option>4박 5일</option>
-							<option>5박 6일</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						대여 일자
-					</td>
-					<td>
-						<input id="datepicker" type="date"><br>
-						<span style="color: gray">반납 예정일 : 2021년 8월 23일</span>	
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="2">
-						선택옵션 & 수량 ajax로 띄워줄 자리
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						총 상품금액 : 999,999 원
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<button type="submit" style="width: 100%">바로구매</button>
-					</td>
-				</tr>
-			</tfoot>
-		
-		</table>
-	</div>
-</div> --%>
+<nav id="review" >
+	<ul>
+		<li><a href="#">상품 선택</a></li>
+		<li><a href="#content">상품 상세</a></li>
+		<li><a href="#review">상품 리뷰</a></li>
+		<li><a href="#qna">Q&A</a></li>
+	</ul>
+</nav>
+<div style="height: 800px; margin: auto; width: 80%; background-color: yellow;">
+</div>
+<nav id="qna">
+	<ul>
+		<li><a href="#">상품 선택</a></li>
+		<li><a href="#content">상품 상세</a></li>
+		<li><a href="#review">상품 리뷰</a></li>
+		<li><a href="#qna">Q&A</a></li>
+	</ul>
+</nav>
+<div style="height: 800px; margin: auto; width: 80%; background-color: blue;">
+</div>
 
+<script type="text/javascript">
+	
+$(document).ready(function () {
+	
+	/* datepicker 기본 설정 */
+	$.datepicker.setDefaults({
+		  dateFormat: 'yy/mm/dd',
+		  prevText: '이전 달',
+		  nextText: '다음 달',
+		  monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		  monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+		  dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+		  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+		  dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+		  showMonthAfterYear: true,
+		  yearSuffix: '년',
+		  
+	});
+
+	/* 시작일 - 종료일 설정 */
+    $("#rent_Sdate").datepicker({ 
+    	minDate: '+7',
+    	maxDate: '+1Y',
+    	onSelect: function (dateString) {
+
+			var rentdays = parseInt($("#rent_Seq option:selected").attr("data-rentDays"));
+			var sdate = new Date($("#rent_Sdate").datepicker({dateFormat:"yy/mm/dd"}).val());
+			var edate = new Date(sdate.setDate(sdate.getDate() + rentdays));
+			
+			var e1 = edate.getFullYear();
+			
+			var e2 = edate.getMonth() + 1;
+			/* month 2자리 변환 */
+			e2 = e2 + "";
+			if(e2.length == 1){
+				e2 = '0' + e2;
+			}
+
+			var e3 = edate.getDate();
+			/* date 2자리 변환 */
+			e3 = e3 +"";
+			if(e3.length == 1){
+				e3 = '0' + e3;
+			}
+			
+			var eedate = e1 + "/" + e2 + "/" + e3;
+			$('#rent_Edate').attr('value', eedate);
+          }
+    });
+	
+	/* 대여기간 변경시 종료일에 반영 */
+	$("#rent_Seq").change(function() {
+		
+		if($("#rent_Sdate").datepicker("getDate") != null){
+			
+			var sdate = $("#rent_Sdate").datepicker("getDate");
+			var rentdays = parseInt($("#rent_Seq option:selected").attr("data-rentDays"));
+	
+			var edate = new Date(sdate.setDate(sdate.getDate() + rentdays));
+			
+			var e1 = edate.getFullYear();
+			
+			var e2 = edate.getMonth() + 1;
+			/* month 2자리 변환 */
+			e2 = e2 + "";
+			if(e2.length == 1){
+				e2 = '0' + e2;
+			}
+	
+			var e3 = edate.getDate();
+			/* date 2자리 변환 */
+			e3 = e3 +"";
+			if(e3.length == 1){
+				e3 = '0' + e3;
+			}
+			
+			var eedate = e1 + "/" + e2 + "/" + e3;
+			$('#rent_Edate').attr('value', eedate);
+		}          
+    });
+
+	/* quantity picker 동작 설정 */
+    $(".quantity-picker").each(function() {
+    	  var input = $(this).find("input");
+    	  var plus = $(this).find(".button-plus");
+    	  var minus = $(this).find(".button-minus");
+    	  var min = parseInt($(input).attr("min"), 10);
+    	  var max = parseInt($(input).attr("max"), 10);
+
+    	  $(plus).click(function() {
+    	    $(input).val(Math.min(parseInt($(input).val(), 10) + 1, max));
+    	    updateState();
+    	  });
+
+    	  $(minus).click(function() {
+    	    $(input).val(Math.max(parseInt($(input).val(), 10) - 1, min));
+    	    updateState();
+    	  });
+
+    	  function updateState() {
+    	    var val = $(input).val();
+
+    	    // Set disabled state when max / min qty reached
+    	    $(minus).prop("disabled", val <= min);
+    	    $(plus).prop("disabled", val >= max);
+    	  };
+    	  
+    	  updateState();
+    });
+    
+	
+	/*총 주문금액 계산 */
+	function totalcount(){
+		
+		var baseprice = parseInt($("#product_Price").val());
+		// alert(baseprice);
+		var rentprice = parseInt($("#rent_Seq option:selected").attr("data-rentPrice"));
+		// alert(rentprice);
+		var opt1price = $("#option1_Seq option:selected").attr("data-optionPrice") != null ? parseInt($("#option1_Seq option:selected").attr("data-optionPrice")) : 0;
+		// alert(opt1price);
+		var opt2price = $("#option2_Seq option:selected").attr("data-optionPrice") != null ? parseInt($("#option2_Seq option:selected").attr("data-optionPrice")) : 0;
+		// alert(opt2price);
+		var quantity = parseInt($("#quantity").val());
+		// alert(quantity);
+		
+		var totalprice = (baseprice + rentprice + opt1price + opt2price) * quantity;
+		// alert(totalprice);
+		
+		/* 총 금액 화면에 출력 */
+		$("#totalprice").text(totalprice.toLocaleString('ko-KR'));
+		$("#total_Price").attr("value", totalprice);
+	}
+	
+	/* select option 부분의 값 변경 감지 */
+	$("#rent_Seq, #option1_Seq, #option2_Seq").change(function(){
+		totalcount();		
+    });
+	/* input(quantity) 부분의 값 변경 감지 */
+	$("#quantity").on("propertychange change keyup paste input", function() {
+	    totalcount();
+	});
+	/* button으로 수량 변경시 감지 */
+	$("#button-minus, #button-plus").click(function(){
+		totalcount();
+	});
+
+});
+
+
+</script>
 
 </body>
 </html>

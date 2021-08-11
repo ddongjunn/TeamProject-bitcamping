@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.camping.bit.dto.ProductDetailDto;
+import com.camping.bit.dto.ProductOptionDto;
+import com.camping.bit.dto.ProductOrderDto;
+import com.camping.bit.dto.ProductRentDto;
 import com.camping.bit.service.RentService;
 import com.camping.bit.util.FileUploadUtil;
 
@@ -58,7 +61,7 @@ public class RentController {
 		
 		System.out.println("변환 파일명 : " + newFileName);
 		
-		dto.setThumbnailName(newFileName);
+		dto.setThumbnail_Name(newFileName);
 		
 		File file = new File(fileUpload + "/" + newFileName);
 		
@@ -77,14 +80,36 @@ public class RentController {
 	}
 	
 	@RequestMapping(value = "detail.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String productDetail(int productSeq, Model model) {
+    public String productDetail(int product_Seq, Model model) {
 		
-		ProductDetailDto detail = service.getproductDetail(productSeq);
+		ProductDetailDto item = service.getProductDetail(product_Seq);
+		model.addAttribute("item", item);
 		
-		model.addAttribute("item", detail);
+		List<ProductRentDto> rent = service.getRentList(product_Seq);
+		model.addAttribute("rent", rent);
+		
+		List<ProductOptionDto> option = service.getOptionList();		
+		model.addAttribute("option", option);
 		
 		return "productDetail.tiles";
 	}
 	
+	@RequestMapping(value = "order.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String productOrder(ProductOrderDto dto, Model model) {
+		
+		System.out.println(dto.toString());
+		model.addAttribute("order", dto);
+		
+		ProductDetailDto item = service.getProductDetail(dto.getProduct_Seq());
+		model.addAttribute("item", item);
+		
+		ProductOptionDto option1 = service.getOptionDetail(dto.getOption1_Seq());
+		model.addAttribute("opt1", option1);
+		
+		ProductOptionDto option2 = service.getOptionDetail(dto.getOption2_Seq());
+		model.addAttribute("opt2", option2);
+		
+		return "productOrder.tiles";
+	}
 	
 }
