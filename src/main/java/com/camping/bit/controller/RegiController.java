@@ -40,8 +40,6 @@ public class RegiController {
     @PostMapping(value = "addMember.do")
     public String addMember(HttpSession session, MemberDto dto) {
 
-        System.out.println("addMember :  " + dto.toString());
-
         service.addMember(dto);
         if(!dto.getSns_Type().equals("none")) {
             session.setAttribute("login", dto);

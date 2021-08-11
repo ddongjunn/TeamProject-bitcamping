@@ -20,4 +20,7 @@ public interface MemberDao {
     public void addMember(MemberDto dto);
 
     public String findId(MemberDto dto);
+    public String findPw(MemberDto dto);
+
+    public void updatePw(MemberDto dto);
 }

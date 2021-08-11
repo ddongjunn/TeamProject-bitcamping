@@ -35,7 +35,7 @@
 		href="cs.do">고객센터</a>
 </div>
 
-<div id="login_modal" class="login_modal-overlay" style="z-index: 1500;" aria-hidden="false">
+<div id="login_modal" class="login_modal-overlay" style="z-index: 800;">
 	<div class="login_modal-window">
 		<div class="login_modal_close-area"><span id="close" style="cursor: pointer">X</span></div>
 		<div class="login_modal_title">
@@ -142,6 +142,8 @@
 
 	function modalOn() {
 		modal.style.display = "flex"
+		modalOff_findId();
+		modalOff_findPw();
 		$('html, body').css({'overflow': 'hidden', 'height': '100%'}); // 모달팝업 중 html,body의 scroll을 hidden시킴
 	}
 	function isModalOn() {
@@ -196,6 +198,7 @@
 	btnModal_findId.addEventListener("click", e => {
 		modalOff();
 		modalOn_findId();
+		findId_error[0].style.display = "none";
 	});
 
 	const closeBtn_findId = modal_findId.querySelector(".close_findId");
@@ -204,7 +207,6 @@
 		modalOff_findId();
 		$('#find_name').val("");
 		$('#find_email').val("");
-		error[0].innerHTML = "";
 	});
 
 	/*modal.addEventListener("click", e => {
@@ -256,6 +258,7 @@
 			findId_error[0].style.color = "#ff0000";
 			findId_error[0].style.display = "block";
 			return;
+
 		}else if($('#find_email').val().trim() === ""){
 			findId_error[0].innerHTML = "이메일을 입력해주세요";
 			findId_error[0].style.color = "#ff0000";
@@ -291,7 +294,6 @@
 			});
 		}
 	});
-
 </script>
 
 
@@ -327,6 +329,62 @@
 	});
 
 	let findPw_error = document.querySelectorAll('.error_findPw_box');
+
+
+	$('#findPwBtn').click(function () {
+
+		if($('#findPw_id').val().trim() === ""){
+			findPw_error[0].innerHTML = "아이디를 입력해주세요.";
+			findPw_error[0].style.color = "#ff0000";
+			findPw_error[0].style.display = "block";
+			return;
+
+		}else if($('#findPw_email').val().trim() === ""){
+			findPw_error[0].innerHTML = "이메일을 입력해주세요";
+			findPw_error[0].style.color = "#ff0000";
+			findPw_error[0].style.display = "block";
+			return;
+
+		}
+
+
+		$.ajax({
+			url: "/login/findPw.do",
+			data: {'id': $('#findPw_id').val(), 'email' : $('#findPw_email').val()},
+			type: "post",
+			success: function ( data ) {
+				if(data === "null"){
+					findId_error[0].innerHTML = "일치하는 회원 정보가 없습니다.";
+					findId_error[0].style.color = "#ff0000";
+					findId_error[0].style.display = "block";
+
+					return;
+				}
+
+				modalOff_findPw();
+
+				console.log("data = " + data);
+
+				Swal.fire({
+						text : '이메일 : ' + $('#findPw_email').val() + '            ' +
+							' 임시 비밀번호가 발송되었습니다.',
+						width : 500,
+						padding : 10
+						});
+
+						$('#findPw_id').val("");
+						$('#findPw_email').val("");
+						modalOn();
+
+						},
+						error: function ( error ) {
+
+						}
+		});
+	});
+
+
+
 
 </script>
 

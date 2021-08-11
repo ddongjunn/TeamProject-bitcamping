@@ -41,6 +41,14 @@
 		SELECT ID FROM MEMBER WHERE USERNAME = #{username} AND EMAIL = #{email}
 	</select>
 
+	<select id="findPw" parameterType="MemberDto" resultType="String">
+		SELECT ID FROM MEMBER WHERE ID = #{id} AND EMAIL = #{email}
+	</select>
+
+	<select id="updatePw" parameterType="MemberDto">
+		UPDATE MEMBER SET PASSWORD = #{pwd} WHERE id = #{id}
+	</select>
+
   </mapper>
   
   

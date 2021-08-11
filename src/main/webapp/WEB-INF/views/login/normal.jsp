@@ -112,7 +112,7 @@
 </div>
 
 
-<form id="frm" method="post" action="/regi/addMember.do">
+<form id="regiFrm" method="post" action="/regi/addMember.do">
     <div class="wrapper">
         <div class="login">
             <h2>비트캠핑</h2>
@@ -153,7 +153,7 @@
                 <span class="error_next_box"></span>
             </div>
             <div class="submit">
-                <input type="button" name="btnJoin" value="회원가입">
+                <input type="button" name="btnJoin" id="regiBtn" value="회원가입">
             </div>
         </div>
     </div>
@@ -329,7 +329,7 @@
                 success: function (data) {
                     if (data === false) {
                         error[4].innerHTML = "사용 가능한 닉네임입니다!";
-                        error[4].style.color = "#08A600";ㄴ
+                        error[4].style.color = "#08A600";
                         error[4].style.display = "block";
                         nicknameStatus = true;
                     } else {
@@ -351,7 +351,7 @@
         var isPhoneNum = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
 
         if ($('#mobile').val() === "") {
-            alert('test');
+
             error[7].innerHTML = "필수 정보입니다. 핸드폰";
             error[7].style.color = "#ff0000";
             error[7].style.display = "block";
@@ -418,21 +418,28 @@
 
         if (!idStatus) {
             $('#userid').focus();
+            return;
         } else if (!pwdStatus) {
             $('#userpwd').focus();
+            return;
         } else if (!pwd2Status) {
             $('#userpwd2').focus();
+            return;
         } else if (!nicknameStatus) {
             $('#nickname').focus();
+            return;
         } else if (!nameStatus) {
             $('#username').focus();
+            return;
         } else if (!emailStatus) {
             $('#useremail').focus();
+            return;
         } else if (!mobileStatus) {
             $('#mobile').focus();
-        } else {
-            $('#frm').submit();
+            return;
         }
+
+        $('#regiFrm').submit();
 
     });
 </script>

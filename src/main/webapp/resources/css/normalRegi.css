@@ -141,7 +141,7 @@ label.required::after {
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
-    z-index: 1050;
+    z-index: 750;
 }
 
 #modal_regi .title {
@@ -207,7 +207,7 @@ li {
     align-items: center;
     flex-direction: column;
     padding : 20px;
-    z-index : 1000; /* test */
+    z-index : 650; /* test */
 }
 
 h2 {

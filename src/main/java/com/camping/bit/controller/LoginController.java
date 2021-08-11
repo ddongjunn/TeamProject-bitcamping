@@ -3,10 +3,12 @@ package com.camping.bit.controller;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 import javax.servlet.http.HttpSession;
 
+import com.camping.bit.commons.Mail;
 import com.camping.bit.commons.Util;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.oauth.bo.KakaoLoginBO;
@@ -15,6 +17,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -190,5 +193,57 @@ public class LoginController {
             }
         }
         return str.toString();
+    }
+
+    @ResponseBody
+    @RequestMapping(value="findPw.do", method = {RequestMethod.POST})
+    public String findPw(MemberDto dto){
+
+
+        System.out.println(dto);
+        String id = null;
+        try {
+            id = service.findPw(dto);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("id " + id);
+
+        if(id == null){
+            System.out.println("null");
+            return "null";
+        }
+        System.out.println("null 아님");
+
+        MemberDto member = new MemberDto();
+        member.setId(id);
+        member.setEmail(dto.getEmail());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String result = null;
+
+        //임시 비밀번호 생성
+        String tempPw = UUID.randomUUID().toString().replace("-","");
+        tempPw = tempPw.substring(0,10);
+        System.out.println("임시비밀번호 확인 : " + tempPw);
+
+        //임시 비밀번호로 변경
+        member.setPwd(tempPw);
+
+        //메일 전송
+        Mail mail = new Mail();
+        mail.sendEmail(member);
+
+        //회원 비밀번호를 암호화
+        String securePw = encoder.encode(member.getPwd());
+        member.setPwd(securePw);
+        System.out.println("암호화 된 비밀번호 : " + securePw);
+        System.out.println("Member = " + member);
+
+        System.out.println("비밀번호 변경 전");
+        //암호화된 비밀번호로 업데이트
+        service.updatePw(member);
+        System.out.println("비밀번호 변경");
+
+        return "success";
     }
 }
