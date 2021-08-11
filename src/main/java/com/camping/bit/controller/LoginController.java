@@ -2,10 +2,12 @@ package com.camping.bit.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 
 import javax.servlet.http.HttpSession;
 
+import com.camping.bit.commons.Util;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.oauth.bo.KakaoLoginBO;
 import com.camping.bit.service.MemberService;
@@ -165,5 +167,28 @@ public class LoginController {
         }
 
         return false;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="findId.do", method = {RequestMethod.POST})
+    public String findId(MemberDto dto){
+
+        String id = service.findId(dto);
+        if(id == null){
+            return "null";
+        }
+
+        int length = id.length() / 2;
+
+        StringBuilder str = new StringBuilder();
+        for(int i = 0; i < id.length(); i++){
+            if( i < length){
+                char c = id.charAt(i);
+                str.append(c);
+            }else{
+                str.append("*");
+            }
+        }
+        return str.toString();
     }
 }

@@ -37,6 +37,10 @@
 		</choose>
 	</insert>
 
+	<select id="findId" parameterType="MemberDto" resultType="String">
+		SELECT ID FROM MEMBER WHERE USERNAME = #{username} AND EMAIL = #{email}
+	</select>
+
   </mapper>
   
   

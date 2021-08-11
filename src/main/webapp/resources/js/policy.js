@@ -21,9 +21,11 @@ function toggleCheckbox(e) {
     this.parentNode.classList.toggle("active");
     checkAllStatus();
     toggleSubmitButton();
+    console.log('1');
 }
 
 function checkAllStatus() {
+    console.log('2');
     const { termsOfService, privacyPolicy, allowPromotions } = agreements;
     if (termsOfService && privacyPolicy && allowPromotions) {
         checkAll.checked = true;
@@ -33,6 +35,7 @@ function checkAllStatus() {
 }
 
 function toggleSubmitButton() {
+    console.log('3');
     const { termsOfService, privacyPolicy } = agreements;
     if (termsOfService && privacyPolicy) {
         submitButton.disabled = false;
@@ -57,8 +60,10 @@ checkAll.addEventListener("click", (e) => {
         });
     }
     toggleSubmitButton();
+    console.log('4');
 });
 
 submitButton.addEventListener("click",evt => {
+    console.log('5');
    regiModalOff();
 });

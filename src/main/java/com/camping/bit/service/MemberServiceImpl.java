@@ -1,6 +1,7 @@
 package com.camping.bit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,10 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void addMember(MemberDto dto) {
 		dao.addMember(dto);
+	}
+
+	@Override
+	public String findId(MemberDto dto) {
+		return dao.findId(dto);
 	}
 }

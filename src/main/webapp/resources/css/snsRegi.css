@@ -20,13 +20,15 @@ li {
 
 .snsRegi_login {
     width: 35%;
-    height: 700px;
+    overflow:hidden;
+    height: auto;
     background: yellow; /*회원가입창 배경*/
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding: 20px;
 }
 
 h2 {
