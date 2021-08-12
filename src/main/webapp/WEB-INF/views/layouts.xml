@@ -51,50 +51,7 @@
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
 	</definition>
 
-	<!-- 민경 -->
-	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
-		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
-		<put-attribute name="leftmenu" value="/WEB-INF/views/community/community-menu.jsp" />
-		<put-attribute name="body" value="/WEB-INF/views/community/community-body.jsp" />
-		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
-	</definition>
-
-	<!-- 자유게시판 -->
-	<definition name="free.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/community-free.jsp"/>
-	</definition>
-
-	<!-- 중고거래 게시판 -->
-	<definition name="deal.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/community-deal.jsp"/>
-	</definition>
-
-	<!-- 캠퍼모임 게시판 -->
-	<definition name="group.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/community-group.jsp"/>
-	</definition>
-
-	<!-- 캠핑후기 게시판 -->
-	<definition name="review.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/community-review.jsp"/>
-	</definition>
-
-	<!-- 작성글 상세화면 -->
-	<definition name="boardDetail.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/community-boardDetail.jsp"/>
-	</definition>
-
-	<!-- 가입인사게시판 -->
-	<definition name="hello.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/community-hello.jsp"/>
-	</definition>
 	
-	<!-- 게시판 글쓰기 -->
-	<definition name="boardwrite.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/community-boardwrite.jsp"/>
-	</definition>
-	
-
 	
 	
 	

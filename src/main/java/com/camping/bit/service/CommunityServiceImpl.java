@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.CommunityDao;
 import com.camping.bit.dto.CommunityDto;
+import com.camping.bit.dto.CommunityParam;
 
 @Service
 public class CommunityServiceImpl implements CommunityService{
@@ -15,19 +16,32 @@ public class CommunityServiceImpl implements CommunityService{
 	CommunityDao dao;
 	
 	@Override
-	public List<CommunityDto> helloboardlist() {
-		return dao.helloboardlist();
+	public List<CommunityDto> helloList(CommunityParam param) {
+		return dao.helloList(param);
+	}
+	
+	// 게시글 총수
+	@Override
+	public int helloListCount(CommunityParam param) {
+		return 0;
 	}
 	
 	// dto값을 받아서 dao로 넘겨 : 구체적인 내용
 	@Override
-	public void boardwriteAf(CommunityDto dto) {
-		dao.boardwriteAf(dto);
+	public void helloWriteAf(CommunityDto dto) {
+		dao.helloWriteAf(dto);
 	}
 	
 	// 게시글 상세보기
 	@Override
-	public int boardDetail(int community_seq) {
-		return dao.boardDetail(community_seq);
+	public CommunityDto helloDetail(int community_seq) {
+		CommunityDto data = dao.helloDetail(community_seq);
+		
+		return data;
+	}
+	
+	@Override
+	public void readcount(int community_seq) {
+		dao.readcount(community_seq);
 	}
 }
