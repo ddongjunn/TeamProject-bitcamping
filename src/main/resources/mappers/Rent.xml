@@ -8,52 +8,37 @@
 
 	<insert id="regiAf" parameterType="ProductDetailDto">
   		INSERT INTO PRODUCT 
-  		(PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, NEW_THUMBNAIL_NAME, 
-  		CONTENT, IMG_SEQ, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL)
-  		VALUES(PRODUCT_SEQ.NEXTVAL, #{productName}, #{productDesc}, #{baseItem}, #{productPrice}, #{productStock}, #{thumbnailName}, NULL,
-  		#{content}, NULL, #{includeLight}, #{includeGrill}, #{rentType}, SYSDATE, 0)
+  		(PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
+  		CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL)
+  		VALUES(PRODUCT_SEQ.NEXTVAL, #{product_Name}, #{product_Desc}, #{base_Item}, #{product_Price}, #{product_Stock}, #{thumbnail_Name},
+  		#{content}, #{include_Light}, #{include_Grill}, #{rent_Type}, SYSDATE, 0)
 	</insert>
 	
 	<select id="getProductList" resultType="ProductDetailDto">
-		SELECT 
-			PRODUCT_SEQ AS PRODUCTSEQ, 
-			PRODUCT_NAME AS PRODUCTNAME, 
-			PRODUCT_DESC AS PRODUCTDESC, 
-			BASE_ITEM AS BASEITEM, 
-			PRODUCT_PRICE AS PRODUCTPRICE, 
-			PRODUCT_STOCK AS PRODUCTSTOCK, 
-			THUMBNAIL_NAME AS THUMBNAILNAME, 
-			NEW_THUMBNAIL_NAME AS NEWTHUMBNAILNAME, 
-	  		CONTENT, 
-	  		IMG_SEQ AS IMGSEQ, 
-	  		INCLUDE_LIGHT AS INCLUDELIGHT, 
-	  		INCLUDE_GRILL AS INCLUDEGRILL, 
-	  		RENT_TYPE AS RENTTYPE, 
-	  		WDATE, 
-	  		DEL 
+		SELECT *
   		FROM PRODUCT
 		ORDER BY WDATE DESC
 	</select>
 	
-	<select id="getproductDetail" parameterType="java.lang.Integer" resultType="ProductDetailDto">
-		SELECT
-			PRODUCT_SEQ AS PRODUCTSEQ, 
-			PRODUCT_NAME AS PRODUCTNAME, 
-			PRODUCT_DESC AS PRODUCTDESC, 
-			BASE_ITEM AS BASEITEM, 
-			PRODUCT_PRICE AS PRODUCTPRICE, 
-			PRODUCT_STOCK AS PRODUCTSTOCK, 
-			THUMBNAIL_NAME AS THUMBNAILNAME, 
-			NEW_THUMBNAIL_NAME AS NEWTHUMBNAILNAME, 
-	  		CONTENT, 
-	  		IMG_SEQ AS IMGSEQ, 
-	  		INCLUDE_LIGHT AS INCLUDELIGHT, 
-	  		INCLUDE_GRILL AS INCLUDEGRILL, 
-	  		RENT_TYPE AS RENTTYPE, 
-	  		WDATE, 
-	  		DEL 
+	<select id="getProductDetail" parameterType="java.lang.Integer" resultType="ProductDetailDto">
+		SELECT *
   		FROM PRODUCT
-  		WHERE PRODUCT_SEQ = #{productSeq}
+  		WHERE PRODUCT_SEQ = #{product_Seq}
+	</select>
+	
+	<select id="getRentList" parameterType="java.lang.Integer" resultType="ProductRentDto">
+		SELECT *
+  		FROM PRODUCT_RENT
+  		WHERE RENT_TYPE = (SELECT RENT_TYPE FROM PRODUCT WHERE PRODUCT_SEQ = #{product_Seq})
+	</select>
+	
+	<select id="getOptionList" resultType="ProductOptionDto">
+		SELECT * FROM PRODUCT_OPTION
+	</select>
+	
+	<select id="getOptionDetail" parameterType="java.lang.Integer" resultType="ProductOptionDto">
+		SELECT * FROM PRODUCT_OPTION
+		WHERE OPTION_SEQ = #{option_Seq}
 	</select>
 
 </mapper>
