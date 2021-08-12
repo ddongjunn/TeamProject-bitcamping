@@ -38,25 +38,25 @@
                 <!-- <div class="bbb_deals_title">Today's Combo Offer</div> -->
                 <div class="bbb_deals_slider_container">
                     <div class=" bbb_deals_item">
-                        <div class="bbb_deals_image"><a href="/rent/detail.do?productSeq=${list.productSeq}"><img src="/resources/upload/${list.thumbnailName}" alt="" height="250px"></a></div>
+                        <div class="bbb_deals_image"><a href="/rent/detail.do?product_Seq=${list.product_Seq}"><img src="/resources/upload/${list.thumbnail_Name}" alt="" height="250px"></a></div>
                         <div class="bbb_deals_content">
                             <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
-                                <div class="bbb_deals_item_name" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/rent/detail.do?productSeq=${list.productSeq}">${list.productName}</a></div>
+                                <div class="bbb_deals_item_name" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/rent/detail.do?product_Seq=${list.product_Seq}">${list.product_Name}</a></div>
                             </div>
                             <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
-                                <div class="bbb_deals_item_category" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">${list.productDesc }</div>
+                                <div class="bbb_deals_item_category" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">${list.product_Desc}</div>
                             </div>
                             <br>
                             <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
                                 <div class="bbb_deals_item_price_a ml-auto">2박 3일 기준</div>
                             </div>
                             <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
-                                <div class="bbb_deals_item_price ml-auto"><fmt:formatNumber value="${list.productPrice }" type="number"/>원</div>
+                                <div class="bbb_deals_item_price ml-auto"><fmt:formatNumber value="${list.product_Price}" type="number"/>원</div>
                             </div>
 
                             <div class="available">
                                 <div class="available_line d-flex flex-row justify-content-start">
-                                    <div class="available_title">현재 상품 재고 <span>${list.productStock }</span>개</div>
+                                    <div class="available_title">현재 상품 재고 <span>${list.product_Stock}</span>개</div>
                                     <div class="sold_stars ml-auto"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
                                 </div>
                                 <div class="available_bar"><span style="width:17%"></span></div>

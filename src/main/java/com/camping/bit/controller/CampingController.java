@@ -42,7 +42,7 @@ public class CampingController{
 		//현재 페이지
 		int pageNumber = param.getPageNumber();
 		model.addAttribute("pageNumber", pageNumber + 1);
-		
+	
 		//System.out.println("controller 작동 확인");
 		return "campinglist.tiles";
 		

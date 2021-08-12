@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.RentDao;
 import com.camping.bit.dto.ProductDetailDto;
+import com.camping.bit.dto.ProductOptionDto;
+import com.camping.bit.dto.ProductRentDto;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -29,10 +31,34 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public ProductDetailDto getproductDetail(int productSeq) {
+	public ProductDetailDto getProductDetail(int product_Seq) {
 
-		ProductDetailDto detail = dao.getproductDetail(productSeq);
+		ProductDetailDto detail = dao.getProductDetail(product_Seq);
 		
 		return detail;
+	}
+
+	@Override
+	public List<ProductRentDto> getRentList(int product_Seq) {
+		
+		List<ProductRentDto> rent = dao.getRentList(product_Seq);
+
+		return rent;
+	}
+
+	@Override
+	public List<ProductOptionDto> getOptionList() {
+
+		List<ProductOptionDto> option = dao.getOptionList();
+		
+		return option;
+	}
+
+	@Override
+	public ProductOptionDto getOptionDetail(int option_Seq) {
+
+		ProductOptionDto option = dao.getOptionDetail(option_Seq);
+		
+		return option;
 	}
 }

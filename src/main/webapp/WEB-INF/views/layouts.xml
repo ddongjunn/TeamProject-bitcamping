@@ -21,6 +21,10 @@
 		<put-attribute name="main" value="/WEB-INF/views/login/snsRegi.jsp" />
 	</definition>
 
+	<definition name="normal.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/login/normal.jsp"/>
+	</definition>
+
 	<!-- 효경 -->
 	<definition name = "campinglist.tiles" extends = "main.tiles">
 		<put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>
@@ -47,8 +51,51 @@
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
 	</definition>
 
-	<definition name="productDetail.tiles" extends="main.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
+	<definition name="productOrder.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/rent/rent_order.jsp"/>
+	</definition>
+
+	<!-- 민경 -->
+	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="leftmenu" value="/WEB-INF/views/community/community-menu.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/community/community-main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
+	</definition>
+
+	<!-- 가입인사게시판 -->
+	<definition name="hello.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/hello.jsp"/>
+	</definition>
+
+	<!-- 가입인사 글쓰기 -->
+	<definition name="hellowrite.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/helloWrite.jsp"/>
+	</definition>
+
+	<!-- 가입인사글 상세화면 -->
+	<definition name="helloDetail.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/helloDetail.jsp"/>
+	</definition>
+
+	<!-- 자유게시판 -->
+	<definition name="free.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/free.jsp"/>
+	</definition>
+
+	<!-- 중고거래 게시판 -->
+	<definition name="deal.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/deal.jsp"/>
+	</definition>
+
+	<!-- 캠퍼모임 게시판 -->
+	<definition name="group.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/group.jsp"/>
+	</definition>
+
+	<!-- 캠핑후기 게시판 -->
+	<definition name="review.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/review.jsp"/>
 	</definition>
 
 	
