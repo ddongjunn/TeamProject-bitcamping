@@ -55,8 +55,6 @@
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_order.jsp"/>
 	</definition>
 
-
-	<!-- 민경 -->
 	<!-- 민경 -->
 	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
@@ -99,8 +97,8 @@
 	<definition name="review.tiles" extends="community.tiles">
 		<put-attribute name="body" value="/WEB-INF/views/community/review.jsp"/>
 	</definition>
-	
 
+	
 	
 	
 	

@@ -12,10 +12,16 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
 public class CommunityParam implements Serializable{
-	private String pageNumber;
-	private int start;
+	
+	private String choice;
+	private String search;
+	
+	private int pageNumber; 
+	
+	private int start; 
 	private int end;
+	 
 }
