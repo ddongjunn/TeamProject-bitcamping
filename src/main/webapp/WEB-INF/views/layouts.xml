@@ -21,6 +21,10 @@
 		<put-attribute name="main" value="/WEB-INF/views/login/snsRegi.jsp" />
 	</definition>
 
+	<definition name="normal.tiles" extends="main.tiles">
+		<put-attribute name="main" value="/WEB-INF/views/login/normal.jsp"/>
+	</definition>
+
 	<!-- 효경 -->
 	<definition name = "campinglist.tiles" extends = "main.tiles">
 		<put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>

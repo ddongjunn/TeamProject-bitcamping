@@ -1,12 +1,18 @@
 package com.camping.bit.service;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.MemberDao;
 import com.camping.bit.dto.MemberDto;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -35,7 +41,29 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public boolean login(MemberDto dto) {
+		return dao.login(dto);
+	}
+
+	@Override
 	public void addMember(MemberDto dto) {
 		dao.addMember(dto);
 	}
+
+	@Override
+	public String findId(MemberDto dto) {
+		return dao.findId(dto);
+	}
+
+	@Override
+	public String findPw(MemberDto dto){
+		return dao.findPw(dto);
+	}
+
+	@Override
+	public void updatePw(MemberDto dto) {
+		dao.updatePw(dto);
+	}
+
+
 }
