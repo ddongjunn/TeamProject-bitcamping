@@ -26,4 +26,5 @@ public interface MemberService {
 	public String findPw(MemberDto dto);
 
 	public void updatePw(MemberDto dto);
+
 }

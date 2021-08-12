@@ -23,4 +23,5 @@ public interface MemberDao {
     public String findPw(MemberDto dto);
 
     public void updatePw(MemberDto dto);
+
 }

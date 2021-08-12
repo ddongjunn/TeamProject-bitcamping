@@ -1,19 +1,13 @@
 package com.camping.bit.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-
-
 import javax.servlet.http.HttpSession;
 
 import com.camping.bit.commons.Mail;
-import com.camping.bit.commons.Util;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.oauth.bo.KakaoLoginBO;
 import com.camping.bit.service.MemberService;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -163,8 +157,15 @@ public class LoginController {
     @RequestMapping(value="normal.do", method = {RequestMethod.POST})
     public boolean login(HttpSession session, MemberDto dto){
 
-        if(service.login(dto)){
-            MemberDto member = service.getMember(dto.getId());
+        System.out.println("사용자가 입력한 비밀번호 = " + dto);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        MemberDto member = service.getMember(dto.getId());
+        if(member == null){
+            return false;
+        }
+
+        if(encoder.matches(dto.getPwd(), member.getPwd())){
             session.setAttribute("login",member);
             return true;
         }
@@ -200,13 +201,11 @@ public class LoginController {
     public String findPw(MemberDto dto){
 
 
-        System.out.println(dto);
+        System.out.println("들어오는 dto " + dto);
+
         String id = null;
-        try {
-            id = service.findPw(dto);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        id = service.findPw(dto);
+
         System.out.println("id " + id);
 
         if(id == null){
@@ -228,10 +227,17 @@ public class LoginController {
 
         //임시 비밀번호로 변경
         member.setPwd(tempPw);
+        System.out.println("임시 비밀번호로 변경 완료");
 
         //메일 전송
-        Mail mail = new Mail();
-        mail.sendEmail(member);
+        try{
+            Mail mail = new Mail();
+            mail.sendEmail(member);
+            System.out.println("mail 전송 : " + member);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
 
         //회원 비밀번호를 암호화
         String securePw = encoder.encode(member.getPwd());

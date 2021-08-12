@@ -5,7 +5,7 @@
   
   <mapper namespace="com.camping.bit.dao.MemberDao">
   	<select id="getMember" parameterType="String" resultType="MemberDto">
-  		SELECT id, username, nickname, phone, email, create_date, sns_type, auth FROM MEMBER WHERE ID = #{id}
+  		SELECT ID, USERNAME, PASSWORD AS PWD, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE, AUTH FROM MEMBER WHERE ID = #{id}
   	</select>
 
 	<select id="idCheck" resultType="boolean">

@@ -3,17 +3,19 @@ package com.camping.bit.commons;
 import com.camping.bit.dto.MemberDto;
 import org.apache.commons.mail.HtmlEmail;
 
+
 public class Mail {
 
 	public void sendEmail(MemberDto dto) {
 		// Mail Server 설정
+
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.gmail.com"; //네이버 이용시 smtp.naver.com
-		String hostSMTPid = "bitcamping00@gmail.com";
+		String hostSMTPid = "bitcamping0";
 		String hostSMTPpwd = "qlxm1234";
 
 		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "bitcamping00@gmail.com";
+		String fromEmail = "bitcamping0@gmail.com";
 		String fromName = "비트캠핑";
 
 		String subject = "";
@@ -35,10 +37,9 @@ public class Mail {
 			email.setCharset(charSet);
 			email.setSSL(true);
 			email.setHostName(hostSMTP);
-			email.setSmtpPort(465); //네이버 이용시 587
-
+			email.setSmtpPort(587); //네이버 이용시 587
 			email.setAuthentication(hostSMTPid, hostSMTPpwd);
-			email.setTLS(true);
+            email.setTLS(true);
 			email.addTo(mail, charSet);
 			email.setFrom(fromEmail, fromName, charSet);
 			email.setSubject(subject);
@@ -47,5 +48,7 @@ public class Mail {
 		} catch (Exception e) {
 			System.out.println("메일발송 실패 : " + e);
 		}
+
 	}
 }
+

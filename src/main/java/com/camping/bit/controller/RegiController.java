@@ -4,6 +4,7 @@ import com.camping.bit.commons.Util;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +41,17 @@ public class RegiController {
     @PostMapping(value = "addMember.do")
     public String addMember(HttpSession session, MemberDto dto) {
 
-        service.addMember(dto);
+        if(dto.getSns_Type().equals("none")){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encPassword = encoder.encode(dto.getPwd());
+            dto.setPwd(encPassword);
+        }
+
         if(!dto.getSns_Type().equals("none")) {
             session.setAttribute("login", dto);
         }
+
+        service.addMember(dto);
 
         return "main.tiles";
     }
