@@ -97,7 +97,7 @@ public class RentController {
 	@RequestMapping(value = "order.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String productOrder(ProductOrderDto dto, Model model) {
 		
-		System.out.println(dto.toString());
+		// System.out.println(dto.toString());
 		model.addAttribute("order", dto);
 		
 		ProductDetailDto item = service.getProductDetail(dto.getProduct_Seq());

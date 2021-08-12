@@ -55,7 +55,7 @@
 					</c:forEach>
 				</select>
 				<h4>대여 일자</h4>
-				<input id="rent_Sdate" name="rent_Sdate" type="text" placeholder="시작 날짜 선택" autocomplete="off" required> ~ <input id="rent_Edate" name="rent_Edate" type="text" placeholder="반납일 자동 지정" autocomplete="off" readonly="readonly">
+				<input id="rent_Sdate" name="rent_Sdate" type="text" placeholder="시작 날짜 선택" autocomplete="off" readonly required> ~ <input id="rent_Edate" name="rent_Edate" type="text" placeholder="반납일 자동 지정" autocomplete="off" readonly required>
 				<span style="font-size: 12px">
 					<br>대여시작일은 일주일 뒤부터 지정 가능합니다
 					<br>
@@ -103,7 +103,7 @@
 				
 			</div>
 			<hr class="hr">
-			<button type="submit" class="buy--btn1">이 제품 대여하기</button>
+			<button type="submit" class="buy--btn">이 제품 대여하기</button>
 		</div>
 	</section>
 </form>
@@ -157,8 +157,7 @@ $(document).ready(function () {
 		  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
 		  dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
 		  showMonthAfterYear: true,
-		  yearSuffix: '년',
-		  
+		  yearSuffix: '년'		  
 	});
 
 	/* 시작일 - 종료일 설정 */

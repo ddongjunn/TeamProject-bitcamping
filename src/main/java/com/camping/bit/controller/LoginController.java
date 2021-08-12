@@ -1,18 +1,17 @@
 package com.camping.bit.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
-
-
+import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
+import com.camping.bit.commons.Mail;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.oauth.bo.KakaoLoginBO;
 import com.camping.bit.service.MemberService;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,20 +43,25 @@ public class LoginController {
     private void setKakaoLoginBO(KakaoLoginBO kakaoLoginBO) { this.kakaoLoginBO = kakaoLoginBO; }
 
 
-    @RequestMapping(value = "login.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String login(Model model, HttpSession session) {
-        /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+    @RequestMapping(value = "naver.do", method = { RequestMethod.POST })
+    public String naverLogin(Model model, HttpSession session) {
+        //* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 *//*
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
         // 네이버
         model.addAttribute("naverUrl", naverAuthUrl);
 
+        return "redirect:" + naverAuthUrl;
+    }
+
+    @RequestMapping(value = "kakao.do", method = { RequestMethod.POST })
+    public String kakaoLogin(Model model, HttpSession session) {
         //카카오 URL
         String kakaoAuthUrl = kakaoLoginBO.getUrl();
 
         //카카오
         model.addAttribute("kakaoUrl", kakaoAuthUrl);
 
-        return "login.tiles";
+        return "redirect:" + kakaoAuthUrl;
     }
 
     @RequestMapping(value = "callback-naver.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -91,6 +95,7 @@ public class LoginController {
         if(result){
             MemberDto dto = service.getMember(id);
             System.out.println("로그인 = " + dto.toString());
+            session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
             session.setAttribute("login",dto);
             return "main.tiles";
         }
@@ -109,14 +114,13 @@ public class LoginController {
 
         String id = info.get("id");
 
-        info.put("nickname2","test");
-
         //신규회원인지 기존회원인지 검사
         boolean result = service.idCheck(id);
 
         if(result){
             MemberDto dto = service.getMember(id);
             System.out.println("로그인 = " + dto.toString());
+            session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
             session.setAttribute("access_Token", access_Token);
             session.setAttribute("login",dto);
             return "main.tiles";
@@ -131,17 +135,121 @@ public class LoginController {
     @RequestMapping(value = "logout.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String logout(HttpSession session) {
         MemberDto dto = (MemberDto) session.getAttribute("login");
-        String sns_Type = dto.getSns_Type();
 
-        if(sns_Type.equals("kakao")){
+        System.out.println("logout : " + dto.toString());
+        if(dto.getSns_Type().equals("null")){
+
+            session.removeAttribute("login");
+        }
+        else if(dto.getSns_Type().equals("kakao")){
+
             kakaoLoginBO.kakaoLogout((String)session.getAttribute("access_Token"));
             session.removeAttribute("access_Token");
         }
 
-        session.removeAttribute("login");
         session.invalidate();
 
-        return "main.tiles";
+        return "redirect:/";
+
     }
 
+    @ResponseBody
+    @RequestMapping(value="normal.do", method = {RequestMethod.POST})
+    public boolean login(HttpSession session, MemberDto dto){
+
+        System.out.println("사용자가 입력한 비밀번호 = " + dto);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        MemberDto member = service.getMember(dto.getId());
+        if(member == null){
+            return false;
+        }
+
+        if(encoder.matches(dto.getPwd(), member.getPwd())){
+            session.setAttribute("login",member);
+            return true;
+        }
+
+        return false;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="findId.do", method = {RequestMethod.POST})
+    public String findId(MemberDto dto){
+
+        String id = service.findId(dto);
+        if(id == null){
+            return "null";
+        }
+
+        int length = id.length() / 2;
+
+        StringBuilder str = new StringBuilder();
+        for(int i = 0; i < id.length(); i++){
+            if( i < length){
+                char c = id.charAt(i);
+                str.append(c);
+            }else{
+                str.append("*");
+            }
+        }
+        return str.toString();
+    }
+
+    @ResponseBody
+    @RequestMapping(value="findPw.do", method = {RequestMethod.POST})
+    public String findPw(MemberDto dto){
+
+
+        System.out.println("들어오는 dto " + dto);
+
+        String id = null;
+        id = service.findPw(dto);
+
+        System.out.println("id " + id);
+
+        if(id == null){
+            System.out.println("null");
+            return "null";
+        }
+        System.out.println("null 아님");
+
+        MemberDto member = new MemberDto();
+        member.setId(id);
+        member.setEmail(dto.getEmail());
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String result = null;
+
+        //임시 비밀번호 생성
+        String tempPw = UUID.randomUUID().toString().replace("-","");
+        tempPw = tempPw.substring(0,10);
+        System.out.println("임시비밀번호 확인 : " + tempPw);
+
+        //임시 비밀번호로 변경
+        member.setPwd(tempPw);
+        System.out.println("임시 비밀번호로 변경 완료");
+
+        //메일 전송
+        try{
+            Mail mail = new Mail();
+            mail.sendEmail(member);
+            System.out.println("mail 전송 : " + member);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+        //회원 비밀번호를 암호화
+        String securePw = encoder.encode(member.getPwd());
+        member.setPwd(securePw);
+        System.out.println("암호화 된 비밀번호 : " + securePw);
+        System.out.println("Member = " + member);
+
+        System.out.println("비밀번호 변경 전");
+        //암호화된 비밀번호로 업데이트
+        service.updatePw(member);
+        System.out.println("비밀번호 변경");
+
+        return "success";
+    }
 }

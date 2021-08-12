@@ -35,4 +35,5 @@
 	
 	<!-- base-package에 정의된 package 소스 중 @component가 작성된 Class를 bean으로 인식 -->
 	<context:component-scan base-package="com.camping.bit.service" />
+
 </beans>

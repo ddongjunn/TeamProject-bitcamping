@@ -4,6 +4,7 @@ import com.camping.bit.commons.Util;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,14 +31,34 @@ public class RegiController {
         return service.emailCheck(email);
     }
 
+    @ResponseBody
+    @RequestMapping(value = "idCheck.do", method = { RequestMethod.GET })
+    public boolean idCheck(String id) {
+
+        return service.idCheck(id);
+    }
+
     @PostMapping(value = "addMember.do")
     public String addMember(HttpSession session, MemberDto dto) {
 
-        System.out.println(dto.toString());
+        if(dto.getSns_Type().equals("none")){
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encPassword = encoder.encode(dto.getPwd());
+            dto.setPwd(encPassword);
+        }
+
+        if(!dto.getSns_Type().equals("none")) {
+            session.setAttribute("login", dto);
+        }
 
         service.addMember(dto);
-        session.setAttribute("login",dto);
 
         return "main.tiles";
+    }
+
+    @RequestMapping(value = "normal.do", method = { RequestMethod.GET })
+    public String regiMember() {
+
+        return "normal.tiles";
     }
 }
