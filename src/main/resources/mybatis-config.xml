@@ -17,9 +17,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
         <!-- 영신 -->
         <typeAlias type="com.camping.bit.dto.ProductDetailDto" alias="ProductDetailDto" />
+        <typeAlias type="com.camping.bit.dto.ProductRentDto" alias="ProductRentDto" />
+        <typeAlias type="com.camping.bit.dto.ProductRentDto" alias="ProductRentDto" />
 
         <!-- 민경 -->
         <typeAlias type="com.camping.bit.dto.CommunityDto" alias = "CommunityDto"/>
+        <typeAlias type="com.camping.bit.dto.CommunityParam" alias = "CommunityParam"/>
 
 
     </typeAliases>	
