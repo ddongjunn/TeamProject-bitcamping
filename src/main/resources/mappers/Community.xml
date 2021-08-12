@@ -47,8 +47,8 @@
   	<!-- dto받은거 db에 넣어주는 쿼리문 작성 id값은 dao 메소드명이랑 일치, dto파라미터타입 -> db에 넣는것, 리절트타입은 db에서 받아오겠다는것 //#{id}-->
 	<insert id="helloWriteAf" parameterType="CommunityDto">
 		INSERT INTO COMMUNITY_BBS(
-		COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, RECOMMEND, DEL, FILE_SEQ, bbstype)
-		VALUES(COMMUNITY_BBS_SEQ.NEXTVAL, 'aaa', #{title}, SYSDATE, #{content}, #{readcount}, 0, 0, 0, #{bbstype})
+		COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, RECOMMEND, DEL, bbstype)
+		VALUES(COMMUNITY_BBS_SEQ.NEXTVAL, 'aaa', #{title}, SYSDATE, #{content}, #{readcount}, 0, 0, #{bbstype})
 	</insert>
   	
   	<!-- 글 상세조회, 파라미터가 넣어주는값-->
