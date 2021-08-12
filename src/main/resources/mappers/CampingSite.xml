@@ -14,13 +14,71 @@
 		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, READCOUNT, LIKECOUNT
 		FROM CAMPING_LIST 
 		WHERE 1=1 
-		<if test="searchDo != null and searchDo !=''">
+ 		<if test="searchDo != null and searchDo !=''"><!-- 지역구분 -->
     	AND DONM in	
-        <foreach item="item" index="index" collection="searchDo" open="(" separator="," close=")">
-            #{item}
-        </foreach>
+	        <foreach item="item" index="index" collection="searchDo" open="(" separator="," close=")">
+	            #{item}
+	        </foreach>
+		</if> 
+		<if test="searchCl != null and searchCl !=''"><!-- 캠핑장운영주체 -->
+    	AND FACLTDIVNM in	
+	        <foreach item="item" index="index" collection="searchCl" open="(" separator="," close=")">
+	            #{item}
+	        </foreach>
+		</if> 
+ 		<!-- <if test="lctCl != null and lctCl !=''">캠핑장 주변환경
+    	AND REGEXP_LIKE (LCTCL,
+	        <foreach item="item" index="index" collection="lctCl" open="(" separator="," close=")">
+	         	#{item})
+	        </foreach>
+	    </if> --> 
+	   	<if test="lctCl != null and lctCl !=''"><!-- 캠핑장 시설분류 -->
+			<trim prefix = "AND(" prefixOverrides="OR" suffix=")">
+				<foreach item="item" index="index" collection="lctCl" separator=" ">
+		    	 OR LCTCL like '%'||#{item}||'%'
+			    </foreach>
+		    </trim>   
 		</if>
-		
+		<if test="induty != null and induty !=''"><!-- 캠핑장 시설분류 -->
+			<trim prefix = "AND(" prefixOverrides="OR" suffix=")">
+				<foreach item="item" index="index" collection="induty" separator=" ">
+		    	 OR INDUTY like '%'||#{item}||'%'
+			    </foreach>
+		    </trim>   
+		</if>
+		<if test="resveCl != null and resveCl !=''"><!-- 캠핑장 시설분류 -->
+			<trim prefix = "AND(" prefixOverrides="OR" suffix=")">
+				<foreach item="item" index="index" collection="resveCl" separator=" ">
+		    	 OR RESVECL like '%'||#{item}||'%'
+			    </foreach>
+		    </trim>   
+		</if> 
+		<if test="eqpmnLendCl != null and eqpmnLendCl !=''"><!-- 장비 대여 가능 여부 -->
+    	AND EQPMNLENDCL != 'none'
+		</if> 
+		<if test="exprnProgrm != null and exprnProgrm !=''"><!-- 체험프로그램 여부 -->
+    	AND EXPRNPROGRM != 'none'	
+		</if> 
+	<!-- 	<if test="animalCmgCl != null and animalCmgCl !=''">애완동물 동반 가능 여부
+    	AND ANIMALCMGCL in	
+	        <foreach item="item" index="index" collection="animalCmgCl" open="(" separator="," close=")">
+	            #{item}
+	        </foreach>
+		</if> 	 -->
+		<if test="animalCmgCl != null and animalCmgCl !=''"><!-- 캠핑장 시설분류 -->
+			<trim prefix = "AND(" prefixOverrides="OR" suffix=")">
+				<foreach item="item" index="index" collection="animalCmgCl" separator=" ">
+		    	 OR ANIMALCMGCL like '%'||#{item}||'%'
+			    </foreach>
+		    </trim>   
+		</if> 
+		<if test="sbrsCl != null and sbrsCl !=''"><!-- 서비스 종류 -->
+    	AND SBRSCL in	
+	        <foreach item="item" index="index" collection="sbrsCl" open="(" separator="," close=")">
+	            #{item}
+	        </foreach>
+		</if> 
+	
 		ORDER BY
 			<choose>
 				<when test = "sorting=='create'">
