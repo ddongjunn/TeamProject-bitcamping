@@ -39,4 +39,12 @@
 
     <beans:bean id="naverLoginBo" class="com.camping.bit.oauth.bo.NaverLoginBO"/>
     <beans:bean id="kakaoLoginBo" class="com.camping.bit.oauth.bo.KakaoLoginBO"/>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/community/*.do"/>
+            <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

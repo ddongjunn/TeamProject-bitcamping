@@ -25,7 +25,7 @@ import com.camping.bit.dto.ProductOptionDto;
 import com.camping.bit.dto.ProductOrderDto;
 import com.camping.bit.dto.ProductRentDto;
 import com.camping.bit.service.RentService;
-import com.camping.bit.util.FileUploadUtil;
+import com.camping.bit.commons.FileUploadUtil;
 
 @Controller
 @RequestMapping(value = "/rent/*")
