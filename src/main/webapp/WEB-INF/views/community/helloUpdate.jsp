@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
+
 <!-- 써머노트 -->
 <script src="${pageContext.request.contextPath}/resources/js/summernote/summernote-lite.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
@@ -14,13 +14,14 @@
 </head>
 <body>
 
-<h1> 가입인사 글쓰기</h1>
+<h1>게시글 수정화면</h1>
 
-<form action="/community/helloWriteAf.do" method="post">
+<form action="/community/helloUpdateAf.do" method="post">
 
-<!-- boardwriteAf.do 로 id값 넘겨주는 곳 -->
-<input type="hidden" name="id" value="${user_id }">
+<!-- boardUpdateAf.do 로 id값 넘겨주는 곳 -->
+<input type="hidden" name="id" value="${data.user_id }">
 <input type="hidden" name="bbstype" value="hello">
+<input type="hidden" name="community_seq" value="${data.community_seq }">
 
 <table border="1">
 <col width="200"><col width="800">
@@ -28,7 +29,13 @@
 <tr>
 	<th>제목</th>
 	<td>
-		<input type="text" name="title" size="50px" required oninvalid="this.setCustomValidity('제목을 입력하세요')">
+		<input type="text" name="title" size="50px" required value="${data.title }">
+	</td>
+</tr>
+<tr>
+	<th>작성일</th>
+	<td>
+		${data.wdate }
 	</td>
 </tr>
 <tr>
@@ -39,7 +46,7 @@
 </tr>
 <tr>
 	<td colspan="2">
-		<input type="submit" id="submit" value="글쓰기">
+		<input type="submit" id="submit" value="수정하기">
 	</td>
 </tr>
 </table>
@@ -48,6 +55,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
+	$('#summernote').summernote('code', '${data.content}');  
 
 	$('#summernote').summernote({
 		height: 400,
@@ -68,7 +77,6 @@ $(document).ready(function() {
 		fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
 		fontNamesIgnoreCheck : [ '맑은고딕' ],
 		focus: false,
-		placeholder: '내용을 입력해 봅시당',
 		lang: "ko-KR",
 		
 		callbacks: {	// 이미지 여러개  for 문
@@ -79,6 +87,7 @@ $(document).ready(function() {
 	        }
 		}
 	});
+
 
 });
 		/* summernote 파일 저장 */
@@ -100,7 +109,6 @@ $(document).ready(function() {
 	}
 
 </script>
-
 
 </body>
 </html>

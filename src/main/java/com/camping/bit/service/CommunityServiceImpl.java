@@ -22,14 +22,14 @@ public class CommunityServiceImpl implements CommunityService{
 	
 	// 게시글 총수
 	@Override
-	public int helloListCount(CommunityParam param) {
-		return 0;
+	public int helloBoardCount(CommunityParam param) {
+		return dao.helloBoardCount(param);
 	}
 	
 	// dto값을 받아서 dao로 넘겨 : 구체적인 내용
 	@Override
-	public void helloWriteAf(CommunityDto dto) {
-		dao.helloWriteAf(dto);
+	public void helloWrite(CommunityDto dto) {
+		dao.helloWrite(dto);
 	}
 	
 	// 게시글 상세보기
@@ -40,8 +40,21 @@ public class CommunityServiceImpl implements CommunityService{
 		return data;
 	}
 	
+	// 조회수
 	@Override
 	public void readcount(int community_seq) {
 		dao.readcount(community_seq);
+	}
+	
+	// 글 삭제
+	@Override
+	public void boardDelete(CommunityDto dto) {
+		dao.boardDelete(dto);
+	}
+	
+	// 글 수정
+	@Override
+	public void helloUpdate(CommunityDto dto) {
+		dao.helloUpdate(dto);
 	}
 }

@@ -11,7 +11,6 @@
 
 <h1>게시글 상세화면</h1>
 
-<form action="hello.do" method="GET" id="board">
 
 <table border="1" style="width: 700px">
 <colgroup>
@@ -32,6 +31,12 @@
 	</td>
 </tr>
 <tr>
+	<th>조회수</th>
+	<td>
+		${data.readcount }
+	</td>
+</tr>
+<tr>
 	<th>제목</th>
 	<td>
 		${data.title }
@@ -41,43 +46,38 @@
 	<th>내용</th>
 	<td>
 		${data.content }
-	</td>
-</tr>
-<tr>
-	<th>좋아요</th>
-	<td>
-		<%-- ${data.commend } ??왜 안됨--%>
-	</td>
-</tr>
-<tr>
-	<td>
-		<input type="submit" value="좋아요">
-	</td>	
-</tr>
-<tr>
-
-	<td>
-		<a href="/community/modify.do?community_seq=${data.community_seq }">수정</a>
-		<button type="submit" id="del">삭제</button>
-	</td>
-	<td>
-		<input type="submit" id="submit" value="목록">
+		
 	</td>
 </tr>
 
 </thead>
 </table>
-</form>
+	
+<button type="button" onclick="update(${data.community_seq})">수정</button>	
+<button type="button" onclick="del(${data.community_seq})">삭제</button>
+<button type="button" onclick="location='/community/hello.do'">목록</button>
+
+<hr>
+
+
 
 <script type="text/javascript">
-$("#del").click(function() {			
-	$("#board").attr({ "target":"_self", "action":"delete.do" }).submit();
-});
+function del(community_seq) {
+	var check = confirm("정말 삭제하시겠습니까?");
+	if (check) {
+		location='/community/delete.do?community_seq=' + ${data.community_seq} + '&bbstype=hello';
+	}
+}
 
-/* $("#modify").click(function() {			
-	$("#board").attr({ "action":"modify.do?community_seq=${data.community_seq }" }).submit();
-}); */
+function update(community_seq) {
+	var check = confirm("수정하시겠습니까?");
+	if (check) {
+		location='/community/helloupdate.do?community_seq=' + ${data.community_seq} + '&bbstype=hello';
+	}
+}
 </script>
 
 </body>
 </html>
+
+
