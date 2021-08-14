@@ -36,7 +36,7 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 List<CampingImageDto> campingimage = (List<CampingImageDto>)request.getAttribute("campingimage");
 String campingintro = (String)request.getAttribute("campingintro");
 %>
-
+<a href = "campinglist.do">목록으로 돌아가기</a>
 <div class = "camping_list">
 	<ul>
 		<li style = "list-style : none;">
@@ -83,6 +83,18 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</li>
 	</ul>
 </div>
+<div id="contents">
+	<div class="camp_cont_w">
+		<h2 class="skip">캠핑장 디테일 화면 분할</h2>
+			<div class="layout">
+				
+							<span><button type = "button" id = "actionBtn">캠핑장 소개</button></span>
+							<span><a href="campingdetail.do?contentid=<%=campinglist.getContentid()%>" class="camp_intro">오시는 길</a></span>
+							<span><a href="campingdetail.do?contentid=<%=campinglist.getContentid()%>" class="camp_intro">캠핑장 후기</a></span>
+							<span><a href="campingdetail.do?contentid=<%=campinglist.getContentid()%>" class="camp_intro">공지/이벤트 </a></span>
+		</div>
+	</div>
+</div>
 
 <div class = "contents">
 	<div class = "layout">
@@ -101,6 +113,9 @@ String campingintro = (String)request.getAttribute("campingintro");
 <%-- <c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i">
 <img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/image/csite_alt_image.png'" width = "200" height = "200">
 </c:forEach> --%>
+<div id = "hey">
+good
+</div>
 <div class = "photos">
 	<table>
 	<tr>
@@ -124,7 +139,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 </tr>
 </c:forEach>
 </table> --%>
-		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=105020d5be336948ef903114d3711ff8"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=105020d5be336948ef903114d3711ff8"></script>
 	<script>	    
 	    var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	    mapOption = { 
@@ -178,5 +193,23 @@ String campingintro = (String)request.getAttribute("campingintro");
      }
 	</script>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+$("#actionBtn").click(function ajaxTest(){
+	 $.ajax({
+	        type : "GET",
+	        url : "campingdetail.do?contentid="+<%=campinglist.getContentid()%>,
+	        dataType : "text",
+	        success : function(data) {
+		          $('#hey').html(data);
+		        },
+	        error : function() {
+	          alert('통신실패!!');
+	        }
+	      	});
+	    });
+	});
+</script>
 </body>
 </html>

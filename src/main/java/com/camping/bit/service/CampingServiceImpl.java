@@ -52,4 +52,9 @@ public class CampingServiceImpl implements CampingService {
 	public String getCampingIntro(int contentid) {
 		return dao.getCampingIntro(contentid);
 	}
+
+	@Override
+	public List<CampingListDto> autoSearch(String searchWord) {
+		return dao.autoSearch(searchWord);
+	}
 }

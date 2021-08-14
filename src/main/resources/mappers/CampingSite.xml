@@ -59,25 +59,45 @@
 		<if test="exprnProgrm != null and exprnProgrm !=''"><!-- 체험프로그램 여부 -->
     	AND EXPRNPROGRM != 'none'	
 		</if> 
-	<!-- 	<if test="animalCmgCl != null and animalCmgCl !=''">애완동물 동반 가능 여부
-    	AND ANIMALCMGCL in	
-	        <foreach item="item" index="index" collection="animalCmgCl" open="(" separator="," close=")">
-	            #{item}
-	        </foreach>
-		</if> 	 -->
-		<if test="animalCmgCl != null and animalCmgCl !=''"><!-- 캠핑장 시설분류 -->
+		<if test="animalCmgCl != null and animalCmgCl !=''"><!-- 애완동물 동반 가능 여부 -->
 			<trim prefix = "AND(" prefixOverrides="OR" suffix=")">
 				<foreach item="item" index="index" collection="animalCmgCl" separator=" ">
 		    	 OR ANIMALCMGCL like '%'||#{item}||'%'
 			    </foreach>
 		    </trim>   
 		</if> 
-		<if test="sbrsCl != null and sbrsCl !=''"><!-- 서비스 종류 -->
-    	AND SBRSCL in	
-	        <foreach item="item" index="index" collection="sbrsCl" open="(" separator="," close=")">
-	            #{item}
-	        </foreach>
+		<if test="sbrsCl != null and sbrsCl !=''"><!-- 캠핑장 시설분류 -->
+			<trim prefix = "AND(" prefixOverrides="OR" suffix=")">
+				<foreach item="item" index="index" collection="sbrsCl" separator=" ">
+		    	 OR SBRSCL like '%'||#{item}||'%'
+			    </foreach>
+		    </trim>   
 		</if> 
+		<if test="siteBottomCl1 != null and siteBottomCl1 !=''"><!-- 캠핑장 바닥 잔디-->
+		AND siteBottomCl1 != 0
+		</if> 
+		<if test="siteBottomCl2 != null and siteBottomCl2 !=''"><!-- 캠핑장 바닥 데크 -->
+		AND siteBottomCl2 != 0
+		</if> 
+		<if test="siteBottomCl3 != null and siteBottomCl3 !=''"><!-- 캠핑장 바닥 파쇄석 -->
+		AND siteBottomCl3 != 0
+		</if> 
+		<if test="siteBottomCl4 != null and siteBottomCl4 !=''"><!-- 캠핑장 바닥 자갈 -->
+		AND siteBottomCl4 != 0
+		</if> 
+		<if test="siteBottomCl5 != null and siteBottomCl5 !=''"><!-- 캠핑장 바닥 잔디맨흙 -->
+		AND siteBottomCl5 != 0
+		</if> 
+		
+		<if test="doNm != null and doNm !=''"><!-- 도 -->
+		AND DONM = #{doNm}
+		</if>
+		<if test="sigunguNm != null and sigunguNm !=''"><!-- 시군구 -->
+		AND SIGUNGUNM = #{sigunguNm}
+		</if>
+		<if test="searchWord != null and searchWord !=''"><!-- 검색어 -->
+		AND FACLTNM LIKE '%'||#{searchWord}||'%'
+		</if>
 	
 		ORDER BY
 			<choose>
@@ -130,4 +150,8 @@
 		SELECT INTRO FROM CAMPING_INTRO WHERE CONTENTID = #{contentid}
 	</select>
 	
+	<!-- 캠핑장 검색시에 자동 검색어 만들기 -->
+	<select id="autoSearch" parameterType = "java.lang.String" resultType = "CampingListDto">
+		SELECT FACLTNM FROM CAMPING_LIST WHERE FACLTNM LIKE '%'||#{searchWord}||'%' ORDER BY READCOUNT DESC
+	</select>
   </mapper>
