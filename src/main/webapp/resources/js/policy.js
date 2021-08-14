@@ -60,10 +60,8 @@ checkAll.addEventListener("click", (e) => {
         });
     }
     toggleSubmitButton();
-    console.log('4');
 });
 
 submitButton.addEventListener("click",evt => {
-    console.log('5');
    regiModalOff();
 });
