@@ -25,6 +25,13 @@
 		<put-attribute name="main" value="/WEB-INF/views/login/normal.jsp"/>
 	</definition>
 
+	<definition name="mypagemain.tiles" template="/WEB-INF/views/layouts-board.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="leftmenu" value="/WEB-INF/views/mypage/mypage-menu.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
+	</definition>
+
 	<!-- 효경 -->
 	<definition name = "campinglist.tiles" extends = "main.tiles">
 		<put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>
@@ -78,6 +85,11 @@
 		<put-attribute name="body" value="/WEB-INF/views/community/helloDetail.jsp"/>
 	</definition>
 
+	<!-- 가입인사글 수정화면 -->
+	<definition name="helloUpdate.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/helloUpdate.jsp"/>
+	</definition>
+
 	<!-- 자유게시판 -->
 	<definition name="free.tiles" extends="community.tiles">
 		<put-attribute name="body" value="/WEB-INF/views/community/free.jsp"/>
@@ -98,8 +110,4 @@
 		<put-attribute name="body" value="/WEB-INF/views/community/review.jsp"/>
 	</definition>
 
-	
-	
-	
-	
 </tiles-definitions>

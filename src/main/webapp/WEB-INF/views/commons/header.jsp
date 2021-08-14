@@ -26,7 +26,7 @@
 				<a href="#none" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
 			</c:when>
 			<c:otherwise>
-				<a href="/login/logout.do">로그아웃</a>
+				<a href="/login/logout.do">로그아웃</a> <a href="/mypage/main.do">마이페이지</a>
 			</c:otherwise>
 		</c:choose>
 </div>
@@ -136,7 +136,6 @@
 
 
 <script type="text/javascript">
-
 	//로그인 모달
 	const modal = document.getElementById("login_modal");
 
@@ -166,12 +165,12 @@
 	});
 
 	//바깥쪽 클릭으로 모달창 닫기
-	modal.addEventListener("click", e => {
+/*	modal.addEventListener("click", e => {
 		const evTarget = e.target
 		if(evTarget.classList.contains("login_modal-overlay")) {
 			modalOff();
 		}
-	});
+	});*/
 
 	//esc키로 모달창 닫기
 	window.addEventListener("keyup", e => {
@@ -232,12 +231,12 @@
 
 		$.ajax({
 			url: "/login/normal.do",
-			data: {'id': $('#id').val(), 'pwd' : $('#pwd').val()},
+			data: {'id': $('#id').val(), 'pwd' : $('#pwd').val() },
 			type: "post",
 			dataType: "json",
 			success: function (data) {
 				if(data){
-					location.href="/";
+					location.href='${param.move}';
 					return;
 				}
 				alert('아이디와 비밀번호를 확인해주세요.');
@@ -353,40 +352,45 @@
 			data: {'id': $('#findPw_id').val(), 'email' : $('#findPw_email').val()},
 			type: "post",
 			success: function ( data ) {
+				console.log(data);
+
 				if(data === "null"){
-					findId_error[0].innerHTML = "일치하는 회원 정보가 없습니다.";
-					findId_error[0].style.color = "#ff0000";
-					findId_error[0].style.display = "block";
+					findPw_error[0].innerHTML = "일치하는 회원 정보가 없습니다.";
+					findPw_error[0].style.color = "#ff0000";
+					findPw_error[0].style.display = "block";
+				}else{
+					modalOff_findPw();
 
-					return;
-				}
+					console.log("data = " + data);
 
-				modalOff_findPw();
-
-				console.log("data = " + data);
-
-				Swal.fire({
+					Swal.fire({
 						text : '이메일 : ' + $('#findPw_email').val() + '            ' +
-							' 임시 비밀번호가 발송되었습니다.',
+								' 임시 비밀번호가 발송되었습니다.',
 						width : 500,
 						padding : 10
-						});
+					});
 
-						$('#findPw_id').val("");
-						$('#findPw_email').val("");
-						modalOn();
+					$('#findPw_id').val("");
+					$('#findPw_email').val("");
+					modalOn();
+				}
+			},
+			error: function ( error ) {
 
-						},
-						error: function ( error ) {
-
-						}
+			}
 		});
 	});
 
 
-
-
 </script>
+<input type="text" value="${param.move}">
+<c:if test="${param.move != null}">
+	<script>
+		move = '${param.move}';
+		modalOn();
+	</script>
+</c:if>
 
 </body>
+
 </html>
