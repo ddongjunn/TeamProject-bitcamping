@@ -32,6 +32,11 @@
   		WHERE RENT_TYPE = (SELECT RENT_TYPE FROM PRODUCT WHERE PRODUCT_SEQ = #{product_Seq})
 	</select>
 	
+	<select id="getRentDetail" parameterType="java.lang.Integer" resultType="ProductRentDto">
+		SELECT * FROM PRODUCT_RENT
+		WHERE RENT_SEQ = #{rent_Seq}
+	</select>
+	
 	<select id="getOptionList" resultType="ProductOptionDto">
 		SELECT * FROM PRODUCT_OPTION
 	</select>

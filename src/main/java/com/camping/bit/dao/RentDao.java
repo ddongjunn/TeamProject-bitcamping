@@ -19,6 +19,8 @@ public interface RentDao {
 
 	public List<ProductOptionDto> getOptionList();
 	
-	public ProductOptionDto getOptionDetail(int option_Seq);	
-	
+	public ProductOptionDto getOptionDetail(int option_Seq);
+
+	public ProductRentDto getRentDetail(int rent_Seq);
+	 
 }

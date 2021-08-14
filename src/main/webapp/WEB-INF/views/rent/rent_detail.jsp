@@ -8,10 +8,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="/resources/css/rentDetail.css" />
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- <script src="./jquery-ui-1.12.1/datepicker-ko.js"></script> -->
+	<!-- css -->
+	<link rel="stylesheet" type="text/css" href="/resources/css/rentDetail.css" />
+	<!-- datepicker -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- sweetAlert2 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -103,7 +106,7 @@
 				
 			</div>
 			<hr class="hr">
-			<button type="submit" class="buy--btn">이 제품 대여하기</button>
+			<button type="submit" id="buybutton" class="buy--btn">이 제품 대여하기</button>
 		</div>
 	</section>
 </form>
@@ -145,6 +148,12 @@
 <script type="text/javascript">
 	
 $(document).ready(function () {
+	
+	if(${item.product_Stock} == 0){
+		$("#buybutton").attr("disabled", true);
+		$("#buybutton").html('품절된 상품입니다');
+		$("#buybutton").css('background-color', '#4c4c4c');
+	}
 	
 	/* datepicker 기본 설정 */
 	$.datepicker.setDefaults({
@@ -286,6 +295,9 @@ $(document).ready(function () {
 	$("#button-minus, #button-plus").click(function(){
 		totalcount();
 	});
+	
+
+	
 
 });
 

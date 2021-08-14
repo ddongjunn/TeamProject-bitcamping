@@ -103,6 +103,9 @@ public class RentController {
 		ProductDetailDto item = service.getProductDetail(dto.getProduct_Seq());
 		model.addAttribute("item", item);
 		
+		ProductRentDto rent = service.getRentDetail(dto.getRent_Seq());
+		model.addAttribute("rent", rent);
+		
 		ProductOptionDto option1 = service.getOptionDetail(dto.getOption1_Seq());
 		model.addAttribute("opt1", option1);
 		

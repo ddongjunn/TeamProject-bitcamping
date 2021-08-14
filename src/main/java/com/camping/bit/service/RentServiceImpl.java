@@ -61,4 +61,12 @@ public class RentServiceImpl implements RentService {
 		
 		return option;
 	}
+
+	@Override
+	public ProductRentDto getRentDetail(int rent_Seq) {
+		
+		ProductRentDto rent = dao.getRentDetail(rent_Seq);
+		
+		return rent;
+	}
 }
