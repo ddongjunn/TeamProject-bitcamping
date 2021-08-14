@@ -19,9 +19,8 @@ public class CommunityParam implements Serializable{
 	private String choice;
 	private String search;
 	
-	private int pageNumber; 
+	private int pageNumber;
 	
-	private int start; 
-	private int end;
-	 
+	private int start;
+	private int end; 
 }

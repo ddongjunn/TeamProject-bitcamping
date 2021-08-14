@@ -11,14 +11,20 @@ public interface CommunityService {
 	public List<CommunityDto> helloList(CommunityParam param);
 	
 	// 가입인사 게시글 총수
-	int helloListCount(CommunityParam param);
+	int helloBoardCount(CommunityParam param);
 	
 	// 가입인사 dto값을 받아서 dao로 넘겨 : 함수명만
-	public void helloWriteAf(CommunityDto dto);
+	public void helloWrite(CommunityDto dto);
 	
 	// 가입인사글 상세보기 
 	public CommunityDto helloDetail(int community_seq);
 	
 	// 조회수
 	void readcount(int community_seq);
+
+	// 글 삭제
+	public void boardDelete(CommunityDto dto);
+
+	// 글 수정
+	public void helloUpdate(CommunityDto dto);
 }

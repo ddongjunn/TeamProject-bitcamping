@@ -26,7 +26,6 @@ public class CommunityDto implements Serializable{
 	 private int readcount;		// 조회수
 	 private int recommend;		// 추천수 
 	 
-	 private int file_seq;		// 써머노트  
 	 
 	 
 }
