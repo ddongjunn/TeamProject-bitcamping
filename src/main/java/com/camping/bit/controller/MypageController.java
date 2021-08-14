@@ -11,6 +11,8 @@ public class MypageController {
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String mypage() {
 
+        System.out.println("test");
+
         return "mypagemain.tiles";
     }
 
