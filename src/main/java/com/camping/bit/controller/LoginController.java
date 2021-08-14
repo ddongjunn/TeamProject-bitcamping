@@ -1,7 +1,10 @@
 package com.camping.bit.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.UUID;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.camping.bit.commons.Mail;
@@ -119,7 +122,7 @@ public class LoginController {
 
         if(result){
             MemberDto dto = service.getMember(id);
-            System.out.println("로그인 = " + dto.toString());
+
             session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
             session.setAttribute("access_Token", access_Token);
             session.setAttribute("login",dto);
@@ -155,9 +158,7 @@ public class LoginController {
 
     @ResponseBody
     @RequestMapping(value="normal.do", method = {RequestMethod.POST})
-    public boolean login(HttpSession session, MemberDto dto){
-
-        System.out.println("사용자가 입력한 비밀번호 = " + dto);
+    public boolean login(Model model, HttpSession session, MemberDto dto) throws IOException {
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         MemberDto member = service.getMember(dto.getId());
@@ -167,6 +168,7 @@ public class LoginController {
 
         if(encoder.matches(dto.getPwd(), member.getPwd())){
             session.setAttribute("login",member);
+
             return true;
         }
 
@@ -200,19 +202,11 @@ public class LoginController {
     @RequestMapping(value="findPw.do", method = {RequestMethod.POST})
     public String findPw(MemberDto dto){
 
-
-        System.out.println("들어오는 dto " + dto);
-
-        String id = null;
-        id = service.findPw(dto);
-
-        System.out.println("id " + id);
+        String id = service.findPw(dto);
 
         if(id == null){
-            System.out.println("null");
             return "null";
         }
-        System.out.println("null 아님");
 
         MemberDto member = new MemberDto();
         member.setId(id);
@@ -223,32 +217,27 @@ public class LoginController {
         //임시 비밀번호 생성
         String tempPw = UUID.randomUUID().toString().replace("-","");
         tempPw = tempPw.substring(0,10);
-        System.out.println("임시비밀번호 확인 : " + tempPw);
+
 
         //임시 비밀번호로 변경
         member.setPwd(tempPw);
-        System.out.println("임시 비밀번호로 변경 완료");
+
 
         //메일 전송
         try{
             Mail mail = new Mail();
             mail.sendEmail(member);
-            System.out.println("mail 전송 : " + member);
+
         }catch(Exception e){
             e.printStackTrace();
         }
 
-
         //회원 비밀번호를 암호화
         String securePw = encoder.encode(member.getPwd());
         member.setPwd(securePw);
-        System.out.println("암호화 된 비밀번호 : " + securePw);
-        System.out.println("Member = " + member);
 
-        System.out.println("비밀번호 변경 전");
         //암호화된 비밀번호로 업데이트
         service.updatePw(member);
-        System.out.println("비밀번호 변경");
 
         return "success";
     }
