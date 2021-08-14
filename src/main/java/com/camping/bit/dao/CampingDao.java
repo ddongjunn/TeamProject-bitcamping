@@ -30,4 +30,6 @@ public interface CampingDao {
 	//캠핑장 intro 가져오기
 	public String getCampingIntro(int contentid);
 
+	//캠핑장 자동검색어 만들기
+	public List<CampingListDto> autoSearch(String searchWord);
 }

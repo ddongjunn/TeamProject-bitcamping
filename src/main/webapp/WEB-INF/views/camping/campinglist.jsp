@@ -24,6 +24,12 @@ String[]resveCl = request.getParameterValues("resveCl");
 String eqpmnLendCl = request.getParameter("eqpmnLendCl");
 String exprnProgrm = request.getParameter("exprnProgrm");
 String[]animalCmgCl = request.getParameterValues("animalCmgCl");
+String[]sbrsCl = request.getParameterValues("sbrsCl");
+String siteBottomCl1 = request.getParameter("siteBottomCl1");
+String siteBottomCl2 = request.getParameter("siteBottomCl2");
+String siteBottomCl3 = request.getParameter("siteBottomCl3");
+String siteBottomCl4 = request.getParameter("siteBottomCl4");
+String siteBottomCl5 = request.getParameter("siteBottomCl5");
 %>  
 <html>
 <head>
@@ -54,39 +60,37 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 	</table>
 </div>
 
-<!-- <div class = "sorting_style">
-	<form id = "searchForm1" action = "campinglist.do" method = "get">
-	</form>
-</div> -->
-
 <div class = "deep search">
 	<form id = "searchForm1" action ="campinglist.do" method = "get">
 		<input id = "sortingval" name = "sorting" type = "hidden" value = ""/>
-		<input id = "searchDo" name = "Do" type = "hidden" value = ""/>
-		<input id = "pageNumber" name = "pageNum" type = "hidden"/>
-		<ul>
-			<li class="tt"><strong class="title">지역</strong>
-				<div class="select_box">
-					<label for="c_do">도/특별시</label>
-						<select id="c_do" name="c_do" class="detail_select" title="도/특별시">
-							<option value="" selected="selected">전체</option>
-							<option value="1">서울시</option><option value="2">부산시</option><option value="3">대구시</option><option value="4">인천시</option><option value="5">광주시</option><option value="6">대전시</option><option value="7">울산시</option><option value="8">세종시</option><option value="9">경기도</option><option value="10">강원도</option><option value="11">충청북도</option><option value="12">충청남도</option><option value="13">전라북도</option><option value="14">전라남도</option><option value="15">경상북도</option><option value="16">경상남도</option><option value="17">제주도</option>
-						</select>
-				</div>
-			</li>
-		</ul>
-	</form>
+
+   <!--  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+
+    <select name="addressRegion" id="addressRegion1"></select>
+    <select name="doNm" id="addressDo1"></select>
+    <select name="sigunguNm" id="addressSiGunGu1"></select>
+
+    <br/><br/><br/>
+
+<!--     <select name="addressRegion" id="addressRegion2"></select>
+    <select name="addressDo" id="addressDo2"></select>
+    <select name="addressSiGunGu" id="addressSiGunGu2"></select> -->
+    <input type = "text" id = "search" name = "searchWord">
+    <div id = "suggest"></div>
+    <button type = "submit" id = "bigSearchBtn">대분류 검색</button>
+</form>
 </div>
 
 <form id = "searchForm2" action = "campinglist.do"method = "get">
-<li>
+<!-- <li> -->
 	<div class="tm_ver f_open">
 		<!-- <button type="button">지역별</button> -->
 			<!--div의 클래스명이 f_open이면 아래의 folder_w가 활성화되고, f_close가 되면 folder_w가 비활성화 됩니다-->
 			
 					<div class="folder_w">
-						<strong>지역별</strong>
-							<div class="check_w">
+						<!-- <strong>지역별</strong> -->
+							 <div class="check_w">
 					<ul>
 						<!-- <li><input type="checkbox" name="searchDo" id="c_do00" class="check00" value="0" title="-"checked="checked"/>
 								<label for="c_do00">전체</label></li> -->
@@ -125,17 +129,16 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 						<li><input type="checkbox" name="searchDo" id="제주도" class="check01" value="제주도" title="17"/>
 								 <label for="c_do017">제주도</label></li>
 					</ul>
-				</div>
+				</div> 
 			</div>
-			
-		
 	</div>
-</li>
+ </li> 
+ <hr>
 <li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">운영형태</button> -->
 		<div class="folder_w">
-			<strong>운영형태</strong>
+			<!--  <strong>운영형태</strong> --> 
 			<div class="check_w">
 				<ul>
 					<li><input type="checkbox" name="searchCl" id="지자체" class="check01" value="지자체" title="29"
@@ -153,12 +156,13 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>
-<li>
+ </li>
+ <hr>
+<li> 
 	<div class="tm_ver f_open">
 	<!-- 	<button type="button">입지구분</button> -->
 		<div class="folder_w">
-			<strong>입지구분</strong>
+		<!-- 	<strong>입지구분</strong> -->
 			<div class="check_w">
 				<ul>
 					<li><input type="checkbox" name="lctCl" id="해변" class="check01" value="해변" title="47"
@@ -182,12 +186,13 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>
-<li>
+ </li>
+ <hr>
+<li> 
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
-			<strong>주요시설</strong>
+		<!-- 	<strong>주요시설</strong> -->
 			<div class="check_w">
 				<ul>
 					<li><input type="checkbox" name="induty" id="일반야영장" value="일반야영장" title="42" class="check01"
@@ -203,12 +208,13 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>
-<li>
+ </li>
+ <hr>
+<li> 
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
-			<strong>예약 방식</strong>
+			<!-- <strong>예약 방식</strong> -->
 			<div class="check_w">
 				<ul>
 					<li><input type="checkbox" name="resveCl" id="온라인" value="온라인" title="42" class="check01"
@@ -222,31 +228,32 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>					
-
-<li>
+ </li>		
+ <hr>			
+<li> 
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
-			<strong>장비 대여</strong>
+			<!-- <strong>장비 대여</strong> -->
 			<div class="check_w">
 				<ul>
-					<li><input type="checkbox" name="eqpmnLendCl" id="ok" value="ok" title="42" class="check01"/>
+					<li><input type="checkbox" name="eqpmnLendCl" id="eqok" value="eqok" title="42" class="check01"/>
 					<label for="c_eqpmnLendCl01">가능</label></li>
 					</ul>
 			</div>
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>			
+</li>
+<hr>			
 <li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
-			<strong>체험 프로그램</strong>
+			<!-- <strong>체험 프로그램</strong> -->
 			<div class="check_w">
 				<ul>
-					<li><input type="checkbox" name="exprnProgrm" id="ok" value="ok" title="42" class="check01"/>
+					<li><input type="checkbox" name="exprnProgrm" id="exok" value="exok" title="42" class="check01"/>
 					<label for="c_exprnProgrm01">가능</label></li>
 					</ul>
 			</div>
@@ -254,11 +261,12 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
 </li>	
+<hr>
 <li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
-			<strong>애완동물 동반여부</strong>
+			<!-- <strong>애완동물 동반여부</strong> -->
 			<div class="check_w">
 				<ul>
 					<li><input type="checkbox" name="animalCmgCl" id="가능" value="가능" title="42" class="check01"/>
@@ -273,8 +281,72 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
 </li>	
+<hr>
+<li>
+	<div class="tm_ver f_open">
+		<!-- <button type="button">부대시설</button> -->
+		<div class="folder_w">
+			<!-- <strong>부대시설</strong> -->
+			<div class="check_w">
+				<ul>
+					<li><input type="checkbox" name="sbrsCl" id="전기" value="전기" title="56" class="check01"
+							 /><label for="searchSbrsClCode01">전기</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="무선인터넷" value="무선인터넷" title="57" class="check01"
+							 /><label for="searchSbrsClCode02">무선인터넷</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="장작판매" value="장작판매" title="58" class="check01"
+							 /><label for="searchSbrsClCode03">장작판매</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="온수" value="온수" title="59" class="check01"
+							 /><label for="searchSbrsClCode04">온수</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="트렘폴린" value="트렘폴린" title="60" class="check01"
+							 /><label for="searchSbrsClCode05">트렘폴린</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="물놀이장" value="물놀이장" title="61" class="check01"
+							 /><label for="searchSbrsClCode06">물놀이장</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="놀이터" value="놀이터" title="62" class="check01"
+							 /><label for="searchSbrsClCode07">놀이터</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="산책로" value="산책로" title="63" class="check01"
+							 /><label for="searchSbrsClCode08">산책로</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="운동장" value="운동장" title="64" class="check01"
+							 /><label for="searchSbrsClCode09">운동장</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="운동시설" value="운동시설" title="65" class="check01"
+							 /><label for="searchSbrsClCode010">운동시설</label></li>
+					<li><input type="checkbox" name="sbrsCl" id="마트.편의점" value="마트.편의점" title="66" class="check01"
+							 /><label for="searchSbrsClCode011">마트.편의점</label></li>
+					</ul>
+			</div>
+		</div>
+		<!--//folder_w-->
+	</div> <!--//tm_ver-->
+</li>
+<hr>
+<li>
+	<div class="tm_ver f_open">
+		<!-- <button type="button">바닥형태</button> -->
+		<div class="folder_w">
+			<!-- <strong>바닥형태</strong> -->
+			<div class="check_w">
+				<ul>
+					<li><input type="checkbox" class="check01" name="siteBottomCl1" id="잔디" value="잔디" title="잔디"
+						><label for="searchSiteBottomCl1" class="label_name">잔디</label></li>
+					<li><input type="checkbox" class="check01" name="siteBottomCl2" id="데크" value="데크" title="데크"
+						><label for="searchSiteBottomCl2" class="label_name">데크</label></li>
+					<li><input type="checkbox" class="check01" name="siteBottomCl3" id="파쇄석" value="파쇄석" title="파쇄석"
+						><label for="searchSiteBottomCl3" class="label_name">파쇄석</label></li>
+					<li><input type="checkbox" class="check01" name="siteBottomCl4" id="자갈" value="자갈" title="자갈"
+						><label for="searchSiteBottomCl4" class="label_name">자갈</label></li>
+					<li><input type="checkbox" class="check01" name="siteBottomCl5" id="맨흙" value="맨흙" title="맨흙"
+						><label for="searchSiteBottomCl5" class="label_name">맨흙</label></li>
+				</ul>
+			</div>
+		</div>
+		<!--//folder_w-->
+	</div> <!--//tm_ver-->
+</li>
+<hr>
+<br>
+<hr>
 <button type = "button" class = "b_blue" id = "resetBtn">초기화</button>
 <button type="submit" class="b_blue" id = "specifiedBtn"><i class="btn_search">검색하기</i></button>
+
 </form>
 
 <c:forEach items = "${campinglist}" var = "camping" varStatus = "i">
@@ -330,7 +402,6 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 						<button type = button onclick = "location.href ='${url}'">홈페이지</button>
 					</c:otherwise>
 				</c:choose>
-				
 			</div>
 			<div style="clear:both"></div>
 		</li>
@@ -349,10 +420,6 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 <br>
 <script type="text/javascript">
 $(document).ready(function () {
-	// 상세검색 조건 초기화
-	$("#resetBtn").click(function() {
-		$("#searchForm2").find("input:checkbox").prop("checked", false);
-	});
 	
  <%if (searchDo != null){ 
  for(int i =0; i < searchDo.length; i++){ %>
@@ -381,22 +448,39 @@ $(document).ready(function () {
 <%  }
 } %> 
 <%if (eqpmnLendCl != null){ %>
-	     $("#<%=eqpmnLendCl%>").prop("checked", true);
+	$("#<%=eqpmnLendCl%>").prop("checked", true);
 	<% } %> 
 <%if (exprnProgrm != null){ %>
     $("#<%=exprnProgrm%>").prop("checked", true);
-<% } %> 
+	<% } %> 
 <%if (animalCmgCl != null){ 
-	   for(int i =0; i < animalCmgCl.length; i++){ %>
-	     $("#<%=animalCmgCl[i]%>").prop("checked", true);
-	<%  }
-	} %> 
-
-/* if(typeof jQuery == 'undefined'){
-	console.log("not ready");
-}else{
-	console.log("ready");
-} */
+   for(int i =0; i < animalCmgCl.length; i++){ %>
+	 $("#<%=animalCmgCl[i]%>").prop("checked", true);
+<%  }
+} %> 
+<%if (sbrsCl != null) {
+   for(int i = 0; i < sbrsCl.length; i++) {%>
+	 $("#<%=sbrsCl[i]%>").prop("checked", true);
+<%	}
+} %> 
+<%if (siteBottomCl1 != null) {%>
+    $("#<%=siteBottomCl1%>").prop("checked", true);
+	<% } %> 
+<%if (siteBottomCl2 != null) {%>
+    $("#<%=siteBottomCl2%>").prop("checked", true);
+	<% } %>
+<%if (siteBottomCl2 != null) {%>
+    $("#<%=siteBottomCl2%>").prop("checked", true);
+	<% } %> 
+<%if (siteBottomCl3!= null){ %>
+	$("#<%=siteBottomCl3%>").prop("checked", true);
+	<% } %> 
+<%if (siteBottomCl4!= null){ %>
+	$("#<%=siteBottomCl4%>").prop("checked", true);
+	<% } %> 
+<%if (siteBottomCl5!= null){ %>
+	$("#<%=siteBottomCl5%>").prop("checked", true);
+	<% } %> 
 
 //페이지네이션
 let totalCount = ${campingPage};	// 서버로부터 총글의 수를 취득
@@ -437,71 +521,152 @@ if($('#pagination').data("twbs-pagination")){
 		//window.location = window.location.pathname;
 	});
 
-	// 시군구 셀렉트 태그 셋팅
-	$("#c_do").change(function() {
-		if ($("#c_do").val() != "") {
-			$.ajax({
-				type : 'get',
-				url : 'campinglist.do',
-				data : {
-					'ctprvn_idx' : $("#c_do").val()
-				},
-				dataType : 'text',
-				success : function(data) {
-					$("#c_signgu").empty();
-					var str = "<option value=''>전체</option>";
-					var signguList = $.parseJSON(data);
-					for ( var i in signguList.list) {
-						str += "<option value='" + signguList.list[i].signgu_idx + "'>" + signguList.list[i].signgu_nm + "</option>"
-					}
-					$("#c_signgu").html(str);
-				},
-				error : function(error) {
-					console.log("오류 발생");
-				}
-			});
-		}
+	// 상세검색 조건 초기화
+	$("#resetBtn").click(function() {
+		$("#searchForm2").find("input:checkbox").prop("checked", false);
 	});
 	
+	//대분류 검색 버튼
+	$("#bigSearchBtn").click(function(){
+		$("#searchForm1").submit();
+	});
+	
+	
+	// 시군구 셀렉트 태그 셋팅
+	$(function(){
+	    areaSelectMaker("select[name=addressRegion]");
+	});
 
+	var areaSelectMaker = function(target){
+	    if(target == null || $(target).length == 0){
+	        console.warn("Unkwon Area Tag");
+	        return;
+	    }
 
-/*  		$("#specifiedBtn").click(function() {
- 			
- 			$('input[name="searchDo"]').change(function() {
- 			    var value = $(this).val();              // value
- 			    var checked = $(this).prop('checked');
- 			});
-			var chk_arr = $("input[name='searchDo']"); 
-			var chk_data = []; 
-			for(var i=0; i<chk_arr.length; i++) { 
-				if(chk_arr[i].checked == true) { 
-				chk_data.push(chk_arr[i].value); 
-				} 
+	    var area = {
+	        "수도권" :{
+	            "서울시" : [ "강남구", "강동구", "강북구", "강서구", "관악구", "광진구", "구로구", "금천구", "노원구", "도봉구", "동대문구", "동작구", "마포구", "서대문구", "서초구", "성동구", "성북구", "송파구", "양천구", "영등포구", "용산구", "은평구", "종로구", "중구", "중랑구" ],
+	            "경기도" : [ "수원시", "성남시", "의정부시", "안양시", "부천시", "광명시", "평택시", "동두천시", "안산시", "고양시",
+	                	 "과천시", "구리시", "남양주시", "오산시", "시흥시", "군포시", "의왕시", "하남시", "용인시" , "파주시", "이천시", "안성시", "김포시", "화성시", "광주시", "양주시", "포천시", "여주시", "연천군", "가평군","양평군" ],
+	            "인천시" : [ "계양구", "미추홀구", "남동구", "동구", "부평구", "서구", "연수구", "중구", "강화군", "옹진군" ]			
+	        },
+	        "강원권" :{
+	            "강원도" : [ "춘천시", "원주시", "강릉시", "동해시", "태백시", "속초시", "삼척시", "홍천군", "횡성군", "영월군", "평창군", "정선군", "철원군", "화천군", "양구군", "인제군", "고성군", "양양군" ]			
+	        },
+	        "충청권" :{
+	            "충청북도" : [ "청주시", "충주시", "제천시", "보은군", "옥천군", "영동군", "증평군", "진천군", "괴산군", "음성군", "단양군", "청원군" ],
+	            "충청남도" : [ "천안시", "공주시", "보령시", "아산시", "서산시", "논산시", "계룡시", "당진시", "금산군", "부여군", "서천군", "청양군", "홍성군", "예산군", "태안군" ],
+	            "대전시" : [ "대덕구", "동구", "서구", "유성구", "중구" ],
+	            "세종시" : [ "금남면", "세종시", "소정면", "연서면", "전동면" ]			
+	        },
+	        "전라권" :{
+	            "전라북도" : [ "전주시", "군산시", "익산시", "정읍시", "남원시", "김제시", "완주군", "진안군", "무주군", "장수군", "임실군", "순창군", "고창군", "부안군" ],
+	            "전라남도" : [ "목포시", "여수시", "순천시", "나주시", "광양시", "담양군", "곡성군", "구례군", "고흥군", "보성군", "화순군", "장흥군", "강진군", "해남군", "영암군", "무안군", "함평군", "영광군", "장성군", "완도군", "진도군", "신안군" ],
+	            "광주시" : [ "광산구", "남구", "동구", "북구", "서구" ]			
+	        },
+	        "경상권" : {
+	            "경상북도" : [ "포항시", "경주시", "김천시", "안동시", "구미시", "영주시", "영천시", "상주시", "문경시", "경산시", "군위군", "의성군", "청송군", "영양군", "영덕군", "청도군", "고령군", "성주군", "칠곡군", "예천군", "봉화군", "울진군", "울릉군" ],
+	            "경상남도" : [ "창원시", "진주시", "통영시", "사천시", "김해시", "밀양시", "거제시", "양산시", "의령군", "함안군", "창녕군", "고성군", "남해군", "하동군", "산청군", "함양군", "거창군", "합천군" ],
+	            "부산시" : [ "강서구", "금정구", "남구", "동구", "동래구", "부산진구", "북구", "사상구", "사하구", "서구", "수영구", "연제구", "영도구", "중구", "해운대구", "기장군" ],
+	            "대구시" : [ "남구", "달서구", "동구", "북구", "서구", "수성구", "중구", "달성군" ],
+	            "울산시" : [ "남구", "동구", "북구", "중구", "울주군" ]			
+	        },
+	        "제주권" : {
+	            "제주도" : [ "서귀포시", "제주시" ]			
+	        }
+	    };
+
+	    for(i=0; i<$(target).length; i++){
+	        (function(z){
+	            var a1 = $(target).eq(z);
+	            var a2 = a1.next();
+	            var a3 = a2.next();
+
+	            //초기화
+	            init(a1, true);
+
+	            //권역 기본 생성
+	            var areaKeys1 = Object.keys(area);
+	            areaKeys1.forEach(function(Region){
+	                a1.append("<option value="+Region+">"+Region+"</option>");
+	            });
+
+	            //변경 이벤트
+	            $(a1).on("change", function(){
+	                init($(this), false);
+	                var Region = $(this).val();
+	                var keys = Object.keys(area[Region]);
+	                keys.forEach(function(Do){
+	                    a2.append("<option value="+Do+">"+Do+"</option>");    
+	                });
+	            });
+
+	            $(a2).on("change", function(){
+	                a3.empty().append("<option value=''>선택</option>");
+	                var Region = a1.val();
+	                var Do = $(this).val();
+	                var keys = Object.keys(area[Region][Do]);
+	                keys.forEach(function(SiGunGu){
+	                    a3.append("<option value="+area[Region][Do][SiGunGu]+">"+area[Region][Do][SiGunGu]+"</option>");    
+	                });
+	            });
+	        })(i);        
+
+	        function init(t, first){
+	            first ? t.empty().append("<option value=''>선택</option>") : "";
+	            t.next().empty().append("<option value=''>선택</option>");
+	            t.next().next().empty().append("<option value=''>선택</option>");
+	        }
+	    }
+	}
+	
+	//캠핑장 검색 기록 남기기
+	var search = "${search}";
+	if(search!=""){
+		document.getElementById("search").value=search;
+	}
+	
+ 	//캠핑장 자동검색어
+ 	/*
+	var loopSearch = true;
+	function autoSearch(){
+		if(loopSearch==false){
+			return;
+		}
+		var value = document.frmSearch.searchWord.value;
+		$.ajax({
+			type : "get",
+			async : true, 
+			url : "${contextPath}/camping/autoSearch.do",
+			data : {keyword:value},
+			success : function(data, textStatus){
+				var jsonInfo = JSON.parse(data);
+				displayResult(jsonInfo);
+			},
+			error : function(data, textStatus){
+				alert(" 에러 발생 " + data);
+			}, 
+			complete : function(data, textStatus){
+				alert(" 작업 완료 ");
 			}
-			console.log(chk_data);
-			alert(chk_data);
- 		}); */
-	/* 	    $('.check01').prop('checked', false); // 일단 모두 uncheck
-
-		    for (var i in chk_data) {
-		       $("input[name=searchDo][value="+chk_data[i]+"]").prop("checked",true);
-		    }   
- 		});
- 	    $('input:checkbox[name="searchDo"]').each(function()      //each는 순회하면서
- 	    		{if(chk_data.indexOf(this.value) > -1){  // 배열 안에 있는 값은 indexOf로 찾을 수 있습니다.
- 	    		       $(this).prop('checked', true); // checked 속성은 prop으로 설정할 수 있습니다.
- 	    		   }
- 			});*/
- 		
- 		
-		/* 	for(var j = 0; j<chk_data.length;j++){
-				$('input:checkbox[name=searchDo]').each(function(){
-				    if(this.value == chk_data[i]){
-					    this.checked = true;
-					    }
-				});
-			} 
-		});*/
+		});
+	}
+	function displayResult(jsonInfo){
+		var count = jsonInfo.keyword.length;
+		if(count>0){
+			var html = '';
+			for(var i in jsonInfo.keyword){
+				html +="a href = "javascript:select('"+jsonInfo.keyword[i]+"')">"
+				jsonInfo.keyword[i]+"</a><br>";
+			}
+			var listView = document.getElementById("suggestList");
+			listView.innerHTML = html;
+			show('suggest');
+		}else{
+			hide('suggest');
+			}
+		}
+	} */
 }); //$(document).ready 끝나는 곳
 </script>
 </body>

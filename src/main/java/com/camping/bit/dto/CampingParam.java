@@ -16,6 +16,11 @@ public class CampingParam implements Serializable{
 	
 	private String sorting;
 	
+	private String doNm;
+	private String sigunguNm;
+	
+	private String searchWord;
+	
 	private String[] searchDo;
 	private String[] searchCl;
 	private String[] lctCl;
@@ -25,20 +30,29 @@ public class CampingParam implements Serializable{
 	private String exprnProgrm;
 	private String[] animalCmgCl;
 	private String[] sbrsCl;
+	private String siteBottomCl1;
+	private String siteBottomCl2;
+	private String siteBottomCl3;
+	private String siteBottomCl4;
+	private String siteBottomCl5;
+	
 	
 	public CampingParam() {
 		
 	}
 
-
-	public CampingParam(int pageNumber, int start, int end, String sorting, String[] searchDo, String[] searchCl,
-			String[] lctCl, String[] induty, String[] resveCl, String eqpmnLendCl, String exprnProgrm,
-			String[] animalCmgCl, String[] sbrsCl) {
+	public CampingParam(int pageNumber, int start, int end, String sorting, String doNm, String sigunguNm,
+			String searchWord, String[] searchDo, String[] searchCl, String[] lctCl, String[] induty, String[] resveCl,
+			String eqpmnLendCl, String exprnProgrm, String[] animalCmgCl, String[] sbrsCl, String siteBottomCl1,
+			String siteBottomCl2, String siteBottomCl3, String siteBottomCl4, String siteBottomCl5) {
 		super();
 		this.pageNumber = pageNumber;
 		this.start = start;
 		this.end = end;
 		this.sorting = sorting;
+		this.doNm = doNm;
+		this.sigunguNm = sigunguNm;
+		this.searchWord = searchWord;
 		this.searchDo = searchDo;
 		this.searchCl = searchCl;
 		this.lctCl = lctCl;
@@ -48,8 +62,12 @@ public class CampingParam implements Serializable{
 		this.exprnProgrm = exprnProgrm;
 		this.animalCmgCl = animalCmgCl;
 		this.sbrsCl = sbrsCl;
+		this.siteBottomCl1 = siteBottomCl1;
+		this.siteBottomCl2 = siteBottomCl2;
+		this.siteBottomCl3 = siteBottomCl3;
+		this.siteBottomCl4 = siteBottomCl4;
+		this.siteBottomCl5 = siteBottomCl5;
 	}
-
 
 	public int getPageNumber() {
 		return pageNumber;
@@ -81,6 +99,30 @@ public class CampingParam implements Serializable{
 
 	public void setSorting(String sorting) {
 		this.sorting = sorting;
+	}
+
+	public String getDoNm() {
+		return doNm;
+	}
+
+	public void setDoNm(String doNm) {
+		this.doNm = doNm;
+	}
+
+	public String getSigunguNm() {
+		return sigunguNm;
+	}
+
+	public void setSigunguNm(String sigunguNm) {
+		this.sigunguNm = sigunguNm;
+	}
+	
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
 
 	public String[] getSearchDo() {
@@ -166,4 +208,47 @@ public class CampingParam implements Serializable{
 	public void setSbrsCl(String[] sbrsCl) {
 		this.sbrsCl = sbrsCl;
 	}
+
+	public String getSiteBottomCl1() {
+		return siteBottomCl1;
+	}
+
+	public void setSiteBottomCl1(String siteBottomCl1) {
+		this.siteBottomCl1 = siteBottomCl1;
+	}
+
+	public String getSiteBottomCl2() {
+		return siteBottomCl2;
+	}
+
+	public void setSiteBottomCl2(String siteBottomCl2) {
+		this.siteBottomCl2 = siteBottomCl2;
+	}
+
+	public String getSiteBottomCl3() {
+		return siteBottomCl3;
+	}
+
+	public void setSiteBottomCl3(String siteBottomCl3) {
+		this.siteBottomCl3 = siteBottomCl3;
+	}
+
+	public String getSiteBottomCl4() {
+		return siteBottomCl4;
+	}
+
+	public void setSiteBottomCl4(String siteBottomCl4) {
+		this.siteBottomCl4 = siteBottomCl4;
+	}
+
+	public String getSiteBottomCl5() {
+		return siteBottomCl5;
+	}
+
+	public void setSiteBottomCl5(String siteBottomCl5) {
+		this.siteBottomCl5 = siteBottomCl5;
+	}
+	
+	
+
 }
