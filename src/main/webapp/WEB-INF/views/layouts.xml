@@ -25,12 +25,47 @@
 		<put-attribute name="main" value="/WEB-INF/views/login/normal.jsp"/>
 	</definition>
 
+	<!-- 마이페이지 -->
 	<definition name="mypagemain.tiles" template="/WEB-INF/views/layouts-board.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
 		<put-attribute name="leftmenu" value="/WEB-INF/views/mypage/mypage-menu.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
+
+	<definition name="mypage-free.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-free.jsp" />
+	</definition>
+
+	<definition name="mypage-deal.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-deal.jsp" />
+	</definition>
+
+	<definition name="mypage-review.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-review.jsp" />
+	</definition>
+
+	<definition name="mypage-find.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-find.jsp" />
+	</definition>
+
+	<definition name="mypage-csite-review.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-csite-review.jsp" />
+	</definition>
+
+	<definition name="mypage-update.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-update.jsp" />
+	</definition>
+
+	<definition name="mypage-password.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-password.jsp" />
+	</definition>
+
+	<definition name="mypage-withdrawal.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-withdrawal.jsp" />
+	</definition>
+
+
 
 	<!-- 효경 -->
 	<definition name = "campinglist.tiles" extends = "main.tiles">

@@ -20,7 +20,6 @@ import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.CommunityParam;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.service.CommunityService;
-import com.camping.bit.util.FileUploadUtil;
 
 @Controller
 @RequestMapping(value = "/community/*")

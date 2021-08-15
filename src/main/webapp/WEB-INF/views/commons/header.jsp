@@ -26,7 +26,7 @@
 				<a href="#none" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
 			</c:when>
 			<c:otherwise>
-				<a href="/login/logout.do">로그아웃</a> <a href="/mypage/main.do">마이페이지</a>
+				<a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">마이페이지</a>
 			</c:otherwise>
 		</c:choose>
 </div>

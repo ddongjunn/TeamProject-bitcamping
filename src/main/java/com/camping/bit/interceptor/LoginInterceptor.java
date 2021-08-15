@@ -20,12 +20,13 @@ public class LoginInterceptor implements HandlerInterceptor{
 
 
         StringBuffer url = (StringBuffer) request.getRequestURL();
+        System.out.println("요청 온 주소 : " + url);
 
         if(dto != null){
             return true;
         }
 
-        /*response.setContentType("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\"\n" +
+        response.setContentType("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\"\n" +
                 "    pageEncoding=\"UTF-8\"%>");
         PrintWriter out = response.getWriter();
         out.println("<!DOCTYPE html>");
@@ -41,7 +42,7 @@ public class LoginInterceptor implements HandlerInterceptor{
         out.println("</script>");
         out.println("</body>");
         out.println("</html>");
-        out.flush();*/
+        out.flush();
 
         return false;
     }
