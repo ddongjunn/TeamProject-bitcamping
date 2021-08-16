@@ -21,10 +21,10 @@
 
     <div class="lnb">
         <h3 class="title">활동정보</h3>
-        <a href="/account/free.do">자유게시판</a>
-        <a href="/account/deal.do">중고거래</a>
-        <a href="/account/review.do">캠핑&여행 후기</a>
-        <a href="/account/find.do">캠퍼 모집</a>
+        <a href="/account/community.do?bbstype=free">자유게시판</a>
+        <a href="/account/community.do?bbstype=deal">중고거래</a>
+        <a href="/account/community.do?bbstype=review">캠핑&여행 후기</a>
+        <a href="/account/community.do?bbstype=find">캠퍼 모집</a>
         <a href="/account/csite-review.do">캠핑장 리뷰</a>
     </div>
 

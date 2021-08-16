@@ -33,20 +33,8 @@
 		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
 
-	<definition name="mypage-free.tiles" extends="mypagemain.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-free.jsp" />
-	</definition>
-
-	<definition name="mypage-deal.tiles" extends="mypagemain.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-deal.jsp" />
-	</definition>
-
-	<definition name="mypage-review.tiles" extends="mypagemain.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-review.jsp" />
-	</definition>
-
-	<definition name="mypage-find.tiles" extends="mypagemain.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-find.jsp" />
+	<definition name="mypage-community.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-community.jsp" />
 	</definition>
 
 	<definition name="mypage-csite-review.tiles" extends="mypagemain.tiles">

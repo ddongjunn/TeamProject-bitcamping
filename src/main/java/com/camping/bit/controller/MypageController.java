@@ -1,13 +1,23 @@
 package com.camping.bit.controller;
 
+import com.camping.bit.dto.CommunityDto;
+import com.camping.bit.dto.MemberDto;
+import com.camping.bit.service.MypageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
 @RequestMapping(value = "/account/*")
 public class MypageController {
+
+    @Autowired
+    MypageService service;
 
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String mypage() {
@@ -16,33 +26,21 @@ public class MypageController {
         return "mypagemain.tiles";
     }
 
-    @RequestMapping(value = "free.do", method = RequestMethod.GET)
-    public String mypageFree() {
+    @RequestMapping(value = "community.do", method = RequestMethod.GET)
+    public String mypageCommunity(CommunityDto cdto, HttpSession session) {
+        MemberDto dto = (MemberDto) session.getAttribute("login");
 
+        cdto.setUser_id(dto.getId());
 
-        return "mypage-free.tiles";
+        //차후 삭제 예정
+        cdto.setBbstype("hello");
+        List<CommunityDto> list = service.getMyCommunity(cdto);
+
+        System.out.println(list.toString());
+
+        return "mypage-community.tiles";
     }
 
-    @RequestMapping(value = "deal.do", method = RequestMethod.GET)
-    public String mypageDeal() {
-
-
-        return "mypage-deal.tiles";
-    }
-
-    @RequestMapping(value = "review.do", method = RequestMethod.GET)
-    public String mypageReview() {
-
-
-        return "mypage-review.tiles";
-    }
-
-    @RequestMapping(value = "find.do", method = RequestMethod.GET)
-    public String mypageFind() {
-
-
-        return "mypage-find.tiles";
-    }
 
     @RequestMapping(value = "csite-review.do", method = RequestMethod.GET)
     public String mypageCampingReview() {

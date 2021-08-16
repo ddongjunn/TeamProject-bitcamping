@@ -20,7 +20,7 @@
       }
       #sidebar-left {
         width: 20%;
-        height: auto;
+        height: 100%;
         padding: 5px;
         margin-right: 5px;
         margin-bottom: 5px;

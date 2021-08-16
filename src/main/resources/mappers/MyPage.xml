@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.camping.bit.dao.MypageDao">
+
+    <select id="getMyCommunity" parameterType="CommunityDto" resultType="CommunityDto">
+        SELECT COMMUNITY_SEQ,
+               ( SELECT MEMBER.NICKNAME
+                 FROM MEMBER
+                 WHERE MEMBER.ID = #{user_id} ) AS NICKNAME,
+               TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE
+        FROM COMMUNITY_BBS WHERE USER_ID = #{user_id} AND BBSTYPE = #{bbstype}
+    </select>
+
+</mapper>
