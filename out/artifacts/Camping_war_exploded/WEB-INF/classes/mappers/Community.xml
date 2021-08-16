@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.camping.bit.dao.CommunityDao">
+
+	<!-- 멤버 id에서 nickname받아오는거 -->
+	<!-- <select id="">
+    </select> -->
+
+	<!-- 가입인사 게시글 리스트 -->
+	<select id="helloList" parameterType="CommunityParam" resultType="CommunityDto">
+		SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+		FROM COMMUNITY_BBS A, MEMBER B
+		WHERE 1=1 AND A.USER_ID = B.ID
+		<if test='choice != null and choice != " "
+           and search != null and search != " "'>
+			<if test='choice == "title"'>
+				AND TITLE LIKE '%'||#{search}||'%'
+			</if>
+			<if test='choice == "content"'>
+				AND CONTENT LIKE '%'||#{search}||'%'
+			</if>
+			<if test='choice == "nickname"'>
+				AND NICKNAME=#{search}
+			</if>
+		</if>
+		ORDER BY COMMUNITY_SEQ DESC
+	</select>
+
+	<!-- 글의 총수 -->
+	<select id="helloBoardCount" parameterType="CommunityParam" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM COMMUNITY_BBS
+		WHERE 1=1 AND BBSTYPE='hello'
+		<if test='choice != null and choice != " "
+           and search != null and search != " "'>
+			<if test='choice == "title"'>
+				AND TITLE LIKE '%'||#{search}||'%'
+			</if>
+			<if test='choice == "content"'>
+				AND CONTENT LIKE '%'||#{search}||'%'
+			</if>
+			<if test='choice == "nickname"'>
+				AND NICKNAME=#{search}
+			</if>
+		</if>
+	</select>
+
+	<!-- 글작성후 db에 저장 -->
+	<!-- dto받은거 db에 넣어주는 쿼리문 작성 id값은 dao 메소드명이랑 일치, dto파라미터타입 -> db에 넣는것, 리절트타입은 db에서 받아오겠다는것 //#{id}-->
+	<insert id="helloWrite" parameterType="CommunityDto">
+		INSERT INTO COMMUNITY_BBS(
+			COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE)
+		VALUES(COMMUNITY_BBS_SEQ.NEXTVAL, #{user_id}, #{title}, SYSDATE, #{content}, #{readcount}, 0, 0, #{bbstype})
+	</insert>
+
+	<!-- 글 상세조회, 파라미터가 넣어주는값-->
+	<select id="helloDetail" parameterType="java.lang.Integer" resultType="CommunityDto">
+		SELECT * FROM COMMUNITY_BBS
+		WHERE COMMUNITY_SEQ = #{community_seq}
+	</select>
+
+	<!-- 조회수 -->
+	<update id="readcount" parameterType="int">
+		UPDATE COMMUNITY_BBS
+		SET READCOUNT = READCOUNT + 1
+		WHERE COMMUNITY_SEQ = #{community_seq}
+	</update>
+
+	<!-- 글 삭제 -->
+	<delete id="boardDelete" parameterType="CommunityDto">
+		DELETE COMMUNITY_BBS WHERE COMMUNITY_SEQ = #{community_seq}
+	</delete>
+
+	<!-- 글 수정 -->
+	<update id="helloUpdate" parameterType="CommunityDto">
+		UPDATE COMMUNITY_BBS SET
+								 TITLE=#{title},
+								 CONTENT=#{content},
+								 WDATE=SYSDATE
+		WHERE COMMUNITY_SEQ = #{community_seq}
+	</update>
+
+</mapper>
