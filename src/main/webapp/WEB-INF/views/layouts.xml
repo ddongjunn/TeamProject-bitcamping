@@ -44,6 +44,7 @@
 	<definition name = "campingmap.tiles" extends = "main.tiles">
 		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingmap.jsp"/>
 	</definition>
+	
 
 	<!-- 영신 -->
 	<definition name="rentList.tiles" extends="main.tiles">

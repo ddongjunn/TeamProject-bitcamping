@@ -25,7 +25,7 @@
     .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
     .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
     .info .link {color: #5085BB;}
-</style>
+</style> 
 </head>
 <body>
 
@@ -87,36 +87,34 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<div class="camp_cont_w">
 		<h2 class="skip">캠핑장 디테일 화면 분할</h2>
 			<div class="layout">
-				
-							<span><button type = "button" id = "actionBtn">캠핑장 소개</button></span>
-							<span><a href="campingdetail.do?contentid=<%=campinglist.getContentid()%>" class="camp_intro">오시는 길</a></span>
-							<span><a href="campingdetail.do?contentid=<%=campinglist.getContentid()%>" class="camp_intro">캠핑장 후기</a></span>
-							<span><a href="campingdetail.do?contentid=<%=campinglist.getContentid()%>" class="camp_intro">공지/이벤트 </a></span>
+				<span><button type = "button" id = "introBtn">캠핑장 소개</button></span>
+				<span><button type = "button" id = "mapBtn">오시는 길</button></span>
+				<span><button type = "button" id = "reviewBtn">캠핑장 후기</button></span>
 		</div>
 	</div>
 </div>
 
 <div class = "contents">
-	<div class = "layout">
+	<div id = "intro" class = "layout">
 		<ul class = "layout_5">
 			<li class = "intro">
 				<a href = "campingdetail.do?contentid=<%=campinglist.getContentid()%>">캠핑장 소개</a>
 				<br>
 				<%=campingintro%>
 			</li>
-			<li class = "map">
+		<!-- 	<li class = "map">
 				<a href = "campingmap.do">지도</a>
-			</li>
-			<div id="map" style="width:500px;height:400px;"></div>
+			</li> -->
+			 
 		</ul>
 	</div>
+	<div id="map" style="width:500px;height:400px;"></div> 
+</div>
 <%-- <c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i">
 <img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/image/csite_alt_image.png'" width = "200" height = "200">
 </c:forEach> --%>
-<div id = "hey">
-good
-</div>
-<div class = "photos">
+
+<div id = "photos" class = "photos">
 	<table>
 	<tr>
 		<c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i" end = "14">
@@ -128,7 +126,23 @@ good
 	</tr>
 	</table>
 </div>
-
+<div id = "review">
+<button type = "button" onclick = "location.href ='campingwritereview.do'">리뷰 작성하기</button>
+<table border=1>
+    <thead>
+        <tr>
+            <td>글번호</td>
+            <td>제목</td>
+            <td>작성자</td>
+            <td>조회수</td>
+        </tr>
+    </thead>
+    <tbody id="reviewlisting">
+    
+    </tbody>
+    
+</table>
+</div>
 
 <%-- <table>
 <c:forEach begin="1" end="3" varStatus="loop">
@@ -139,7 +153,7 @@ good
 </tr>
 </c:forEach>
 </table> --%>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=105020d5be336948ef903114d3711ff8"></script>
+ <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=105020d5be336948ef903114d3711ff8"></script>
 	<script>	    
 	    var mapContainer = document.getElementById('map'), // 지도의 중심좌표
 	    mapOption = { 
@@ -191,25 +205,74 @@ good
      function closeOverlay() {
          overlay.setMap(null);     
      }
-	</script>
-</div>
+	</script> 
+
 <script type="text/javascript">
 $(document).ready(function(){
+	$('#map').hide();
+	$('#review').hide();
+$("#introBtn").click(function(){
+	 $('#map').hide();
+	 $('#intro').show();
+	 $('#photos').show();
+});
+	    
+$("#mapBtn").click(function(){
+	  $('#intro').hide();
+	  $('#photos').hide();
+	  $('#map').show(); 
+
+});
+  $("#reviewBtn").click(function campingbbslist(){
+	 $('#intro').hide();
+	 $('#photos').hide();
+	 $('#map').hide();
+	 $('#review').show();
+	 const contentid = new URLSearchParams(location.search).get('contentid');
+	 console.log('content id', contentid)
+<%-- 	 var url = "${pageContext.request.contextPath}/csite/campingreview.do";
+	 var paramData = {"contentid" : "<%=campinglist.getContentid()%>"}; --%>
+			
+			$.ajax({
+				url : '/csite/campingreview.do',
+				type : 'get',
+				dataType : 'text',
+				data : {'contentid':contentid},
+				success : function(response){
+					console.log(response);
+					//alert("success");
+					$("#reviewlisting").html("");
+
+					const parsedResponse = JSON.parse(response);
 	
-$("#actionBtn").click(function ajaxTest(){
-	 $.ajax({
-	        type : "GET",
-	        url : "campingdetail.do?contentid="+<%=campinglist.getContentid()%>,
-	        dataType : "text",
-	        success : function(data) {
-		          $('#hey').html(data);
-		        },
-	        error : function() {
-	          alert('통신실패!!');
-	        }
-	      	});
-	    });
-	});
+					if(response == '[]'){
+						let str = "<tr>"
+					    +"<td colspan='4' class='nodata'>아직 등록된 후기가 없습니다. 첫번째 리뷰어가 되어보세요!</td>"
+					    +"</tr>"
+					    $("#reviewlisting").append(str);
+					}
+					parsedResponse.forEach( (item, idx) => {
+						let str = "<tr>"
+							+ "<td>" + (idx + 1) + "</td>"
+							+/*  "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "'>" + item.title + "</a></td>" */
+							 "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
+							+ "<td>" + item.user_id + "</td>"
+							+ "<td>" + item.readcount + "</td>"
+							+ "</tr>";
+						$("#reviewlisting").append(str);
+					});
+				}, 
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+			
+});//reviewBtn function 끝나는 곳
+
+
+
+
+});//document.ready 끝나는 곳
 </script>
 </body>
 </html>

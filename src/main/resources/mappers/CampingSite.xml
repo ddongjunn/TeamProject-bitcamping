@@ -10,8 +10,8 @@
   	</select> -->
   	<select id = "getCampingList" parameterType = "CampingParam" resultType = "CampingListDto">
   		SELECT * FROM
-		(SELECT ROW_NUMBER()OVER(ORDER BY FIRSTIMAGEURL) AS RNUM, 
-		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, READCOUNT, LIKECOUNT
+		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM, 
+		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, READCOUNT, LIKECOUNT, CREATEDTIME, MODIFIEDTIME
 		FROM CAMPING_LIST 
 		WHERE 1=1 
  		<if test="searchDo != null and searchDo !=''"><!-- 지역구분 -->
@@ -88,7 +88,6 @@
 		<if test="siteBottomCl5 != null and siteBottomCl5 !=''"><!-- 캠핑장 바닥 잔디맨흙 -->
 		AND siteBottomCl5 != 0
 		</if> 
-		
 		<if test="doNm != null and doNm !=''"><!-- 도 -->
 		AND DONM = #{doNm}
 		</if>
@@ -98,26 +97,25 @@
 		<if test="searchWord != null and searchWord !=''"><!-- 검색어 -->
 		AND FACLTNM LIKE '%'||#{searchWord}||'%'
 		</if>
-	
+		)WHERE RNUM BETWEEN ${start} AND ${end}
 		ORDER BY
 			<choose>
 				<when test = "sorting=='create'">
-					CREATEDTIME DESC)
+					CREATEDTIME DESC
 				</when>
 				<when test = "sorting=='update'">
-					MODIFIEDTIME DESC)
+					MODIFIEDTIME DESC
 				</when>
 				<when test = "sorting=='read'">
-					READCOUNT DESC)
+					READCOUNT DESC
 				</when>
 				<when test = "sorting=='like'">
-					LIKECOUNT DESC)
+					LIKECOUNT DESC
 				</when>
 				<otherwise>
-					FIRSTIMAGEURL ASC)
+					FIRSTIMAGEURL ASC
 				</otherwise>
 			</choose>
-			WHERE RNUM BETWEEN ${start} AND ${end}
   	</select>
   	
   	<!-- 캠핑장 상세화면 출력 -->
@@ -154,4 +152,21 @@
 	<select id="autoSearch" parameterType = "java.lang.String" resultType = "CampingListDto">
 		SELECT FACLTNM FROM CAMPING_LIST WHERE FACLTNM LIKE '%'||#{searchWord}||'%' ORDER BY READCOUNT DESC
 	</select>
+	
+	<!-- 캠핑장 리뷰 검색 -->
+	<select id = "campingreview" parameterType = "java.lang.Integer" resultType = "CampingBbsDto">
+		SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT FROM CAMPING_BBS
+		WHERE CONTENTID = #{contentid} 
+	</select>
+	
+	<!-- 캠핑장 리뷰 상세화면 -->
+	<select id = "campingdetailreview" parameterType = "CampingBbsDto" resultType = "CampingBbsDto">
+		SELECT * FROM CAMPING_BBS WHERE REVIEW_SEQ = #{review_seq} AND CONTENTID = #{contentid}
+	</select>
+	
+	<!-- 캠핑장 리뷰 쓰기 -->
+	<insert id = "campingwritereview" parameterType = "CampingBbsDto">
+	INSERT INTO CAMPING_BBS(REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT) 
+	VALUES(CAMPING_BBS_SEQ.NEXTVAL,#{contentid},#{title},#{content},SYSDATE,0,#{user_id}, 0,0)
+	</insert>
   </mapper>
