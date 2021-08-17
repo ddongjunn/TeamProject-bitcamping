@@ -108,7 +108,7 @@ $("#pagination").twbsPagination({
 	next: "다음",
 	last: '<span sria-hidden="true">»</span>',
 	onPageClick:function(event, page){
-		alert(page);
+		//alert(page);
 	}
 });
 </script>

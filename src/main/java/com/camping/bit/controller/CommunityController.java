@@ -20,7 +20,6 @@ import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.CommunityParam;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.service.CommunityService;
-import com.camping.bit.commons.FileUploadUtil;
 
 @Controller
 @RequestMapping(value = "/community/*")
@@ -136,20 +135,7 @@ public class CommunityController {
 		
 		return "redirect:/community/hello.do";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/* 가입인사 다 할때까지 딴 게시판 하지마~~~~ */
 	
 	// 자유게시판
@@ -170,7 +156,7 @@ public class CommunityController {
 	@RequestMapping(value = "group.do", method = RequestMethod.GET)
 	public String groupboard() {
 
-		return "group.tiles";
+		return "find.tiles";
 	}
 
 	// 캠핑후기 게시판

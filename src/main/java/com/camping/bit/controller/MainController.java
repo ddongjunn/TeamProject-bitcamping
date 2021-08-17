@@ -12,9 +12,7 @@ import com.camping.bit.service.MemberService;
 
 @Controller
 public class MainController {
-	
-	@Autowired
-	private MemberService service;
+
 
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
 	public String main() {
