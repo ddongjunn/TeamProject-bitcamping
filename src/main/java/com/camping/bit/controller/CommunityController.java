@@ -151,7 +151,6 @@ public class CommunityController {
 		
 		return "redirect:/community/hello.do";
 	}
-	
 
 	// 댓글 입력(아직안함)
 	@RequestMapping("write.do")
@@ -163,18 +162,7 @@ public class CommunityController {
 		service.commentWrite(dto); 
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/* 가입인사 다 할때까지 딴 게시판 하지마~~~~ */
 	
 	// 자유게시판

@@ -1,5 +1,7 @@
 package com.camping.bit.dto;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Setter
 @Getter
-public class ProductRentDto {
+public class ProductRentDto implements Serializable {
 	
     // 대여 SEQ 
     private int rent_Seq;

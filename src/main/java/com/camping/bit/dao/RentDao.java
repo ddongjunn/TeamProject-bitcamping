@@ -5,6 +5,7 @@ import java.util.List;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
 import com.camping.bit.dto.ProductRentDto;
+import com.camping.bit.dto.ProductReviewDto;
 
 public interface RentDao {
 	
@@ -22,5 +23,11 @@ public interface RentDao {
 	public ProductOptionDto getOptionDetail(int option_Seq);
 
 	public ProductRentDto getRentDetail(int rent_Seq);
+
+	public void writeReviewAf(ProductReviewDto review);
+	
+	public List<ProductReviewDto> getReviewList(int product_Seq);
+	
+	public int getReviewCount(int product_Seq);
 	 
 }

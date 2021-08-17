@@ -4,10 +4,6 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:requestEncoding value="utf-8" />	<!-- time, encoding -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,19 +14,18 @@
         margin-bottom: 5px;
         background-color: lightgreen;
       }
-      #sidebar-left {
-        width: 20%;
-        height: 100%;
-        padding: 5px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        float: left;
-        background-color: yellow;
+      #lnb {
+        width: 15%;
+        height: auto;
+        min-height: 800px;
+        padding: 50px 15px;
+        float: left;        
+        background-color: tomato;
       }
       #content {
-        width: 80%;
-        padding: 5px;
-        margin-right: 5px;
+        width: 85%;
+        padding: 50px;
+        float: left;
       }
       #footer {
         clear: both;
@@ -46,8 +41,8 @@
 	<div id="header">
 		<tiles:insertAttribute name="header"/>
     </div>
-    <div id="sidebar-left">
-        <tiles:insertAttribute name="leftmenu"/> 
+    <div id="lnb">
+        <tiles:insertAttribute name="lnb"/> 
     </div>
     <div id="content">
         <tiles:insertAttribute name="body"/>

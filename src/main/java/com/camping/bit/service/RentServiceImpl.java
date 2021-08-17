@@ -9,6 +9,7 @@ import com.camping.bit.dao.RentDao;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
 import com.camping.bit.dto.ProductRentDto;
+import com.camping.bit.dto.ProductReviewDto;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -68,5 +69,27 @@ public class RentServiceImpl implements RentService {
 		ProductRentDto rent = dao.getRentDetail(rent_Seq);
 		
 		return rent;
+	}
+
+	@Override
+	public void writeReviewAf(ProductReviewDto review) {
+		
+		dao.writeReviewAf(review);
+	}
+
+	@Override
+	public List<ProductReviewDto> getReviewList(int product_Seq) {
+		
+		List<ProductReviewDto> review = dao.getReviewList(product_Seq);
+		
+		return review;
+	}
+
+	@Override
+	public int getReviewCount(int product_Seq) {
+
+		int reviewCount = dao.getReviewCount(product_Seq);
+		
+		return reviewCount;
 	}
 }
