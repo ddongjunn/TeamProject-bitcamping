@@ -73,6 +73,7 @@
 	</definition>
 
 	<!-- 영신 -->
+	<!-- 캠핑 용품 대여 -->
 	<definition name="rentList.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_list.jsp"/>
 	</definition>
@@ -92,9 +93,9 @@
 	<definition name="productOrder.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_order.jsp"/>
 	</definition>
-
+	
 	<definition name="writeReview.tiles" template="/WEB-INF/views/rent/write_review.jsp">
-	</definition>
+	</definition>	
 
 	<!-- 고객센터 -->
 	<definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
@@ -111,6 +112,7 @@
 	<definition name="noticeDetail.tiles" extends="noticeList.tiles">
 		<put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeDetail.jsp" />
 	</definition>
+
 
 	<!-- 민경 -->
 	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">

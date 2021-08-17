@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.camping.bit.dao.CsDao">
+	
+	<insert id="noticeWriteAf" parameterType="CsNoticeDto">
+		INSERT INTO NOTICE
+		VALUES(NOTICE_SEQ.NEXTVAL, #{user_Id}, #{title}, #{content}, #{filename}, #{newfilename}, SYSDATE, 0, 0, 0)	
+	</insert>
+	
+	<select id="getNoticeList" resultType="CsNoticeDto">
+		SELECT N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.TITLE, N.CONTENT, N.FILENAME, N.NEWFILENAME, N.WDATE, N.READCOUNT, N.DOWNCOUNT, N.DEL
+		FROM NOTICE N, MEMBER M
+		WHERE 1=1
+		AND N.USER_ID = M.ID
+		AND DEL != 1
+		ORDER BY WDATE DESC
+	</select>
+	
+	<select id="getNoticeDetail" parameterType="java.lang.Integer" resultType="CsNoticeDto">
+		SELECT N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.TITLE, N.CONTENT, N.FILENAME, N.NEWFILENAME, N.WDATE, N.READCOUNT, N.DOWNCOUNT, N.DEL
+		FROM NOTICE N, MEMBER M
+		WHERE 1=1
+		AND N.USER_ID = M.ID
+		AND N.NOTICE_SEQ = #{notice_Seq}
+	</select>
+
+</mapper>

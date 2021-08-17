@@ -31,7 +31,7 @@
 					<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p> -->
 				</div>
 
-				<form id="paymentform">
+				<form id="paymentform" action="/rent/payment.do" method="post">
 					<!-- 배송 정보 -->
 					<div class="card-details">
 						<h3 class="title">배송 정보 입력</h3>
@@ -184,16 +184,8 @@
 				}
 			});
 		});
-
-		function iamport() {
-
-			if ($("#policyagree").is(":checked") == false) {
-				Swal.fire({
-					icon : 'error',
-					text : '결제 약관에 동의해주세요'
-				});
-				return;
-			}
+		
+		function datamaker(){			
 			
 			/* 전화번호 합쳐서 넣어주기 */
 			var phone = $("#phone1").val() + "-" + $("#phone2").val() + "-" + $("#phone3").val();
@@ -204,21 +196,34 @@
 				$("#memo").attr("value", $("#memodirect").val());
 			}else{
 				$("#memo").attr("value", $("#memoselect").val());
-			}
+			}			
+		}
+		
+		function iamport() {
 
+			if ($("#policyagree").is(":checked") == false) {
+				Swal.fire({
+					icon : 'error',
+					text : '결제 약관에 동의해주세요'
+				});
+				return;
+			}
+			
+			datamaker();
+			
 			//가맹점 식별코드
 			IMP.init('iamport');
 			IMP.request_pay({
 				pg : 'kcp',
 				pay_method : 'card',
 				merchant_uid : 'merchant_' + new Date().getTime(),
-				name : '상품1', //결제창에서 보여질 이름
-				amount : 100, //실제 결제되는 가격
-				buyer_email : 'iamport@siot.do',
-				buyer_name : '구매자이름',
-				buyer_tel : '010-1234-5678',
-				buyer_addr : '서울 강남구 도곡동',
-				buyer_postcode : '123-456'
+				name : '${item.product_Name}', //결제창에서 보여질 이름
+				amount : 100/* $("#total_Price").val() */, //실제 결제되는 가격
+				buyer_email : '${login.email}',
+				buyer_name : '${login.username}',
+				buyer_tel : '${login.phone}',
+				buyer_addr : '$("#delivery_addr1").val() + $("#delivery_addr2").val()',
+				buyer_postcode : '$("#delivery_post").val()'
 			}, function(rsp) {
 				console.log(rsp);
 				if (rsp.success) {
@@ -234,19 +239,23 @@
 							merchant_uid : rsp.merchant_uid
 						}
 					}).done(function(data) {
-						// 가맹점 서버 결제 API 성공시 로직
+						$("#paymentform").submit();
 					})
 
 					var msg = '결제가 완료되었습니다.';
 					/* msg += '고유ID : ' + rsp.imp_uid;
-					msg += '상점 거래ID : ' + rsp.merchant_uid;
-					msg += '결제 금액 : ' + rsp.paid_amount;
-					msg += '카드 승인번호 : ' + rsp.apply_num; */
+					msg += '상점 거래ID : ' + rsp.merchant_uid; */
+					msg += '\n결제 금액 : ' + rsp.paid_amount;
+					/* msg += '카드 승인번호 : ' + rsp.apply_num; */
 				} else {
-					var msg = '결제에 실패하였습니다.';
+					var msg = '결제에 실패하였습니다. \n';
 					msg += '에러내용 : ' + rsp.error_msg;
 				}
-				alert(msg);
+				/* alert(msg); */
+				Swal.fire({
+					icon : 'error',
+					text : msg
+				});
 			});
 		}
 	</script>
