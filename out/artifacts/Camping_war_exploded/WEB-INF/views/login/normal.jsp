@@ -351,7 +351,6 @@
         var isPhoneNum = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
 
         if ($('#mobile').val() === "") {
-
             error[7].innerHTML = "필수 정보입니다. 핸드폰";
             error[7].style.color = "#ff0000";
             error[7].style.display = "block";

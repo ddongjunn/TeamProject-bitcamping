@@ -75,7 +75,7 @@
         let nowPage = ${nowPage};	// 서버로부터 현재 페이지를 취득
         //alert(nowPage);
 
-        let pageSize = 10;//페이지의 크기(1~10) [1] ~ [10]
+        let pageSize = 15;//페이지의 크기(1~10) [1] ~ [10]
 
         let totalPages = totalCount / pageSize;
 

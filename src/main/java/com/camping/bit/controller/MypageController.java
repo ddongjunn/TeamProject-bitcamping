@@ -32,8 +32,8 @@ public class MypageController {
     public String mypageCommunity(HttpSession session, Model model, MypageParam param) {
 
         int sn = param.getPageNumber();
-        int start = 1 + 10 * sn;
-        int end = 10 + 10 * sn;
+        int start = 1 + 15 * sn;
+        int end = 15 + 15 * sn;
         System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
 
         param.setStart(start);
@@ -82,12 +82,23 @@ public class MypageController {
         return "mypage-csite-review.tiles";
     }
 
-    @RequestMapping(value = "update.do", method = RequestMethod.GET)
+    @RequestMapping(value = "update.do", method = { RequestMethod.GET,RequestMethod.POST} )
     public String mypageUpdate() {
-
 
         return "mypage-update.tiles";
     }
+
+    @RequestMapping(value = "updateAf.do", method = { RequestMethod.POST} )
+    public String mypageUpdateAf(MemberDto dto, HttpSession session) {
+
+        service.modifyInfo(dto);
+
+        session.setAttribute("login",dto);
+
+        return "redirect:/account/update.do";
+    }
+
+
 
     @RequestMapping(value = "password.do", method = RequestMethod.GET)
     public String mypagePassword() {

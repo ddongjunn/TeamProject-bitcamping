@@ -47,4 +47,8 @@
         </if>
     </select>
 
+    <update id="modifyInfo" parameterType="MemberDto">
+        UPDATE MEMBER SET NICKNAME = #{nickname}, PHONE = #{phone},  EMAIL = #{email} WHERE ID = #{id}
+    </update>
+
 </mapper>
