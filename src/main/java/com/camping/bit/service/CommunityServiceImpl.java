@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.CommunityDao;
+import com.camping.bit.dto.CommunityCommentDto;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.CommunityParam;
 
@@ -42,9 +43,10 @@ public class CommunityServiceImpl implements CommunityService{
 	
 	// 조회수
 	@Override
-	public void readcount(int community_seq) {
-		dao.readcount(community_seq);
+	public void readCount(int community_seq) {
+		dao.readCount(community_seq);
 	}
+	
 	
 	// 글 삭제
 	@Override
@@ -56,5 +58,17 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void helloUpdate(CommunityDto dto) {
 		dao.helloUpdate(dto);
+	}
+	
+	// 댓글 리스트
+	@Override
+	public List<CommunityCommentDto> commentList(int community_seq) {
+		return dao.commentList(community_seq);
+	}
+	
+	// 댓글 입력
+	@Override
+	public void commentWrite(CommunityCommentDto dto) {
+		dao.commentWrite(dto);
 	}
 }

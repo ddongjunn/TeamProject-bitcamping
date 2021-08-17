@@ -82,5 +82,19 @@
 								 WDATE=SYSDATE
 		WHERE COMMUNITY_SEQ = #{community_seq}
 	</update>
+  
+  <!-- 댓글 리스트 -->
+	<select id="commentList" resultType="CommunityCommentDto" parameterType="java.lang.Integer">
+		SELECT * FROM COMMUNITY_BBS_COMMENT
+  		WHERE COMMUNITY_SEQ = #{community_seq}
+  		ORDER BY COMMENT_SEQ DESC
+	</select>
+	
+	<!-- 댓글 입력 -->
+	<insert id="commentWrite">
+		INSERT INTO COMMUNITY_BBS_COMMENT(
+		COMMENT_SEQ, USER_ID, CONTENT,  WDATE, DEL, COMMUNITY_SEQ)
+		VALUES(COMMENT_SEQ.NEXTVAL, '#{user_id}', '#{content}', SYSDATE,0,#{community_seq})
+	</insert>
 
 </mapper>

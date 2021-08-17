@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +38,12 @@
 	</td>
 </tr>
 <tr>
+	<th>좋아요수</th>
+	<td>
+		${data.likecount }
+	</td>
+</tr>
+<tr>
 	<th>제목</th>
 	<td>
 		${data.title }
@@ -56,9 +63,28 @@
 <button type="button" onclick="update(${data.community_seq})">수정</button>	
 <button type="button" onclick="del(${data.community_seq})">삭제</button>
 <button type="button" onclick="location='/community/hello.do'">목록</button>
+<button type="button" onclick="location='/community/helloDetail.do'">좋아요</button>
 
+<br>
 <hr>
+<br>
 
+
+<textarea rows="5" cols="80" id="comment" placeholder="댓글 작성" ></textarea>
+<button type="button" id="btnReply">댓글등록</button>
+
+<div id="comment">
+ <ol class="commentList">
+ <c:forEach items="${commentList }" var="comment">
+ <li>
+  <p>
+   작성자 : ${comment.user_id} // ${comment.wdate} 
+  </p>
+  <p>${comment.content}</p>
+ </li>
+ </c:forEach>
+ </ol>
+</div>
 
 
 <script type="text/javascript">

@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.camping.bit.dto.CommunityCommentDto;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.CommunityParam;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.service.CommunityService;
+import com.camping.bit.commons.FileUploadUtil;
 
 @Controller
 @RequestMapping(value = "/community/*")
@@ -52,15 +54,25 @@ public class CommunityController {
 		System.out.println(boardPage);
 		
 		// 현재 페이지
-		model.addAttribute("pageNumber", param.getPageNumber());
+		model.addAttribute("pageNumber", param.getPageNumber() + 1);
+		
+		int sn = param.getPageNumber();
+		int start = 1 + sn * 10;
+		int end = (sn + 1) * 10;
+		
+		param.setStart(start);
+		param.setEnd(end);
+		
+		model.addAttribute("search", param.getSearch());
+		model.addAttribute("choice", param.getChoice());
 		
 		return "hello.tiles"; 
 	}
 	
 	// 가입인사 글쓰기
 	@RequestMapping(value = "helloWrite.do", method = RequestMethod.GET)
-	public String helloWrite(Model model, String type) {
-	
+	public String helloWrite(Model model) {
+		
 		return "hellowrite.tiles";
 	}	
 	
@@ -81,13 +93,17 @@ public class CommunityController {
 	
 	// 가입인사글 상세
 	@RequestMapping(value = "helloDetail.do", method = RequestMethod.GET)
-	public String helloDetail(Model model, int community_seq) {
+	public String helloDetail(Model model, int community_seq, String id) {
 		
 		CommunityDto data = service.helloDetail(community_seq);
 		model.addAttribute("data", data); 
 		
 		// 조회수
-		service.readcount(community_seq);
+		service.readCount(community_seq);
+		
+		// 댓글
+		List<CommunityCommentDto> commentList = service.commentList(community_seq);
+		model.addAttribute("commentList", commentList);
 		
 		return "helloDetail.tiles";
 	}
@@ -136,6 +152,17 @@ public class CommunityController {
 		return "redirect:/community/hello.do";
 	}
 
+	// 댓글 입력(아직안함)
+	@RequestMapping("write.do")
+		public void commentWrite(CommunityCommentDto dto) {
+		
+		System.out.println(dto.toString());
+
+		/*dto값을 service로 넘겨*/
+		service.commentWrite(dto); 
+		
+	}
+
 	/* 가입인사 다 할때까지 딴 게시판 하지마~~~~ */
 	
 	// 자유게시판
@@ -153,7 +180,7 @@ public class CommunityController {
 	}
 
 	// 캠퍼모임 게시판
-	@RequestMapping(value = "group.do", method = RequestMethod.GET)
+	@RequestMapping(value = "find.do", method = RequestMethod.GET)
 	public String groupboard() {
 
 		return "find.tiles";

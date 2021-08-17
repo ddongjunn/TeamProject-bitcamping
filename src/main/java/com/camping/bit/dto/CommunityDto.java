@@ -25,4 +25,5 @@ public class CommunityDto implements Serializable{
 	 			
 	 private int del;			// 삭제
 	 private int readcount;		// 조회수
+	 private int likecount;		// 좋아요 
 }

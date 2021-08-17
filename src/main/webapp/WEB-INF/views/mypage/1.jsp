@@ -8,7 +8,5 @@
 </head>
 <body>
 
-<h1>캠핑여행&후기</h1>
-
 </body>
 </html>

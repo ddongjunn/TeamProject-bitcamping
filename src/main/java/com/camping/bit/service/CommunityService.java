@@ -2,6 +2,7 @@ package com.camping.bit.service;
 
 import java.util.List;
 
+import com.camping.bit.dto.CommunityCommentDto;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.CommunityParam;
 
@@ -20,11 +21,17 @@ public interface CommunityService {
 	public CommunityDto helloDetail(int community_seq);
 	
 	// 조회수
-	void readcount(int community_seq);
+	void readCount(int community_seq);
 
 	// 글 삭제
 	public void boardDelete(CommunityDto dto);
 
 	// 글 수정
 	public void helloUpdate(CommunityDto dto);
+	
+	// 댓글 리스트
+	public List<CommunityCommentDto> commentList(int community_seq);
+	
+	// 댓글 입력
+	public void commentWrite(CommunityCommentDto dto);
 }
