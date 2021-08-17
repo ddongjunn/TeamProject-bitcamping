@@ -3,6 +3,7 @@ package com.camping.bit.controller;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.MypageParam;
+import com.camping.bit.service.MemberService;
 import com.camping.bit.service.MypageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ public class MypageController {
 
     @Autowired
     MypageService service;
+    MemberService memberService;
 
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String main() {
@@ -93,7 +95,7 @@ public class MypageController {
 
         service.modifyInfo(dto);
 
-        session.setAttribute("login",dto);
+        session.setAttribute("login",memberService.getMember(dto.getId()));
 
         return "redirect:/account/update.do";
     }
