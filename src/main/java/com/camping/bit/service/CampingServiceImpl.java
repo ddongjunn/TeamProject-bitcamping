@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.CampingDao;
+import com.camping.bit.dto.CampingBbsDto;
 import com.camping.bit.dto.CampingDetailDto;
 import com.camping.bit.dto.CampingImageDto;
 import com.camping.bit.dto.CampingListDto;
@@ -53,8 +54,25 @@ public class CampingServiceImpl implements CampingService {
 		return dao.getCampingIntro(contentid);
 	}
 
-	@Override
+	@Override //캠핑장 자동검색어
 	public List<CampingListDto> autoSearch(String searchWord) {
 		return dao.autoSearch(searchWord);
 	}
+
+	@Override //캠핑장 리뷰 가져오기
+	public List<CampingBbsDto> campingreview(int contentid) {
+		return dao.campingreview(contentid);
+	}
+
+	@Override //캠핑장 리뷰 상세화면
+	public CampingBbsDto campingdetailreview(CampingBbsDto cbsdto) {
+		return dao.campingdetailreview(cbsdto);
+	}
+
+	@Override
+	public void campingwritereview(CampingBbsDto cbsdto) {
+		dao.campingwritereview(cbsdto);
+	}
+	
+	
 }

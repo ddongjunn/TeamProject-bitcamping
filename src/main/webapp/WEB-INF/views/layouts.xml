@@ -67,6 +67,7 @@
 	<definition name = "campingmap.tiles" extends = "main.tiles">
 		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingmap.jsp"/>
 	</definition>
+	
 
 	<definition name = "campingdetailreview.tiles" extends = "main.tiles">
 		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingdetailreview.jsp"/>

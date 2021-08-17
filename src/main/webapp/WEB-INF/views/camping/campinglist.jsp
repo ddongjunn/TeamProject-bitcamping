@@ -82,8 +82,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 </form>
 </div>
 
+
 <form id = "searchForm2" action = "campinglist.do"method = "get">
-<!-- <li> -->
+<ul><li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">지역별</button> -->
 			<!--div의 클래스명이 f_open이면 아래의 folder_w가 활성화되고, f_close가 되면 folder_w가 비활성화 됩니다-->
@@ -132,9 +133,8 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 				</div> 
 			</div>
 	</div>
- </li> 
- <hr>
-<li>
+</li></ul>
+<ul><li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">운영형태</button> -->
 		<div class="folder_w">
@@ -151,14 +151,14 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 							 /><label for="c_cl04">국민여가</label></li>
 					<li><input type="checkbox" name="searchCl" id="민간" class="check01" value="민간" title="33"
 							 /><label for="c_cl05">민간</label></li>
-					</ul>
+				</ul>
 			</div>
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
- </li>
- <hr>
-<li> 
+ </li></ul>
+
+<ul><li> 
 	<div class="tm_ver f_open">
 	<!-- 	<button type="button">입지구분</button> -->
 		<div class="folder_w">
@@ -186,9 +186,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
- </li>
- <hr>
-<li> 
+ </li></ul>
+
+<ul><li> 
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
@@ -208,9 +208,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
- </li>
- <hr>
-<li> 
+ </li></ul>
+
+<ul><li> 
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
@@ -228,9 +228,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
- </li>		
- <hr>			
-<li> 
+ </li></ul>	
+ <br>
+<ul><li> 
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
@@ -244,9 +244,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>
-<hr>			
-<li>
+</li></ul>
+	
+<ul><li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
@@ -260,9 +260,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>	
-<hr>
-<li>
+</li></ul>
+
+<ul><li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">주요시설</button> -->
 		<div class="folder_w">
@@ -280,9 +280,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>	
-<hr>
-<li>
+</li></ul>
+
+<ul><li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">부대시설</button> -->
 		<div class="folder_w">
@@ -316,9 +316,9 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>
-<hr>
-<li>
+</li></ul>
+
+<ul><li>
 	<div class="tm_ver f_open">
 		<!-- <button type="button">바닥형태</button> -->
 		<div class="folder_w">
@@ -340,22 +340,20 @@ ul li{list-style-type : none; float : left; margin-left : 10px}
 		</div>
 		<!--//folder_w-->
 	</div> <!--//tm_ver-->
-</li>
-<hr>
-<br>
-<hr>
+</li></ul>
+
 <button type = "button" class = "b_blue" id = "resetBtn">초기화</button>
 <button type="submit" class="b_blue" id = "specifiedBtn"><i class="btn_search">검색하기</i></button>
 
 </form>
-
+<br>
 <c:forEach items = "${campinglist}" var = "camping" varStatus = "i">
 <div class = "camping_search_list">
 	<ul>
 		<li style = "list-style : none;">
 			<div class = "image" style = "float : left ; margin-right : 10px" >
 				<a href = "campingdetail.do?contentid=${camping.contentid}">	
-				<img src = "${camping.firstimageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/image/csite_alt_image.png'"
+				<img src = "${camping.firstimageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/csite_alt_image.png'"
 				width = "300" height = "200"></a>
 			</div>
 			<div class = "camping_information" style = "float : left">
@@ -507,9 +505,13 @@ if($('#pagination').data("twbs-pagination")){
 		next: "다음",
 		last: '<span sria-hidden="true">»</span>',
 		initiateStartPageClick:false,
-		onPageClick: function(event,page,searchDo){
-			//alert(page);
-			location.href = "campinglist.do?pageNumber=" + (page - 1);
+		onPageClick: function(event,page){
+			var pa = window.location.search.split("&pageNumber");
+			if (window.location.href.indexOf("?") > -1 && window.location.href.indexOf("&")>-1) {
+				location.href = "campinglist.do"+ pa[0] + "&pageNumber=" + (page - 1);
+			}else{
+				location.href = "campinglist.do?" + "pageNumber=" + (page - 1);}
+			//alert(window.location.search);;
 		}
 	});
 	  

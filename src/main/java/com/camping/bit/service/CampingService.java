@@ -2,6 +2,7 @@ package com.camping.bit.service;
 
 import java.util.List;
 
+import com.camping.bit.dto.CampingBbsDto;
 import com.camping.bit.dto.CampingDetailDto;
 import com.camping.bit.dto.CampingImageDto;
 import com.camping.bit.dto.CampingListDto;
@@ -32,5 +33,14 @@ public interface CampingService {
 	
 	//캠핑장 자동검색어 만들기
 	public List<CampingListDto> autoSearch(String searchWord);
+	
+	//캠핑장 리뷰 리스트 가져오기
+	public List<CampingBbsDto> campingreview(int contentid);
+	
+	//캠핑디테일 리뷰 상세화면
+	public CampingBbsDto campingdetailreview(CampingBbsDto cbsdto);
+	
+	//캠핑장 리뷰 작성하기
+	public void campingwritereview(CampingBbsDto cbsdto);
 	
 }

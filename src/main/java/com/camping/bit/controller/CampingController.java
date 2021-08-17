@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.camping.bit.dto.CampingBbsDto;
 import com.camping.bit.dto.CampingDetailDto;
 import com.camping.bit.dto.CampingImageDto;
 import com.camping.bit.dto.CampingListDto;
@@ -86,7 +88,6 @@ public class CampingController{
 		service.getCampingReadcount(contentid);
 		return "redirect:/campinglist.do";
 	}
-
 	
     //자동 검색어 추천
 	@RequestMapping(value = "autoSearch.do", method = RequestMethod.GET, produces = "application/text;charset=utf8")
@@ -106,5 +107,42 @@ public class CampingController{
 		return jsonInfo;
 
 	}
-	 
+
+	//캠핑디테일 화면 캠핑장 소개 코너 
+	@RequestMapping(value = "campingreview.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<CampingBbsDto> campingreview(int contentid) throws Exception {
+		List<CampingBbsDto> boardList = service.campingreview(contentid);
+		//System.out.println(contentid + ":" + boardList);
+	    return boardList;
+	}
+	
+	//캠핑디테일 리뷰 상세화면 
+	@RequestMapping(value = "campingdetailreview.do", method = RequestMethod.GET)
+	public String campingdetailreview(Model model, CampingBbsDto cbsdto, int contentid) throws Exception{
+		CampingBbsDto campingbbs = service.campingdetailreview(cbsdto);
+		CampingDetailDto detaildto = service.getCampingDetail(contentid);
+		CampingListDto listdto = service.getCampingListForDetail(contentid);
+		
+		model.addAttribute("campingdetail", detaildto);
+		model.addAttribute("campinglistfordetail", listdto);
+		model.addAttribute("campingdetailreview", campingbbs);
+		return "campingdetailreview.tiles";
+	}
+
+	//캠핑장 리뷰 작성하기
+	@RequestMapping(value = "campingwritereview.do", method = RequestMethod.GET)
+	public String bbswrite(Model model) throws Exception{
+		return "campingwritereview.tiles";
+	}
+	
+	@RequestMapping(value = "campingwritereviewAf.do", method = RequestMethod.GET)
+	public String bbswriteAf(CampingBbsDto cbsdto, Model model) throws Exception{
+		if(cbsdto.getContent().equals("") || cbsdto.getTitle().equals("")){
+			return "campingwritereview.tiles";
+		}
+	service.campingwritereview(cbsdto);
+		return "redirect:/campingdetailreview.do";
+	}
+
 }
