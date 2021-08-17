@@ -42,7 +42,7 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/community/*.do"/>
+            <mvc:mapping path="/account/*do"/>
             <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

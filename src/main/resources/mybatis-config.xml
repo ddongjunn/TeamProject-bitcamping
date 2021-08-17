@@ -8,22 +8,28 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 
         <!-- 동준 -->
         <typeAlias type="com.camping.bit.dto.MemberDto" alias="MemberDto" />
+        <typeAlias type="com.camping.bit.dto.MypageParam" alias="MypageParam" />
 
         <!-- 효경 -->
         <typeAlias type="com.camping.bit.dto.CampingListDto" alias = "CampingListDto"/>
         <typeAlias type="com.camping.bit.dto.CampingDetailDto" alias = "CampingDetailDto"/>
         <typeAlias type ="com.camping.bit.dto.CampingParam" alias = "CampingParam"/>
         <typeAlias type ="com.camping.bit.dto.CampingImageDto" alias = "CampingImageDto"/>
-     
+        <typeAlias type ="com.camping.bit.dto.CampingBbsDto" alias = "CampingBbsDto"/>
+
 
         <!-- 영신 -->
         <typeAlias type="com.camping.bit.dto.ProductDetailDto" alias="ProductDetailDto" />
         <typeAlias type="com.camping.bit.dto.ProductRentDto" alias="ProductRentDto" />
         <typeAlias type="com.camping.bit.dto.ProductOptionDto" alias="ProductOptionDto" />
+        <typeAlias type="com.camping.bit.dto.ProductReviewDto" alias="ProductReviewDto" />
+
+        <typeAlias type="com.camping.bit.dto.CsNoticeDto" alias="CsNoticeDto" />
 
         <!-- 민경 -->
         <typeAlias type="com.camping.bit.dto.CommunityDto" alias = "CommunityDto"/>
         <typeAlias type="com.camping.bit.dto.CommunityParam" alias = "CommunityParam"/>
+        <typeAlias type="com.camping.bit.dto.CommunityCommentDto" alias = "CommunityCommentDto"/>
 
 
     </typeAliases>	

@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-    <h2>마이페이지 메인</h2>
-12313123123123
+    <h3>마이페이지 메인</h3>
+
 </body>
 </html>

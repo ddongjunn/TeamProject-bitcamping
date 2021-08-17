@@ -24,6 +24,7 @@ import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
 import com.camping.bit.dto.ProductOrderDto;
 import com.camping.bit.dto.ProductRentDto;
+import com.camping.bit.dto.ProductReviewDto;
 import com.camping.bit.service.RentService;
 import com.camping.bit.commons.FileUploadUtil;
 
@@ -37,8 +38,7 @@ public class RentController {
 	@RequestMapping(value = "list.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String rentList(Model model) {
 		
-		List<ProductDetailDto> list = service.getProductList();
-		
+		List<ProductDetailDto> list = service.getProductList();		
 		model.addAttribute("list", list);
 		
 		return "rentList.tiles";
@@ -65,16 +65,12 @@ public class RentController {
 		
 		File file = new File(fileUpload + "/" + newFileName);
 		
-		System.out.println("regiAf before : " + dto.toString());
-		
 		try {
 			FileUtils.writeByteArrayToFile(file, thumbnail.getBytes());
 			service.regiAf(dto);
 		}catch(IOException e) {
 			e.printStackTrace();			
 		}		
-		
-		System.out.println("regiAf after : " + dto.toString());
 		
 		return "redirect:/rent/list.do";
 	}
@@ -89,7 +85,13 @@ public class RentController {
 		model.addAttribute("rent", rent);
 		
 		List<ProductOptionDto> option = service.getOptionList();		
-		model.addAttribute("option", option);
+		model.addAttribute("option", option);		
+		
+		List<ProductReviewDto> review = service.getReviewList(product_Seq);
+		model.addAttribute("review", review);
+		
+		int reviewCount = service.getReviewCount(product_Seq);
+		model.addAttribute("reviewCount", reviewCount);
 		
 		return "productDetail.tiles";
 	}
@@ -114,5 +116,56 @@ public class RentController {
 		
 		return "productOrder.tiles";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "payment.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String productPayment(ProductOrderDto dto, Model model) {
+		
+		System.out.println("결제완료~~!");
+		
+		return "hi";
+	}
+	
+	@RequestMapping(value = "writeReview.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String writeReview(Model model, @RequestParam int order_Seq) {
+		
+		model.addAttribute("order_Seq", order_Seq);
+		
+		return "writeReview.tiles";
+	}
+	
+	@RequestMapping(value = "writeReviewAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String writeReviewAf(ProductReviewDto review, @RequestParam(value = "reviewImage", required = false) MultipartFile reviewImage, HttpServletRequest req) {
+		
+		// System.out.println(reviewImage.isEmpty());
+		System.out.println(review);
+		
+		if(!(reviewImage.isEmpty())) {
+		
+			String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+			
+			System.out.println("리뷰 사진 업로드 경로 : " + fileUpload);
+			
+			String newFileName = FileUploadUtil.getNewFileName(reviewImage.getOriginalFilename());
+			
+			System.out.println("변환 파일명 : " + newFileName);
+			
+			review.setImage(newFileName);
+			
+			File file = new File(fileUpload + "/" + newFileName);
+			
+			try {
+				FileUtils.writeByteArrayToFile(file, reviewImage.getBytes());
+				service.writeReviewAf(review);
+			}catch(IOException e) {
+				e.printStackTrace();			
+			}
+		}else {
+			service.writeReviewAf(review);
+		}
+				
+		return "redirect:/";	
+	}
+
 	
 }

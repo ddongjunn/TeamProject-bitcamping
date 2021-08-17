@@ -25,12 +25,35 @@
 		<put-attribute name="main" value="/WEB-INF/views/login/normal.jsp"/>
 	</definition>
 
+	<!-- 마이페이지 -->
 	<definition name="mypagemain.tiles" template="/WEB-INF/views/layouts-board.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
 		<put-attribute name="leftmenu" value="/WEB-INF/views/mypage/mypage-menu.jsp" />
 		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-main.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
+
+	<definition name="mypage-community.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-community.jsp" />
+	</definition>
+
+	<definition name="mypage-csite-review.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-csite-review.jsp" />
+	</definition>
+
+	<definition name="mypage-update.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-update.jsp" />
+	</definition>
+
+	<definition name="mypage-password.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-password.jsp" />
+	</definition>
+
+	<definition name="mypage-withdrawal.tiles" extends="mypagemain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-withdrawal.jsp" />
+	</definition>
+
+
 
 	<!-- 효경 -->
 	<definition name = "campinglist.tiles" extends = "main.tiles">
@@ -46,7 +69,12 @@
 	</definition>
 	
 
+	<definition name = "campingdetailreview.tiles" extends = "main.tiles">
+		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingdetailreview.jsp"/>
+	</definition>
+
 	<!-- 영신 -->
+	<!-- 캠핑 용품 대여 -->
 	<definition name="rentList.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_list.jsp"/>
 	</definition>
@@ -54,14 +82,38 @@
 	<definition name="productRegi.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_regi.jsp"/>
 	</definition>
-	
-	<definition name="productDetail.tiles" extends="main.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
+
+	<definition name="productDetail.tiles" template="/WEB-INF/views/layouts-rentdetail.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="maincontent" value="/WEB-INF/views/rent/rent_detail.jsp" />
+		<put-attribute name="subcontent1" value="/WEB-INF/views/rent/rent_review.jsp" />
+		<put-attribute name="subcontent2" value="/WEB-INF/views/rent/rent_qna.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
 
 	<definition name="productOrder.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_order.jsp"/>
 	</definition>
+	
+	<definition name="writeReview.tiles" template="/WEB-INF/views/rent/write_review.jsp">
+	</definition>	
+
+	<!-- 고객센터 -->
+	<definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="lnb" value="/WEB-INF/views/cs/cs_lnb.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_notice.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
+	</definition>
+
+	<definition name="noticeWirte.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeWrite.jsp" />
+	</definition>
+
+	<definition name="noticeDetail.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeDetail.jsp" />
+	</definition>
+
 
 	<!-- 민경 -->
 	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
@@ -102,8 +154,8 @@
 	</definition>
 
 	<!-- 캠퍼모임 게시판 -->
-	<definition name="group.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/group.jsp"/>
+	<definition name="find.tiles" extends="community.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/community/find.jsp"/>
 	</definition>
 
 	<!-- 캠핑후기 게시판 -->
