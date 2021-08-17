@@ -4,13 +4,51 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camping.bit.dao.MypageDao">
 
-    <select id="getMyCommunity" parameterType="CommunityDto" resultType="CommunityDto">
-        SELECT COMMUNITY_SEQ,
-               ( SELECT MEMBER.NICKNAME
-                 FROM MEMBER
-                 WHERE MEMBER.ID = #{user_id} ) AS NICKNAME,
-               TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE
-        FROM COMMUNITY_BBS WHERE USER_ID = #{user_id} AND BBSTYPE = #{bbstype}
+    <select id="getMyCommunity" parameterType="MypageParam" resultType="CommunityDto">
+        SELECT COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
+               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = 'admin' ) AS NICKNAME
+
+        FROM (
+            SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+            COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE
+            FROM COMMUNITY_BBS
+                WHERE 1=1
+                    AND BBSTYPE = #{bbstype}
+                    AND USER_ID = #{id}
+                    AND DEL = 0
+                    <if test="choice != null and choice != '' and search != null and search != ''">
+                        <if test="choice == 'title'">
+                             AND TITLE LIKE '%'||#{search}||'%'
+                        </if>
+                        <if test="choice == 'content'">
+                            AND CONTENT LIKE '%'||#{search}||'%'
+                        </if>
+                    </if>
+            ORDER BY WDATE DESC
+            )
+        WHERE RNUM BETWEEN #{start} AND #{end}
     </select>
+
+    <!--글의 총수 -->
+    <select id="getMyCommunityCount" parameterType="MypageParam" resultType="Integer">
+        SELECT NVL(COUNT(*), 0)
+        FROM COMMUNITY_BBS
+        WHERE 1=1
+            AND BBSTYPE = #{bbstype}
+            AND USER_ID = #{id}
+            AND DEL = 0
+        <if test="choice != null and choice != '' and search != null and search != ''">
+            <if test="choice == 'title'">
+                AND TITLE LIKE '%'||#{search}||'%'
+            </if>
+            <if test="choice == 'content'">
+                AND CONTENT LIKE '%'||#{search}||'%'
+            </if>
+        </if>
+    </select>
+
+    <update id="modifyInfo" parameterType="MemberDto">
+        UPDATE MEMBER SET NICKNAME = #{nickname}, PHONE = #{phone},  EMAIL = #{email} WHERE ID = #{id}
+    </update>
 
 </mapper>

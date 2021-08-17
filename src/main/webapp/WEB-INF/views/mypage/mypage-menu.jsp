@@ -16,7 +16,7 @@
 <div class="leftmenu">
     <div class="customer-name">
         <span class="ns-profile icon-user"></span>
-        <span>${login.nickname} 님</span>
+        <span>${login.nickname} 메롱님</span>
     </div>
 
     <div class="lnb">

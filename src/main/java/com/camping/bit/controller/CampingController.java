@@ -86,12 +86,9 @@ public class CampingController{
 		service.getCampingReadcount(contentid);
 		return "redirect:/campinglist.do";
 	}
-	
-	
-	
+
 	
     //자동 검색어 추천
-  
 	@RequestMapping(value = "autoSearch.do", method = RequestMethod.GET, produces = "application/text;charset=utf8")
 	public @ResponseBody String autoSearch(@RequestParam("searchWord") String searchWord,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {

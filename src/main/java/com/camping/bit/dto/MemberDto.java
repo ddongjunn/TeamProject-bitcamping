@@ -2,12 +2,14 @@ package com.camping.bit.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 @AllArgsConstructor
 @Setter
 @Getter
 @NoArgsConstructor
 @ToString
-public class MemberDto {
+public class MemberDto implements Serializable {
 
  private String id;
  private String pwd;

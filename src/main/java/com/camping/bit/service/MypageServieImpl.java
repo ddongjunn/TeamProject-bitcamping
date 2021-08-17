@@ -2,6 +2,8 @@ package com.camping.bit.service;
 
 import com.camping.bit.dao.MypageDao;
 import com.camping.bit.dto.CommunityDto;
+import com.camping.bit.dto.MemberDto;
+import com.camping.bit.dto.MypageParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +16,17 @@ public class MypageServieImpl implements  MypageService{
     MypageDao dao;
 
     @Override
-    public List<CommunityDto> getMyCommunity(CommunityDto dto) {
-        return dao.getMyCommunity(dto);
+    public List<CommunityDto> getMyCommunity(MypageParam param) {
+        return dao.getMyCommunity(param);
+    }
+
+    @Override
+    public int getMyCommunityCount(MypageParam param) {
+        return dao.getMyCommunityCount(param);
+    }
+
+    @Override
+    public void modifyInfo(MemberDto dto) {
+        dao.modifyInfo(dto);
     }
 }
