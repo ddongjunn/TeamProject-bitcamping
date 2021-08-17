@@ -101,7 +101,7 @@
 				<div class="quantity-picker is-small">
 					<button type="button" id="button-minus" class="button-minus">-</button>
 					<input type="number" id="quantity" name="quantity" min="1" max="10" value="1" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" readonly />
-					<button type="button" id="button-plus" class="button-plus">+</button>
+					<button type="button" id="button-plus" class="button-plus"><div id="plusbox" style="display:inline;">+</div></button>
 				</div>
 				
 			</div>
@@ -120,30 +120,12 @@
 	</ul>
 </nav>
 
-<div style="height: auto; background-color: #dddddd; margin: 100px; padding: 100px;">
+<div style="height: auto; width: 80%; background-color: #dddddd; margin:auto; padding: 20px;">
 	${item.content}
 </div>
 
-<nav id="review" >
-	<ul>
-		<li><a href="#">상품 선택</a></li>
-		<li><a href="#content">상품 상세</a></li>
-		<li><a href="#review">상품 리뷰</a></li>
-		<li><a href="#qna">Q&A</a></li>
-	</ul>
-</nav>
-<div style="height: 800px; margin: auto; width: 80%; background-color: yellow;">
-</div>
-<nav id="qna">
-	<ul>
-		<li><a href="#">상품 선택</a></li>
-		<li><a href="#content">상품 상세</a></li>
-		<li><a href="#review">상품 리뷰</a></li>
-		<li><a href="#qna">Q&A</a></li>
-	</ul>
-</nav>
-<div style="height: 800px; margin: auto; width: 80%; background-color: blue;">
-</div>
+
+
 
 <script type="text/javascript">
 	
@@ -296,10 +278,11 @@ $(document).ready(function () {
 		totalcount();
 	});
 	
-
-	
-
 });
+
+function reload(){
+	$("#reviewcontent").load("/rent/regi.do");
+}
 
 
 </script>

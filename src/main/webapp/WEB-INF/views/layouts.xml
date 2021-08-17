@@ -46,6 +46,7 @@
 	</definition>
 
 	<!-- 영신 -->
+	<!-- 캠핑 용품 대여 -->
 	<definition name="rentList.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_list.jsp"/>
 	</definition>
@@ -54,14 +55,37 @@
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_regi.jsp"/>
 	</definition>
 	
-	<definition name="productDetail.tiles" extends="main.tiles">
-		<put-attribute name="main" value="/WEB-INF/views/rent/rent_detail.jsp"/>
+	<definition name="productDetail.tiles" template="/WEB-INF/views/layouts-rentdetail.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="maincontent" value="/WEB-INF/views/rent/rent_detail.jsp" />
+		<put-attribute name="subcontent1" value="/WEB-INF/views/rent/rent_review.jsp" />
+		<put-attribute name="subcontent2" value="/WEB-INF/views/rent/rent_qna.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
 
 	<definition name="productOrder.tiles" extends="main.tiles">
 		<put-attribute name="main" value="/WEB-INF/views/rent/rent_order.jsp"/>
 	</definition>
+	
+	<definition name="writeReview.tiles" template="/WEB-INF/views/rent/write_review.jsp">
+	</definition>	
+	
+	<!-- 고객센터 -->
+ 	<definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name="lnb" value="/WEB-INF/views/cs/cs_lnb.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_notice.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
+	</definition>	
+		
+	<definition name="noticeWirte.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeWrite.jsp" />
+	</definition>
 
+	<definition name="noticeDetail.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeDetail.jsp" />
+	</definition>
+	
 	<!-- 민경 -->
 	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
