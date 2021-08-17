@@ -100,11 +100,6 @@
 		<put-attribute name="body" value="/WEB-INF/views/community/deal.jsp"/>
 	</definition>
 
-	<!-- 캠퍼모임 게시판 -->
-	<definition name="group.tiles" extends="community.tiles">
-		<put-attribute name="body" value="/WEB-INF/views/community/group.jsp"/>
-	</definition>
-
 	<!-- 캠핑후기 게시판 -->
 	<definition name="review.tiles" extends="community.tiles">
 		<put-attribute name="body" value="/WEB-INF/views/community/review.jsp"/>

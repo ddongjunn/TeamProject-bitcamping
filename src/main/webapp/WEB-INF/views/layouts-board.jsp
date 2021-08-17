@@ -31,7 +31,6 @@
         width: 75%;
         padding: 5px;
         margin-right: 5px;
-        float: left;
       }
       #footer {
         clear: both;

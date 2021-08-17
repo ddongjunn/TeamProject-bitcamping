@@ -19,7 +19,7 @@
 <form action="/community/helloWriteAf.do" method="post">
 
 <!-- boardwriteAf.do 로 id값 넘겨주는 곳 -->
-<input type="hidden" name="id" value="${user_id }">
+<input type="hidden" name="user_id" value="${login.id}">
 <input type="hidden" name="bbstype" value="hello">
 
 <table border="1">
@@ -98,6 +98,7 @@ $(document).ready(function() {
     		}
   		});     	
 	}
+
 
 </script>
 
