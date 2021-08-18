@@ -16,7 +16,7 @@
         회원탈퇴
     </h2>
 
-    <form id="withdrawalFrm">
+    <form id="withdrawalFrm" action="/account/withdrawalAf.do" method="post">
         <h5>회원탈퇴 사유</h5>
 
         <div class="withdrawal-radio">
@@ -38,14 +38,15 @@
         <br>
 
         <div class="withdrawal-agree">
-            <p><input type="checkbox"> 회원탈퇴 안내를 모두 확인하였으며 탈퇴에 동의합니다</p>
+            <h5>회원 탈퇴 동의</h5>
+            <p><input type="checkbox" name="reason3"> 회원탈퇴 안내를 모두 확인하였으며 탈퇴에 동의합니다</p>
             <span class="error_msg"></span>
         </div>
 
         <br>
 
         <div class="withdrawal-guide">
-            <ol type="1" start="1">
+            <ol type="1">
                 <li>
                     회원정보는 탈퇴 시 관련법령에 따라 보관 의무가 있는 경우를 제외하고는 즉시 삭제됩니다.
                 </li>
@@ -58,9 +59,11 @@
             </ol>
         </div>
 
-        <div class="submit">
+        <div class="send">
             <input type="button" id="withdrawalBtn" value="탈퇴하기">
         </div>
+
+        <input type="hidden" name="id" value='${login.id}'>
     </form>
 </div>
 
@@ -71,13 +74,30 @@
 
         radioCheck();
         textCheck();
+        checkCheck();
 
         if(!radioCheck()){
             return;
         }else if(!textCheck()){
             return;
+        }else if(!checkCheck()){
+            return;
         }
-            alert('전부합격');
+
+        Swal.fire({
+            title: '회원탈퇴',
+            html: '정말 떠나시는 건가요? <br>한 번 더 생각해 보지 않으시겠어요?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText : '취소',
+            confirmButtonText: '탈퇴신청'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('#withdrawalFrm').submit();
+            }
+        })
 
 
     });
@@ -101,10 +121,25 @@
             errormsg[1].innerHTML = "필수 입력 항목입니다.";
             errormsg[1].style.color = "#ff0000";
             errormsg[1].style.display = "block";
+
             $('textarea[name=reason2]').focus();
             return false;
         }else{
             errormsg[1].style.display = "none";
+            return true;
+        }
+    }
+
+    function checkCheck() {
+        if( !$('input:checkbox[name=reason3]').is(':checked')) {
+            errormsg[2].innerHTML = "필수 입력 항목입니다.";
+            errormsg[2].style.color = "#ff0000";
+            errormsg[2].style.display = "block";
+
+            $('input:checkbox[name=reason3]').focus();
+            return false;
+        }else{
+            errormsg[2].style.display = "none";
             return true;
         }
     }

@@ -55,4 +55,8 @@
         SELECT PASSWORD FROM MEMBER WHERE ID = #{id}
     </select>
 
+    <update id="withdrawal" parameterType="String">
+        UPDATE MEMBER SET AUTH = -1 WHERE ID = #{id}
+    </update>
+
 </mapper>

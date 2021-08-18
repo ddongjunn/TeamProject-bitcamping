@@ -14,4 +14,6 @@ public interface MypageService {
     public void modifyInfo(MemberDto dto);
 
     public String getPassword(String id);
+
+    public void withdrawal(String id);
 }

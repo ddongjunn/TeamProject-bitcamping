@@ -164,6 +164,8 @@ public class LoginController {
         MemberDto member = service.getMember(dto.getId());
         if(member == null){
             return false;
+        }else if(member.getAuth() == -1){
+            return false;
         }
 
         if(encoder.matches(dto.getPwd(), member.getPwd())){

@@ -154,4 +154,13 @@ public class MypageController {
         return "mypage-withdrawal.tiles";
     }
 
+    @RequestMapping(value = "withdrawalAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String mypageWithdrawalAf(HttpSession session, String id) {
+
+        service.withdrawal(id);
+        session.invalidate();
+
+        return "redirect:/";
+    }
+
 }
