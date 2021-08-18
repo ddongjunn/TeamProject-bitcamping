@@ -13,4 +13,6 @@ public interface MypageDao {
     public int getMyCommunityCount(MypageParam param);
 
     public void modifyInfo(MemberDto dto);
+
+    public String getPassword(String id);
 }

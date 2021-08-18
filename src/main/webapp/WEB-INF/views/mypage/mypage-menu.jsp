@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: djlee
@@ -16,7 +17,7 @@
 <div class="leftmenu">
     <div class="customer-name">
         <span class="ns-profile icon-user"></span>
-        <span>${login.nickname} 메롱님</span>
+        <span>${login.nickname}</span>
     </div>
 
     <div class="lnb">
@@ -31,8 +32,10 @@
     <div class="lnb">
         <h3 class="title">나의정보</h3>
         <a href="/account/update.do">회원정보 관리 </a>
-        <a href="/account/password.do">비밀번호 변경 </a>
-        <a href="/account/withdrawal.do">회원탈퇴 </a>
+        <c:if test="${login.sns_Type == 'none'}">
+            <a href="/account/password.do">비밀번호 변경 </a>
+            <a href="/account/withdrawal.do">회원탈퇴 </a>
+        </c:if>
     </div>
 
     <div class="lnb">

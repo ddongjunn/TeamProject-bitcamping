@@ -68,7 +68,6 @@
             <input type="button" name="updateBtn" value="수정하기">
         </div>
 
-        <input type="hidden" name="username" value="${login.username}">
         <input type="hidden" name="id" value="${login.id}">
     </form>
 </div>

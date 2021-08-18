@@ -51,4 +51,8 @@
         UPDATE MEMBER SET NICKNAME = #{nickname}, PHONE = #{phone},  EMAIL = #{email} WHERE ID = #{id}
     </update>
 
+    <select id="getPassword" parameterType="String" resultType="String">
+        SELECT PASSWORD FROM MEMBER WHERE ID = #{id}
+    </select>
+
 </mapper>

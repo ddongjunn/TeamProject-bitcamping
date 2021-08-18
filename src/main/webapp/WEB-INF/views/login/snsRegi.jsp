@@ -206,7 +206,6 @@
 
     $('input[name=btnJoin2]').click(function () {
 
-        alert('test1');
         let nameStatus = nameCheck();
         let mobileStatus = checkPhoneNum();
 
@@ -224,10 +223,7 @@
             return;
         }
 
-        alert('test2');
-        console.log($('#snsRegiFrm'));
         document.getElementById('snsRegiFrm').submit();
-        alert('test3');
 
     });
 </script>
