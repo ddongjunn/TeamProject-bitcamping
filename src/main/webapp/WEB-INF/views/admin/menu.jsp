@@ -153,12 +153,20 @@
                     </a>
                     <ul class="nav nav-treeview" style="display: none;">
                         <li class="nav-item">
-                            <a href="../UI/general.html" class="nav-link">
+                            <a href="/admin/memberInfo.do" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>회원정보</p>
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/calendar.do" class="nav-link active">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            일정관리
+                        </p>
+                    </a>
                 </li>
             </ul>
         </nav>

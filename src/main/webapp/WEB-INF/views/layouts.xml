@@ -61,6 +61,14 @@
 		<put-attribute name="footer" value="/WEB-INF/views/admin/footer.jsp" />
 	</definition>
 
+	<definition name="admin-calendar.tiles" extends="adminmain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/admin/calendar.jsp" />
+	</definition>
+
+	<definition name="admin-memberInfo.tiles" extends="adminmain.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/admin/memberInfo.jsp" />
+	</definition>
+
 	<!-- 효경 -->
 	<definition name = "campinglist.tiles" extends = "main.tiles">
 		<put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>

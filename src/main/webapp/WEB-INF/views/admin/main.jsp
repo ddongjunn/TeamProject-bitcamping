@@ -1,3 +1,4 @@
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: djlee
@@ -11,7 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<div class="content-wrapper" style="min-height: 798px;">
+<div class="content-wrapper" style="min-height: 1171px;">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -86,7 +87,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">총회원수</span>
-                            <span class="info-box-number">2,000</span>
+                            <span class="info-box-number">${memberCount}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
