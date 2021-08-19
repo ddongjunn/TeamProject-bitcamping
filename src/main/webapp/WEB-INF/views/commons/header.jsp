@@ -29,7 +29,7 @@
                <a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">마이페이지</a>
             </c:when>
 			<c:otherwise>
-               <a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">관리자페이지</a>
+               <a href="/login/logout.do">로그아웃</a> <a href="/admin/main.do">관리자페이지</a>
 			</c:otherwise>
 		</c:choose>
 </div>

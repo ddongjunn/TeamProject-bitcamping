@@ -45,18 +45,18 @@
 
         <br>
 
-        <div class="withdrawal-guide">
-            <ol type="1">
-                <li>
+        <div class="withdrawal-guide" style="margin-left: 17px">
+            <ol >
+                <li style="list-style: decimal !important;">
                     회원정보는 탈퇴 시 관련법령에 따라 보관 의무가 있는 경우를 제외하고는 즉시 삭제됩니다.
                 </li>
-                <li>
+                <li style="list-style: decimal !important;">
                     전자상거래 등에서의 소비자보호에 관한 법률에 따라 계약 또는 청약철회에 관한 기록, 대금 결제 및 재화 등의 공급에 관한 기록은 5년, 그리고 소비자의 불만 또는 분쟁처리에 관한 기록은 3년간 보존됩니다.
                 </li>
-                <li>
+                <li style="list-style: decimal !important;">
                     탈퇴 이후에는 어떠한 방법으로도 삭제된 회원정보를 복원할 수 없습니다.
                 </li>
-            </ol>
+            </ol >
         </div>
 
         <div class="send">

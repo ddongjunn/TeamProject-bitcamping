@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="customer-update">
+<div class="">
     <h2 class="title">
         회원정보 수정
     </h2>

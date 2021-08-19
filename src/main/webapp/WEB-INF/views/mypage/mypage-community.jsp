@@ -54,9 +54,9 @@
                     </c:if>
                 </c:forEach>
             </tbody>
+        </table>
     </c:otherwise>
     </c:choose>
-        </table>
 </div>
 
 <div class="container"> <!-- style = "width : 100%; text-align : center" -->

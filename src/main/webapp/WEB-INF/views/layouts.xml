@@ -53,7 +53,13 @@
 		<put-attribute name="body" value="/WEB-INF/views/mypage/mypage-withdrawal.jsp" />
 	</definition>
 
-
+	<!-- 관리자 페이지 -->
+	<definition name="adminmain.tiles" template="/WEB-INF/views/layouts-admin.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/admin/header.jsp" />
+		<put-attribute name="leftmenu" value="/WEB-INF/views/admin/menu.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/admin/main.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/admin/footer.jsp" />
+	</definition>
 
 	<!-- 효경 -->
 	<definition name = "campinglist.tiles" extends = "main.tiles">

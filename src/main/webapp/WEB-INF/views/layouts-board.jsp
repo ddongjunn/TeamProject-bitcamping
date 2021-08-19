@@ -19,18 +19,18 @@
         background-color: lightgreen;
       }
       #sidebar-left {
-        width: 20%;
-        height: 100%;
-        padding: 5px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        float: left;
-        background-color: yellow;
+          width: 15%;
+          min-width: 230px;
+          height: auto;
+          min-height: 800px;
+          padding: 50px 15px;
+          float: left;
+          background-color: #ffc859;
       }
       #content {
-        width: 80%;
-        padding: 5px;
-        margin-right: 5px;
+          width: 85%;
+          padding: 50px;
+          float: left;
       }
       #footer {
         clear: both;
@@ -39,7 +39,7 @@
       }
       
     </style>
-    
+
 <title>Insert title here</title>
 </head>
 <body>
