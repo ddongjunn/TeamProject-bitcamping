@@ -6,7 +6,7 @@
 
     <select id="getMyCommunity" parameterType="MypageParam" resultType="CommunityDto">
         SELECT COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
-               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = 'admin' ) AS NICKNAME
+               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = #{id} ) AS NICKNAME
 
         FROM (
             SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,

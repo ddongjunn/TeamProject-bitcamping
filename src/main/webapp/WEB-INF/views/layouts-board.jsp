@@ -11,30 +11,29 @@
 <head>
 <meta charset="UTF-8">
     <style>
-      #header {
-        padding: 5px;
-        margin-bottom: 5px;
-        background-color: lightgreen;
-      }
-      #sidebar-left {
-          width: 15%;
-          min-width: 230px;
-          height: auto;
-          min-height: 800px;
-          padding: 50px 15px;
-          float: left;
-          background-color: #ffc859;
-      }
-      #content {
-          width: 85%;
-          padding: 50px;
-          float: left;
-      }
-      #footer {
-        clear: both;
-        padding: 5px;
-        background-color: lightblue;
-      }
+        #header {
+            padding: 5px;
+            margin-bottom: 5px;
+            background-color: lightgreen;
+        }
+        #sidebar-left {
+            width: 15%;
+            height: auto;
+            min-height: 800px;
+            padding: 50px 15px;
+            float: left;
+            background-color: tomato;
+        }
+        #content {
+            width: 85%;
+            padding: 50px;
+            float: left;
+        }
+        #footer {
+            clear: both;
+            padding: 5px;
+            background-color: lightblue;
+        }
       
     </style>
 

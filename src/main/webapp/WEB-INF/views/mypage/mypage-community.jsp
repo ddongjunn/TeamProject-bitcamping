@@ -15,8 +15,24 @@
     <title>Title</title>
 </head>
 <body>
+<c:choose>
+    <c:when test="${bbstype eq 'hello'}">
+        <h2>가입인사</h2>
+    </c:when>
+    <c:when test="${bbstype eq 'free'}">
+        <h2>자유게시판</h2>
+    </c:when>
+    <c:when test="${bbstype eq 'deal'}">
+        <h2>중고거래</h2>
+    </c:when>
+    <c:when test="${bbstype eq 'review'}">
+        <h2>캠핑&여행후기</h2>
+    </c:when>
+    <c:otherwise>
+        <h2>캠핑장리뷰</h2>
+    </c:otherwise>
+</c:choose>
 <div>
-<h2>${bbstype}</h2>
     <c:choose>
     <c:when test="${empty list}">
         <h1>작성하신 글이 없습니다.</h1>
@@ -27,13 +43,12 @@
                 <col style="width:10%;" />
                 <col style="width:auto;" />
                 <col style="width:15%;" />
-                <col style="width:10%;" />
                 <col style="width:20%;" />
             </colgroup>
 
             <thead>
             <tr>
-                <th>번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일</th>
+                <th>번호</th><th>제목</th><th>조회수</th><th>작성일</th>
             </tr>
             </thead>
 
@@ -44,9 +59,22 @@
                             <td>${data.community_seq }</td>
 
                             <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
-                            <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            <c:if test="${bbstype eq 'free'}">
+                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'find'}">
+                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'deal'}">
+                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'review'}">
+                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'hello'}">
+                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
 
-                            <td>${data.nickname}</td>
                             <td>${data.readcount}</td>
                             <td>
                                 <c:set var="date" value="${data.wdate}"/>

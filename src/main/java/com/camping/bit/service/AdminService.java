@@ -1,5 +1,6 @@
 package com.camping.bit.service;
 
+import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.MypageParam;
 
@@ -11,4 +12,7 @@ public interface AdminService {
     public int memberCountSearch(MypageParam param);
 
     public int memberCount();
+
+    public List<CommunityDto> getCommunity(MypageParam param);
+    public int getCommunityCount(MypageParam param);
 }

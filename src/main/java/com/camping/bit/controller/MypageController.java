@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -92,19 +95,26 @@ public class MypageController {
     }
 
     @RequestMapping(value = "update.do", method = { RequestMethod.GET,RequestMethod.POST} )
-    public String mypageUpdate() {
+    public String mypageUpdate(MemberDto dto, Model model, HttpSession session) {
+
+
+        if(dto.getId() != null) {
+            MemberDto user = memberService.getMember(dto.getId());
+            model.addAttribute("user", user);
+            session.setAttribute("login",user);
+            return "mypage-update.tiles";
+        }
+            MemberDto user = (MemberDto) session.getAttribute("login");
+            model.addAttribute("user",memberService.getMember(user.getId()));
+            session.setAttribute("login",memberService.getMember(user.getId()));
 
         return "mypage-update.tiles";
     }
 
     @RequestMapping(value = "updateAf.do", method = { RequestMethod.POST} )
-    public String mypageUpdateAf(MemberDto dto, HttpSession session) {
+    public String mypageUpdateAf(MemberDto dto, HttpSession session, RedirectAttributes redirect) {
 
         service.modifyInfo(dto);
-        MemberDto user = memberService.getMember(dto.getId());
-
-        session.setAttribute("login", user);
-
 
         return "redirect:/account/update.do";
     }
@@ -140,11 +150,9 @@ public class MypageController {
         String securePw = encoder.encode(dto.getPwd());
         dto.setPwd(securePw);
 
-        System.out.println("변경전 dto = " + dto);
         //비밀번호 변경
-        System.out.println("비밀번호 변경");
         memberService.updatePw(dto);
-        System.out.println("비밀번호 변경완료");
+
 
         return true;
     }

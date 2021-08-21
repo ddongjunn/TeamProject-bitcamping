@@ -22,6 +22,7 @@
 
     <div class="lnb">
         <h3 class="title">활동정보</h3>
+        <a href="/account/community.do?bbstype=hello">가입인사</a>
         <a href="/account/community.do?bbstype=free">자유게시판</a>
         <a href="/account/community.do?bbstype=deal">중고거래</a>
         <a href="/account/community.do?bbstype=review">캠핑&여행 후기</a>
@@ -31,7 +32,11 @@
 
     <div class="lnb">
         <h3 class="title">나의정보</h3>
-        <a href="/account/update.do">회원정보 관리 </a>
+        <form name="updateFrm" action="/account/update.do" method="post">
+            <input type="hidden" name="id" value="${login.id}">
+            <a href="#" onclick="javascript:document.updateFrm.submit();">회원정보 관리 </a>
+        </form>
+
         <c:if test="${login.sns_Type == 'none'}">
             <a href="/account/password.do">비밀번호 변경 </a>
             <a href="/account/withdrawal.do">회원탈퇴 </a>

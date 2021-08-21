@@ -27,11 +27,12 @@
 
     <div class="lnb">
         <h3 class="title">커뮤니티관리</h3>
+        <a href="/admin/community.do?bbstype=hello">가입인사</a>
         <a href="/admin/community.do?bbstype=free">자유게시판</a>
         <a href="/admin/community.do?bbstype=deal">중고거래</a>
         <a href="/admin/community.do?bbstype=review">캠핑&여행후기</a>
         <a href="/admin/community.do?bbstype=find">캠퍼모집</a>
-        <a href="/account/csite-review.do">캠핑장리뷰</a>
+        <a href="/admin/csite-review.do">캠핑장리뷰</a>
     </div>
 
     <div class="lnb">

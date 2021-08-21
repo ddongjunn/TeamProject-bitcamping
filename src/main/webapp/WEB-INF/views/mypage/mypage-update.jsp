@@ -20,33 +20,33 @@
 
     <form id='updateFrm' action="/account/updateAf.do" method="post">
 
-        <c:if test="${login.sns_Type eq 'none'}">
+        <c:if test="${user.sns_Type eq 'none'}">
             <div class="userid">
                 <label for="userid"> 아이디 </label> <br>
-                <input type="text" id="userid" value="${login.id}" size="20" disabled>
+                <input type="text" id="userid" value="${user.id}" size="20" disabled>
             </div>
         </c:if>
 
         <div class="username">
             <label for="username"> 이름 </label> <br>
-            <input type="text" id="username" value="${login.username}" disabled>
+            <input type="text" id="username" value="${user.username}" disabled>
         </div>
 
         <div class="nickname">
             <label for="nickname"> 닉네임 </label> <br>
-            <input type="text" id="nickname" name="nickname" value="${login.nickname}" maxlength="10">
+            <input type="text" id="nickname" name="nickname" value="${user.nickname}" maxlength="10">
             <span class="error_msg"></span>
         </div>
 
         <div class="phone">
             <label for="phone"> 휴대폰 </label> <br>
-            <input type="text" id="phone" name="phone" value="${login.phone}" maxlength="13">
+            <input type="text" id="phone" name="phone" value="${user.phone}" maxlength="13">
             <span class="error_msg"></span>
         </div>
 
         <div class="email">
             <label for="email"> 이메일 </label> <br>
-            <input type="text" id="email" name="email" value="${login.email}">
+            <input type="text" id="email" name="email" value="${user.email}">
             <span class="error_msg"></span>
         </div>
 
@@ -68,7 +68,7 @@
             <input type="button" name="updateBtn" value="수정하기">
         </div>
 
-        <input type="hidden" name="id" value="${login.id}">
+        <input type="hidden" name="id" value="${user.id}">
     </form>
 </div>
 
