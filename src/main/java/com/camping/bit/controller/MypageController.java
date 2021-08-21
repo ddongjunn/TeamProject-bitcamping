@@ -41,7 +41,6 @@ public class MypageController {
         int sn = param.getPageNumber();
         int start = 1 + 15 * sn;
         int end = 15 + 15 * sn;
-        System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
 
         param.setStart(start);
         param.setEnd(end);
@@ -77,6 +76,9 @@ public class MypageController {
                 model.addAttribute("bbstype", "캠퍼 모집");
                 break;
         }*/
+
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
 
         return "mypage-community.tiles";
     }

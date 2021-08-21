@@ -213,7 +213,7 @@
         $('input[name=updateBtn]').click(function () {
 
             if(nowNickname == $('#nickname').val() && nowPhone == $('#phone').val() && nowEmail == $('#email').val()){
-                const Toast = Swal.mixin({
+                let Toast = Swal.mixin({
                     toast: true,
                     position: 'bottom-end',
                     showConfirmButton: false,

@@ -42,8 +42,10 @@
                     <c:if test="${data.del != '1'}">
                         <tr>
                             <td>${data.community_seq }</td>
+
                             <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
                             <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+
                             <td>${data.nickname}</td>
                             <td>${data.readcount}</td>
                             <td>
@@ -66,8 +68,24 @@
     </nav>
 </div>
 
+
+<div align="center">
+    <select id="_choice" name="choice">
+        <option value="" selected="selected">선택</option>
+        <option value="title">제목</option>
+        <option value="content">내용</option>
+    </select>
+    <input type="text" id="_search" name="search" placeholder="검색">
+    <button type="button" id="btnSearch">검색</button>
+</div>
+
 <script type="text/javascript">
+
     $(document).ready(function () {
+
+        let choice = '${choice}';
+        let search = '${search}';
+
         //페이지네이션
         let totalCount = ${totalCount};	// 서버로부터 총글의 수를 취득
         //alert(totalCount);
@@ -98,8 +116,53 @@
             last: '<span sria-hidden="true">»</span>',
             initiateStartPageClick:false,
             onPageClick: function(event,page){
-                location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1);
+                location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
             }
+        });
+
+        $("#btnSearch").click(function () {
+
+            if($('#_choice').val() === ""){
+                let Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: '검색옵션을 선택해주세요!'
+                })
+                return;
+
+            }else if($('#_search').val() ===""){
+                let Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: '검색어를 입력해주세요!'
+                })
+
+                return;
+            }
+
+            location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
         });
     });
 </script>

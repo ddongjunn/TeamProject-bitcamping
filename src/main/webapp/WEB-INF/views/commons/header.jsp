@@ -23,7 +23,7 @@
 <div>
 		<c:choose>
 			<c:when test="${empty login}">
-				<a href="#none" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
+				<a href="javascript:void(0)" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
 			</c:when>
             <c:when test="${login.auth == 0}">
                <a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">마이페이지</a>

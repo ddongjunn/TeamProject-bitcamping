@@ -5,11 +5,50 @@
   
     <mapper namespace="com.camping.bit.dao.AdminDao">
 
-    <select id="allMember" resultType="MemberDto">
-        SELECT ID, USERNAME, PASSWORD, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE FROM MEMBER WHERE AUTH = 0
+    <select id="allMemberList" parameterType="MypageParam" resultType="MemberDto">
+        SELECT ID, USERNAME, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE
+        FROM (
+        SELECT ROW_NUMBER()OVER(ORDER BY USERNAME DESC) AS RNUM,
+        ID, USERNAME, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE
+        FROM MEMBER
+        WHERE 1=1
+        AND AUTH = 0
+        <if test="choice != null and choice != '' and search != null and search != ''">
+            <if test="choice == 'id'">
+                AND ID = #{search}
+            </if>
+            <if test="choice == 'username'">
+                AND USERNAME = #{search}
+            </if>
+            <if test="choice == 'nickname'">
+                AND NICKNAME = #{search}
+            </if>
+        </if>
+        ORDER BY USERNAME DESC
+        )
+        WHERE RNUM BETWEEN #{start} AND #{end}
     </select>
 
-    <select id="memberCount" resultType="int">
+    <!-- 멤버 수 -->
+    <select id="memberCountSearch" parameterType="MypageParam" resultType="Integer">
+        SELECT NVL(COUNT(*), 0)
+        FROM MEMBER
+        WHERE 1=1
+        AND AUTH = 0
+        <if test="choice != null and choice != '' and search != null and search != ''">
+            <if test="choice == 'id'">
+                AND ID = #{search}
+            </if>
+            <if test="choice == 'username'">
+                AND USERNAME = #{search}
+            </if>
+            <if test="choice == 'nickname'">
+                AND NICKNAME = #{search}
+            </if>
+        </if>
+    </select>
+
+    <select id="memberCount" resultType="Integer">
         SELECT COUNT(*) FROM MEMBER WHERE AUTH = 0
     </select>
 

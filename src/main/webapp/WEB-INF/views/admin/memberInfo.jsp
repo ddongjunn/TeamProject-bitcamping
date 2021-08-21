@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: 이동준
@@ -7,312 +8,174 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="/resources/jquery/jquery.twbsPagination.min.js"></script>
 <html>
 <head>
     <title>Title</title>
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="/resources/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+
 </head>
 <body>
+<div>
+    <h2>회원정보</h2>
+    <c:choose>
+        <c:when test="${empty list}">
+            <h1>회원이 없습니다.</h1>
+        </c:when>
+        <c:otherwise>
+            <table border="1" style="width: 100%">
+                <colgroup>
+                    <col style="width:auto;" />
+                    <col style="width:8%;" />
+                    <col style="width:10%;" />
+                    <col style="width:11%;" />
+                    <col style="width:16%;" />
+                    <col style="width:9%;" />
+                    <col style="width:10%;" />
+                </colgroup>
 
-<div class="content-wrapper" style="min-height: 1113.69px;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>DataTables</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">DataTables</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
+                <thead>
+                <tr>
+                    <th>아이디</th><th>이름</th><th>닉네임</th><th>핸드폰</th><th>이메일</th><th>가입일</th><th>가입경로</th>
+                </tr>
+                </thead>
 
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">DataTable with default features</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-6">
-                                        <div class="dt-buttons btn-group flex-wrap">
-                                            <button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0"
-                                                    aria-controls="example1" type="button"><span>Copy</span></button>
-                                            <button class="btn btn-secondary buttons-csv buttons-html5" tabindex="0"
-                                                    aria-controls="example1" type="button"><span>CSV</span></button>
-                                            <button class="btn btn-secondary buttons-excel buttons-html5" tabindex="0"
-                                                    aria-controls="example1" type="button"><span>Excel</span></button>
-                                            <button class="btn btn-secondary buttons-pdf buttons-html5" tabindex="0"
-                                                    aria-controls="example1" type="button"><span>PDF</span></button>
-                                            <button class="btn btn-secondary buttons-print" tabindex="0"
-                                                    aria-controls="example1" type="button"><span>Print</span></button>
-                                            <div class="btn-group">
-                                                <button class="btn btn-secondary buttons-collection dropdown-toggle buttons-colvis"
-                                                        tabindex="0" aria-controls="example1" type="button"
-                                                        aria-haspopup="true" aria-expanded="false"><span>Column visibility</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <div id="example1_filter" class="dataTables_filter"><label>Search:<input
-                                                type="search" class="form-control form-control-sm" placeholder=""
-                                                aria-controls="example1"></label></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <table id="example1"
-                                               class="table table-bordered table-striped dataTable dtr-inline"
-                                               role="grid" aria-describedby="example1_info">
-                                            <thead>
-                                            <tr role="row">
-                                                <th class="sorting sorting_asc" tabindex="0" aria-controls="example1"
-                                                    rowspan="1" colspan="1" aria-sort="ascending"
-                                                    aria-label="Rendering engine: activate to sort column descending">
-                                                    Rendering engine
-                                                </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                                    colspan="1" aria-label="Browser: activate to sort column ascending">
-                                                    Browser
-                                                </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                                    colspan="1"
-                                                    aria-label="Platform(s): activate to sort column ascending">
-                                                    Platform(s)
-                                                </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                                    colspan="1"
-                                                    aria-label="Engine version: activate to sort column ascending">
-                                                    Engine version
-                                                </th>
-                                                <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1"
-                                                    colspan="1"
-                                                    aria-label="CSS grade: activate to sort column ascending">CSS grade
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr class="odd">
-                                                <td class="sorting_1 dtr-control" tabindex="0">Presto</td>
-                                                <td>Nintendo DS browser</td>
-                                                <td>Nintendo DS</td>
-                                                <td>8.5</td>
-                                                <td>C/A<sup>1</sup></td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="sorting_1 dtr-control" tabindex="0">Tasman</td>
-                                                <td>Internet Explorer 4.5</td>
-                                                <td>Mac OS 8-9</td>
-                                                <td>-</td>
-                                                <td>X</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="sorting_1 dtr-control" tabindex="0">Tasman</td>
-                                                <td>Internet Explorer 5.1</td>
-                                                <td>Mac OS 7.6-9</td>
-                                                <td>1</td>
-                                                <td>C</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="sorting_1 dtr-control" tabindex="0">Tasman</td>
-                                                <td>Internet Explorer 5.2</td>
-                                                <td>Mac OS 8-X</td>
-                                                <td>1</td>
-                                                <td>C</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="dtr-control sorting_1" tabindex="0">Trident</td>
-                                                <td>Internet
-                                                    Explorer 4.0
-                                                </td>
-                                                <td>Win 95+</td>
-                                                <td> 4</td>
-                                                <td>X</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="dtr-control sorting_1" tabindex="0">Trident</td>
-                                                <td>Internet
-                                                    Explorer 5.0
-                                                </td>
-                                                <td>Win 95+</td>
-                                                <td>5</td>
-                                                <td>C</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="dtr-control sorting_1" tabindex="0">Trident</td>
-                                                <td>Internet
-                                                    Explorer 5.5
-                                                </td>
-                                                <td>Win 95+</td>
-                                                <td>5.5</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="dtr-control sorting_1" tabindex="0">Trident</td>
-                                                <td>Internet
-                                                    Explorer 6
-                                                </td>
-                                                <td>Win 98+</td>
-                                                <td>6</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr class="odd">
-                                                <td class="dtr-control sorting_1" tabindex="0">Trident</td>
-                                                <td>Internet Explorer 7</td>
-                                                <td>Win XP SP2+</td>
-                                                <td>7</td>
-                                                <td>A</td>
-                                            </tr>
-                                            <tr class="even">
-                                                <td class="dtr-control sorting_1" tabindex="0">Trident</td>
-                                                <td>AOL browser (AOL desktop)</td>
-                                                <td>Win XP</td>
-                                                <td>6</td>
-                                                <td>A</td>
-                                            </tr>
-                                            </tbody>
-                                            <tfoot>
-                                            <tr>
-                                                <th rowspan="1" colspan="1">Rendering engine</th>
-                                                <th rowspan="1" colspan="1">Browser</th>
-                                                <th rowspan="1" colspan="1">Platform(s)</th>
-                                                <th rowspan="1" colspan="1">Engine version</th>
-                                                <th rowspan="1" colspan="1">CSS grade</th>
-                                            </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="example1_info" role="status"
-                                             aria-live="polite">Showing 41 to 50 of 57 entries
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-7">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                                            <ul class="pagination">
-                                                <li class="paginate_button page-item previous" id="example1_previous"><a
-                                                        href="#" aria-controls="example1" data-dt-idx="0" tabindex="0"
-                                                        class="page-link">Previous</a></li>
-                                                <li class="paginate_button page-item "><a href="#"
-                                                                                          aria-controls="example1"
-                                                                                          data-dt-idx="1" tabindex="0"
-                                                                                          class="page-link">1</a></li>
-                                                <li class="paginate_button page-item "><a href="#"
-                                                                                          aria-controls="example1"
-                                                                                          data-dt-idx="2" tabindex="0"
-                                                                                          class="page-link">2</a></li>
-                                                <li class="paginate_button page-item "><a href="#"
-                                                                                          aria-controls="example1"
-                                                                                          data-dt-idx="3" tabindex="0"
-                                                                                          class="page-link">3</a></li>
-                                                <li class="paginate_button page-item "><a href="#"
-                                                                                          aria-controls="example1"
-                                                                                          data-dt-idx="4" tabindex="0"
-                                                                                          class="page-link">4</a></li>
-                                                <li class="paginate_button page-item active"><a href="#"
-                                                                                                aria-controls="example1"
-                                                                                                data-dt-idx="5"
-                                                                                                tabindex="0"
-                                                                                                class="page-link">5</a>
-                                                </li>
-                                                <li class="paginate_button page-item "><a href="#"
-                                                                                          aria-controls="example1"
-                                                                                          data-dt-idx="6" tabindex="0"
-                                                                                          class="page-link">6</a></li>
-                                                <li class="paginate_button page-item next" id="example1_next"><a
-                                                        href="#" aria-controls="example1" data-dt-idx="7" tabindex="0"
-                                                        class="page-link">Next</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+                <tbody>
+                <c:forEach var="list" items="${list}">
+                    <tr>
+                        <td>${list.id}</td>
+                        <td>${list.username}</td>
+                        <td>${list.nickname}</td>
+                        <td>${list.phone}</td>
+                        <td>${list.email}</td>
+                        <td>
+                            <c:set var="date" value="${list.create_Date}"/>
+                                ${fn:substring(date,0,11)}
+                        </td>
+
+                        <td>
+                            <c:if test="${list.sns_Type eq 'naver'}">
+                                네이버
+                            </c:if>
+                            <c:if test="${list.sns_Type eq 'kakao'}">
+                                카카오
+                            </c:if>
+                            <c:if test="${list.sns_Type eq 'none'}">
+                                자사
+                            </c:if>
+                        </td>
+                    </tr>
+                </c:forEach>
+
+                </tbody>
+            </table>
+        </c:otherwise>
+    </c:choose>
+</div>
+
+<div class="container"> <!-- style = "width : 100%; text-align : center" -->
+    <!--  <div style = "display : inline-block"> -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination"></ul>
+    </nav>
 </div>
 
 
+<div align="center">
+    <select id="_choice" name="choice">
+        <option value="" selected="selected">선택</option>
+        <option value="id">아이디</option>
+        <option value="username">이름</option>
+        <option value="nickname">닉네임</option>
+    </select>
+    <input type="text" id="_search" name="search" placeholder="검색">
+    <button type="button" id="btnSearch">검색</button>
+</div>
+
 <script type="text/javascript">
-    if ($('#pagination').data("twbs-pagination")) {
-        $('#pagination').twbsPagination('destroy');
-    }
 
-    $("#pagination").twbsPagination({
-        startPage: 1,
-        totalPages: 6, //전체 페이지
-        visiblePages: 10, //최대로 보여줄 페이지
-        first: '<span sria-hidden="true">«</span>',
-        prev: "이전",
-        next: "다음",
-        last: '<span sria-hidden="true">»</span>',
-        initiateStartPageClick: false,
-        onPageClick: function (event, page) {
-            /*location.href = "/account/community.do?bbstype=" + '
-            ${bbstype}' + "&pageNumber=" + (page - 1);*/
+    $(document).ready(function () {
+
+        let choice = '${choice}';
+        let search = '${search}';
+
+        //페이지네이션
+        let totalCount = ${totalCount};	// 서버로부터 총글의 수를 취득
+        //alert(totalCount);
+
+        let nowPage = ${nowPage};	// 서버로부터 현재 페이지를 취득
+        //alert(nowPage);
+
+        let pageSize = 15;//페이지의 크기(1~10) [1] ~ [10]
+
+        let totalPages = totalCount / pageSize;
+
+        if(totalCount % pageSize > 0){
+            totalPages++;
         }
+
+        /*페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.*/
+        if($('#pagination').data("twbs-pagination")){
+            $('#pagination').twbsPagination('destroy');
+        }
+
+        $("#pagination").twbsPagination({
+            startPage : nowPage,
+            totalPages : totalPages, //전체 페이지
+            visiblePages: 10, //최대로 보여줄 페이지
+            first: '<span sria-hidden="true">«</span>',
+            prev: "이전",
+            next: "다음",
+            last: '<span sria-hidden="true">»</span>',
+            initiateStartPageClick:false,
+            onPageClick: function(event,page){
+                location.href = "/admin/memberInfo.do?&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
+            }
+        });
+
+        $("#btnSearch").click(function () {
+
+            if($('#_choice').val() === ""){
+                let Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: '검색옵션을 선택해주세요!'
+                })
+                return;
+
+            }else if($('#_search').val() ===""){
+                let Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: '검색어를 입력해주세요!'
+                })
+
+                return;
+            }
+
+            location.href = "/admin/memberInfo.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
+        });
     });
 </script>
-<!-- jQuery -->
-<script src="/resources/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables  & Plugins -->
-<script src="/resources/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/resources/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="/resources/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="/resources/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="/resources/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="/resources/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="/resources/plugins/jszip/jszip.min.js"></script>
-<script src="/resources/plugins/pdfmake/pdfmake.min.js"></script>
-<script src="/resources/plugins/pdfmake/vfs_fonts.js"></script>
-<script src="/resources/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="/resources/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="/resources/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/resources/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="/resources/dist/js/demo.js"></script>
-<!-- Page specific script -->
-<script>
-
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
-</script>
-
-
 </body>
 </html>
