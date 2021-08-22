@@ -1,10 +1,13 @@
 package com.camping.bit.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.camping.bit.dto.CampingBbsDto;
+import com.camping.bit.dto.CampingCommentDto;
 import com.camping.bit.dto.CampingDetailDto;
 import com.camping.bit.dto.CampingImageDto;
+import com.camping.bit.dto.CampingLikeDto;
 import com.camping.bit.dto.CampingListDto;
 import com.camping.bit.dto.CampingParam;
 
@@ -39,8 +42,48 @@ public interface CampingService {
 	
 	//캠핑디테일 리뷰 상세화면
 	public CampingBbsDto campingdetailreview(CampingBbsDto cbsdto);
+
+	//캠핑장 리뷰 작성하기(후처리)
+	public void campingwritereviewAf(CampingBbsDto cbsdto);
 	
-	//캠핑장 리뷰 작성하기
-	public void campingwritereview(CampingBbsDto cbsdto);
+	//캠핑장 리뷰 조회수 
+	public int getCampingReviewReadcount(int review_seq);
+	
+	//캠핑장 리뷰 수정하기(후처리)
+	public void campingupdatereviewAf(CampingBbsDto cbsdto);
+	
+	//캠핑장 리뷰 삭제하기
+	public boolean campingdeletereview(int review_seq);
+	
+	//캠핑장 리뷰 검색하기
+	public List<CampingBbsDto> campingSearchReview(CampingParam param);
+	
+	//캠핑장 좋아요 뿌리기 
+	public Map<String, Object> getCampingLike(Map<String, Object> contentidMap);
+	
+	//좋아요 어쩌고 하기 위해 likecount검사하는 용
+	public Map<String, Object> getCampingLikeInfo(int contentid);
+	
+	//캠핑장 좋아요 증가시키기
+	public boolean plusCampingHeart(CampingLikeDto clike);
+	
+	//캠핑장 좋아요 감소시키기
+	public boolean minusCampingHeart(CampingLikeDto clike);
+	
+	//캠핑장 좋아요 늘리기
+	public void plusCampingLikecount(int contentid);
+		
+	//캠핑장 좋아요 줄이기
+	public void minusCampingLikecount(int contentid);
+	
+	//캠핑장 좋아요 수 증감(likecount)
+	public int getCampingLikecount(int contentid);
+	
+	//캠핑장 리뷰 댓글달기
+	public String campingWriteComment(CampingCommentDto cc);
+	
+	//캠핑장 리뷰 보여주기
+	public List<CampingCommentDto> campingShowComment(int comment_seq);
+	
 	
 }

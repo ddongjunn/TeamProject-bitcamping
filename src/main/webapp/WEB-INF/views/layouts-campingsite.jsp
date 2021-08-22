@@ -15,14 +15,18 @@
 <body>
 
 <div>
-	
+	<div>
+		<tiles:insertAttribute name="header" />
+	</div>
+	<div>
+		<tiles:insertAttribute name="top" />
+	</div>
 	<div>
 		<tiles:insertAttribute name="main" />
 	</div>
 	<div>
-		<tiles:insertAttribute name="review" />
+		<tiles:insertAttribute name="footer" />
 	</div>
-	
 
 </div>
 

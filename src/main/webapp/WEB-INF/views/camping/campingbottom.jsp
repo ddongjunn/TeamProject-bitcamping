@@ -36,53 +36,6 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 List<CampingImageDto> campingimage = (List<CampingImageDto>)request.getAttribute("campingimage");
 String campingintro = (String)request.getAttribute("campingintro");
 %>
-<a href = "campinglist.do">목록으로 돌아가기</a>
-<div class = "camping_list">
-	<ul>
-		<li style = "list-style : none;">
-			<div class = "image" style = "float : left ; margin-right : 10px" >
-				<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/csite_alt_image.png'" width = "400" height = "400">
-			</div>
-			<div class = "camping_information" style = "float : left">
-				<div class = "camping_site name">
-					<h2 class = "camping_site_name">	
-							<%=campinglist.getFacltnm()%>
-						<span class = "readcount" style = "font-size : 15px">조회수 : <%=campinglist.getReadcount()%></span>
-						<span class = "readcount" style = "font-size : 15px">추천수 : <%=campinglist.getLikecount()%></span>
-					</h2>
-				</div>
-				<hr>
-				<h5> 주소  : <%=campinglist.getAddr1() %></h5>	
-				<h5> 전화번호 : <%=campinglist.getTel() %></h5>
-				<h5> 캠핑장 환경 : <%=campinglist.getLctcl() %>/<%=campinglist.getFacltdivnm() %></h5>	
-				<h5> 캠핑장 유형 : <%=campinglist.getInduty() %></h5>
-				<h5> 운영기간 : <%=campingdetail.getOperpdcl() %></h5>
-				<h5> 운영일 : <%=campingdetail.getOperdecl() %></h5>
-				
-				<c:url value="<%=campinglist.getHomepage() %>" var="url" />
-				<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
-					<c:choose>
-					  	<c:when test="${url eq 'none'}">
-					       	홈페이지 준비중 / 
-					    </c:when>
-					    <c:otherwise>
-					        <button type = button onclick = "location.href ='${url}'">홈페이지</button>
-					    </c:otherwise>
-					</c:choose>
-					<c:choose>
-					  	<c:when test="${url1 eq 'none'}">
-					        전화예약
-					    </c:when>
-					    <c:otherwise>
-					        <button type = button onclick = "location.href ='${url1}'">예약하기</button>
-					    </c:otherwise>
-					</c:choose>
-				<h5> 시설 : <%=campinglist.getSbrscl() %></h5>
-			</div>
-			<div style="clear:both"></div>
-		</li>
-	</ul>
-</div>
 <div id ="section">
 		<h2 class="skip">캠핑장 디테일 화면 분할</h2>
 			<div class="layout">
@@ -423,7 +376,7 @@ $("#mapBtn").click(function(){
 				error:function(request,status,error){
 				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
-			});
+			});//ajax reviewBtn 끝나는 곳
 			
 	});//reviewBtn function 끝나는 곳
 	
