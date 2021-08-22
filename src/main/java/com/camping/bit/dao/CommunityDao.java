@@ -37,7 +37,10 @@ public interface CommunityDao {
 	public void likeUp(CommunityLikeDto dto);
 	
 	// 좋아요 취소
-	public void deleteLike(CommunityLikeDto dto);
+	public void likeDown(CommunityLikeDto dto);
+
+	//좋아요 확인
+	public boolean likeCheck(CommunityLikeDto dto);
 
 	// 댓글 리스트
 	public List<CommunityCommentDto> commentList(int community_seq);

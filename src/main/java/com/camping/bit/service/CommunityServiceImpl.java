@@ -75,10 +75,16 @@ public class CommunityServiceImpl implements CommunityService{
 	
 	// 좋아요 취소
 	@Override 
-	public void deleteLike(CommunityLikeDto dto) {
-		dao.deleteLike(dto);
+	public void likeDown(CommunityLikeDto dto) {
+		dao.likeDown(dto);
 	}
-	
+
+	//좋아요 확인
+	@Override
+	public boolean likeCheck(CommunityLikeDto dto) {
+		return dao.likeCheck(dto);
+	}
+
 	// 댓글 리스트
 	@Override
 	public List<CommunityCommentDto> commentList(int community_seq) {
