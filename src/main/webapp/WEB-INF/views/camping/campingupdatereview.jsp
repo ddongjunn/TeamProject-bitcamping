@@ -3,6 +3,7 @@
 <%@page import="com.camping.bit.dto.CampingBbsDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,25 +15,24 @@
 </head>
 <body>
 <% 
-CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");
+CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailreview");
+
 %>
 
-<form name = "write_review_form" method="post" action="campingwritereviewAf.do" enctype = "multipart/form-data" autocomplete = "off">
+<form name = "update_review_form" action="campingupdatereviewAf.do" method="post">
+<c:set var = "campingbbs" value = '<%=campingbbs%>'></c:set>
+<input type= "hidden" name="review_seq" value="${campingbbs.review_seq}">
+<input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
 
-<div style="clear:both"></div>
-<div id = "writer_info">
-<input type="hidden" name="user_id" value="${login.id}">
-<input type = "hidden" name = "contentid" value = '<%=campinglist.getContentid() %>'>
-	<h2>${login.id}님의 소중한 리뷰</h2>
-	<h2><input name="title" type = "text" placeholder = "제목을 입력해주세요"></h2>
-</div>
+${campingbbs.user_id}님 무엇을 수정해볼까요?
 
+<h3>제목 : <input name="title" type = "text" value = "${campingbbs.title}"></h3>
 <div style="clear:both"></div>
+
 <div id="summernotebox" style="width: 500px; margin: auto; float : left">
-		<textarea id="summernote" name="content" ></textarea>
+		<textarea id="summernote" name="content" >${campingbbs.content}</textarea>
 </div>
-
-<button type = "submit" value = "글쓰기" id = "campingwritereview">글쓰기</button>
+<button type = "submit" value = "수정하기" id = "campingupdatereview">수정하기</button>
 
 </form>
 </body>
@@ -89,6 +89,7 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
       	});     	
     }
 
+	
 	
 </script>
 </html>

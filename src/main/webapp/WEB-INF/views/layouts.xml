@@ -56,22 +56,7 @@
 
 
 	<!-- 효경 -->
-	<definition name = "campinglist.tiles" extends = "main.tiles">
-		<put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>
-	</definition>
 
-	<definition name = "campingdetail.tiles" extends = "main.tiles">
-		<put-attribute name="main" value = "/WEB-INF/views/camping/campingdetail.jsp"/>
-	</definition>
-	
-	<definition name = "campingmap.tiles" extends = "main.tiles">
-		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingmap.jsp"/>
-	</definition>
-	
-
-	<definition name = "campingdetailreview.tiles" extends = "main.tiles">
-		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingdetailreview.jsp"/>
-	</definition>
 
 	<!-- 영신 -->
 	<!-- 캠핑 용품 대여 -->

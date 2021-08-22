@@ -8,6 +8,20 @@
 <!--DB에 컬럼 추가 
 ALTER TABLE CAMPING_LIST ADD READCOUNT NUMBER(8) DEFAULT '0' NOT NULL; 
 ALTER TABLE CAMPING_LIST ADD LIKECOUNT NUMBER(8) DEFAULT '0' NOT NULL;
+
+
+
+CREATE TABLE CAMPING_LIKE(
+LIKE_AUTO_SEQ NUMBER(8) NOT NULL, 
+LIKED_PAGE NUMBER(8) NOT NULL,
+USER_ID VARCHAR2(100) NOT NULL, 
+CONTENT_TYPE NUMBER(8) NOT NULL, 
+CONSTRAINT PK_CAMPING_LIKE PRIMARY KEY (LIKE_AUTO_SEQ),
+CONSTRAINT FK_CAMPING_LIKE FOREIGN KEY(USER_ID) REFERENCES MEMBER(ID));
+    
+CREATE SEQUENCE CAMPING_LIKE_SEQ
+START WITH 1
+INCREMENT BY 1;
 -->
 <!DOCTYPE html>
 <%  
@@ -30,6 +44,7 @@ String siteBottomCl2 = request.getParameter("siteBottomCl2");
 String siteBottomCl3 = request.getParameter("siteBottomCl3");
 String siteBottomCl4 = request.getParameter("siteBottomCl4");
 String siteBottomCl5 = request.getParameter("siteBottomCl5");
+String user_id = (String)request.getAttribute("user_id");
 %>  
 <html>
 <head>
