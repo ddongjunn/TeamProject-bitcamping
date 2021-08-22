@@ -38,7 +38,7 @@ public class RegiController {
         return service.idCheck(id);
     }
 
-    @PostMapping(value = "addMember.do")
+    @RequestMapping(value = "addMember.do", method = { RequestMethod.POST, RequestMethod.GET })
     public String addMember(HttpSession session, MemberDto dto) {
 
         if(dto.getSns_Type().equals("none")){
@@ -53,7 +53,7 @@ public class RegiController {
 
         service.addMember(dto);
 
-        return "main.tiles";
+        return "redirect:/main.do";
     }
 
     @RequestMapping(value = "normal.do", method = { RequestMethod.GET })

@@ -23,17 +23,20 @@
 <div>
 		<c:choose>
 			<c:when test="${empty login}">
-				<a href="#none" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
+				<a href="javascript:void(0)" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
 			</c:when>
+            <c:when test="${login.auth == 0}">
+               <a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">마이페이지</a>
+            </c:when>
 			<c:otherwise>
-				<a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">마이페이지</a>
+               <a href="/login/logout.do">로그아웃</a> <a href="/admin/main.do">관리자페이지</a>
 			</c:otherwise>
 		</c:choose>
 </div>
-<div>
 
+<div>
    <a href="/csite/campinglist.do">캠핑장검색</a> <a href="/community/main.do">커뮤니티</a> <a href="/rent/list.do">물품대여</a>
-   <a href="/cs/notice.do">고객센터</a>
+   <a href="/cs/csMain.do">고객센터</a>
 </div>
 
 <div id="login_modal" class="login_modal-overlay" style="z-index: 800;">
@@ -51,7 +54,7 @@
                      <button class='btn-social-login' style='background:#FFEB00'><i class="xi-3x xi-kakaotalk text-dark"></i></button>
                   </form>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <form style="display: inline">
+                  <form style="display: inline" action="javascript:void(0)">
                      <button class='btn-social-login' style='background:#D93025'><i class="xi-3x xi-google"></i></button>
                   </form>
                </div>

@@ -29,4 +29,14 @@ public class MypageServieImpl implements  MypageService{
     public void modifyInfo(MemberDto dto) {
         dao.modifyInfo(dto);
     }
+
+    @Override
+    public String getPassword(String id) {
+        return dao.getPassword(id);
+    }
+
+    @Override
+    public void withdrawal(String id) {
+        dao.withdrawal(id);
+    }
 }

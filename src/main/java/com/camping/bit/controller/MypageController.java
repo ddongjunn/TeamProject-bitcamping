@@ -3,16 +3,23 @@ package com.camping.bit.controller;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.MypageParam;
+import com.camping.bit.service.MemberService;
 import com.camping.bit.service.MypageService;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -21,6 +28,9 @@ public class MypageController {
 
     @Autowired
     MypageService service;
+
+    @Autowired
+    MemberService memberService;
 
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String main() {
@@ -34,7 +44,6 @@ public class MypageController {
         int sn = param.getPageNumber();
         int start = 1 + 15 * sn;
         int end = 15 + 15 * sn;
-        System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
 
         param.setStart(start);
         param.setEnd(end);
@@ -71,6 +80,9 @@ public class MypageController {
                 break;
         }*/
 
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+
         return "mypage-community.tiles";
     }
 
@@ -83,21 +95,29 @@ public class MypageController {
     }
 
     @RequestMapping(value = "update.do", method = { RequestMethod.GET,RequestMethod.POST} )
-    public String mypageUpdate() {
+    public String mypageUpdate(MemberDto dto, Model model, HttpSession session) {
+
+
+        if(dto.getId() != null) {
+            MemberDto user = memberService.getMember(dto.getId());
+            model.addAttribute("user", user);
+            session.setAttribute("login",user);
+            return "mypage-update.tiles";
+        }
+            MemberDto user = (MemberDto) session.getAttribute("login");
+            model.addAttribute("user",memberService.getMember(user.getId()));
+            session.setAttribute("login",memberService.getMember(user.getId()));
 
         return "mypage-update.tiles";
     }
 
     @RequestMapping(value = "updateAf.do", method = { RequestMethod.POST} )
-    public String mypageUpdateAf(MemberDto dto, HttpSession session) {
+    public String mypageUpdateAf(MemberDto dto, HttpSession session, RedirectAttributes redirect) {
 
         service.modifyInfo(dto);
 
-        session.setAttribute("login",dto);
-
         return "redirect:/account/update.do";
     }
-
 
 
     @RequestMapping(value = "password.do", method = RequestMethod.GET)
@@ -107,11 +127,50 @@ public class MypageController {
         return "mypage-password.tiles";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "passwordCheck.do", method = RequestMethod.POST)
+    public boolean passwordCheck(MemberDto dto) {
+
+        //들어오는 id를 통해서 password 가져오기
+        String password = service.getPassword(dto.getId());
+
+        //입력한 비밀번호와 (암호화된)기존 비밀번호 비교
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(dto.getPwd(), password);
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "passwordAf.do", method = RequestMethod.POST)
+    public boolean mypagePasswordAf(MemberDto dto) {
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+        //새로운 비밀번호 암호화
+        String securePw = encoder.encode(dto.getPwd());
+        dto.setPwd(securePw);
+
+        //비밀번호 변경
+        memberService.updatePw(dto);
+
+
+        return true;
+    }
+
     @RequestMapping(value = "withdrawal.do", method = RequestMethod.GET)
     public String mypageWithdrawal() {
 
 
         return "mypage-withdrawal.tiles";
+    }
+
+    @RequestMapping(value = "withdrawalAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String mypageWithdrawalAf(HttpSession session, String id) {
+
+        service.withdrawal(id);
+        session.invalidate();
+
+        return "redirect:/";
     }
 
 }

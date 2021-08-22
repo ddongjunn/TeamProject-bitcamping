@@ -43,8 +43,14 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/account/*do"/>
-   
+            <mvc:mapping path="/community/helloWrite.do"/>
+            <mvc:mapping path="/csite/campingwritereview.do"/>
+
             <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/*do"/>
+            <bean id="adminInterceptor" class="com.camping.bit.interceptor.AdminInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 
