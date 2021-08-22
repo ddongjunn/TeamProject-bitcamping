@@ -63,7 +63,7 @@
 	</select>
 
 	<!-- 조회수 -->
-	<update id="readcount" parameterType="int">
+	<update id="readCount" parameterType="int">
 		UPDATE COMMUNITY_BBS
 		SET READCOUNT = READCOUNT + 1
 		WHERE COMMUNITY_SEQ = #{community_seq}

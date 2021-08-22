@@ -22,6 +22,19 @@ public class LoginInterceptor implements HandlerInterceptor{
         StringBuffer url = (StringBuffer) request.getRequestURL();
         System.out.println("요청 온 주소 : " + url);
 
+        String query = request.getQueryString();
+        System.out.println("쿼리스트링 : " + query);
+
+        if (query == null || query.equals("null")) {
+
+            query = "";
+
+        } else {
+
+            query = "?" + query;
+
+        }
+
         if(dto != null){
             return true;
         }
@@ -38,7 +51,7 @@ public class LoginInterceptor implements HandlerInterceptor{
         out.println("<body>");
         out.println("<script>");
         out.println("alert('로그인이 필요한 서비스입니다.');");
-        out.println("location.href='http://localhost:8090/main.do?move=" + url + "';");
+        out.println("location.href='http://localhost:8090/main.do?move=" + url + query + "';");
         out.println("</script>");
         out.println("</body>");
         out.println("</html>");

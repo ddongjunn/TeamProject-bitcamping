@@ -27,4 +27,5 @@ public interface MemberService {
 
 	public void updatePw(MemberDto dto);
 
+
 }
