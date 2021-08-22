@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.camping.bit.dto.CommunityCommentDto;
 import com.camping.bit.dto.CommunityDto;
+import com.camping.bit.dto.CommunityLikeDto;
 import com.camping.bit.dto.CommunityParam;
 
 public interface CommunityDao {
@@ -12,13 +13,13 @@ public interface CommunityDao {
 	public List<CommunityDto> helloList(CommunityParam param);
 	
 	// 게시글 총수
-	int helloBoardCount(CommunityParam param);
+	public int helloBoardCount(CommunityParam param);
 	
 	// service같이 함수명만 적어줌 
 	public void helloWrite(CommunityDto dto);
 
 	// 게시글 상세보기 
-	public CommunityDto helloDetail(int community_seq);
+	public CommunityDto helloDetail(CommunityDto dto);
 	
 	// 조회수
 	public void readCount(int community_seq);
@@ -29,6 +30,15 @@ public interface CommunityDao {
 	// 글 수정
 	public void helloUpdate(CommunityDto dto);
 	
+	// 좋아요 정보
+	public int likeCount(int community_seq);
+
+	// 좋아요 저장 
+	public void likeUp(CommunityLikeDto dto);
+	
+	// 좋아요 취소
+	public void deleteLike(CommunityLikeDto dto);
+
 	// 댓글 리스트
 	public List<CommunityCommentDto> commentList(int community_seq);
 	

@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.camping.bit.dto.CommunityDto" alias = "CommunityDto"/>
         <typeAlias type="com.camping.bit.dto.CommunityParam" alias = "CommunityParam"/>
         <typeAlias type="com.camping.bit.dto.CommunityCommentDto" alias = "CommunityCommentDto"/>
+       
 
 
     </typeAliases>	
