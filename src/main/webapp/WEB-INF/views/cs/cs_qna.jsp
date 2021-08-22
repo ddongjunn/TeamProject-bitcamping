@@ -13,7 +13,7 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <style type="text/css">
-.noticeList > th, td{
+.qnaList > th, td{
 	padding: 5px;
 	border-bottom: solid 1px gray;
 	border-collapse: collapse;
@@ -31,12 +31,12 @@
 </head>
 <body>
 
-<table class="noticeList">
+<table class="qnaList">
 
 	<colgroup>
 		<col width="10%">
-		<col width="45%">
 		<col width="10%">
+		<col width="45%">
 		<col width="10%">
 		<col width="15%">	
 		<col width="10%">	
@@ -44,48 +44,70 @@
 	
 	<thead>
 		<tr>
-			<th>글번호</th> <th>제목</th> <th>첨부파일</th> <th>작성자</th> <th>작성일</th> <th>조회수</th>
+			<th>글번호</th> <th>답변상태</th> <th>제목</th> <th>작성자</th> <th>작성일</th> <th>조회수</th>
 		</tr>
 	</thead>
 	
 	<tbody>
-		<c:forEach items="${notice}" var="notice">
+		<c:forEach items="${qna}" var="qna" varStatus="i">
 			<tr>
-				<td>${notice.notice_Seq}</td>
+				<td>${qna.qna_Seq}</td>
+				<td>
+					<c:choose>
+						<c:when test="${qna.status eq 0}">
+							[답변대기중]
+						</c:when>
+						<c:otherwise>
+							[답변완료]
+						</c:otherwise>
+					</c:choose>				
+				</td>
 				<td style="text-align: left;">
-					<a href="/cs/noticeDetail.do?notice_Seq=${notice.notice_Seq}">
-						${notice.title}
-						<c:if test="${notice.commentcount ne 0}">
-							<span style="font-size: 13px; color: tomato;">[${notice.commentcount}]</span>
-						</c:if>
-					</a>
+					<c:choose>
+						<c:when test="${qna.secret eq 0}">
+							<a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}">						
+								${qna.title}
+							</a>
+						</c:when>
+						<c:otherwise>
+						
+							<c:choose>						
+								<c:when test="${login.id eq qna.user_Id || login.auth eq 3}">
+									<a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}">							
+										${qna.title}
+									</a> 🔒 
+								</c:when>
+								<c:otherwise>
+									<a href="javascript:noPermission();">						
+										${qna.title}
+									</a> 🔒 
+								</c:otherwise>
+							</c:choose>
+							
+						</c:otherwise>
+					</c:choose>			
 				</td>
+				<td>${qna.nickname}</td>
 				<td>
-					<c:if test="${not empty notice.filename}"> 💾 </c:if>
-				</td>
-				<td>${notice.nickname}</td>
-				<td>
- 					<fmt:parseDate value="${notice.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+ 					<fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
 					<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
 				</td>
-				<td>${notice.readcount}</td>
+				<td>${qna.readcount}</td>
 			</tr>		
 		</c:forEach>
 	</tbody>
 </table>
 
 <div class="buttonbox">
-	<button onclick="location.href='/cs/noticeWrite.do'">글쓰기</button>
+	<button onclick="location.href='/cs/qnaWrite.do'">글쓰기</button>
 </div>
 
 <!-- pagination -->
 <div class="container">
     <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination" style="justify-content:center;"></ul>
+        <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
     </nav>
 </div>
-
-<br>
 
 <!-- 검색 -->
 <div class="searchbox" style="margin: 5px auto 10px auto">
@@ -97,7 +119,7 @@
 				<option value="" selected="selected">선택</option>
 				<option value="title">제목</option>
 				<option value="content">내용</option>
-				<!-- <option value="writer">작성자</option> -->
+				<option value="writer">작성자</option>
 			</select>	
 		</td>
 		<td style="padding-left: 5px">
@@ -113,6 +135,14 @@
 
 <script type="text/javascript">
 
+	function noPermission(){
+		Swal.fire({
+			  icon: 'error',
+			  title: '접근 권한이 없습니다',
+			  text: '비밀글은 작성자와 관리자만 조회할 수 있습니다',
+		});
+	}
+
 	var search = "${search}";
 	var choice = "${choice}";
 	
@@ -124,11 +154,14 @@
 		}	
 	});
 
-	let totalCount = ${totalCount};
-	let nowPage = ${pageNumber};
-	let pageSize = 10;
-	let _totalPages = totalCount / pageSize;
+	let totalCount = ${totalCount};	// 서버로부터 총글의 수를 취득
+	//alert(count);
+	let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
+	//alert(pageNum);
 	
+	let pageSize = 10;
+	
+	let _totalPages = totalCount / pageSize;
 	if(totalCount % pageSize > 0){
 		_totalPages++;
 	}
@@ -145,13 +178,13 @@
 		last:'<span sria-hidden="true">»</span>',
 		initiateStartPageClick:false,		// onPageClick 자동 실행되지 않도록 한다
 		onPageClick:function(event, page){
-			location.href = "/cs/notice.do?search=" + $("#_search").val() + "&choice=" + $("#_choice").val() + "&pageNumber=" + (page - 1);	
+			location.href = "/cs/qna.do?search=" + $("#_search").val() + "&choice=" + $("#_choice").val() + "&pageNumber=" + (page - 1);	
 		}
 	});
 	
 	
 	$("#btnSearch").click(function () {
-		location.href = "/cs/notice.do?search=" + $("#_search").val() + "&choice=" + $("#_choice").val();	
+		location.href = "/cs/qna.do?search=" + $("#_search").val() + "&choice=" + $("#_choice").val();	
 	});
 </script>
 

@@ -162,6 +162,10 @@
 		<put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeDetail.jsp" />
 	</definition>
 
+	<definition name="noticeUpdate.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeUpdate.jsp" />
+	</definition>	
+
 
 	<!-- 민경 -->
 	<definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">

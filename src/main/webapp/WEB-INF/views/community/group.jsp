@@ -8,16 +8,7 @@
 </head>
 <body>
 
-<div>
-	<a href="/cs/csMain.do">고객센ㅋ터</a>
-</div>
-<div>
-	<a href="/cs/notice.do">공지사항</a>
-</div>
-<div>
-	<a href="/cs/qna.do">Q & A</a>
-</div>
-
+<h1>캠퍼모집 게시판</h1>
 
 </body>
 </html>
