@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.camping.bit.dao.CommunityDao;
 import com.camping.bit.dto.CommunityCommentDto;
 import com.camping.bit.dto.CommunityDto;
+import com.camping.bit.dto.CommunityLikeDto;
 import com.camping.bit.dto.CommunityParam;
 
 @Service
@@ -35,8 +36,8 @@ public class CommunityServiceImpl implements CommunityService{
 	
 	// 게시글 상세보기
 	@Override
-	public CommunityDto helloDetail(int community_seq) {
-		CommunityDto data = dao.helloDetail(community_seq);
+	public CommunityDto helloDetail(CommunityDto dto) {
+		CommunityDto data = dao.helloDetail(dto);
 		
 		return data;
 	}
@@ -46,7 +47,6 @@ public class CommunityServiceImpl implements CommunityService{
 	public void readCount(int community_seq) {
 		dao.readCount(community_seq);
 	}
-	
 	
 	// 글 삭제
 	@Override
@@ -58,6 +58,25 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void helloUpdate(CommunityDto dto) {
 		dao.helloUpdate(dto);
+	}
+	
+	// 좋아요 정보
+	@Override
+	public int likeCount(int community_seq) {
+
+		return dao.likeCount(community_seq);
+	}
+
+	// 좋아요 저장
+	@Override 
+	public void likeUp(CommunityLikeDto dto) {
+		dao.likeUp(dto);
+	}
+	
+	// 좋아요 취소
+	@Override 
+	public void deleteLike(CommunityLikeDto dto) {
+		dao.deleteLike(dto);
 	}
 	
 	// 댓글 리스트

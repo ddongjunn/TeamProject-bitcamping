@@ -5,35 +5,41 @@
 
 <mapper namespace="com.camping.bit.dao.CommunityDao">
 
-	<!-- 멤버 id에서 nickname받아오는거 -->
-	<!-- <select id="">
-    </select> -->
-
 	<!-- 가입인사 게시글 리스트 -->
 	<select id="helloList" parameterType="CommunityParam" resultType="CommunityDto">
 		SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
-		FROM COMMUNITY_BBS A, MEMBER B
-		WHERE 1=1 AND A.USER_ID = B.ID
-		<if test='choice != null and choice != " "
-           and search != null and search != " "'>
-			<if test='choice == "title"'>
-				AND TITLE LIKE '%'||#{search}||'%'
-			</if>
-			<if test='choice == "content"'>
-				AND CONTENT LIKE '%'||#{search}||'%'
-			</if>
-			<if test='choice == "nickname"'>
-				AND NICKNAME=#{search}
-			</if>
-		</if>
-		ORDER BY COMMUNITY_SEQ DESC
-	</select>
+		FROM(
+			SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+			COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+			FROM COMMUNITY_BBS A, MEMBER B
+			WHERE 1=1 
+				AND A.USER_ID = B.ID
+				AND DEL = 0
+				<if test='choice != null and choice != " "
+           			and search != null and search != " "'>
+					<if test='choice == "title"'>
+						AND TITLE LIKE '%'||#{search}||'%'
+					</if>
+					<if test='choice == "content"'>
+						AND CONTENT LIKE '%'||#{search}||'%'
+					</if>
+					<if test='choice == "nickname"'>
+						AND B.NICKNAME=#{search}
+					</if>
+				</if>
+				ORDER BY COMMUNITY_SEQ DESC
+				)
+				WHERE RNUM BETWEEN #{start} AND #{end}
+			</select>
 
 	<!-- 글의 총수 -->
 	<select id="helloBoardCount" parameterType="CommunityParam" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
-		FROM COMMUNITY_BBS
-		WHERE 1=1 AND BBSTYPE='hello'
+		FROM COMMUNITY_BBS A, MEMBER B
+		WHERE 1=1 
+			AND BBSTYPE='hello' 
+			AND A.USER_ID = B.ID
+			AND DEL = 0
 		<if test='choice != null and choice != " "
            and search != null and search != " "'>
 			<if test='choice == "title"'>
@@ -43,7 +49,7 @@
 				AND CONTENT LIKE '%'||#{search}||'%'
 			</if>
 			<if test='choice == "nickname"'>
-				AND NICKNAME=#{search}
+				AND B.NICKNAME=#{search}
 			</if>
 		</if>
 	</select>
@@ -57,9 +63,15 @@
 	</insert>
 
 	<!-- 글 상세조회, 파라미터가 넣어주는값-->
-	<select id="helloDetail" parameterType="java.lang.Integer" resultType="CommunityDto">
-		SELECT * FROM COMMUNITY_BBS
+	<select id="helloDetail" parameterType="CommunityDto" resultType="CommunityDto">
+		SELECT  COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
+	             (
+	             	SELECT COUNT(*) FROM COMMUNITY_BBS_LIKE WHERE COMMUNITY_BBS_LIKE.USER_ID = #{user_id} <!--현재 로그인한 아이디 -->    
+	             	AND COMMUNITY_BBS_LIKE.COMMUNITY_SEQ = COMMUNITY_BBS.COMMUNITY_SEQ     
+	             ) AS LIKED_YN, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME
+		FROM COMMUNITY_BBS
 		WHERE COMMUNITY_SEQ = #{community_seq}
+
 	</select>
 
 	<!-- 조회수 -->
@@ -70,9 +82,10 @@
 	</update>
 
 	<!-- 글 삭제 -->
-	<delete id="boardDelete" parameterType="CommunityDto">
-		DELETE COMMUNITY_BBS WHERE COMMUNITY_SEQ = #{community_seq}
-	</delete>
+	<update id="boardDelete" parameterType="CommunityDto">
+		UPDATE COMMUNITY_BBS SET DEL = 1
+		WHERE COMMUNITY_SEQ = #{community_seq}
+	</update>
 
 	<!-- 글 수정 -->
 	<update id="helloUpdate" parameterType="CommunityDto">
@@ -82,8 +95,29 @@
 								 WDATE=SYSDATE
 		WHERE COMMUNITY_SEQ = #{community_seq}
 	</update>
-  
-  <!-- 댓글 리스트 -->
+	
+
+	<!-- 좋이요 갯수 가져오는거 -->
+	<select id="likeCount" parameterType="int" resultType="Integer">
+		SELECT COUNT(*) AS TOTAL
+		FROM COMMUNITY_BBS_LIKE
+		WHERE COMMUNITY_SEQ = #{community_seq}
+	</select>
+	
+	 <!-- 좋아요 저장 -->
+	<insert id="likeUp" parameterType="CommunityLikeDto">
+		INSERT INTO COMMUNITY_BBS_LIKE
+			(COMMUNITY_LIKE_SEQ, COMMUNITY_SEQ, USER_ID)
+		VALUES(COMMUNITY_LIKE_SEQ.NEXTVAL, #{community_seq}, #{user_id})
+	</insert> 
+	
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLike" parameterType="CommunityLikeDto">
+		DELETE FROM COMMUNITY_BBS_LIKE
+		WHERE COMMUNITY_SEQ = #{community_seq} AND USER_ID = #{user_id}
+	</delete> 
+	
+	  <!-- 댓글 리스트 -->
 	<select id="commentList" resultType="CommunityCommentDto" parameterType="java.lang.Integer">
 		SELECT * FROM COMMUNITY_BBS_COMMENT
   		WHERE COMMUNITY_SEQ = #{community_seq}

@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- bootstrap 추가 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
@@ -37,9 +37,7 @@
 	<th>번호</th><th>제목</th><th>닉네임</th><th>조회수</th><th>작성일</th>
 </tr>
 	<c:if test="${empty helloList}">
-	<tr>
-		<td colspan="3">작성된 글이 없습니다</td>
-	</tr>			
+		<td colspan="3">작성된 글이 없습니다</td>			
 	</c:if>
 		<c:forEach var="data" items="${helloList}">
 			<tr>
@@ -74,7 +72,7 @@
 
 <!-- 페이지네이션 -->
 <div class="container" style="text-align: center" >
-    <div style = "display : inline-block"> 
+     <div style = "display : inline-block">  
 	    <nav aria-label="Page navigation">
 	        <ul class="pagination" id="pagination"></ul>
 	    </nav>
@@ -86,34 +84,40 @@
 </div>
 
 <script type="text/javascript">
-// 검색
-$("#btnSearch").click(function () {
-	location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();	
-}); 
-// 페이지네이션
-let totalCount = ${boardPage}; 	// 글의 총수
-let pageSize = 10;	// 페이지의 크기 1 ~ 10 [1] ~ [10]
-let nowPage = ${pageNumber}; // 현재 페이지
-
-let _totalPages = totalCount / pageSize;
-if(totalCount % pageSize > 0) {
-	_totalPages++;
-}
-$("#pagination").twbsPagination({
-	startPage: nowPage,
-	totalPages: (_totalPages==0)?1:_totalPages,
-	visiblePages: 10, // 보여지는 페이지 갯수
-	first: '<span sria-hidden="true">«</span>',
-	prev: "이전",
-	next: "다음",
-	last: '<span sria-hidden="true">»</span>',
-	initiateStartPageClick:false,
-	onPageClick:function(event, page){
-		//alert(page);
-		location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val() + "&pageNumber=" + (page - 1);
+$(document).ready(function () {
+	// 페이지네이션
+	let totalCount = ${totalCount}; 	// 글의 총수
+	let pageSize = 15;	// 페이지의 크기 1 ~ 10 [1] ~ [10]
+	let nowPage = ${nowPage}; // 현재 페이지
+	let totalPages = totalCount / pageSize;
+	
+	if(totalCount % pageSize > 0) {
+		totalPages++;
 	}
+	
+    /*페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.*/
+    if($('#pagination').data("twbs-pagination")){
+         $('#pagination').twbsPagination('destroy');
+     }
+	
+	$("#pagination").twbsPagination({
+		startPage: nowPage,
+		totalPages: totalPages,
+		visiblePages: 10, // 보여지는 페이지 갯수
+		first: '<span sria-hidden="true">«</span>',
+		prev: "이전",
+		next: "다음",
+		last: '<span sria-hidden="true">»</span>',
+		initiateStartPageClick:false,
+		onPageClick:function(event, page){
+			location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val() + "&pageNumber=" + (page - 1);
+		}
+	});
+ 	// 검색
+	$("#btnSearch").click(function () {
+		location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();	
+	});  
 });
-
 </script>
 
 
