@@ -23,34 +23,24 @@
         <c:otherwise>
             <table border="1" style="width: 100%">
                 <colgroup>
+                    <col style="width:10%;" />
                     <col style="width:auto;" />
                     <col style="width:8%;" />
                     <col style="width:10%;" />
                     <col style="width:11%;" />
                     <col style="width:16%;" />
                     <col style="width:9%;" />
-                    <col style="width:10%;" />
                 </colgroup>
 
                 <thead>
                 <tr>
-                    <th>아이디</th><th>이름</th><th>닉네임</th><th>핸드폰</th><th>이메일</th><th>가입일</th><th>가입경로</th>
+                    <th>가입경로</th><th>아이디</th><th>이름</th><th>닉네임</th><th>핸드폰</th><th>이메일</th><th>가입일</th><th>상태</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 <c:forEach var="list" items="${list}">
                     <tr>
-                        <td>${list.id}</td>
-                        <td>${list.username}</td>
-                        <td>${list.nickname}</td>
-                        <td>${list.phone}</td>
-                        <td>${list.email}</td>
-                        <td>
-                            <c:set var="date" value="${list.create_Date}"/>
-                                ${fn:substring(date,0,11)}
-                        </td>
-
                         <td>
                             <c:if test="${list.sns_Type eq 'naver'}">
                                 네이버
@@ -62,6 +52,24 @@
                                 자사
                             </c:if>
                         </td>
+                        <td>${list.id}</td>
+                        <td>${list.username}</td>
+                        <td>${list.nickname}</td>
+                        <td>${list.phone}</td>
+                        <td>${list.email}</td>
+                        <td>
+                            <c:set var="date" value="${list.create_Date}"/>
+                                ${fn:substring(date,0,11)}
+                        </td>
+                        <td>
+                            <c:if test="${list.auth == '0'}">
+                                활동
+                            </c:if>
+                            <c:if test="${list.auth == '1'}">
+                                탈퇴
+                            </c:if>
+                        </td>
+
                     </tr>
                 </c:forEach>
 

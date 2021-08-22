@@ -74,18 +74,33 @@
 		<put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>
 	</definition>
 
-	<definition name = "campingdetail.tiles" extends = "main.tiles">
-		<put-attribute name="main" value = "/WEB-INF/views/camping/campingdetail.jsp"/>
+	<definition name = "campingdetail.tiles" template = "/WEB-INF/views/layouts-campingsite.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name = "top" value = "/WEB-INF/views/camping/campingtop.jsp"/>
+		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingbottom.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
-	
+
 	<definition name = "campingmap.tiles" extends = "main.tiles">
 		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingmap.jsp"/>
 	</definition>
-	
 
-	<definition name = "campingdetailreview.tiles" extends = "main.tiles">
+
+	<definition name = "campingdetailreview.tiles" template="/WEB-INF/views/layouts-campingsite.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+		<put-attribute name = "top" value = "/WEB-INF/views/camping/campingdetailtop.jsp"/>
 		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingdetailreview.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
 	</definition>
+
+	<definition name = "campingwritereview.tiles" extends = "campingdetailreview.tiles">
+		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingwritereview.jsp"/>
+	</definition>
+
+	<definition name = "campingupdatereview.tiles" extends = "campingdetailreview.tiles">
+		<put-attribute name = "main" value = "/WEB-INF/views/camping/campingupdatereview.jsp"/>
+	</definition>
+
 
 	<!-- 영신 -->
 	<!-- 캠핑 용품 대여 -->
@@ -110,7 +125,27 @@
 	</definition>
 	
 	<definition name="writeReview.tiles" template="/WEB-INF/views/rent/write_review.jsp">
-	</definition>	
+	</definition>
+
+	<definition name="csMain.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_main.jsp" />
+	</definition>
+
+	<definition name="qnaList.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_qna.jsp" />
+	</definition>
+
+	<definition name="qnaWrite.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_qnaWrite.jsp" />
+	</definition>
+
+	<definition name="qnaDetail.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_qnaDetail.jsp" />
+	</definition>
+
+	<definition name="qnaAnswer.tiles" extends="noticeList.tiles">
+		<put-attribute name="body" value="/WEB-INF/views/cs/cs_qnaAnswer.jsp" />
+	</definition>
 
 	<!-- 고객센터 -->
 	<definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
