@@ -1,91 +1,81 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <%--
   Created by IntelliJ IDEA.
-  User: djlee
-  Date: 2021-08-15
-  Time: 오후 8:16
+  User: 이동준
+  Date: 2021-08-19
+  Time: 오후 11:42
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
+
 </head>
 <body>
-<c:choose>
-    <c:when test="${bbstype eq 'hello'}">
-        <h2>가입인사</h2>
-    </c:when>
-    <c:when test="${bbstype eq 'free'}">
-        <h2>자유게시판</h2>
-    </c:when>
-    <c:when test="${bbstype eq 'deal'}">
-        <h2>중고거래</h2>
-    </c:when>
-    <c:when test="${bbstype eq 'review'}">
-        <h2>캠핑&여행후기</h2>
-    </c:when>
-    <c:otherwise>
-        <h2>캠핑장리뷰</h2>
-    </c:otherwise>
-</c:choose>
 <div>
+    <h2>회원정보</h2>
     <c:choose>
-    <c:when test="${empty list}">
-        <h1>작성하신 글이 없습니다.</h1>
-    </c:when>
-    <c:otherwise>
-        <table border="1" style="width: 70%">
-            <colgroup>
-                <col style="width:10%;" />
-                <col style="width:auto;" />
-                <col style="width:15%;" />
-                <col style="width:20%;" />
-            </colgroup>
+        <c:when test="${empty list}">
+            <h1>회원이 없습니다.</h1>
+        </c:when>
+        <c:otherwise>
+            <table border="1" style="width: 100%">
+                <colgroup>
+                    <col style="width:10%;" />
+                    <col style="width:auto;" />
+                    <col style="width:8%;" />
+                    <col style="width:10%;" />
+                    <col style="width:11%;" />
+                    <col style="width:16%;" />
+                    <col style="width:9%;" />
+                </colgroup>
 
-            <thead>
-            <tr>
-                <th>번호</th><th>제목</th><th>조회수</th><th>작성일</th>
-            </tr>
-            </thead>
+                <thead>
+                <tr>
+                    <th>가입경로</th><th>아이디</th><th>이름</th><th>닉네임</th><th>핸드폰</th><th>이메일</th><th>가입일</th><th>상태</th>
+                </tr>
+                </thead>
 
-            <tbody>
-                <c:forEach var="data" items="${list}">
-                    <c:if test="${data.del != '1'}">
-                        <tr>
-                            <td>${data.community_seq }</td>
+                <tbody>
+                <c:forEach var="list" items="${list}">
+                    <tr>
+                        <td>
+                            <c:if test="${list.sns_Type eq 'naver'}">
+                                네이버
+                            </c:if>
+                            <c:if test="${list.sns_Type eq 'kakao'}">
+                                카카오
+                            </c:if>
+                            <c:if test="${list.sns_Type eq 'none'}">
+                                자사
+                            </c:if>
+                        </td>
+                        <td>${list.id}</td>
+                        <td>${list.username}</td>
+                        <td>${list.nickname}</td>
+                        <td>${list.phone}</td>
+                        <td>${list.email}</td>
+                        <td>
+                            <c:set var="date" value="${list.create_Date}"/>
+                                ${fn:substring(date,0,11)}
+                        </td>
+                        <td>
+                            <c:if test="${list.auth == '0'}">
+                                활동
+                            </c:if>
+                            <c:if test="${list.auth == '1'}">
+                                탈퇴
+                            </c:if>
+                        </td>
 
-                            <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
-                            <c:if test="${bbstype eq 'free'}">
-                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'find'}">
-                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'deal'}">
-                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'review'}">
-                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'hello'}">
-                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-
-                            <td>${data.readcount}</td>
-                            <td>
-                                <c:set var="date" value="${data.wdate}"/>
-                                    ${fn:substring(date,2,16)}
-                            </td>
-                        </tr>
-                    </c:if>
+                    </tr>
                 </c:forEach>
-            </tbody>
-        </table>
-    </c:otherwise>
+
+                </tbody>
+            </table>
+        </c:otherwise>
     </c:choose>
 </div>
 
@@ -100,8 +90,9 @@
 <div align="center">
     <select id="_choice" name="choice">
         <option value="" selected="selected">선택</option>
-        <option value="title">제목</option>
-        <option value="content">내용</option>
+        <option value="id">아이디</option>
+        <option value="username">이름</option>
+        <option value="nickname">닉네임</option>
     </select>
     <input type="text" id="_search" name="search" placeholder="검색">
     <button type="button" id="btnSearch">검색</button>
@@ -130,7 +121,7 @@
         }
 
         /*페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.*/
-       if($('#pagination').data("twbs-pagination")){
+        if($('#pagination').data("twbs-pagination")){
             $('#pagination').twbsPagination('destroy');
         }
 
@@ -144,7 +135,7 @@
             last: '<span sria-hidden="true">»</span>',
             initiateStartPageClick:false,
             onPageClick: function(event,page){
-                location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
+                location.href = "/admin/memberInfo.do?&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
             }
         });
 
@@ -190,7 +181,7 @@
                 return;
             }
 
-            location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
+            location.href = "/admin/memberInfo.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
         });
     });
 </script>

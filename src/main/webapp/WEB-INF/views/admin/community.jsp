@@ -34,25 +34,26 @@
 </c:choose>
 <div>
     <c:choose>
-    <c:when test="${empty list}">
-        <h1>작성하신 글이 없습니다.</h1>
-    </c:when>
-    <c:otherwise>
-        <table border="1" style="width: 70%">
-            <colgroup>
-                <col style="width:10%;" />
-                <col style="width:auto;" />
-                <col style="width:15%;" />
-                <col style="width:20%;" />
-            </colgroup>
+        <c:when test="${empty list}">
+            <h1>작성하신 글이 없습니다.</h1>
+        </c:when>
+        <c:otherwise>
+            <table border="1" style="width: 70%">
+                <colgroup>
+                    <col style="width:10%;" />
+                    <col style="width:auto;" />
+                    <col style="width:15%;" />
+                    <col style="width:10%;" />
+                    <col style="width:20%;" />
+                </colgroup>
 
-            <thead>
-            <tr>
-                <th>번호</th><th>제목</th><th>조회수</th><th>작성일</th>
-            </tr>
-            </thead>
+                <thead>
+                <tr>
+                    <th>번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일</th>
+                </tr>
+                </thead>
 
-            <tbody>
+                <tbody>
                 <c:forEach var="data" items="${list}">
                     <c:if test="${data.del != '1'}">
                         <tr>
@@ -75,17 +76,18 @@
                                 <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
                             </c:if>
 
+                            <td>${data.nickname}</td>
                             <td>${data.readcount}</td>
                             <td>
                                 <c:set var="date" value="${data.wdate}"/>
-                                    ${fn:substring(date,2,16)}
+                                    ${fn:substring(date,2,19)}
                             </td>
                         </tr>
                     </c:if>
                 </c:forEach>
-            </tbody>
-        </table>
-    </c:otherwise>
+                </tbody>
+            </table>
+        </c:otherwise>
     </c:choose>
 </div>
 
@@ -102,6 +104,7 @@
         <option value="" selected="selected">선택</option>
         <option value="title">제목</option>
         <option value="content">내용</option>
+        <option value="writer">작성자</option>
     </select>
     <input type="text" id="_search" name="search" placeholder="검색">
     <button type="button" id="btnSearch">검색</button>
@@ -130,7 +133,7 @@
         }
 
         /*페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.*/
-       if($('#pagination').data("twbs-pagination")){
+        if($('#pagination').data("twbs-pagination")){
             $('#pagination').twbsPagination('destroy');
         }
 
@@ -144,7 +147,7 @@
             last: '<span sria-hidden="true">»</span>',
             initiateStartPageClick:false,
             onPageClick: function(event,page){
-                location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
+                location.href = "/admin/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
             }
         });
 
@@ -190,7 +193,7 @@
                 return;
             }
 
-            location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
+            location.href = "/admin/community.do?bbstype=" + '${bbstype}' + "&choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
         });
     });
 </script>
