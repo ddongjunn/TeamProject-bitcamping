@@ -33,7 +33,7 @@
 <div>
 
    <a href="/csite/campinglist.do">캠핑장검색</a> <a href="/community/main.do">커뮤니티</a> <a href="/rent/list.do">물품대여</a>
-   <a href="/cs/notice.do">고객센터</a>
+   <a href="/cs/csMain.do">고객센터</a>
 </div>
 
 <div id="login_modal" class="login_modal-overlay" style="z-index: 800;">

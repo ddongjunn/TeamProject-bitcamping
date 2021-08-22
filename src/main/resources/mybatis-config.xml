@@ -25,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.camping.bit.dto.ProductReviewDto" alias="ProductReviewDto" />
 
         <typeAlias type="com.camping.bit.dto.CsNoticeDto" alias="CsNoticeDto" />
+        
 
         <!-- 민경 -->
         <typeAlias type="com.camping.bit.dto.CommunityDto" alias = "CommunityDto"/>
