@@ -15,8 +15,24 @@
     <title>Title</title>
 </head>
 <body>
+<c:choose>
+    <c:when test="${bbstype eq 'hello'}">
+        <h2>가입인사</h2>
+    </c:when>
+    <c:when test="${bbstype eq 'free'}">
+        <h2>자유게시판</h2>
+    </c:when>
+    <c:when test="${bbstype eq 'deal'}">
+        <h2>중고거래</h2>
+    </c:when>
+    <c:when test="${bbstype eq 'review'}">
+        <h2>캠핑&여행후기</h2>
+    </c:when>
+    <c:otherwise>
+        <h2>캠핑장리뷰</h2>
+    </c:otherwise>
+</c:choose>
 <div>
-<h2>${bbstype}</h2>
     <c:choose>
     <c:when test="${empty list}">
         <h1>작성하신 글이 없습니다.</h1>
@@ -27,13 +43,12 @@
                 <col style="width:10%;" />
                 <col style="width:auto;" />
                 <col style="width:15%;" />
-                <col style="width:10%;" />
                 <col style="width:20%;" />
             </colgroup>
 
             <thead>
             <tr>
-                <th>번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일</th>
+                <th>번호</th><th>제목</th><th>조회수</th><th>작성일</th>
             </tr>
             </thead>
 
@@ -42,9 +57,24 @@
                     <c:if test="${data.del != '1'}">
                         <tr>
                             <td>${data.community_seq }</td>
+
                             <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
-                            <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            <td>${data.nickname}</td>
+                            <c:if test="${bbstype eq 'free'}">
+                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'find'}">
+                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'deal'}">
+                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'review'}">
+                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+                            <c:if test="${bbstype eq 'hello'}">
+                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                            </c:if>
+
                             <td>${data.readcount}</td>
                             <td>
                                 <c:set var="date" value="${data.wdate}"/>
@@ -54,9 +84,9 @@
                     </c:if>
                 </c:forEach>
             </tbody>
+        </table>
     </c:otherwise>
     </c:choose>
-        </table>
 </div>
 
 <div class="container"> <!-- style = "width : 100%; text-align : center" -->
@@ -66,8 +96,24 @@
     </nav>
 </div>
 
+
+<div align="center">
+    <select id="_choice" name="choice">
+        <option value="" selected="selected">선택</option>
+        <option value="title">제목</option>
+        <option value="content">내용</option>
+    </select>
+    <input type="text" id="_search" name="search" placeholder="검색">
+    <button type="button" id="btnSearch">검색</button>
+</div>
+
 <script type="text/javascript">
+
     $(document).ready(function () {
+
+        let choice = '${choice}';
+        let search = '${search}';
+
         //페이지네이션
         let totalCount = ${totalCount};	// 서버로부터 총글의 수를 취득
         //alert(totalCount);
@@ -98,8 +144,53 @@
             last: '<span sria-hidden="true">»</span>',
             initiateStartPageClick:false,
             onPageClick: function(event,page){
-                location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1);
+                location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
             }
+        });
+
+        $("#btnSearch").click(function () {
+
+            if($('#_choice').val() === ""){
+                let Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: '검색옵션을 선택해주세요!'
+                })
+                return;
+
+            }else if($('#_search').val() ===""){
+                let Toast = Swal.mixin({
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: '검색어를 입력해주세요!'
+                })
+
+                return;
+            }
+
+            location.href = "/account/community.do?bbstype=" + '${bbstype}' + "&choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
         });
     });
 </script>

@@ -45,4 +45,7 @@ public class CsNoticeDto {
 
     // 삭제 
     private int del;
+    
+    // 댓글수
+    private int commentcount;
 }

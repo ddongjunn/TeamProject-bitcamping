@@ -9,11 +9,15 @@
 <body>
 
 <div>
+	<a href="/cs/csMain.do">고객센ㅋ터</a>
+</div>
+<div>
 	<a href="/cs/notice.do">공지사항</a>
 </div>
 <div>
 	<a href="/cs/qna.do">Q & A</a>
 </div>
+
 
 </body>
 </html>

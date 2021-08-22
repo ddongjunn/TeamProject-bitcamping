@@ -5,9 +5,6 @@
   
     <mapper namespace="com.camping.bit.dao.CampingDao">
     <!-- 캠핑장 리스트 출력 -->
-  	<!-- <select id="getCampingList" parameterType = "CampingListDto" resultType="CampingListDto">
-  		SELECT * FROM CAMPING_LIST ORDER BY FIRSTIMAGEURL ASC
-  	</select> -->
   	<select id = "getCampingList" parameterType = "CampingParam" resultType = "CampingListDto">
   		SELECT * FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM, 
@@ -26,13 +23,7 @@
 	            #{item}
 	        </foreach>
 		</if> 
- 		<!-- <if test="lctCl != null and lctCl !=''">캠핑장 주변환경
-    	AND REGEXP_LIKE (LCTCL,
-	        <foreach item="item" index="index" collection="lctCl" open="(" separator="," close=")">
-	         	#{item})
-	        </foreach>
-	    </if> --> 
-	   	<if test="lctCl != null and lctCl !=''"><!-- 캠핑장 시설분류 -->
+	   	<if test="lctCl != null and lctCl !=''"><!-- 캠핑장 주변 환경 -->
 			<trim prefix = "AND(" prefixOverrides="OR" suffix=")">
 				<foreach item="item" index="index" collection="lctCl" separator=" ">
 		    	 OR LCTCL like '%'||#{item}||'%'
@@ -153,10 +144,10 @@
 		SELECT FACLTNM FROM CAMPING_LIST WHERE FACLTNM LIKE '%'||#{searchWord}||'%' ORDER BY READCOUNT DESC
 	</select>
 	
-	<!-- 캠핑장 리뷰 검색 -->
+	<!-- 캠핑장 리뷰 리스트 뿌리기 -->
 	<select id = "campingreview" parameterType = "java.lang.Integer" resultType = "CampingBbsDto">
-		SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT FROM CAMPING_BBS
-		WHERE CONTENTID = #{contentid} 
+		SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL FROM CAMPING_BBS
+		WHERE CONTENTID = #{contentid} AND DEL = 0 
 	</select>
 	
 	<!-- 캠핑장 리뷰 상세화면 -->
@@ -164,9 +155,129 @@
 		SELECT * FROM CAMPING_BBS WHERE REVIEW_SEQ = #{review_seq} AND CONTENTID = #{contentid}
 	</select>
 	
-	<!-- 캠핑장 리뷰 쓰기 -->
-	<insert id = "campingwritereview" parameterType = "CampingBbsDto">
-	INSERT INTO CAMPING_BBS(REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT) 
-	VALUES(CAMPING_BBS_SEQ.NEXTVAL,#{contentid},#{title},#{content},SYSDATE,0,#{user_id}, 0,0)
+	<!-- 캠핑장 리뷰 쓰기 후처리 -->
+	<insert id = "campingwritereviewAf" parameterType = "CampingBbsDto">
+		INSERT INTO CAMPING_BBS(REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL) 
+		VALUES(CAMPING_BBS_SEQ.NEXTVAL,#{contentid},#{title},#{content},SYSDATE,0,#{user_id}, 0,0,0)
 	</insert>
+	
+	<!-- 캠핑장 리뷰 조회수 증가-->
+	<update id="getCampingReviewReadcount" parameterType = "java.lang.Integer" >
+		UPDATE CAMPING_BBS SET READCOUNT=READCOUNT+1 WHERE REVIEW_SEQ = #{review_seq}
+	</update>
+	
+	<!-- 캠핑장 리뷰 수정하기 -->
+	<update id="campingupdatereviewAf" parameterType = "CampingBbsDto" >
+		UPDATE CAMPING_BBS SET TITLE = #{title}, CONTENT = #{content} WHERE REVIEW_SEQ = #{review_seq} AND CONTENTID = #{contentid}
+	</update>
+	
+	<!-- 캠핑장 리뷰 삭제하기 -->
+	<update id = "campingdeletereview" parameterType = "CampingBbsDto">
+		UPDATE CAMPING_BBS SET DEL = 1 WHERE REVIEW_SEQ = #{review_seq}
+	</update>
+	
+	<!-- 캠핑장 리뷰 검색하기 -->
+	<!-- <select id = "campingSearchReview" parameterType = "CampingParam" resultType = "CampingBbsDto">
+		SELECT TITLE, CONTENT, USER_ID, READCOUNT FROM CAMPING_BBS WHERE 1=1 
+		<if test="choice!=null and choice !='' and search !=null and search !=''">
+			<if test = "choice=='title'">
+				AND title LIKE '%'||#{search}||'%'
+			</if>
+			<if test = "choice=='content'">
+				AND content LIKE '%'||#{search}||'%'
+			</if>
+			<if test = "choice=='writer'">
+				AND user_id=#{search}
+			</if>
+		</if>
+	</select> -->
+	
+	<!-- 캠핑장 리뷰 검색하기, 정렬하기 -->
+	<select id = "campingSearchReview" parameterType = "CampingParam" resultType = "CampingBbsDto">
+		SELECT TITLE, CONTENT, USER_ID, READCOUNT FROM CAMPING_BBS WHERE 1=1 
+		<if test="choice!=null and choice !='' and search !=null and search !=''">
+			<if test = "choice=='title'">
+				AND title LIKE '%'||#{search}||'%'
+			</if>
+			<if test = "choice=='content'">
+				AND content LIKE '%'||#{search}||'%'
+			</if>
+			<if test = "choice=='writer'">
+				AND user_id=#{search}
+			</if>
+		</if>
+		AND CONTENTID = #{contentid} AND DEL = 0 ORDER BY
+			<if test = "reviewsorting!=null and reviewsorting != ''">
+			<choose>
+				<when test = "reviewsorting=='create'">
+					WDATE DESC
+				</when>
+				<when test = "reviewsorting=='read'">
+					READCOUNT DESC
+				</when>
+				<when test = "reviewsorting=='like'">
+					LIKE_COUNT DESC
+				</when>
+				<otherwise>
+					WDATE DESC
+				</otherwise>
+			</choose>
+		</if>
+			<if test = "reviewsorting==null">
+				WDATE DESC
+			</if>
+		</select> 
+		
+		<!-- 캠핑장 좋아요 긁어오기 
+		<select id = "getCampingLike" parameterType = "java.lang.Integer" resultType = "CampingLike">
+			SELECT * FROM CAMPING_LIKE WHERE CONTENTID = #{contentid} AND CONTENT_TYPE = 1
+		</select>-->
+		
+		<!-- 캠핑장 좋아요 긁어오기 -->
+		<select id = "getCampingLike" parameterType = "java.util.Map" resultType = "java.util.Map">
+			SELECT * FROM CAMPING_LIKE WHERE CONTENTID = #{campingidx} AND USER_ID = #{useridx} AND CONTENT_TYPE = 1
+		</select>
+		
+		<!-- 캠핑장 좋아요 갯수 검사용  -->
+		
+		<select id="getCampingLikeInfo" parameterType = "java.lang.Integer" resultType = "map">
+			SELECT CONTENTID, LIKECOUNT FROM CAMPING_LIST WHERE 1=1 AND CONTENTID = #{contentid}
+		</select>
+		
+		<!-- 캠핑장 좋아요 하트 추가하기 -->
+		<insert id="plusCampingHeart" parameterType = "CampingLike">
+			INSERT INTO CAMPING_LIKE(LIKE_AUTO_SEQ, CONTENTID, USER_ID, CONTENT_TYPE)
+			VALUES(CAMPING_LIKE_SEQ.NEXTVAL,#{contentid}, #{user_id}, 1)
+		</insert>
+		
+		<!-- 캠핑장 좋아요 하트 감소시키기  -->
+		<delete id="minusCampingHeart" parameterType = "CampingLike">
+			DELETE FROM CAMPING_LIKE WHERE CONTENTID = #{contentid} AND USER_ID = #{user_id}
+		</delete>
+		
+		<!-- 캠핑장 좋아요수 갯수(likecount) -->
+		<select id="getCampingLikecount" parameterType = "java.lang.Integer" resultType = "java.lang.Integer">
+		select count(*) FROM CAMPING_LIKE WHERE CONTENTID = #{contentid}
+		</select>
+		
+		<!-- 캠핑장 좋아요 수 늘리기 -->
+		<update id = "plusCampingLikecount" parameterType = "java.lang.Integer">
+			UPDATE CAMPING_LIST SET LIKECOUNT = LIKECOUNT +1 WHERE CONTENTID = #{contentid}
+		</update>
+		
+		<!-- 캠핑장 좋아요 수 줄이기 -->
+		<update id = "minusCampingLikecount" parameterType = "java.lang.Integer">
+			UPDATE CAMPING_LIST SET LIKECOUNT = LIKECOUNT -1 WHERE CONTENTID = #{contentid}
+		</update>
+		
+		<!-- 캠핑장 리뷰 댓글 달기 -->
+		<insert id = "campingWriteComment" parameterType = "CampingComment">
+			INSERT INTO CAMPING_BBS_COMMENT(COMMENT_SEQ, REVIEW_SEQ, USER_ID, CONTENT, WDATE, REF, STEP, DEPTH)
+			VALUES(CAMPING_BBS_COMMENT_SEQ.NEXTVAL, #{review_seq}, #{user_id}, #{content}, SYSDATE, 0, 0, 0) 
+		</insert>
+		
+		<!-- 캠핑장 댓글 뿌리기 -->
+		<select id="campingShowComment" parameterType = "java.lang.Integer" resultType = "CampingComment">
+			SELECT USER_ID, CONTENT, WDATE FROM CAMPING_BBS_COMMENT WHERE COMMENT_SEQ = #{comment_seq}
+		</select>
   </mapper>

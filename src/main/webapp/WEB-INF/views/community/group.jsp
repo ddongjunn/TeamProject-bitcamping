@@ -8,5 +8,7 @@
 </head>
 <body>
 
+<h1>캠퍼모집 게시판</h1>
+
 </body>
 </html>

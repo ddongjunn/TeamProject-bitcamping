@@ -6,7 +6,7 @@
 
     <select id="getMyCommunity" parameterType="MypageParam" resultType="CommunityDto">
         SELECT COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
-               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = 'admin' ) AS NICKNAME
+               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = #{id} ) AS NICKNAME
 
         FROM (
             SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
@@ -49,6 +49,14 @@
 
     <update id="modifyInfo" parameterType="MemberDto">
         UPDATE MEMBER SET NICKNAME = #{nickname}, PHONE = #{phone},  EMAIL = #{email} WHERE ID = #{id}
+    </update>
+
+    <select id="getPassword" parameterType="String" resultType="String">
+        SELECT PASSWORD FROM MEMBER WHERE ID = #{id}
+    </select>
+
+    <update id="withdrawal" parameterType="String">
+        UPDATE MEMBER SET AUTH = -1 WHERE ID = #{id}
     </update>
 
 </mapper>

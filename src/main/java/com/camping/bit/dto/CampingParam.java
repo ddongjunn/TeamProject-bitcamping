@@ -36,6 +36,11 @@ public class CampingParam implements Serializable{
 	private String siteBottomCl4;
 	private String siteBottomCl5;
 	
+	private String choice;
+	private String search;
+	private String reviewsorting;
+	
+	private int contentid;
 	
 	public CampingParam() {
 		
@@ -44,7 +49,8 @@ public class CampingParam implements Serializable{
 	public CampingParam(int pageNumber, int start, int end, String sorting, String doNm, String sigunguNm,
 			String searchWord, String[] searchDo, String[] searchCl, String[] lctCl, String[] induty, String[] resveCl,
 			String eqpmnLendCl, String exprnProgrm, String[] animalCmgCl, String[] sbrsCl, String siteBottomCl1,
-			String siteBottomCl2, String siteBottomCl3, String siteBottomCl4, String siteBottomCl5) {
+			String siteBottomCl2, String siteBottomCl3, String siteBottomCl4, String siteBottomCl5, String choice,
+			String search, String reviewsorting, int contentid) {
 		super();
 		this.pageNumber = pageNumber;
 		this.start = start;
@@ -67,6 +73,10 @@ public class CampingParam implements Serializable{
 		this.siteBottomCl3 = siteBottomCl3;
 		this.siteBottomCl4 = siteBottomCl4;
 		this.siteBottomCl5 = siteBottomCl5;
+		this.choice = choice;
+		this.search = search;
+		this.reviewsorting = reviewsorting;
+		this.contentid = contentid;
 	}
 
 	public int getPageNumber() {
@@ -248,7 +258,36 @@ public class CampingParam implements Serializable{
 	public void setSiteBottomCl5(String siteBottomCl5) {
 		this.siteBottomCl5 = siteBottomCl5;
 	}
-	
-	
 
+	public String getChoice() {
+		return choice;
+	}
+
+	public void setChoice(String choice) {
+		this.choice = choice;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public String getReviewsorting() {
+		return reviewsorting;
+	}
+
+	public void setReviewsorting(String reviewsorting) {
+		this.reviewsorting = reviewsorting;
+	}
+
+	public int getContentid() {
+		return contentid;
+	}
+
+	public void setContentid(int contentid) {
+		this.contentid = contentid;
+	}
 }
