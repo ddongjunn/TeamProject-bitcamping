@@ -49,7 +49,7 @@
             <mvc:mapping path="/community/likeClick.do"/> <!--확인해봐야함-->
             <mvc:mapping path="/community/freeWrite.do"/>
             <mvc:mapping path="/community/findWrite.do"/>
-            
+
             <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
