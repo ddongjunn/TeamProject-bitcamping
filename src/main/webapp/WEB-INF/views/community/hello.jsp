@@ -5,16 +5,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!-- bootstrap 추가 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 <!DOCTYPE html>
 <html>
 <head>
+<!-- bootstrap 추가 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
-<title>가입인사게시판</title>
+<title>Insert title here</title>
 </head>
 <body>
 
@@ -77,6 +77,7 @@
 	        <ul class="pagination" id="pagination"></ul>
 	    </nav>
     </div>
+</div>
 
 <!-- 글쓰기 버튼 -->
 <div align="right">
@@ -84,6 +85,10 @@
 </div>
 
 <script type="text/javascript">
+
+	let choice = '${choice}';
+	let search = '${search}';
+
 $(document).ready(function () {
 	// 페이지네이션
 	let totalCount = ${totalCount}; 	// 글의 총수
@@ -110,7 +115,7 @@ $(document).ready(function () {
 		last: '<span sria-hidden="true">»</span>',
 		initiateStartPageClick:false,
 		onPageClick:function(event, page){
-			location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val() + "&pageNumber=" + (page - 1);
+			location.href = "/community/hello.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page - 1);
 		}
 	});
  	// 검색
@@ -120,6 +125,6 @@ $(document).ready(function () {
 });
 </script>
 
-
+ 
 </body>
 </html>
