@@ -47,4 +47,37 @@ public interface CommunityService {
 	
 	// 댓글 입력
 	public void commentWrite(CommunityCommentDto dto);
+	
+	// 자유게시판 리스트
+	public List<CommunityDto> freeList(CommunityParam param);
+
+	// 자유게시판 총수
+	public int freeBoardCount(CommunityParam param);
+
+	// 자유게시판 글 내용 저장
+	public void freeWrite(CommunityDto dto);
+
+	// 자유게시판 상세보기
+	public CommunityDto freeDetail(CommunityDto dto);
+
+	// 자유게시판 글 수정
+	public void freeUpdate(CommunityDto dto);
+	
+	// 캠퍼모집 리스트
+	public List<CommunityDto> findList(CommunityParam param);
+
+	// 캠퍼모집 총수
+	public int findBoardCount(CommunityParam param);
+
+	// 캠퍼모집 글 내용 저장
+	public void findWrite(CommunityDto dto);
+
+	// 캠퍼모집 상세보기
+	public CommunityDto findDetail(CommunityDto dto);
+
+	// 캠퍼모집 글 수정
+	public void findUpdate(CommunityDto dto);
+	
+	
+	
 }

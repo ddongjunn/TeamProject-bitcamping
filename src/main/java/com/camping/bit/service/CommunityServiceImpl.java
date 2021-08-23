@@ -17,18 +17,20 @@ public class CommunityServiceImpl implements CommunityService{
 	@Autowired
 	CommunityDao dao;
 	
+	// 가입인사 리스트
 	@Override
 	public List<CommunityDto> helloList(CommunityParam param) {
 		return dao.helloList(param);
 	}
 	
-	// 게시글 총수
+	// 가입인사 게시글 총수
 	@Override
 	public int helloBoardCount(CommunityParam param) {
 		return dao.helloBoardCount(param);
 	}
 	
 	// dto값을 받아서 dao로 넘겨 : 구체적인 내용
+	// 가입인사 글 작성
 	@Override
 	public void helloWrite(CommunityDto dto) {
 		dao.helloWrite(dto);
@@ -38,7 +40,6 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public CommunityDto helloDetail(CommunityDto dto) {
 		CommunityDto data = dao.helloDetail(dto);
-		
 		return data;
 	}
 	
@@ -54,7 +55,7 @@ public class CommunityServiceImpl implements CommunityService{
 		dao.boardDelete(dto);
 	}
 	
-	// 글 수정
+	// 가입인사 글 수정
 	@Override
 	public void helloUpdate(CommunityDto dto) {
 		dao.helloUpdate(dto);
@@ -63,7 +64,6 @@ public class CommunityServiceImpl implements CommunityService{
 	// 좋아요 정보
 	@Override
 	public int likeCount(int community_seq) {
-
 		return dao.likeCount(community_seq);
 	}
 
@@ -76,15 +76,15 @@ public class CommunityServiceImpl implements CommunityService{
 	// 좋아요 취소
 	@Override 
 	public void likeDown(CommunityLikeDto dto) {
-		dao.likeDown(dto);
+	    dao.likeDown(dto);
 	}
-
-	//좋아요 확인
-	@Override
-	public boolean likeCheck(CommunityLikeDto dto) {
-		return dao.likeCheck(dto);
-	}
-
+	
+	// 좋아요 확인
+  @Override
+  public boolean likeCheck(CommunityLikeDto dto) {
+      return dao.likeCheck(dto);
+  }
+	
 	// 댓글 리스트
 	@Override
 	public List<CommunityCommentDto> commentList(int community_seq) {
@@ -95,5 +95,67 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void commentWrite(CommunityCommentDto dto) {
 		dao.commentWrite(dto);
+	}
+	
+	// 자유게시판 리스트
+	@Override
+	public List<CommunityDto> freeList(CommunityParam param) {
+		return dao.freeList(param);
+	}
+	
+	// 자유게시판 총수
+	@Override
+	public int freeBoardCount(CommunityParam param) {
+		return dao.freeBoardCount(param);
+	}
+	
+	// 자유게시판 글 내용 저장
+	@Override
+	public void freeWrite(CommunityDto dto) {
+		dao.freeWrite(dto);
+	}
+	
+	// 자유게시글 상세보기
+	@Override
+	public CommunityDto freeDetail(CommunityDto dto) {
+		CommunityDto data = dao.freeDetail(dto);
+		return data;
+	}
+	
+	// 자유게시판 글 수정
+	@Override
+	public void freeUpdate(CommunityDto dto) {
+		dao.freeUpdate(dto);
+	}
+	
+	// 캠퍼모집 리스트
+	@Override
+	public List<CommunityDto> findList(CommunityParam param) {
+		return dao.findList(param);
+	}
+	
+	// 캠퍼모집 총수
+	@Override
+	public int findBoardCount(CommunityParam param) {
+		return dao.findBoardCount(param);
+	}
+	
+	// 캠퍼모집 글 내용 저장
+	@Override
+	public void findWrite(CommunityDto dto) {
+		dao.findWrite(dto);
+	}
+	
+	// 캠퍼모집 상세보기
+	@Override
+	public CommunityDto findDetail(CommunityDto dto) {
+		CommunityDto data = dao.findDetail(dto);
+		return data;
+	}
+	
+	// 캠퍼모집 글 수정
+	@Override
+	public void findUpdate(CommunityDto dto) {
+		dao.findUpdate(dto);
 	}
 }

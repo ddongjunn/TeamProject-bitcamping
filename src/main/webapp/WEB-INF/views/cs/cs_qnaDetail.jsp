@@ -90,7 +90,7 @@
 		<button type="button" id="btnUpdate" onclick="location.href='/cs/qnaUpdate.do?qna_Seq=${qna.qna_Seq}'">수정</button>
 		<button type="button" id="btnDelete" onclick="confirm()">삭제</button>	
 	</c:if>
-	<c:if test="${login.auth eq 3}">		
+	<c:if test="${login.auth eq 1}">		
 		<c:choose>
 			<c:when test="${qna.status eq 0}">
 				<button type="button" id="btnAnswer" onclick="location.href='/cs/qnaAnswer.do?qna_Seq=${qna.qna_Seq}'">답글</button>

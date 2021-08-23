@@ -10,8 +10,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- bootstrap 추가 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
-<title>가입인사게시판</title>
+<title>Insert title here</title>
 </head>
 <body>
 
@@ -74,6 +77,7 @@
 	        <ul class="pagination" id="pagination"></ul>
 	    </nav>
     </div>
+</div>
 
 <!-- 글쓰기 버튼 -->
 <div align="right">
@@ -163,6 +167,6 @@ $(document).ready(function () {
 });
 </script>
 
-
+ 
 </body>
 </html>

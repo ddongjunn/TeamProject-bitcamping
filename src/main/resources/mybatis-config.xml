@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
- 	<typeAliases>
+    <typeAliases>
 
         <!-- 동준 -->
         <typeAlias type="com.camping.bit.dto.MemberDto" alias="MemberDto" />
@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.camping.bit.dto.CsParam" alias="CsParam" />
         <typeAlias type="com.camping.bit.dto.CsNoticeCommentDto" alias="CsNoticeCommentDto" />
         <typeAlias type="com.camping.bit.dto.CsQnaDto" alias="CsQnaDto" />
+		    <typeAlias type="com.camping.bit.dto.CsCommentParam" alias="CsCommentParam" />
 
         <!-- 민경 -->
         <typeAlias type="com.camping.bit.dto.CommunityDto" alias = "CommunityDto"/>
@@ -35,5 +36,5 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.camping.bit.dto.CommunityCommentDto" alias = "CommunityCommentDto"/>
         <typeAlias type="com.camping.bit.dto.CommunityLikeDto" alias = "CommunityLikeDto"/>
 
-    </typeAliases>	
+    </typeAliases>   
 </configuration>

@@ -135,17 +135,25 @@ public class CampingServiceImpl implements CampingService {
 	public int getCampingLikecount(int contentid) {
 		return dao.getCampingLikecount(contentid);
 	}
-
-	@Override
-	public String campingWriteComment(CampingCommentDto cc) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	@Override //캠핑장 리뷰에 달린 댓글 뿌리기 
+	public List<CampingCommentDto> campingShowComment(int review_seq) {
+		return dao.campingShowComment(review_seq);
 	}
 
-	@Override
-	public List<CampingCommentDto> campingShowComment(int comment_seq) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override //캠핑장 리뷰에 댓글 달기 
+	public Boolean campingWriteComment(CampingCommentDto cc) {
+		return dao.campingWriteComment(cc);
+	}
+
+	@Override //캠핑장 리뷰에 댓글 삭제하기
+	public Boolean campingDeleteComment(int comment_seq) {
+		return dao.campingDeleteComment(comment_seq);
+	}
+
+	@Override //캠핑장 리뷰에 댓글 수정하기
+	public Boolean campingUpdateComment(CampingCommentDto cc) {
+		return dao.campingUpdateComment(cc);
 	}
 
 }

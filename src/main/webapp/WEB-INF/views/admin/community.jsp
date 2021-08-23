@@ -126,7 +126,7 @@
         let pageSize = 15;//페이지의 크기(1~10) [1] ~ [10]
 
         let totalPages = totalCount / pageSize;
-
+        
         if(totalCount % pageSize > 0){
             totalPages++;
         }
