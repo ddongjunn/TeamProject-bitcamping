@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div style="clear: both;">
+<div id="footer" style="clear: both;">
     footer
 </div>
 

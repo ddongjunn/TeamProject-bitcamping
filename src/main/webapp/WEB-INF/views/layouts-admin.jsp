@@ -3,7 +3,6 @@
 
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,7 +31,6 @@
             padding: 5px;
             background-color: lightblue;
         }
-
     </style>
 
     <title>Insert title here</title>

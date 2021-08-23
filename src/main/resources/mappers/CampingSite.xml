@@ -270,14 +270,26 @@
 			UPDATE CAMPING_LIST SET LIKECOUNT = LIKECOUNT -1 WHERE CONTENTID = #{contentid}
 		</update>
 		
+		<!-- 캠핑장 댓글 뿌리기 -->
+		<select id="campingShowComment" parameterType = "java.lang.Integer" resultType = "CampingComment">
+			SELECT USER_ID, CONTENT, WDATE, COMMENT_SEQ FROM CAMPING_BBS_COMMENT WHERE REVIEW_SEQ = #{review_seq}
+		</select>
+		
 		<!-- 캠핑장 리뷰 댓글 달기 -->
 		<insert id = "campingWriteComment" parameterType = "CampingComment">
 			INSERT INTO CAMPING_BBS_COMMENT(COMMENT_SEQ, REVIEW_SEQ, USER_ID, CONTENT, WDATE, REF, STEP, DEPTH)
 			VALUES(CAMPING_BBS_COMMENT_SEQ.NEXTVAL, #{review_seq}, #{user_id}, #{content}, SYSDATE, 0, 0, 0) 
 		</insert>
 		
-		<!-- 캠핑장 댓글 뿌리기 -->
-		<select id="campingShowComment" parameterType = "java.lang.Integer" resultType = "CampingComment">
-			SELECT USER_ID, CONTENT, WDATE FROM CAMPING_BBS_COMMENT WHERE COMMENT_SEQ = #{comment_seq}
-		</select>
+		<!-- 캠핑장 리뷰 삭제하기 -->
+		<delete id="campingDeleteComment" parameterType = "java.lang.Integer">
+			DELETE FROM CAMPING_BBS_COMMENT WHERE COMMENT_SEQ = #{comment_seq}
+		</delete>
+		
+		<!-- 캠핑장 리뷰 수정하기 -->
+		<update id="campingUpdateComment" parameterType = "CampingComment">
+			UPDATE CAMPING_BBS_COMMENT SET CONTENT = #{content} WHERE COMMENT_SEQ = #{comment_seq}
+		</update>
+		
+		
   </mapper>
