@@ -178,14 +178,33 @@ public class CampingController{
 	
 	//캠핑디테일 리뷰 상세화면 
 	@RequestMapping(value = "campingdetailreview.do", method = RequestMethod.GET)
-	public String campingdetailreview(Model model, CampingBbsDto cbsdto, int contentid) throws Exception{
+	public String campingdetailreview(Model model, CampingBbsDto cbsdto, int contentid, int review_seq, HttpSession session) throws Exception{
 		CampingBbsDto campingbbs = service.campingdetailreview(cbsdto);
 		CampingDetailDto detaildto = service.getCampingDetail(contentid);
 		CampingListDto listdto = service.getCampingListForDetail(contentid);
+		List<CampingCommentDto> commentList = service.campingShowComment(review_seq);
+		String useridx;  //사용자 아이디 받아올 변수
+		try {
+			if(session.getAttribute("login") != null) { //로그인을 한 경우에
+				
+			//@SuppressWarnings("unchecked")
+			MemberDto userInfo = (MemberDto)session.getAttribute("login");
+			//System.out.println(userInfo);
+			useridx = userInfo.getId();
+			model.addAttribute("useridx", useridx);
+			System.out.println("useridx : " + useridx);			
+			}else { //login하지 않은 상태에서 
+				model.addAttribute("useridx", "");
+			}
+		} catch (Exception e) {
+			// 에러났을때
+			System.out.println(e);
+		}
 		
 		model.addAttribute("campingdetail", detaildto);
 		model.addAttribute("campinglistfordetail", listdto);
 		model.addAttribute("campingdetailreview", campingbbs);
+		model.addAttribute("commentList", commentList);
 		return "campingdetailreview.tiles";
 	}
 	
@@ -199,6 +218,7 @@ public class CampingController{
 		model.addAttribute("campingdetail", detaildto);
 		model.addAttribute("campinglistfordetail", listdto);
 		model.addAttribute("campingdetailreview", campingbbs);
+		
 		return "campingdetailtop.tiles";
 	}
 
@@ -373,31 +393,46 @@ public class CampingController{
 	}
 		*/
 		
-		//캠핑장 댓글 달기 
+	//캠핑장 댓글 달기 
 	@RequestMapping(value = "campingWriteComment.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String getCampingWriteComment(CampingCommentDto cbs, @RequestParam("contentid") int contentid, Model model, RedirectAttributes redirect) throws Exception{
-		String write;
-		if(service.campingWriteComment(cbs)!=null) {
-			write = "success";
-		}else {
-			write = "failed";
-		}
-		model.addAttribute("result", write);
-		redirect.addAttribute("review_seq", cbs.getReview_seq());
-		redirect.addAttribute("contentid", contentid);
-		return "redirect:/csite/campingdetailreview.do";
-	}	
-	//캠핑장 댓글 뿌리기
-	@RequestMapping(value = "campingShowComment.do", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public List<CampingCommentDto> campingShowComment(CampingCommentDto cbs) throws Exception{
-		List<CampingCommentDto> result;
-		if(service.campingWriteComment(cbs)=="success") {
-			result = service.campingShowComment(cbs.getComment_seq());
+	public String getCampingWriteComment(CampingCommentDto cbs) throws Exception{
+		String result;
+		if(service.campingWriteComment(cbs)) {
+			result = "success";
 		}else {
-			result = null;
+			result = "failed";
 		}
 		return result;
-	}
+	}	
+	
+	//캠핑장 댓글 삭제하기
+	@RequestMapping(value = "campingDeleteComment.do", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public String getCampingDeleteComment(int comment_seq) throws Exception{
+		String result;
+		if(service.campingDeleteComment(comment_seq)) {
+			result = "success";
+		}else {
+			result = "failed";
+		}
+		return result;
+	}	
+	
+	//캠핑장 댓글 수정하기
+		@RequestMapping(value = "campingUpdateComment.do", method = {RequestMethod.GET, RequestMethod.POST})
+		@ResponseBody
+		public String getCampingUpdateComment(CampingCommentDto cbs, Model model) throws Exception{
+			int comment_seq = cbs.getComment_seq();
+			model.addAttribute("comment_seq", comment_seq);
+			String result;
+			if(service.campingUpdateComment(cbs)) {
+				result = "success";
+			}else {
+				result = "failed";
+			}
+			return result;
+		}	
+
 	
 }

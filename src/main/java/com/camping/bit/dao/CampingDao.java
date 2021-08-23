@@ -79,12 +79,17 @@ public interface CampingDao {
 	//캠핑장 좋아요 수 갯수(likecount)
 	public int getCampingLikecount(int contentid);
 	
-	//캠핑장 리뷰 댓글달기
-	public String campingWriteComment(CampingCommentDto cc);
-	
 	//캠핑장 리뷰 보여주기
-	public List<CampingCommentDto> campingShowComment(int comment_seq);
+	public List<CampingCommentDto> campingShowComment(int review_seq);
 	
+	//캠핑장 리뷰 댓글달기
+	public Boolean campingWriteComment(CampingCommentDto cc);
+	
+	//캠핑장 리뷰 댓글 삭제하기 
+	public Boolean campingDeleteComment(int comment_seq);
+	
+	//캠핑장 리뷰 댓글 수정하기
+	public Boolean campingUpdateComment(CampingCommentDto cc);
 
 	
 }

@@ -20,19 +20,21 @@ public class LoginInterceptor implements HandlerInterceptor{
 
         StringBuffer url = (StringBuffer) request.getRequestURL();
         System.out.println("요청 온 주소 : " + url);
-        
+
         String query = request.getQueryString();
-        System.out.println("쿼리 : " + query);
-        
+        System.out.println("쿼리스트링 : " + query);
+
         if (query == null || query.equals("null")) {
 
-			query = "";
+            query = "";
 
-		} else {
+        } else {
 
-			query = "?" + query;
+            query = "?" + query;
 
-		}
+        }
+
+        
        
         if(dto != null){
             return true;
