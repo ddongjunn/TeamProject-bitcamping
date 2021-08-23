@@ -57,9 +57,8 @@ public class CommunityController {
       System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
       
       param.setStart(start);
-        param.setEnd(end);
-
-
+      param.setEnd(end);
+     
       // DB 글목록 불러오기
       List<CommunityDto> list = service.helloList(param);
       
@@ -314,29 +313,13 @@ public class CommunityController {
       return "redirect:/community/free.do";
    }
 
-   
-   
-   
+ 
    // 중고거래 게시판
    @RequestMapping(value = "deal.do", method = RequestMethod.GET)
    public String dealboard() {
 
       return "deal.tiles";
    }
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
    
    // 캠퍼모임
    @RequestMapping(value = "find.do", method = RequestMethod.GET)
@@ -444,14 +427,6 @@ public class CommunityController {
 
       return "redirect:/community/find.do";
    }
-   
-   
-   
-   
-   
-   
-   
-   
 
    // 캠핑후기 게시판
    @RequestMapping(value = "review.do", method = RequestMethod.GET)
@@ -459,5 +434,4 @@ public class CommunityController {
 
       return "review.tiles";
    }
-
 }

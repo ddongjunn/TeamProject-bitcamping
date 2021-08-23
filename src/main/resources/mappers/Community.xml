@@ -214,9 +214,6 @@
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
 
-
-
-
    <!-- 캠퍼모집 글 리스트 -->
    <select id="findList" parameterType="CommunityParam" resultType="CommunityDto">
       SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
@@ -292,6 +289,6 @@
                          CONTENT=#{content},
                          WDATE=SYSDATE
       WHERE COMMUNITY_SEQ = #{community_seq}
-   </update>
+  </update>
 
 </mapper>

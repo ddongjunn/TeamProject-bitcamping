@@ -10,34 +10,65 @@
 <head>
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
-   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/findAccount.css">
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/jquery/jquery.twbsPagination.min.js"></script>
+
+   <!-- 공통 css -->
+   <link rel="stylesheet" type="text/css" href="/resources/css/reset.css" />
+   <link rel="stylesheet" type="text/css" href="/resources/css/common.css" />
+   <link rel="stylesheet" type="text/css" href="/resources/css/header.css" />
+   <link rel="stylesheet" type="text/css" href="/resources/css/footer.css" />
+
+   <!-- 공통 css -->
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/findAccount.css">
+
+   <!-- page별 css -->
+   <link rel="stylesheet" type="text/css" href="/resources/css/home.css" />
+
    <meta charset="UTF-8">
    <title>Insert title here</title>
 </head>
 <body>
-<div>
-		<c:choose>
-			<c:when test="${empty login}">
-				<a href="javascript:void(0)" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
-			</c:when>
-            <c:when test="${login.auth == 0}">
-               <a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">마이페이지</a>
-            </c:when>
-			<c:otherwise>
-               <a href="/login/logout.do">로그아웃</a> <a href="/admin/main.do">관리자페이지</a>
-			</c:otherwise>
-		</c:choose>
-</div>
 
-<div>
-   <a href="/csite/campinglist.do">캠핑장검색</a> <a href="/community/main.do">커뮤니티</a> <a href="/rent/list.do">물품대여</a>
-   <a href="/cs/csMain.do">고객센터</a>
-</div>
+<div id="ground">
+   <!-- header start -->
+   <div id="header">
+      <div class="indiv">
+         <div class="logobox">
+            <a href="/main.do">
+               <h1 id="logo">
+                  로고
+               </h1>
+            </a>
+         </div>
+         <ul id="menu">
+            <li><a href="/csite/campinglist.do">캠핑장 검색</a></li>
+            <li><a href="/rent/list.do">캠핑장비 대여</a></li>
+            <li><a href="/community/main.do">캠핑커뮤니티</a></li>
+            <li><a href="/cs/csMain.do">고객센터</a></li>
+         </ul>
+         <div id="gnb">
+            <c:choose>
+               <c:when test="${empty login}">
+                  <a href="javascript:void(0)" id="header_login">로그인</a> <a href="/regi/normal.do">회원가입</a>
+               </c:when>
+               <c:when test="${login.auth == 0}">
+                  <a href="/login/logout.do">로그아웃</a> <a href="/account/main.do">마이페이지</a>
+               </c:when>
+               <c:otherwise>
+                  <a href="/login/logout.do">로그아웃</a> <a href="/admin/main.do">관리자페이지</a>
+               </c:otherwise>
+            </c:choose>
+         </div>
+      </div>
+   </div>
+   <!-- header end-->
 
 <div id="login_modal" class="login_modal-overlay" style="z-index: 800;">
    <div class="login_modal-window">
@@ -390,7 +421,6 @@
 
 
 </script>
-<input type="text" value="${param.move}">
 <c:if test="${param.move != null}">
 	<script>
 		move = '${param.move}';

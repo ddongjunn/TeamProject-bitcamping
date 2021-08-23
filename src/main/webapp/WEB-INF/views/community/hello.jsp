@@ -23,7 +23,7 @@
 
 <!-- 글 작성 리스트 틀-->
 <div align="center">
-<table border="1">
+<table>
 <colgroup>
 	<col style="width:5%;" />
 	<col style="width:auto;" />
@@ -86,10 +86,11 @@
 
 <script type="text/javascript">
 
+$(document).ready(function () {
+
 	let choice = '${choice}';
 	let search = '${search}';
 
-$(document).ready(function () {
 	// 페이지네이션
 	let totalCount = ${totalCount}; 	// 글의 총수
 	let pageSize = 15;	// 페이지의 크기 1 ~ 10 [1] ~ [10]
@@ -120,7 +121,48 @@ $(document).ready(function () {
 	});
  	// 검색
 	$("#btnSearch").click(function () {
-		location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();	
+
+		if($('#_choice').val() === ""){
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'bottom-end',
+				showConfirmButton: false,
+				timer: 2000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'error',
+				title: '검색옵션을 선택해주세요!'
+			})
+			return;
+
+		}else if($('#_search').val() ===""){
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'bottom-end',
+				showConfirmButton: false,
+				timer: 2000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'error',
+				title: '검색어를 입력해주세요!'
+			})
+
+			return;
+		}
+
+		location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
 	});  
 });
 </script>

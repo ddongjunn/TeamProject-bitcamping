@@ -201,6 +201,20 @@
       <put-attribute name="body" value="/WEB-INF/views/community/free.jsp"/>
    </definition>
 
+   <!-- 자유게시판 글쓰기 -->
+   <definition name="freewrite.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/freeWrite.jsp"/>
+   </definition>
+
+   <!-- 자유게시판 작성글 상세화면 -->
+   <definition name="freeDetail.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/freeDetail.jsp"/>
+   </definition>
+
+   <!-- 자유게시판 글 수정화면 -->
+   <definition name="freeUpdate.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/freeUpdate.jsp"/>
+   </definition>
 
    <!-- 중고거래 게시판 -->
    <definition name="deal.tiles" extends="community.tiles">
@@ -211,7 +225,25 @@
    <definition name="find.tiles" extends="community.tiles">
       <put-attribute name="body" value="/WEB-INF/views/community/find.jsp"/>
    </definition>
-   
 
+   <!-- 캠퍼모임 글쓰기 -->
+   <definition name="findWrite.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/findWrite.jsp"/>
+   </definition>
+
+   <!-- 캠퍼모임 작성글 상세화면 -->
+   <definition name="findDetail.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/findDetail.jsp"/>
+   </definition>
+
+   <!-- 캠퍼모임 글 수정화면 -->
+   <definition name="findUpdate.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/findUpdate.jsp"/>
+   </definition>
+
+   <!-- 캠핑후기 게시판 -->
+   <definition name="review.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/review.jsp"/>
+   </definition>
 
 </tiles-definitions>

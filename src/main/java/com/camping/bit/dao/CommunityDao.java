@@ -39,7 +39,7 @@ public interface CommunityDao {
 	
 	// 좋아요 취소
 	public void likeDown(CommunityLikeDto dto);
-	
+
 	//좋아요 확인
 	public boolean likeCheck(CommunityLikeDto dto);
 
