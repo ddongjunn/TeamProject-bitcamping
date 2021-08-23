@@ -101,14 +101,23 @@
 		WHERE COMMENT_SEQ = #{comment_Seq}
 	</update>
 	
-	<select id="getCommentList" parameterType="java.lang.Integer" resultType="CsNoticeCommentDto">
-		SELECT N.COMMENT_SEQ, N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.CONTENT, N.REF, N.STEP, N.DEPTH, N.WDATE, N.DEL
+	<select id="getCommentList" parameterType="CsCommentParam" resultType="CsNoticeCommentDto">
+		SELECT COMMENT_SEQ, NOTICE_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, CONTENT, REF, STEP, DEPTH, WDATE, DEL
 			<!-- (SELECT NICKNAME FROM MEMBER WHERE ID = (SELECT USER_ID FROM NOTICE_COMMENT WHERE REF = N.REF AND STEP = N.STEP - 1)) AS PARENT_NICKNAME -->
-		FROM NOTICE_COMMENT N, MEMBER M
-		WHERE N.USER_ID = M.ID
-			AND N.NOTICE_SEQ = #{notice_Seq}
+		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REF ASC, STEP ASC, DEPTH ASC) AS RNUM, COMMENT_SEQ, NOTICE_SEQ, 
+			USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, CONTENT, REF, STEP, DEPTH, WDATE, DEL
+			FROM NOTICE_COMMENT
+			WHERE DEL = 0
+				AND NOTICE_SEQ = #{notice_Seq})
+		WHERE RNUM BETWEEN #{start} AND #{end}
+		ORDER BY REF ASC, STEP ASC, DEPTH ASC 
+	</select>
+	
+	<select id="getCommentCount" parameterType="CsCommentParam" resultType="java.lang.Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM NOTICE_COMMENT
+		WHERE NOTICE_SEQ = #{notice_Seq}
 			AND DEL = 0
-		ORDER BY N.REF ASC, N.STEP ASC, N.DEPTH ASC 
 	</select>
 	
 	<update id="noticeDelete" parameterType="java.lang.Integer">
@@ -119,10 +128,10 @@
 	
 	<select id="getQnaList" parameterType="CsParam" resultType="CsQnaDto">
 		SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH, 
-			TITLE, CONTENT, WDATE, READCOUNT, STATUS, NOTICE, SECRET, DEL
+			TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
 		FROM (
 			SELECT ROW_NUMBER()OVER(ORDER BY REF DESC, STEP ASC) AS RNUM, QNA_SEQ, USER_ID, REF, STEP, DEPTH, 
-				TITLE, CONTENT, WDATE, READCOUNT, STATUS, NOTICE, SECRET, DEL
+				TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
 			FROM QNA
 			WHERE 1=1
 				AND STEP = 0
@@ -134,7 +143,7 @@
 						AND CONTENT LIKE '%'||#{search}||'%'
 					</if>
 					<if test="choice == 'writer'">
-						AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) = #{search}
+						AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) LIKE '%'||#{search}||'%'
 					</if>	
 				</if>		
 			ORDER BY REF DESC, STEP ASC
@@ -145,7 +154,7 @@
 	<insert id="qnaWriteAf" parameterType="CsQnaDto">
 		INSERT INTO QNA
 		VALUES(QNA_SEQ.NEXTVAL, #{user_Id}, (SELECT NVL(MAX(REF)+1, 0) FROM QNA), 0, 0,
-			#{title}, #{content}, SYSDATE, 0, 0, #{notice}, #{secret}, 0)
+			#{title}, #{content}, SYSDATE, 0, 0, #{secret}, 0)
 	</insert>
 	
 	<select id="getQnaCount" resultType="java.lang.Integer">
@@ -167,7 +176,7 @@
 	
 	<select id="getQnaDetail" parameterType="java.lang.Integer" resultType="CsQnaDto">
 		SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH, 
-			TITLE, CONTENT, WDATE, READCOUNT, STATUS, NOTICE, SECRET, DEL
+			TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
 		FROM QNA
 		WHERE QNA_SEQ = #{qna_Seq}
 	</select>
@@ -175,7 +184,7 @@
 	<insert id="qnaAnswerAf" parameterType="CsQnaDto">
 		INSERT INTO QNA
 		VALUES(QNA_SEQ.NEXTVAL, #{user_Id}, #{ref}, 1, 1,
-			#{title}, #{content}, SYSDATE, 0, 0, 0, #{secret}, 0)
+			#{title}, #{content}, SYSDATE, 0, 0, #{secret}, 0)
 	</insert>
 	
 	<update id="answerStatus" parameterType="java.lang.Integer">
@@ -187,7 +196,7 @@
 	
 	<select id="getAnswerDetail" parameterType="java.lang.Integer" resultType="CsQnaDto">
 		SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH, 
-			TITLE, CONTENT, WDATE, READCOUNT, STATUS, NOTICE, SECRET, DEL
+			TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
 		FROM QNA
 		WHERE REF = (SELECT REF FROM QNA WHERE QNA_SEQ = #{qna_Seq})
 			AND STEP = 1

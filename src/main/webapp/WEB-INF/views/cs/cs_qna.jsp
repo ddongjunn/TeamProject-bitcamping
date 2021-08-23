@@ -13,6 +13,9 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 <style type="text/css">
+.qnaList{
+	width: 85%;
+}
 .qnaList > th, td{
 	padding: 5px;
 	border-bottom: solid 1px gray;
@@ -72,7 +75,7 @@
 						<c:otherwise>
 						
 							<c:choose>						
-								<c:when test="${login.id eq qna.user_Id || login.auth eq 3}">
+								<c:when test="${login.id eq qna.user_Id || login.auth eq 1}">
 									<a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}">							
 										${qna.title}
 									</a> 🔒 
@@ -159,7 +162,7 @@
 	let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
 	//alert(pageNum);
 	
-	let pageSize = 10;
+	let pageSize = 15;
 	
 	let _totalPages = totalCount / pageSize;
 	if(totalCount % pageSize > 0){

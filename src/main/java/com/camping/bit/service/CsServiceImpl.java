@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.CsDao;
+import com.camping.bit.dto.CsCommentParam;
 import com.camping.bit.dto.CsNoticeCommentDto;
 import com.camping.bit.dto.CsNoticeDto;
 import com.camping.bit.dto.CsParam;
@@ -68,9 +69,9 @@ public class CsServiceImpl implements CsService{
 	}
 
 	@Override
-	public List<CsNoticeCommentDto> getCommentList(int notice_Seq) {
+	public List<CsNoticeCommentDto> getCommentList(CsCommentParam param) {
 
-		return dao.getCommentList(notice_Seq);
+		return dao.getCommentList(param);
 	}
 
 	@Override
@@ -143,5 +144,11 @@ public class CsServiceImpl implements CsService{
 	public void qnaReadcount(int qna_Seq) {
 		
 		dao.qnaReadcount(qna_Seq);
+	}
+
+	@Override
+	public int getCommentCount(CsCommentParam param) {
+		
+		return dao.getCommentCount(param);
 	}
 }

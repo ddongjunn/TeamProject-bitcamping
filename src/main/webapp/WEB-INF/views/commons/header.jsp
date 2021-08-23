@@ -9,13 +9,13 @@
 <html>
 <head>
    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css">
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/findAccount.css">
-   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
 
    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/jquery/jquery.twbsPagination.min.js"></script>
+ 
    <meta charset="UTF-8">
    <title>Insert title here</title>
 </head>
