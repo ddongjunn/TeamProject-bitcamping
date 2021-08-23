@@ -35,305 +35,403 @@ import com.camping.bit.commons.FileUploadUtil;
 @RequestMapping(value = "/community/*")
 public class CommunityController {
 
-	private static final int community_seq = 0;
-	@Autowired
-	CommunityService service;
-	
-	// 커뮤니티 누르면 첫화면
-	@RequestMapping(value = "main.do", method = RequestMethod.GET)
-	public String mainboard() {
-	
-		return "community.tiles";
-	
-	}
-	
-	// 가입인사게시판
-	@RequestMapping(value = "hello.do", method = RequestMethod.GET)
-	public String helloBoard(Model model, CommunityParam param){
-	
-		int sn = param.getPageNumber();
-		int start = 1 + 15 * sn;
-		int end = 15 + 15 * sn;
-		System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
-		
-		param.setStart(start);
-        param.setEnd(end);
+   private static final int community_seq = 0;
+   @Autowired
+   CommunityService service;
+   
+   // 커뮤니티 누르면 첫화면
+   @RequestMapping(value = "main.do", method = RequestMethod.GET)
+   public String mainboard() {
+   
+      return "community.tiles";
+   
+   }
+   
+   // 가입인사게시판
+   @RequestMapping(value = "hello.do", method = RequestMethod.GET)
+   public String helloBoard(Model model, CommunityParam param){
+   
+      int sn = param.getPageNumber();
+      int start = 1 + 15 * sn;
+      int end = 15 + 15 * sn;
+      System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
+      
+      param.setStart(start);
+      param.setEnd(end);
+     
+      // DB 글목록 불러오기
+      List<CommunityDto> list = service.helloList(param);
+      
+      // model 이용해 list룰 "helloList" 짐싸서 보냄
+      model.addAttribute("helloList", list); 
+      
+      // 게시글 총 수
+      int totalCount = service.helloBoardCount(param);
+      model.addAttribute("totalCount", totalCount);
+      System.out.println("게시글 총 글수 = " + totalCount);
+      
+	  // 현재 페이지
+	  int nowPage = param.getPageNumber();
+	  model.addAttribute("nowPage", nowPage + 1);
+      
+      model.addAttribute("search", param.getSearch());
+      model.addAttribute("choice", param.getChoice());
+      
+      return "hello.tiles"; 
+   }
+   
+   // 가입인사 글쓰기
+   @RequestMapping(value = "helloWrite.do", method = RequestMethod.GET)
+   public String helloWrite(Model model) {
+      
+      return "hellowrite.tiles";
+   }   
+   
+   // 가입인사글 작성 후
+   @RequestMapping(value = "helloWriteAf.do", method = RequestMethod.POST)
+   public String helloWriteAf(CommunityDto dto, HttpServletRequest req) {
+      
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+      
+      System.out.println(dto.toString());
 
+      /*dto값을 service로 넘겨*/
+      service.helloWrite(dto); 
+      
+      return "redirect:/community/hello.do";
+   
+   }
+   
+   // 가입인사글 상세
+   @RequestMapping(value = "helloDetail.do", method = RequestMethod.GET)
+   public String helloDetail(HttpSession session, Model model, CommunityDto dto) {
 
-		// DB 글목록 불러오기
-		List<CommunityDto> list = service.helloList(param);
-		
-		// model 이용해 list룰 "helloList" 짐싸서 보냄
-		model.addAttribute("helloList", list); 
-		
-		// 게시글 총 수
-		int totalCount = service.helloBoardCount(param);
-		model.addAttribute("totalCount", totalCount);
-		System.out.println("게시글 총 글수 = " + totalCount);
-		
-        // 현재 페이지
-        int nowPage = param.getPageNumber();
-        model.addAttribute("nowPage", nowPage + 1);
-	
-		
-		model.addAttribute("search", param.getSearch());
-		model.addAttribute("choice", param.getChoice());
-		
-		return "hello.tiles"; 
-	}
-	
-	// 가입인사 글쓰기
-	@RequestMapping(value = "helloWrite.do", method = RequestMethod.GET)
-	public String helloWrite(Model model) {
-		
-		return "hellowrite.tiles";
-	}	
-	
-	// 가입인사글 작성 후
-	@RequestMapping(value = "helloWriteAf.do", method = RequestMethod.POST)
-	public String helloWriteAf(CommunityDto dto, HttpServletRequest req) {
-		
-		String fileUpload = req.getServletContext().getRealPath("/resources/upload");
-		
-		System.out.println(dto.toString());
+      // 조회수
+      service.readCount(dto.getCommunity_seq());
 
-		/*dto값을 service로 넘겨*/
-		service.helloWrite(dto); 
-		
-		return "redirect:/community/hello.do";
-	
-	}
-	
-	// 가입인사글 상세
-	@RequestMapping(value = "helloDetail.do", method = RequestMethod.GET)
-	public String helloDetail(HttpSession session, Model model, CommunityDto dto) {
+      CommunityDto data = null;
 
-		// 조회수
-		service.readCount(dto.getCommunity_seq());
+      if(session.getAttribute("login") != null) {
+         MemberDto user = (MemberDto) session.getAttribute("login");
+         dto.setUser_id(user.getId());
+         data = service.helloDetail(dto);
+      }else {
+         dto.setUser_id("0");
+         data = service.helloDetail(dto);
+      }
+      
+      /* CommunityDto data = service.helloDetail(dto); */
+      model.addAttribute("data", data);
+      
+      int likecount = service.likeCount(dto.getCommunity_seq());
+      model.addAttribute("likecount", likecount);
+      
+      return "helloDetail.tiles";
+   }
+   
+   
+   // 게시글 삭제
+   @RequestMapping(value = "delete.do", method = RequestMethod.GET) 
+   public String boardDelete(CommunityDto dto) {   
+   
+      service.boardDelete(dto);
+      
+      if(dto.getBbstype().equals("hello")) {
+         return "redirect:/community/hello.do";
+      }else if(dto.getBbstype().equals("free")) {
+         return "redirect:/community/free.do";
+      }else if(dto.getBbstype().equals("deal")) {
+         return "redirect:/community/deal.do";
+      }else if(dto.getBbstype().equals("find")) {
+         return "redirect:/community/find.do";
+      }else {
+         return "redirect:/community/review.do";
+      }
+      
+   }
+   
+   // 인사게시글 수정
+   @RequestMapping(value = "helloupdate.do", method =  { RequestMethod.GET, RequestMethod.POST })
+   public String helloUpdate(Model model, CommunityDto dto) {
 
-		CommunityDto data = null;
+      CommunityDto data = service.helloDetail(dto);
+      model.addAttribute("data", data);
 
-		if(session.getAttribute("login") != null) {
-			MemberDto user = (MemberDto) session.getAttribute("login");
-			dto.setUser_id(user.getId());
-			data = service.helloDetail(dto);
-		}else {
-			dto.setUser_id("0");
-			data = service.helloDetail(dto);
-		}
-		
-		/* CommunityDto data = service.helloDetail(dto); */
-		model.addAttribute("data", data);
-		
-		int likecount = service.likeCount(dto.getCommunity_seq());
-		model.addAttribute("likecount", likecount);
-		
-		return "helloDetail.tiles";
-	}
-	
-	
-	// 게시글 삭제
-	@RequestMapping(value = "delete.do", method = RequestMethod.GET) 
-	public String boardDelete(CommunityDto dto) {	
-	
-		service.boardDelete(dto);
-		
-		if(dto.getBbstype().equals("hello")) {
-			return "redirect:/community/hello.do";
-		}else if(dto.getBbstype().equals("free")) {
-			return "redirect:/community/free.do";
-		}else if(dto.getBbstype().equals("deal")) {
-			return "redirect:/community/deal.do";
-		}else if(dto.getBbstype().equals("group")) {
-			return "redirect:/community/group.do";
-		}else {
-			return "redirect:/community/review.do";
-		}
-		
-	}
-	
-	// 인사게시글 수정
-	@RequestMapping(value = "helloupdate.do", method =  { RequestMethod.GET, RequestMethod.POST })
-	public String helloUPdate(Model model, CommunityDto dto) {
+      return "helloUpdate.tiles";
+   }
+   
+   // 인사게시글 수정 후
+   @RequestMapping(value = "helloUpdateAf.do", method = RequestMethod.POST) 
+      public String helloUpdateAf(CommunityDto dto, HttpServletRequest req) {   
+      
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+      
+      System.out.println(dto.toString());
+      
+      service.helloUpdate(dto);
+      
+      return "redirect:/community/hello.do";
+   }
+   
+   // 좋아요 저장
+   @ResponseBody
+   @RequestMapping(value = "likeClick.do", method = RequestMethod.GET)
+   public HashMap<String,Object> likeClick(CommunityLikeDto dto) {
 
-		CommunityDto data = service.helloDetail(dto);
-		model.addAttribute("data", data);
+      boolean check = service.likeCheck(dto);
 
-		return "helloUpdate.tiles";
-	}
-	
-	// 인사게시글 수정 후
-	@RequestMapping(value = "helloUpdateAf.do", method = RequestMethod.POST) 
-		public String helloUpdateAf(CommunityDto dto, HttpServletRequest req) {	
-		
-		String fileUpload = req.getServletContext().getRealPath("/resources/upload");
-		
-		System.out.println(dto.toString());
-		
-		service.helloUpdate(dto);
-		
-		return "redirect:/community/hello.do";
-	}
-	
-	// 좋아요 저장
-	@ResponseBody
-	@RequestMapping(value = "likeClick.do", method = RequestMethod.GET)
-	public HashMap<String,Object> likeClick(CommunityLikeDto dto) {
+      HashMap<String,Object> map = new HashMap<String, Object>();
 
-		boolean check = service.likeCheck(dto);
+      System.out.println("check = " + check);
+      if(check){
+         service.likeDown(dto);
+         map.put("result",false);
+         map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
+         return map;
+      }
+      service.likeUp(dto);
+      map.put("result",true);
+      map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
+      return map;
+   }
+   
+   // 댓글 입력(아직안함)
+   @RequestMapping("write.do")
+      public void commentWrite(CommunityCommentDto dto) {
+      
+      System.out.println(dto.toString());
 
-		HashMap<String,Object> map = new HashMap<String, Object>();
+      /*dto값을 service로 넘겨*/
+      service.commentWrite(dto); 
+      
+   }
+   
+   // 자유게시판
+   @RequestMapping(value = "free.do", method = RequestMethod.GET)
+   public String freeBoard(Model model, CommunityParam param) {
 
-		System.out.println("check = " + check);
-		if(check){
-			service.likeDown(dto);
-			map.put("result",false);
-			map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
-			return map;
-		}
-		service.likeUp(dto);
-		map.put("result",true);
-		map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
-		return map;
-	}
-	
-	// 댓글 입력(아직안함)
-	@RequestMapping("write.do")
-		public void commentWrite(CommunityCommentDto dto) {
-		
-		System.out.println(dto.toString());
+      int sn = param.getPageNumber();
+      int start = 1 + 15 * sn;
+      int end = 15 + 15 * sn;
+      System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
 
-		/*dto값을 service로 넘겨*/
-		service.commentWrite(dto); 
-		
-	}
-	
-	/* 가입인사 다 할때까지 딴 게시판 하지마~~~~ */
+      param.setStart(start);
+      param.setEnd(end);
 
-	// 자유게시판
-	/*@RequestMapping(value = "free.do", method = RequestMethod.GET)
-	public String freeboard(Model model, CommunityParam param) {
+      // DB 글목록 불러오기
+      List<CommunityDto> list = service.freeList(param);
 
-		int sn = param.getPageNumber();
-		int start = 1 + 15 * sn;
-		int end = 15 + 15 * sn;
-		System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
+      // model 이용해 list룰 "freeList" 짐싸서 보냄
+      model.addAttribute("freeList", list);
 
-		param.setStart(start);
-		param.setEnd(end);
+      // 게시글 총 수
+      int totalCount = service.freeBoardCount(param);
+      model.addAttribute("totalCount", totalCount);
+      System.out.println("게시글 총 글수 = " + totalCount);
 
-		// DB 글목록 불러오기
-		List<CommunityDto> list = service.freeList(param);
+      // 현재 페이지
+      int nowPage = param.getPageNumber();
+      model.addAttribute("nowPage", nowPage + 1);
+      
+      model.addAttribute("search", param.getSearch());
+      model.addAttribute("choice", param.getChoice());
 
-		// model 이용해 list룰 "freeList" 짐싸서 보냄
-		model.addAttribute("freeList", list);
+      return "free.tiles";
+   }
 
-		// 게시글 총 수
-		int totalCount = service.freeBoardCount(param);
-		model.addAttribute("totalCount", totalCount);
-		System.out.println("게시글 총 글수 = " + totalCount);
+   // 자유게시판 글쓰기
+   @RequestMapping(value = "freeWrite.do", method = RequestMethod.GET)
+   public String freeWrite(Model model) {
 
-		// 현재 페이지
-		int nowPage = param.getPageNumber();
-		model.addAttribute("nowPage", nowPage + 1);
+      return "freewrite.tiles";
+   }
 
-		return "free.tiles";
-	}
+   // 자유게시판 작성 후
+   @RequestMapping(value = "freeWriteAf.do", method = RequestMethod.POST)
+   public String freeWriteAf(CommunityDto dto, HttpServletRequest req) {
 
-	// 자유게시판 글쓰기
-	@RequestMapping(value = "freeWrite.do", method = RequestMethod.GET)
-	public String freeWrite(Model model) {
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
 
-		return "freewrite.tiles";
-	}
+      System.out.println(dto.toString());
 
-	// 자유게시판 작성 후
-	@RequestMapping(value = "freeWriteAf.do", method = RequestMethod.POST)
-	public String freeWriteAf(CommunityDto dto, HttpServletRequest req) {
+      /*dto값을 service로 넘겨*/
+      service.freeWrite(dto);
 
-		String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+      return "redirect:/community/free.do";
 
-		System.out.println(dto.toString());
+   }
 
-		*//*dto값을 service로 넘겨*//*
-		service.freeWrite(dto);
+   // 자유게시판 상세
+   @RequestMapping(value = "freeDetail.do", method = RequestMethod.GET)
+   public String freeDetail(HttpSession session, Model model, CommunityDto dto) {
+	   
+      // 조회수
+      service.readCount(dto.getCommunity_seq());
+	      
+      CommunityDto data = null;
 
-		return "redirect:/community/free.do";
+      System.out.println("들어오는 dto = " + dto);
 
-	}
+      if(session.getAttribute("login") != null) {
+         MemberDto user = (MemberDto) session.getAttribute("login");
+         dto.setUser_id(user.getId());
+         data = service.freeDetail(dto);
+      }else {
+         dto.setUser_id("0");
+         data = service.freeDetail(dto);
+      }
 
-	// 자유게시판 상세
-	@RequestMapping(value = "freeDetail.do", method = RequestMethod.GET)
-	public String freeDetail(HttpSession session, Model model, CommunityDto dto) {
-		CommunityDto data = null;
+      /* CommunityDto data = service.helloDetail(dto); */
+      model.addAttribute("data", data);
 
-		System.out.println("들어오는 dto = " + dto);
+      int likecount = service.likeCount(dto.getCommunity_seq());
+      model.addAttribute("likecount", likecount);
 
-		if(session.getAttribute("login") != null) {
-			MemberDto user = (MemberDto) session.getAttribute("login");
-			dto.setUser_id(user.getId());
-			data = service.freeDetail(dto);
-		}else {
-			dto.setUser_id("0");
-			data = service.freeDetail(dto);
-		}
+      return "freeDetail.tiles";
+   }
 
-		*//* CommunityDto data = service.helloDetail(dto); *//*
-		model.addAttribute("data", data);
+   // 자유게시판 글 수정
+   @RequestMapping(value = "freeUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
+   public String freeUpdate(Model model, CommunityDto dto) {
 
-		// 조회수
-		service.readCount(community_seq);
+      CommunityDto data = service.freeDetail(dto);
+      model.addAttribute("data", data);
 
-		*//*
-		 * int likecount = service.likeCount(dto.getCommunity_seq());
-		 * model.addAttribute("likecount", likecount);
-		 *//*
+      return "freeUpdate.tiles";
+   }
 
-		return "freeDetail.tiles";
-	}
+   // 자유게시판 글 수정 후
+   @RequestMapping(value = "freeUpdateAf.do", method = RequestMethod.POST)
+   public String freeUpdateAf(CommunityDto dto, HttpServletRequest req) {
 
-	// 자유게시판 글 수정
-	@RequestMapping(value = "freeUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public String freeUpdate(Model model, CommunityDto dto) {
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
 
-		CommunityDto data = service.freeDetail(dto);
-		model.addAttribute("data", data);
+      System.out.println(dto.toString());
 
-		return "freeUpdate.tiles";
-	}
+      service.freeUpdate(dto);
 
-	// 자유게시판 글 수정 후
-	@RequestMapping(value = "freeUpdateAf.do", method = RequestMethod.POST)
-	public String freeUpdateAf(CommunityDto dto, HttpServletRequest req) {
+      return "redirect:/community/free.do";
+   }
 
-		String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+ 
+   // 중고거래 게시판
+   @RequestMapping(value = "deal.do", method = RequestMethod.GET)
+   public String dealboard() {
 
-		System.out.println(dto.toString());
+      return "deal.tiles";
+   }
+   
+   // 캠퍼모임
+   @RequestMapping(value = "find.do", method = RequestMethod.GET)
+   public String findBoard(Model model, CommunityParam param) {
 
-		service.freeUpdate(dto);
+      int sn = param.getPageNumber();
+      int start = 1 + 15 * sn;
+      int end = 15 + 15 * sn;
+      System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
 
-		return "redirect:/community/free.do";
-	}*/
+      param.setStart(start);
+      param.setEnd(end);
 
-	// 중고거래 게시판
-	@RequestMapping(value = "deal.do", method = RequestMethod.GET)
-	public String dealboard() {
+      // DB 글목록 불러오기
+      List<CommunityDto> list = service.findList(param);
 
-		return "deal.tiles";
-	}
+      // model 이용해 list룰 "findList" 짐싸서 보냄
+      model.addAttribute("findList", list);
 
-	// 캠퍼모임 게시판
-	@RequestMapping(value = "find.do", method = RequestMethod.GET)
-	public String groupboard() {
+      // 게시글 총 수
+      int totalCount = service.findBoardCount(param);
+      model.addAttribute("totalCount", totalCount);
+      System.out.println("게시글 총 글수 = " + totalCount);
 
-		return "find.tiles";
-	}
+      // 현재 페이지
+      int nowPage = param.getPageNumber();
+      model.addAttribute("nowPage", nowPage + 1);
+      
+      model.addAttribute("search", param.getSearch());
+      model.addAttribute("choice", param.getChoice());
 
-	// 캠핑후기 게시판
-	@RequestMapping(value = "review.do", method = RequestMethod.GET)
-	public String reviewboard() {
+      return "find.tiles";
+   }
 
-		return "review.tiles";
-	}
+   // 캠퍼모집 글쓰기
+   @RequestMapping(value = "findWrite.do", method = RequestMethod.GET)
+   public String findWrite(Model model) {
 
+      return "findWrite.tiles";
+   }
+
+   // 캠퍼모집 작성 후
+   @RequestMapping(value = "findWriteAf.do", method = RequestMethod.POST)
+   public String findWriteAf(CommunityDto dto, HttpServletRequest req) {
+
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+      System.out.println(dto.toString());
+
+      /*dto값을 service로 넘겨*/
+      service.findWrite(dto);
+
+      return "redirect:/community/find.do";
+
+   }
+
+   // 캠퍼모집 상세
+   @RequestMapping(value = "findDetail.do", method = RequestMethod.GET)
+   public String findDetail(HttpSession session, Model model, CommunityDto dto) {
+	   
+      // 조회수
+      service.readCount(dto.getCommunity_seq());
+	      
+      CommunityDto data = null;
+
+      System.out.println("들어오는 dto = " + dto);
+
+      if(session.getAttribute("login") != null) {
+         MemberDto user = (MemberDto) session.getAttribute("login");
+         dto.setUser_id(user.getId());
+         data = service.findDetail(dto);
+      }else {
+         dto.setUser_id("0");
+         data = service.findDetail(dto);
+      }
+
+      /* CommunityDto data = service.helloDetail(dto); */
+      model.addAttribute("data", data);
+
+      int likecount = service.likeCount(dto.getCommunity_seq());
+      model.addAttribute("likecount", likecount);
+
+      return "findDetail.tiles";
+   }
+
+   // 캠퍼모집 글 수정
+   @RequestMapping(value = "findUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
+   public String findUpdate(Model model, CommunityDto dto) {
+
+      CommunityDto data = service.findDetail(dto);
+      model.addAttribute("data", data);
+
+      return "findUpdate.tiles";
+   }
+
+   // 캠퍼모집 글 수정 후
+   @RequestMapping(value = "findUpdateAf.do", method = RequestMethod.POST)
+   public String findUpdateAf(CommunityDto dto, HttpServletRequest req) {
+
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+      System.out.println(dto.toString());
+
+      service.findUpdate(dto);
+
+      return "redirect:/community/find.do";
+   }
+
+   // 캠핑후기 게시판
+   @RequestMapping(value = "review.do", method = RequestMethod.GET)
+   public String reviewboard() {
+
+      return "review.tiles";
+   }
 }

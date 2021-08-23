@@ -1,202 +1,211 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="com.camping.bit.dao.CsDao">
-
-	<insert id="noticeWriteAf" parameterType="CsNoticeDto">
-		INSERT INTO NOTICE
-		VALUES(NOTICE_SEQ.NEXTVAL, #{user_Id}, #{title}, #{content}, #{filename}, #{newfilename}, SYSDATE, 0, 0, 0)
-	</insert>
-
-	<select id="getNoticeList" parameterType="CsParam" resultType="CsNoticeDto">
-		SELECT N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.TITLE, N.CONTENT, N.FILENAME, N.NEWFILENAME, N.WDATE, N.READCOUNT, N.DOWNCOUNT, N.DEL,
-		(SELECT NVL(COUNT(*),0) FROM NOTICE_COMMENT WHERE NOTICE_SEQ = N.NOTICE_SEQ AND DEL = 0) AS COMMENTCOUNT
-		FROM (SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM, NOTICE_SEQ, USER_ID, TITLE, CONTENT, FILENAME, NEWFILENAME, WDATE, READCOUNT, DOWNCOUNT, DEL
-		FROM NOTICE
-		WHERE 1=1
-		AND DEL != 1
-		<if test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'title'">
-				AND TITLE LIKE '%'||#{search}||'%'
-			</if>
-			<if test="choice == 'content'">
-				AND CONTENT LIKE '%'||#{search}||'%'
-			</if>
-		</if>
-		) N, MEMBER M
-		WHERE N.USER_ID = M.ID
-		AND N.RNUM BETWEEN #{start} AND #{end}
-		ORDER BY N.WDATE DESC
-	</select>
-
-	<select id="getNoticeCount" parameterType="CsParam" resultType="java.lang.Integer">
-		SELECT NVL(COUNT(*),0)
-		FROM NOTICE
-		WHERE 1=1
-		<if test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'title'">
-				AND TITLE LIKE '%'||#{search}||'%'
-			</if>
-			<if test="choice == 'content'">
-				AND CONTENT LIKE '%'||#{search}||'%'
-			</if>
-		</if>
-	</select>
-
-	<select id="getNoticeDetail" parameterType="java.lang.Integer" resultType="CsNoticeDto">
-		SELECT N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.TITLE, N.CONTENT, N.FILENAME, N.NEWFILENAME, N.WDATE, N.READCOUNT, N.DOWNCOUNT, N.DEL
-		FROM NOTICE N, MEMBER M
-		WHERE 1=1
-		  AND N.USER_ID = M.ID
-		  AND N.NOTICE_SEQ = #{notice_Seq}
-	</select>
-
-	<update id="downcount" parameterType="java.lang.Integer">
-		UPDATE NOTICE
-		SET DOWNCOUNT = DOWNCOUNT + 1
-		WHERE NOTICE_SEQ = #{notice_Seq}
-	</update>
-
-	<update id="noticeReadcount" parameterType="java.lang.Integer">
-		UPDATE NOTICE
-		SET READCOUNT = READCOUNT + 1
-		WHERE NOTICE_SEQ = #{notice_Seq}
-	</update>
-
-	<update id="noticeUpdateAf" parameterType="CsNoticeDto">
-		UPDATE NOTICE
-		SET TITLE = #{title},
-			CONTENT = #{content},
-			FILENAME = #{filename, jdbcType=VARCHAR},
-			NEWFILENAME = #{newfilename, jdbcType=VARCHAR}
-		WHERE NOTICE_SEQ = #{notice_Seq}
-	</update>
-
-	<insert id="writeComment" parameterType="CsNoticeCommentDto">
-		INSERT INTO NOTICE_COMMENT
-		VALUES(NOTICE_COMMENT_SEQ.NEXTVAL, #{notice_Seq}, #{user_Id}, #{content}, (SELECT NVL(MAX(REF)+1, 0) FROM NOTICE_COMMENT), 0, 0, SYSDATE, 0)
-	</insert>
-
-	<insert id="answerComment" parameterType="CsNoticeCommentDto">
-		INSERT INTO NOTICE_COMMENT
-		VALUES(NOTICE_COMMENT_SEQ.NEXTVAL, #{notice_Seq}, #{user_Id}, #{content},
-			   (SELECT REF FROM NOTICE_COMMENT WHERE COMMENT_SEQ = #{comment_Seq}),
-			   (SELECT MAX(STEP) FROM NOTICE_COMMENT WHERE REF = #{ref}) + 1,
-			   (SELECT DEPTH FROM NOTICE_COMMENT WHERE COMMENT_SEQ = #{comment_Seq}) + 1, SYSDATE, 0)
-	</insert>
-
-	<update id="updateComment" parameterType="CsNoticeCommentDto">
-		UPDATE NOTICE_COMMENT
-		SET CONTENT = #{content},
-			WDATE = SYSDATE
-		WHERE COMMENT_SEQ = #{comment_Seq}
-	</update>
-
-	<update id="deleteComment" parameterType="java.lang.Integer">
-		UPDATE NOTICE_COMMENT
-		SET DEL = 1
-		WHERE COMMENT_SEQ = #{comment_Seq}
-	</update>
-
-	<select id="getCommentList" parameterType="java.lang.Integer" resultType="CsNoticeCommentDto">
-		SELECT N.COMMENT_SEQ, N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.CONTENT, N.REF, N.STEP, N.DEPTH, N.WDATE, N.DEL
-		<!-- (SELECT NICKNAME FROM MEMBER WHERE ID = (SELECT USER_ID FROM NOTICE_COMMENT WHERE REF = N.REF AND STEP = N.STEP - 1)) AS PARENT_NICKNAME -->
-		FROM NOTICE_COMMENT N, MEMBER M
-		WHERE N.USER_ID = M.ID
-		AND N.NOTICE_SEQ = #{notice_Seq}
-		AND DEL = 0
-		ORDER BY N.REF ASC, N.STEP ASC, N.DEPTH ASC
-	</select>
-
-	<update id="noticeDelete" parameterType="java.lang.Integer">
-		UPDATE NOTICE
-		SET DEL = 1
-		WHERE NOTICE_SEQ = #{notice_Seq}
-	</update>
-
-	<select id="getQnaList" parameterType="CsParam" resultType="CsQnaDto">
-		SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH,
-		TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
-		FROM (
-		SELECT ROW_NUMBER()OVER(ORDER BY REF DESC, STEP ASC) AS RNUM, QNA_SEQ, USER_ID, REF, STEP, DEPTH,
-		TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
-		FROM QNA
-		WHERE 1=1
-		AND STEP = 0
-		<if test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'title'">
-				AND TITLE LIKE '%'||#{search}||'%'
-			</if>
-			<if test="choice == 'content'">
-				AND CONTENT LIKE '%'||#{search}||'%'
-			</if>
-			<if test="choice == 'writer'">
-				AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) LIKE '%'||#{search}||'%'
-			</if>
-		</if>
-		ORDER BY REF DESC, STEP ASC
-		)
-		WHERE RNUM BETWEEN #{start} AND #{end}
-	</select>
-
-	<insert id="qnaWriteAf" parameterType="CsQnaDto">
-		INSERT INTO QNA
-		VALUES(QNA_SEQ.NEXTVAL, #{user_Id}, (SELECT NVL(MAX(REF)+1, 0) FROM QNA), 0, 0,
-			   #{title}, #{content}, SYSDATE, 0, 0, #{secret}, 0)
-	</insert>
-
-	<select id="getQnaCount" resultType="java.lang.Integer">
-		SELECT NVL(COUNT(*),0)
-		FROM QNA
-		WHERE 1=1
-		<if test="choice != null and choice != '' and search != null and search != ''">
-			<if test="choice == 'title'">
-				AND TITLE LIKE '%'||#{search}||'%'
-			</if>
-			<if test="choice == 'content'">
-				AND CONTENT LIKE '%'||#{search}||'%'
-			</if>
-			<if test="choice == 'writer'">
-				AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) = '%'||#{search}||'%'
-			</if>
-		</if>
-	</select>
-
-	<select id="getQnaDetail" parameterType="java.lang.Integer" resultType="CsQnaDto">
-		SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH,
-			   TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
-		FROM QNA
-		WHERE QNA_SEQ = #{qna_Seq}
-	</select>
-
-	<insert id="qnaAnswerAf" parameterType="CsQnaDto">
-		INSERT INTO QNA
-		VALUES(QNA_SEQ.NEXTVAL, #{user_Id}, #{ref}, 1, 1,
-			   #{title}, #{content}, SYSDATE, 0, 0, #{secret}, 0)
-	</insert>
-
-	<update id="answerStatus" parameterType="java.lang.Integer">
-		UPDATE QNA
-		SET STATUS = 1
-		WHERE REF = #{ref}
-		  AND STEP = 0
-	</update>
-
-	<select id="getAnswerDetail" parameterType="java.lang.Integer" resultType="CsQnaDto">
-		SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH,
-			   TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
-		FROM QNA
-		WHERE REF = (SELECT REF FROM QNA WHERE QNA_SEQ = #{qna_Seq})
-		  AND STEP = 1
-	</select>
-
-	<update id="qnaReadcount" parameterType="java.lang.Integer">
-		UPDATE QNA
-		SET READCOUNT = READCOUNT + 1
-		WHERE QNA_SEQ = #{qna_Seq}
-	</update>
+   
+   <insert id="noticeWriteAf" parameterType="CsNoticeDto">
+      INSERT INTO NOTICE
+      VALUES(NOTICE_SEQ.NEXTVAL, #{user_Id}, #{title}, #{content}, #{filename}, #{newfilename}, SYSDATE, 0, 0, 0)   
+   </insert>
+   
+   <select id="getNoticeList" parameterType="CsParam" resultType="CsNoticeDto">
+      SELECT N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.TITLE, N.CONTENT, N.FILENAME, N.NEWFILENAME, N.WDATE, N.READCOUNT, N.DOWNCOUNT, N.DEL, 
+         (SELECT NVL(COUNT(*),0) FROM NOTICE_COMMENT WHERE NOTICE_SEQ = N.NOTICE_SEQ AND DEL = 0) AS COMMENTCOUNT
+      FROM (SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM, NOTICE_SEQ, USER_ID, TITLE, CONTENT, FILENAME, NEWFILENAME, WDATE, READCOUNT, DOWNCOUNT, DEL
+            FROM NOTICE
+            WHERE 1=1
+               AND DEL != 1
+               <if test="choice != null and choice != '' and search != null and search != ''">
+                  <if test="choice == 'title'">
+                     AND TITLE LIKE '%'||#{search}||'%'
+                  </if>
+                  <if test="choice == 'content'">
+                     AND CONTENT LIKE '%'||#{search}||'%'
+                  </if>
+               </if>               
+         ) N, MEMBER M
+      WHERE N.USER_ID = M.ID
+         AND N.RNUM BETWEEN #{start} AND #{end} 
+      ORDER BY N.WDATE DESC
+   </select>
+   
+   <select id="getNoticeCount" parameterType="CsParam" resultType="java.lang.Integer">
+      SELECT NVL(COUNT(*),0)
+      FROM NOTICE
+      WHERE 1=1
+         <if test="choice != null and choice != '' and search != null and search != ''">
+            <if test="choice == 'title'">
+               AND TITLE LIKE '%'||#{search}||'%'
+            </if>
+            <if test="choice == 'content'">
+               AND CONTENT LIKE '%'||#{search}||'%'
+            </if>
+         </if>
+   </select>
+   
+   <select id="getNoticeDetail" parameterType="java.lang.Integer" resultType="CsNoticeDto">
+      SELECT N.NOTICE_SEQ, N.USER_ID, M.NICKNAME, N.TITLE, N.CONTENT, N.FILENAME, N.NEWFILENAME, N.WDATE, N.READCOUNT, N.DOWNCOUNT, N.DEL
+      FROM NOTICE N, MEMBER M
+      WHERE 1=1
+      AND N.USER_ID = M.ID
+      AND N.NOTICE_SEQ = #{notice_Seq}
+   </select>
+   
+   <update id="downcount" parameterType="java.lang.Integer">
+      UPDATE NOTICE
+      SET DOWNCOUNT = DOWNCOUNT + 1
+      WHERE NOTICE_SEQ = #{notice_Seq}
+   </update>
+   
+   <update id="noticeReadcount" parameterType="java.lang.Integer">
+      UPDATE NOTICE
+      SET READCOUNT = READCOUNT + 1
+      WHERE NOTICE_SEQ = #{notice_Seq}
+   </update>
+   
+   <update id="noticeUpdateAf" parameterType="CsNoticeDto">
+      UPDATE NOTICE
+      SET TITLE = #{title},
+         CONTENT = #{content},
+         FILENAME = #{filename, jdbcType=VARCHAR},
+         NEWFILENAME = #{newfilename, jdbcType=VARCHAR}
+      WHERE NOTICE_SEQ = #{notice_Seq}
+   </update>
+   
+   <insert id="writeComment" parameterType="CsNoticeCommentDto">
+      INSERT INTO NOTICE_COMMENT
+      VALUES(NOTICE_COMMENT_SEQ.NEXTVAL, #{notice_Seq}, #{user_Id}, #{content}, (SELECT NVL(MAX(REF)+1, 0) FROM NOTICE_COMMENT), 0, 0, SYSDATE, 0)   
+   </insert>
+   
+   <insert id="answerComment" parameterType="CsNoticeCommentDto">
+      INSERT INTO NOTICE_COMMENT
+      VALUES(NOTICE_COMMENT_SEQ.NEXTVAL, #{notice_Seq}, #{user_Id}, #{content}, 
+         (SELECT REF FROM NOTICE_COMMENT WHERE COMMENT_SEQ = #{comment_Seq}), 
+         (SELECT MAX(STEP) FROM NOTICE_COMMENT WHERE REF = #{ref}) + 1,
+         (SELECT DEPTH FROM NOTICE_COMMENT WHERE COMMENT_SEQ = #{comment_Seq}) + 1, SYSDATE, 0)
+   </insert>
+   
+   <update id="updateComment" parameterType="CsNoticeCommentDto">
+      UPDATE NOTICE_COMMENT
+      SET CONTENT = #{content},
+         WDATE = SYSDATE
+      WHERE COMMENT_SEQ = #{comment_Seq}
+   </update>
+   
+   <update id="deleteComment" parameterType="java.lang.Integer">
+      UPDATE NOTICE_COMMENT
+      SET DEL = 1
+      WHERE COMMENT_SEQ = #{comment_Seq}
+   </update>
+   
+   <select id="getCommentList" parameterType="CsCommentParam" resultType="CsNoticeCommentDto">
+      SELECT COMMENT_SEQ, NOTICE_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, CONTENT, REF, STEP, DEPTH, WDATE, DEL
+         <!-- (SELECT NICKNAME FROM MEMBER WHERE ID = (SELECT USER_ID FROM NOTICE_COMMENT WHERE REF = N.REF AND STEP = N.STEP - 1)) AS PARENT_NICKNAME -->
+      FROM (SELECT ROW_NUMBER()OVER(ORDER BY REF ASC, STEP ASC, DEPTH ASC) AS RNUM, COMMENT_SEQ, NOTICE_SEQ, 
+         USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, CONTENT, REF, STEP, DEPTH, WDATE, DEL
+         FROM NOTICE_COMMENT
+         WHERE DEL = 0
+            AND NOTICE_SEQ = #{notice_Seq})
+      WHERE RNUM BETWEEN #{start} AND #{end}
+      ORDER BY REF ASC, STEP ASC, DEPTH ASC 
+   </select>
+   
+   <select id="getCommentCount" parameterType="CsCommentParam" resultType="java.lang.Integer">
+      SELECT NVL(COUNT(*),0)
+      FROM NOTICE_COMMENT
+      WHERE NOTICE_SEQ = #{notice_Seq}
+         AND DEL = 0
+   </select>
+   
+   <update id="noticeDelete" parameterType="java.lang.Integer">
+      UPDATE NOTICE
+      SET DEL = 1
+      WHERE NOTICE_SEQ = #{notice_Seq}
+   </update>
+   
+   <select id="getQnaList" parameterType="CsParam" resultType="CsQnaDto">
+      SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH, 
+         TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
+      FROM (
+         SELECT ROW_NUMBER()OVER(ORDER BY REF DESC, STEP ASC) AS RNUM, QNA_SEQ, USER_ID, REF, STEP, DEPTH, 
+            TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
+         FROM QNA
+         WHERE 1=1
+            AND STEP = 0
+            <if test="choice != null and choice != '' and search != null and search != ''">
+               <if test="choice == 'title'">
+                  AND TITLE LIKE '%'||#{search}||'%'
+               </if>
+               <if test="choice == 'content'">
+                  AND CONTENT LIKE '%'||#{search}||'%'
+               </if>
+               <if test="choice == 'writer'">
+                  AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) LIKE '%'||#{search}||'%'
+               </if>   
+            </if>      
+         ORDER BY REF DESC, STEP ASC
+         )
+      WHERE RNUM BETWEEN #{start} AND #{end}
+   </select>
+   
+   <insert id="qnaWriteAf" parameterType="CsQnaDto">
+      INSERT INTO QNA
+      VALUES(QNA_SEQ.NEXTVAL, #{user_Id}, (SELECT NVL(MAX(REF)+1, 0) FROM QNA), 0, 0,
+         #{title}, #{content}, SYSDATE, 0, 0, #{secret}, 0)
+   </insert>
+   
+   <select id="getQnaCount" resultType="java.lang.Integer">
+      SELECT NVL(COUNT(*),0)
+      FROM QNA
+      WHERE 1=1
+      <if test="choice != null and choice != '' and search != null and search != ''">
+         <if test="choice == 'title'">
+            AND TITLE LIKE '%'||#{search}||'%'
+         </if>
+         <if test="choice == 'content'">
+            AND CONTENT LIKE '%'||#{search}||'%'
+         </if>
+         <if test="choice == 'writer'">
+            AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) = '%'||#{search}||'%'
+         </if>   
+      </if>
+   </select>
+   
+   <select id="getQnaDetail" parameterType="java.lang.Integer" resultType="CsQnaDto">
+      SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH, 
+         TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
+      FROM QNA
+      WHERE QNA_SEQ = #{qna_Seq}
+   </select>
+   
+   <insert id="qnaAnswerAf" parameterType="CsQnaDto">
+      INSERT INTO QNA
+      VALUES(QNA_SEQ.NEXTVAL, #{user_Id}, #{ref}, 1, 1,
+         #{title}, #{content}, SYSDATE, 0, 0, #{secret}, 0)
+   </insert>
+   
+   <update id="answerStatus" parameterType="java.lang.Integer">
+      UPDATE QNA
+      SET STATUS = 1
+      WHERE REF = #{ref}
+         AND STEP = 0
+   </update>
+   
+   <select id="getAnswerDetail" parameterType="java.lang.Integer" resultType="CsQnaDto">
+      SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH, 
+         TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
+      FROM QNA
+      WHERE REF = (SELECT REF FROM QNA WHERE QNA_SEQ = #{qna_Seq})
+         AND STEP = 1
+   </select>
+   
+   <update id="qnaReadcount" parameterType="java.lang.Integer">
+      UPDATE QNA
+      SET READCOUNT = READCOUNT + 1
+      WHERE QNA_SEQ = #{qna_Seq}
+   </update>
 
 </mapper>
