@@ -70,7 +70,9 @@
 	</definition>
 
 	<!-- 효경 -->
-
+	<definition name = "campinglist.tiles" extends = "main.tiles">
+      <put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>
+   	</definition>
 
 	<definition name = "campingdetail.tiles" template = "/WEB-INF/views/layouts-campingsite.jsp">
 		<put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
