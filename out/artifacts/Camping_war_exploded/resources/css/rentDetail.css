@@ -1,0 +1,328 @@
+@charset "UTF-8";
+
+/* nav button */
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+@font-face {
+     font-family: 'S-CoreDream-6Bold';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+@font-face {
+     font-family: 'S-CoreDream-4Regular';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-4Regular.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
+
+/* ----- Variables ----- */
+/* ----- Global ----- */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 1fr;
+  font-family: 'S-CoreDream-4Regular', sans-serif;
+/*   background-color: rgb(193, 208, 204); */
+}
+
+h3 {
+  font-size: 1.0em;
+  letter-spacing: 1.2px;
+  color: #a6a6a6;
+}
+
+img {
+  max-width: 100%;
+  filter: drop-shadow(1px 1px 3px #a6a6a6);
+}
+
+/* ----- Product Section ----- */
+.product {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr;
+  margin: auto 5%;
+  padding: 2.5em;
+  min-width: 600px;
+  background-color: rgb(246, 246, 246);
+  border-radius: 5px;
+}
+
+/* ----- Photo Section ----- */
+.product__photo {
+  position: relative;
+}
+
+.photo-container {
+  position: absolute;
+  left: 10%;
+  display: grid;
+  grid-template-rows: 1fr;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  /* box-shadow: 4px 4px 25px -2px rgba(0, 0, 0, 0.3); */
+  margin: 10px;
+}
+
+.photo-main {
+  border-radius: 6pxrgb(255, 255, 255)x 6px;
+  /* background-color: #ffffff;
+  background: radial-gradient(#ffffff, #dddddd); */
+}
+
+/* .photo-main .controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8em;
+  color: #fff;
+}
+.photo-main .controls i {
+  cursor: pointer;
+} */
+.photo-main img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform:translate(-50%, -50%); 
+  margin: auto;
+  max-width: 110%;
+  filter: saturate(150%) contrast(120%) hue-rotate(10deg) drop-shadow(4px 4px 25px -2px rgba(0, 0, 0, 0.3));
+}
+
+/* .photo-album {
+  padding: 0.7em 1em;
+  border-radius: 0 0 6px 6px;
+  background-color: #fff;
+}
+.photo-album ul {
+  display: flex;
+  justify-content: space-around;
+}
+.photo-album li {
+  float: left;
+  width: 55px;
+  height: 55px;
+  padding: 7px;
+  border: 1px solid #a6a6a6;
+  border-radius: 3px;
+} */
+
+/* ----- Informations Section ----- */
+.product__info {
+  padding: 0.8em 0 0 12em;
+}
+.hr{
+	background-color: #e3e3e3 !important;
+	border-top: 1px solid #e3e3e3 !important;
+}
+.title h1 {
+  font-family: 'S-CoreDream-6Bold';
+  margin-bottom: 0.1em;
+  color: #4c4c4c;
+  font-size: 1.9em;
+  font-weight: 900;
+}
+.title span {
+  font-size: 1.1em;
+  color: #a6a6a6;
+}
+
+.price {
+  margin: 1.5em 0;
+  color: #ff3f40;
+  font-size: 1.0em;
+/*   text-align: right; */
+}
+.price span {
+/* padding-left: 0.15em; */
+  font-size: 2.9em;
+}
+
+.variant {
+  overflow: auto;
+  margin-bottom: 20px;
+}
+.variant h3 {
+  margin-bottom: 0.5em;
+}
+.variant li {
+  float: left;
+  width: 35px;
+  height: 35px;
+  padding: 3px;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.variant li:first-child, .variant li:hover {
+  border: 1px solid #a6a6a6;
+}
+.variant li:not(:first-child) {
+  margin-left: 0.1em;
+}
+
+.description {
+  clear: left;
+  margin: 2em 0;
+}
+.description h3 {
+  margin-bottom: 0.5em;
+}
+.description h4{
+margin-bottom: 0.5em;
+}
+.description ul {
+  font-size: 0.8em;
+  list-style: none;
+  margin-left: 1em;
+}
+.description li {
+  text-indent: -0.6em;
+  margin-bottom: 0.5em;
+}
+select{
+  font-size: 14px;
+}
+.buy--btn {
+  padding: 1.5em 3.1em;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: #fff;
+  background-color: #ff3f40;
+  box-shadow: 2px 2px 25px -7px #4c4c4c;
+  cursor: pointer;
+}
+.buy--btn:active {
+  transform: scale(0.97);
+}
+
+/* Quantity Picker Section */
+input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button {
+	 -webkit-appearance: none;
+	 margin: 0;
+}
+ .quantity-picker {
+	 border-radius: 4px;
+	 overflow: hidden;
+	 box-sizing: border-box;
+	 height: 50px;
+	 border: 2px solid #a6a6a6;
+	 display: inline-flex;
+	 flex-wrap: nowrap;
+	 flex-direction: row;
+	 -webkit-flex-direction: row;
+}
+ .quantity-picker > button, .quantity-picker > input {
+	 -webkit-appearance: none;
+	 user-select: none;
+	 background: none;
+	 font-size: 26px;
+	 font-weight: 700;
+	 border: 0;
+	 border-radius: 0;
+	 margin: 0;
+	 box-sizing: border-box;
+}
+ .quantity-picker > button:focus, .quantity-picker > input:focus {
+	 outline: none;
+}
+ .quantity-picker > input {
+	 width: 64px;
+	 text-align: center;
+	 border-left: 1.5px solid #a6a6a6;
+	 border-right: 1.5px solid #a6a6a6;
+}
+ .quantity-picker > button {
+	 width: 42px;
+	 flex: 0 0 42px;
+	 padding: 0;
+	 cursor: pointer;
+}
+ .quantity-picker > button.button-plus:hover {
+	 background: #7ed2a9;
+}
+ .quantity-picker > button.button-plus:hover:disabled {
+	 background: #caecdb;
+}
+ .quantity-picker > button.button-minus:hover {
+	 background: #fe7c7c;
+}
+ .quantity-picker > button.button-minus:hover:disabled {
+	 background: #ffe1e1;
+}
+ .quantity-picker > button.button-plus:hover, .quantity-picker > button.button-minus:hover {
+	 color: #fff;
+}
+ .quantity-picker.is-small {
+	 height: 30px;
+}
+ .quantity-picker.is-small > button, .quantity-picker.is-small > input {
+	 font-size: 16px;
+}
+ .quantity-picker.is-small > input {
+	 width: 40px;
+	 flex: 0 0 40px;
+}
+ .quantity-picker.is-small > button {
+	 width: 28px;
+	 flex: 0 1 28px;
+}
+
+/* Total 금액 section */
+.total{
+	display: flex;
+	justify-content: space-between;
+	}
+
+/* menu section */
+nav {
+  width: 80%;
+  height: 60px; 
+/*   position: fixed; 
+  top: 0; */
+  margin: auto;
+  margin-top: 60px;
+  background: linear-gradient(to left, #c2e59c, #64b3f4);
+}
+nav ul {
+  padding: 20px;
+  margin: 0 auto;
+  list-style: none;
+  text-align: center;
+}
+nav ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+nav ul li a {
+  padding: 10px 0;
+  color: #fff;
+  font-size: 1.0em;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+nav ul li a:hover {
+  color: #fff;
+}
+a.active {
+  border-bottom: 2px solid #ecf0f1;
+}
+
+/* ----- Main Content Section ----- */
+
+
+

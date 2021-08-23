@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.camping.bit.dao.RentDao">
+
+	<insert id="regiAf" parameterType="ProductDetailDto">
+  		INSERT INTO PRODUCT 
+  		(PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
+  		CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL)
+  		VALUES(PRODUCT_SEQ.NEXTVAL, #{product_Name}, #{product_Desc}, #{base_Item}, #{product_Price}, #{product_Stock}, #{thumbnail_Name},
+  		#{content}, #{include_Light}, #{include_Grill}, #{rent_Type}, SYSDATE, 0)
+	</insert>
+	
+	<select id="getProductList" resultType="ProductDetailDto">
+		SELECT *
+  		FROM PRODUCT
+		ORDER BY WDATE DESC
+	</select>
+	
+	<select id="getProductDetail" parameterType="java.lang.Integer" resultType="ProductDetailDto">
+		SELECT *
+  		FROM PRODUCT
+  		WHERE PRODUCT_SEQ = #{product_Seq}
+	</select>
+	
+	<select id="getRentList" parameterType="java.lang.Integer" resultType="ProductRentDto">
+		SELECT *
+  		FROM PRODUCT_RENT
+  		WHERE RENT_TYPE = (SELECT RENT_TYPE FROM PRODUCT WHERE PRODUCT_SEQ = #{product_Seq})
+	</select>
+	
+	<select id="getRentDetail" parameterType="java.lang.Integer" resultType="ProductRentDto">
+		SELECT * FROM PRODUCT_RENT
+		WHERE RENT_SEQ = #{rent_Seq}
+	</select>
+	
+	<select id="getOptionList" resultType="ProductOptionDto">
+		SELECT * FROM PRODUCT_OPTION
+	</select>
+	
+	<select id="getOptionDetail" parameterType="java.lang.Integer" resultType="ProductOptionDto">
+		SELECT * FROM PRODUCT_OPTION
+		WHERE OPTION_SEQ = #{option_Seq}
+	</select>
+	
+	<insert id="writeReviewAf" parameterType="ProductReviewDto">
+  		INSERT INTO PRODUCT_REVIEW 
+  		(REVIEW_SEQ, PRODUCT_SEQ, USER_ID, ORDER_SEQ, TITLE, CONTENT, IMAGE, RATE, WDATE, DEL, STATUS)
+  		VALUES(PRODUCT_REVIEW_SEQ.NEXTVAL, (SELECT PRODUCT_SEQ FROM PRODUCT_ORDER WHERE ORDER_SEQ=#{order_Seq}), #{user_Id}, #{order_Seq}, 
+  		#{title}, #{content}, #{image, jdbcType=VARCHAR}, #{rate}, SYSDATE, 0, 0)
+	</insert>
+	
+	<select id="getReviewList" parameterType="java.lang.Integer" resultType="ProductReviewDto">
+  		SELECT P.REVIEW_SEQ, P.PRODUCT_SEQ, P.USER_ID, M.NICKNAME, P.ORDER_SEQ, P.TITLE, P.CONTENT, P.IMAGE, P.RATE, P.WDATE, P.DEL, P.STATUS 
+		FROM MEMBER M, PRODUCT_REVIEW P
+		WHERE 1=1 
+		AND M.ID = P.USER_ID
+		AND DEL != 1 
+		AND PRODUCT_SEQ = #{product_Seq}
+		ORDER BY WDATE
+	</select>
+	
+	<select id="getReviewCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM PRODUCT_REVIEW
+		WHERE 1=1 
+		AND DEL != 1 
+		AND PRODUCT_SEQ = #{product_Seq}
+	</select>
+
+</mapper>

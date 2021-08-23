@@ -1,0 +1,17 @@
+.leftmenu .lnb{
+    box-sizing: border-box;
+    border-top : 1px solid #dedfda;
+    margin: 0;
+    padding: 20px 0;
+    vertical-align: baseline;
+}
+
+/*.lnb a{
+    padding: 8px;
+    height: auto;
+}*/
+
+.leftmenu .lnb > a{
+    width : 100%;
+    display: inline-block;
+}

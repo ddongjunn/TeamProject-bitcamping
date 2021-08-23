@@ -5,7 +5,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -105,10 +107,12 @@ public class CommunityController {
 	// 가입인사글 상세
 	@RequestMapping(value = "helloDetail.do", method = RequestMethod.GET)
 	public String helloDetail(HttpSession session, Model model, CommunityDto dto) {
+
+		// 조회수
+		service.readCount(dto.getCommunity_seq());
+
 		CommunityDto data = null;
-		
-		System.out.println("들어오는 dto = " + dto);
-		
+
 		if(session.getAttribute("login") != null) {
 			MemberDto user = (MemberDto) session.getAttribute("login");
 			dto.setUser_id(user.getId());
@@ -119,10 +123,7 @@ public class CommunityController {
 		}
 		
 		/* CommunityDto data = service.helloDetail(dto); */
-		model.addAttribute("data", data); 
-		
-		// 조회수
-		service.readCount(community_seq);
+		model.addAttribute("data", data);
 		
 		int likecount = service.likeCount(dto.getCommunity_seq());
 		model.addAttribute("likecount", likecount);
@@ -152,12 +153,12 @@ public class CommunityController {
 	}
 	
 	// 인사게시글 수정
-	@RequestMapping(value = "helloupdate.do", method = RequestMethod.GET) 
+	@RequestMapping(value = "helloupdate.do", method =  { RequestMethod.GET, RequestMethod.POST })
 	public String helloUPdate(Model model, CommunityDto dto) {
-		
+
 		CommunityDto data = service.helloDetail(dto);
 		model.addAttribute("data", data);
-		
+
 		return "helloUpdate.tiles";
 	}
 	
@@ -177,25 +178,23 @@ public class CommunityController {
 	// 좋아요 저장
 	@ResponseBody
 	@RequestMapping(value = "likeClick.do", method = RequestMethod.GET)
-	public void likeUp(CommunityLikeDto dto) {
-		
-		System.out.println(dto.getCommunity_seq());
-		System.out.println(dto.getUser_id());
-		
-		service.likeUp(dto);
-		
-	}
+	public HashMap<String,Object> likeClick(CommunityLikeDto dto) {
 
-	// 좋아요 취소
-	@ResponseBody
-	@RequestMapping(value = "deleteLike.do", method = RequestMethod.GET)
-	public void deleteLike(CommunityLikeDto dto) {
-		
-		System.out.println(dto.getCommunity_seq());
-		System.out.println(dto.getUser_id());
-		
-		service.deleteLike(dto);
-		
+		boolean check = service.likeCheck(dto);
+
+		HashMap<String,Object> map = new HashMap<String, Object>();
+
+		System.out.println("check = " + check);
+		if(check){
+			service.likeDown(dto);
+			map.put("result",false);
+			map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
+			return map;
+		}
+		service.likeUp(dto);
+		map.put("result",true);
+		map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
+		return map;
 	}
 	
 	// 댓글 입력(아직안함)
@@ -210,13 +209,111 @@ public class CommunityController {
 	}
 	
 	/* 가입인사 다 할때까지 딴 게시판 하지마~~~~ */
-	
+
 	// 자유게시판
-	@RequestMapping(value = "free.do", method = RequestMethod.GET)
-	public String freeboard() {
+	/*@RequestMapping(value = "free.do", method = RequestMethod.GET)
+	public String freeboard(Model model, CommunityParam param) {
+
+		int sn = param.getPageNumber();
+		int start = 1 + 15 * sn;
+		int end = 15 + 15 * sn;
+		System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
+
+		param.setStart(start);
+		param.setEnd(end);
+
+		// DB 글목록 불러오기
+		List<CommunityDto> list = service.freeList(param);
+
+		// model 이용해 list룰 "freeList" 짐싸서 보냄
+		model.addAttribute("freeList", list);
+
+		// 게시글 총 수
+		int totalCount = service.freeBoardCount(param);
+		model.addAttribute("totalCount", totalCount);
+		System.out.println("게시글 총 글수 = " + totalCount);
+
+		// 현재 페이지
+		int nowPage = param.getPageNumber();
+		model.addAttribute("nowPage", nowPage + 1);
 
 		return "free.tiles";
 	}
+
+	// 자유게시판 글쓰기
+	@RequestMapping(value = "freeWrite.do", method = RequestMethod.GET)
+	public String freeWrite(Model model) {
+
+		return "freewrite.tiles";
+	}
+
+	// 자유게시판 작성 후
+	@RequestMapping(value = "freeWriteAf.do", method = RequestMethod.POST)
+	public String freeWriteAf(CommunityDto dto, HttpServletRequest req) {
+
+		String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+		System.out.println(dto.toString());
+
+		*//*dto값을 service로 넘겨*//*
+		service.freeWrite(dto);
+
+		return "redirect:/community/free.do";
+
+	}
+
+	// 자유게시판 상세
+	@RequestMapping(value = "freeDetail.do", method = RequestMethod.GET)
+	public String freeDetail(HttpSession session, Model model, CommunityDto dto) {
+		CommunityDto data = null;
+
+		System.out.println("들어오는 dto = " + dto);
+
+		if(session.getAttribute("login") != null) {
+			MemberDto user = (MemberDto) session.getAttribute("login");
+			dto.setUser_id(user.getId());
+			data = service.freeDetail(dto);
+		}else {
+			dto.setUser_id("0");
+			data = service.freeDetail(dto);
+		}
+
+		*//* CommunityDto data = service.helloDetail(dto); *//*
+		model.addAttribute("data", data);
+
+		// 조회수
+		service.readCount(community_seq);
+
+		*//*
+		 * int likecount = service.likeCount(dto.getCommunity_seq());
+		 * model.addAttribute("likecount", likecount);
+		 *//*
+
+		return "freeDetail.tiles";
+	}
+
+	// 자유게시판 글 수정
+	@RequestMapping(value = "freeUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String freeUpdate(Model model, CommunityDto dto) {
+
+		CommunityDto data = service.freeDetail(dto);
+		model.addAttribute("data", data);
+
+		return "freeUpdate.tiles";
+	}
+
+	// 자유게시판 글 수정 후
+	@RequestMapping(value = "freeUpdateAf.do", method = RequestMethod.POST)
+	public String freeUpdateAf(CommunityDto dto, HttpServletRequest req) {
+
+		String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+		System.out.println(dto.toString());
+
+		service.freeUpdate(dto);
+
+		return "redirect:/community/free.do";
+	}*/
 
 	// 중고거래 게시판
 	@RequestMapping(value = "deal.do", method = RequestMethod.GET)
@@ -238,6 +335,5 @@ public class CommunityController {
 
 		return "review.tiles";
 	}
-	
-	
+
 }
