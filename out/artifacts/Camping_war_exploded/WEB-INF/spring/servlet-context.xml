@@ -43,9 +43,13 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/account/*do"/>
+            <mvc:mapping path="/csite/campingwritereview.do"/>
+
             <mvc:mapping path="/community/helloWrite.do"/>
             <mvc:mapping path="/community/likeClick.do"/> <!--확인해봐야함-->
-            <mvc:mapping path="/csite/campingwritereview.do"/>
+            <mvc:mapping path="/community/freeWrite.do"/>
+            <mvc:mapping path="/community/findWrite.do"/>
+            
             <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
