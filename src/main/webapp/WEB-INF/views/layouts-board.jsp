@@ -34,7 +34,6 @@
             padding: 5px;
             background-color: lightblue;
         }
-      
     </style>
 
 <title>Insert title here</title>

@@ -18,7 +18,6 @@ public class LoginInterceptor implements HandlerInterceptor{
         HttpSession session;
         MemberDto dto = (MemberDto) request.getSession().getAttribute("login");
 
-
         StringBuffer url = (StringBuffer) request.getRequestURL();
         System.out.println("요청 온 주소 : " + url);
 
@@ -35,6 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 
         }
 
+        
        
         if(dto != null){
             return true;

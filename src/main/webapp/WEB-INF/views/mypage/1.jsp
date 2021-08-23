@@ -8,8 +8,5 @@
 </head>
 <body>
 
-<div id="footer" style="clear: both;">
-    footer
-</div>
-
+</body>
 </html>

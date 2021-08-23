@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
- 	<typeAliases>
+    <typeAliases>
 
         <!-- 동준 -->
         <typeAlias type="com.camping.bit.dto.MemberDto" alias="MemberDto" />
@@ -18,19 +18,16 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type ="com.camping.bit.dto.CampingBbsDto" alias = "CampingBbsDto"/>
         <typeAlias type ="com.camping.bit.dto.CampingLikeDto" alias = "CampingLike"/>
         <typeAlias type = "com.camping.bit.dto.CampingCommentDto" alias = "CampingComment"/>
-            
-    
+
         <!-- 영신 -->
         <typeAlias type="com.camping.bit.dto.ProductDetailDto" alias="ProductDetailDto" />
         <typeAlias type="com.camping.bit.dto.ProductRentDto" alias="ProductRentDto" />
         <typeAlias type="com.camping.bit.dto.ProductOptionDto" alias="ProductOptionDto" />
         <typeAlias type="com.camping.bit.dto.ProductReviewDto" alias="ProductReviewDto" />
-
         <typeAlias type="com.camping.bit.dto.CsNoticeDto" alias="CsNoticeDto" />
         <typeAlias type="com.camping.bit.dto.CsParam" alias="CsParam" />
         <typeAlias type="com.camping.bit.dto.CsNoticeCommentDto" alias="CsNoticeCommentDto" />
         <typeAlias type="com.camping.bit.dto.CsQnaDto" alias="CsQnaDto" />
-    
 
         <!-- 민경 -->
         <typeAlias type="com.camping.bit.dto.CommunityDto" alias = "CommunityDto"/>
@@ -38,5 +35,5 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.camping.bit.dto.CommunityCommentDto" alias = "CommunityCommentDto"/>
         <typeAlias type="com.camping.bit.dto.CommunityLikeDto" alias = "CommunityLikeDto"/>
 
-    </typeAliases>	
+    </typeAliases>   
 </configuration>

@@ -5,16 +5,16 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!-- bootstrap 추가 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
 <!DOCTYPE html>
 <html>
 <head>
+<!-- bootstrap 추가 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
-<title>가입인사게시판</title>
+<title>Insert title here</title>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 
 <!-- 글 작성 리스트 틀-->
 <div align="center">
-<table border="1">
+<table>
 <colgroup>
 	<col style="width:5%;" />
 	<col style="width:auto;" />
@@ -77,6 +77,7 @@
 	        <ul class="pagination" id="pagination"></ul>
 	    </nav>
     </div>
+</div>
 
 <!-- 글쓰기 버튼 -->
 <div align="right">
@@ -84,7 +85,12 @@
 </div>
 
 <script type="text/javascript">
+
 $(document).ready(function () {
+
+	let choice = '${choice}';
+	let search = '${search}';
+
 	// 페이지네이션
 	let totalCount = ${totalCount}; 	// 글의 총수
 	let pageSize = 15;	// 페이지의 크기 1 ~ 10 [1] ~ [10]
@@ -110,16 +116,57 @@ $(document).ready(function () {
 		last: '<span sria-hidden="true">»</span>',
 		initiateStartPageClick:false,
 		onPageClick:function(event, page){
-			location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val() + "&pageNumber=" + (page - 1);
+			location.href = "/community/hello.do?choice=" + choice + "&search=" + search + "&pageNumber=" + (page - 1);
 		}
 	});
  	// 검색
 	$("#btnSearch").click(function () {
-		location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();	
+
+		if($('#_choice').val() === ""){
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'bottom-end',
+				showConfirmButton: false,
+				timer: 2000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'error',
+				title: '검색옵션을 선택해주세요!'
+			})
+			return;
+
+		}else if($('#_search').val() ===""){
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'bottom-end',
+				showConfirmButton: false,
+				timer: 2000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'error',
+				title: '검색어를 입력해주세요!'
+			})
+
+			return;
+		}
+
+		location.href = "/community/hello.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
 	});  
 });
 </script>
 
-
+ 
 </body>
 </html>
