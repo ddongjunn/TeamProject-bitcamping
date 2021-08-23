@@ -11,6 +11,7 @@
 <style type="text/css">
 .noticedetail{
 	width: 85%;
+	margin: auto;
 }
 .noticedetail > tr, td{
 	padding: 10px 10px;
@@ -107,6 +108,11 @@
     </form>
 </div>
 
+<div id="pagination-div">
+
+</div> 
+
+
 <form name="file_Down" action="/cs/fileDownload.do" method="post">
 	<input type="hidden" name="newfilename">
 	<input type="hidden" name="filename">
@@ -114,13 +120,12 @@
 </form>
 
 <script type="text/javascript">
+	
+	// let pageNumJS;
+	// let nowPageJS;
 
-/* 	$(document).ready(function(){
-		var text = $("#text").text();
-		
-		console.log(text);
-	}) */
 
+	/* 파일 다운로드 */
 	var myVar;
 	
 	function filedown(newfilename, seq, filename) {
@@ -138,6 +143,7 @@
 		clearTimeout(myVar);
 	}
 	
+	/* 글 삭제 알림 */
 	function confirm(){
 		Swal.fire({
 			  title: '삭제하시겠습니까?',
@@ -156,12 +162,21 @@
 			})
 	}
 	
+	/* 댓글 불러오기 */
+	$(function(){
+  		commentList();
+/*         // 10초마다 댓글 갱신
+        setInterval(function(){
+        	commentList
+        }, 10000); */
+    });
 	
 	/* 댓글 등록 */
 	$("#addComment").on("click", function(){
     	var user_Id;
         var notice_Seq = "${notice.notice_Seq}"; // 글번호
         var content = $("#comment").val(); // 댓글내용
+        var page
         
         // 로그인 여부 검사
         if(${login == null}) {
@@ -194,7 +209,10 @@
                     	msg = "댓글 등록 성공";
                         // 내용을 작성한 textarea를 다 지워줌
                         $("#comment").val("");
-                        commentList(); // commnetList()함수 호출
+                        
+                        commentList();
+                        location.reload();
+                        
                         break;
                         
                     case 0 :  //등록실패
@@ -216,7 +234,7 @@
                         break;
                     }
                     
-                    // alert(msg);
+                  
                 },
                 error : function(){
                 	console.log("ajax 통신 실패");
@@ -226,24 +244,62 @@
     });
     
     // 댓글 목록 조회 함수
-    function commentList() {
+    function commentList(pageNumber) {
+    	
+    	
     	var notice_Seq = "${notice.notice_Seq}";
+    	pageNumber = (typeof pageNumber == "undefined") ? 0 : pageNumber;
         
         $.ajax({
         	url : "/cs/commentList.do",
             type : "POST",
-            data : {"notice_Seq" : notice_Seq},
+            data : {"notice_Seq" : notice_Seq,
+            		"pageNumber" : pageNumber},
             dataType : "json",
             success : function(data){
-            	                
+            	
+            	
+            	
             	var html = "";
-                var cCnt = data.length;
-                
-                if(data.length > 0){
+            	var test = "";
+                var cCnt = data.totalCount;
+            	pageNumber += 1;
+
+         
+              	/* 댓글 페이징 */
+            	let totalCount = data.totalCount;
+            	let nowPage = pageNumber;
+            	let pageSize = 10;
+            	let _totalPages = totalCount / pageSize;
+            	
+         
+ 
+            	if(totalCount % pageSize > 0){
+            		_totalPages++;  
+            	}
+               	
+            	// nowPageJS = pageNumber;            	            	
+            	
+            	$("#pagination-div").twbsPagination({
+            		startPage: nowPage,
+            		totalPages: _totalPages,
+            		visiblePages: 10,
+            		first:'<span sria-hidden="true">«</span>',
+            		prev:"이전",
+            		next:"다음",
+            		last:'<span sria-hidden="true">»</span>',
+            		initiateStartPageClick:false,		// onPageClick 자동 실행되지 않도록 한다
+            		onPageClick:function(event, page){
+            			commentList(page -1);
+            		}
+            	});
+
+                /* 댓글 list 출력 */
+                if(data.comment.length > 0){
                     
-                    for(i=0; i<data.length; i++){
+                    for(i=0; i<data.comment.length; i++){
                     	
-                    	var wdate = (data[i].wdate).substr(0, 16);
+                    	var wdate = (data.comment[i].wdate).substr(0, 16);
                     	wdate = wdate.replace(/-/gi, "/");
                     	
                         html += "<div>";
@@ -251,46 +307,46 @@
                         html += "<tr><td>";
                         
                         /* 댓글 내용 div */
-                        if(data[i].depth == 0){
-                        	html += "<h5><span style='color: tomato'>"+data[i].nickname+"</span></h5>";
+                        if(data.comment[i].depth == 0){
+                        	html += "<h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
                             html += "<h6>" + wdate + "</h6>";
-                           	html += "<div id='cmt"+data[i].comment_Seq+"'>";
-	                        html += "<div>"+data[i].content+"</div>";
+                           	html += "<div id='cmt"+data.comment[i].comment_Seq+"'>";
+	                        html += "<div>"+data.comment[i].content+"</div>";
                         
                         /* 대댓글 내용 div */
                         }else{
                         	html += "<div style='float: left;'>ㄴ</div>";
-                        	html += "<div id='cmt"+data[i].comment_Seq+"' style='margin-left: 15px;'><h5><span style='color: tomato'>"+data[i].nickname+"</span></h5>";
+                        	html += "<div id='cmt"+data.comment[i].comment_Seq+"' style='margin-left: 15px;'><h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
                             html += "<h6>"+wdate+"</h6>";
-                            html += "<div>"+data[i].content+"</div>";
+                            html += "<div>"+data.comment[i].content+"</div>";
                         }
                         
                         /* 수정, 삭제, 답글 div */
                         html += "<div><h5>";                        
-                        if('${login.id}' === data[i].user_Id){         	
-	                        html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data[i].comment_Seq+");'>수정</a></span>";
-	                        html += "<span style='margin: 5px;'><a href='javascript:commentDelete("+data[i].comment_Seq+");'>삭제</a></span>";
+                        if('${login.id}' === data.comment[i].user_Id){         	
+	                        html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data.comment[i].comment_Seq+");'>수정</a></span>";
+	                        html += "<span style='margin: 5px;'><a href='javascript:commentDelete("+data.comment[i].comment_Seq+");'>삭제</a></span>";
                         }                        
-                        html += "<span style='margin: 5px; float: right;'><a href='javascript:showAnswer("+data[i].comment_Seq+");'>답글</a></span>";
+                        html += "<span style='margin: 5px; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>답글</a></span>";
                         html += "</h5></div>";
                         html += "</div>"; // 댓글 내용 div 여기서 끝
                         
                         /* 대댓글 입력창 div */
-                        html += "<div id='answerbox"+data[i].comment_Seq+"' style='display: none;'>";
-                        html += "<h5><span style='color: tomato'>"+data[i].nickname+"</span></h5>";
-                        html += "<textarea style='width: 100%' rows='3' cols='30' id='answer"+data[i].comment_Seq+"' placeholder='댓글을 입력하세요'></textarea>";
+                        html += "<div id='answerbox"+data.comment[i].comment_Seq+"' style='display: none;'>";
+                        html += "<h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
+                        html += "<textarea style='width: 100%' rows='3' cols='30' id='answer"+data.comment[i].comment_Seq+"' placeholder='댓글을 입력하세요'></textarea>";
                         html += "<div style='float: right;'><h5>";
-                        html += "<span style='margin: 5px;'><a href='javascript:commentAnswer("+data[i].comment_Seq+");'>등록</a></span>";
-                        html += "<span style='margin: 5px;'><a href='javascript:showAnswer("+data[i].comment_Seq+");'>취소</a></span>";
+                        html += "<span style='margin: 5px;'><a href='javascript:commentAnswer("+data.comment[i].comment_Seq+");'>등록</a></span>";
+                        html += "<span style='margin: 5px;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>취소</a></span>";
                         html += "</h5></div>";
                         html += "</div>";
                         
                         /* 댓글 수정창 div */
-                        html += "<div id='updatebox"+data[i].comment_Seq+"' style='display: none;'>";
-                        html += "<textarea style='width: 100%' rows='3' cols='30' id='update"+data[i].comment_Seq+"' placeholder='댓글을 입력하세요'>"+data[i].content+"</textarea>";
+                        html += "<div id='updatebox"+data.comment[i].comment_Seq+"' style='display: none;'>";
+                        html += "<textarea style='width: 100%' rows='3' cols='30' id='update"+data.comment[i].comment_Seq+"' placeholder='댓글을 입력하세요'>"+data.comment[i].content+"</textarea>";
                         html += "<div style='float: right;'><h5>";
-                        html += "<span style='margin: 5px;'><a href='javascript:commentUpdate("+data[i].comment_Seq+");'>등록</a></span>";
-                        html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data[i].comment_Seq+");'>취소</a></span>";
+                        html += "<span style='margin: 5px;'><a href='javascript:commentUpdate("+data.comment[i].comment_Seq+");'>등록</a></span>";
+                        html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data.comment[i].comment_Seq+");'>취소</a></span>";
                         html += "</h5></div>";
                         html += "</div>";
                         
@@ -299,15 +355,31 @@
                         html += "</div>";
                     }
                     
-                } else {                    
+/*                     pn += "<nav aria-label='Page navigation'>";
+                    pn += "<ul class='pagination' id='pagination' style='justify-content:center;'></ul>";
+                    pn += "</nav>"; */
+                    
+               
+                    
+                    
+                } else {             
+                	/* 댓글 없을 때 */
                    /*  html += "<div>";
                     html += "<table class='comment_table'><h5><strong>등록된 댓글이 없습니다.</strong></h5>";
                     html += "</table>";
                     html += "</div>";    */
                 }
-                
+            	
                 $("#cCnt").html(cCnt);
                 $("#commentList").html(html);
+				//$("#paginationbox").html(pn);
+				
+				
+				test += '<div id="pagination-div">';
+                    test += '</div>';
+                 
+                 $("#test").html(test);
+				
                 
             },
             error : function(request, status, error){
@@ -492,7 +564,7 @@
   		               switch(result) {
   		               case 1 :  //성공
   		               	msg = "댓글 삭제 성공";
-  		                   commentList(); // commnetList()함수 호출
+  		                   commentList();
   		                   break;
   		                   
   		               case 0 :  //등록실패
@@ -528,18 +600,7 @@
   			});
         }
     }
-    
-  	$(function(){
-  		commentList();
-        
-/*         // 10초마다 댓글 갱신
-        setInterval(function(){
-        	commentList
-        }, 10000); */
-    });
-  	
-  	
- 
+
   	
 </script>
 

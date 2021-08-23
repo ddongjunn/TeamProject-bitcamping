@@ -8,11 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<!-- pagination -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
 <style type="text/css">
+.noticeList{
+	width: 85%;
+}
 .noticeList > th, td{
 	padding: 5px;
 	border-bottom: solid 1px gray;
@@ -74,9 +73,11 @@
 	</tbody>
 </table>
 
-<div class="buttonbox">
-	<button onclick="location.href='/cs/noticeWrite.do'">글쓰기</button>
-</div>
+<c:if test="${login.auth eq 1}">
+	<div class="buttonbox">
+		<button onclick="location.href='/cs/noticeWrite.do'">글쓰기</button>
+	</div>
+</c:if>
 
 <!-- pagination -->
 <div class="container">
@@ -84,8 +85,6 @@
         <ul class="pagination" id="pagination" style="justify-content:center;"></ul>
     </nav>
 </div>
-
-<br>
 
 <!-- 검색 -->
 <div class="searchbox" style="margin: 5px auto 10px auto">
@@ -126,8 +125,9 @@
 
 	let totalCount = ${totalCount};
 	let nowPage = ${pageNumber};
-	let pageSize = 10;
+	let pageSize = 15;
 	let _totalPages = totalCount / pageSize;
+	
 	
 	if(totalCount % pageSize > 0){
 		_totalPages++;

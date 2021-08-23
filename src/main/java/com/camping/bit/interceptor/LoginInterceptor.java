@@ -34,8 +34,6 @@ public class LoginInterceptor implements HandlerInterceptor{
 
         }
 
-        
-       
         if(dto != null){
             return true;
         }
@@ -68,4 +66,3 @@ public class LoginInterceptor implements HandlerInterceptor{
     }
 
 }
-

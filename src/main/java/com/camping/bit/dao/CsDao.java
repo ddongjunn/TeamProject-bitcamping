@@ -2,6 +2,7 @@ package com.camping.bit.dao;
 
 import java.util.List;
 
+import com.camping.bit.dto.CsCommentParam;
 import com.camping.bit.dto.CsNoticeCommentDto;
 import com.camping.bit.dto.CsNoticeDto;
 import com.camping.bit.dto.CsParam;
@@ -25,7 +26,7 @@ public interface CsDao {
 
 	public int writeComment(CsNoticeCommentDto comment);
 
-	public List<CsNoticeCommentDto> getCommentList(int notice_Seq);
+	public List<CsNoticeCommentDto> getCommentList(CsCommentParam param);
 
 	public void noticeDelete(int notice_Seq);
 
@@ -50,5 +51,7 @@ public interface CsDao {
 	public int deleteComment(int comment_Seq);
 
 	public void qnaReadcount(int qna_Seq);
+
+	public int getCommentCount(CsCommentParam param);
 
 }

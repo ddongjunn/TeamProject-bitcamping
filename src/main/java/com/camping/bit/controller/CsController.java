@@ -2,6 +2,7 @@ package com.camping.bit.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.camping.bit.commons.FileUploadUtil;
+import com.camping.bit.dto.CsCommentParam;
 import com.camping.bit.dto.CsNoticeCommentDto;
 import com.camping.bit.dto.CsNoticeDto;
 import com.camping.bit.dto.CsParam;
@@ -243,19 +245,33 @@ public class CsController {
 	// text/html; charset=utf-8
 	@ResponseBody
 	@RequestMapping(value="commentList.do", produces="application/json; charset=utf-8")
-	public String commentList(int notice_Seq){
-
-		// ajax에서 에러를 처리해줌으로
-	    // try catch를 안해줘도됨(다른방법도 있음)
-	    List<CsNoticeCommentDto> comment = service.getCommentList(notice_Seq);
-	    System.out.println(comment);
+	public HashMap<String, Object> commentList(CsCommentParam param){
+		
+		int currentPage = param.getPageNumber();
+		
+		int start = 1 + currentPage * 10;
+		param.setStart(start);
+		
+		int end = (currentPage + 1) * 10;
+		param.setEnd(end);
+		
+		System.out.println(param);
+		
+		HashMap<String, Object> result = new HashMap<>();
+		
+	    List<CsNoticeCommentDto> comment = service.getCommentList(param);	    
+	    result.put("comment", comment);
 	    
-	    // JSON으로 담아도 되지만 편한 방법인 GSON으로 사용
+	    int totalCount = service.getCommentCount(param);
+	    result.put("totalCount", totalCount);
 	    
+	    result.put("param", param);
+	    
+	    // JSON으로 담아도 되지만 편한 방법인 GSON으로 사용	    
 	    // yyyy-MM-dd hh:mm:ss
 	    Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
 	    
-	    return gson.toJson(comment);
+	    return result;
 	}
 	
 	@RequestMapping(value = "noticeDelete.do", method = {RequestMethod.GET, RequestMethod.POST})
