@@ -1,11 +1,10 @@
-html { 
-  /*background: url("/resources/images/test2.jpg") no-repeat center center fixed;*/
-  /*background-color: crimson;*/
+/* html {
+  background: url("../img/camping.jpeg") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
+} */
 
 a {text-decoration: none;}
 img {max-width: 100%; height: auto;}
@@ -61,3 +60,7 @@ img {max-width: 100%; height: auto;}
 /* button 정의 */
 .pr-btn {width: 80px; height:40px; border-radius: 10px; background-color: #D5EEBB; border: none;}
 /* button 정의 */
+
+/* font color 정의 */
+.f_wcolor { color: #ffffff; }
+.f_bcolor { color: #000000; }

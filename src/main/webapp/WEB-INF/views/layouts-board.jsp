@@ -14,7 +14,7 @@
         #header {
             padding: 5px;
             margin-bottom: 5px;
-            background-color: lightgreen;
+
         }
         #sidebar-left {
             width: 15%;

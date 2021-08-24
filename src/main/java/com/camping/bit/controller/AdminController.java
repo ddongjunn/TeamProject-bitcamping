@@ -2,6 +2,7 @@ package com.camping.bit.controller;
 
 import com.camping.bit.dto.*;
 import com.camping.bit.service.AdminService;
+import com.camping.bit.service.CsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +18,15 @@ public class AdminController {
     @Autowired
     AdminService service;
 
+    @Autowired
+    CsService csService;
+
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String main(Model model) {
 
         model.addAttribute("memberCount",service.memberCount());
+        model.addAttribute("qnaCount",service.getQnaWaitTotalCount());
+        model.addAttribute("communityCount",service.getCommunityTotalCount());
 
         return "adminmain.tiles";
     }
@@ -79,5 +85,31 @@ public class AdminController {
         model.addAttribute("choice", param.getChoice());
 
         return "admin-community.tiles";
+    }
+
+    @RequestMapping(value = "qna.do", method = RequestMethod.GET)
+    public String qnaList(Model model, CsParam param) {
+
+        int sn = param.getPageNumber();
+        int start = 1 + 15 * sn;
+        int end = (sn + 1) * 15;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        List<CsQnaDto> qna = csService.getQnaList(param);
+        model.addAttribute("qna", qna);
+
+        System.out.println("qna=" + qna);
+
+        int totalCount = csService.getQnaCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        model.addAttribute("pageNumber", param.getPageNumber() + 1);
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+        model.addAttribute("kind",param.getKind());
+
+        return "admin-qna.tiles";
     }
 }

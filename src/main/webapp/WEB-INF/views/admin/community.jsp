@@ -16,43 +16,51 @@
 <body>
 <c:choose>
     <c:when test="${bbstype eq 'hello'}">
-        <h2>가입인사</h2>
+        <div class="container-fluid" >
+            <h2>가입인사</h2>
+        </div>
     </c:when>
     <c:when test="${bbstype eq 'free'}">
-        <h2>자유게시판</h2>
+        <div class="container-fluid" >
+            <h2>자유게시판</h2>
+        </div>
     </c:when>
     <c:when test="${bbstype eq 'deal'}">
-        <h2>중고거래</h2>
+        <div class="container-fluid" >
+            <h2>중고거래</h2>
+        </div>
     </c:when>
     <c:when test="${bbstype eq 'review'}">
-        <h2>캠핑&여행후기</h2>
+        <div class="container-fluid" >
+            <h2>캠핑&여행후기</h2>
+        </div>
     </c:when>
     <c:otherwise>
-        <h2>캠핑장리뷰</h2>
+        <div class="container-fluid" >
+            <h2>캠핑장리뷰</h2>
+        </div>
     </c:otherwise>
 </c:choose>
-<div>
-    <c:choose>
-        <c:when test="${empty list}">
-            <h1>작성하신 글이 없습니다.</h1>
-        </c:when>
-        <c:otherwise>
-            <table border="1" style="width: 70%">
-                <colgroup>
-                    <col style="width:10%;" />
-                    <col style="width:auto;" />
-                    <col style="width:15%;" />
-                    <col style="width:10%;" />
-                    <col style="width:20%;" />
-                </colgroup>
-
-                <thead>
+<div class="table-responsive">
+    <div>
+        <table class="table align-items-center">
+            <thead class="thead-light">
                 <tr>
-                    <th>번호</th><th>제목</th><th>작성자</th><th>조회수</th><th>작성일</th>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>조회수</th>
+                    <th>작성일</th>
                 </tr>
-                </thead>
-
-                <tbody>
+            </thead>
+            <tbody class="list">
+                <c:if test="${empty list}">
+                    <tr>
+                        <td colspan="5" style="text-align: center">
+                            작성된 게시글이 없습니다.
+                        </td>
+                    </tr>
+                </c:if>
                 <c:forEach var="data" items="${list}">
                     <c:if test="${data.del != '1'}">
                         <tr>
@@ -84,29 +92,28 @@
                         </tr>
                     </c:if>
                 </c:forEach>
-                </tbody>
-            </table>
-        </c:otherwise>
-    </c:choose>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="container"> <!-- style = "width : 100%; text-align : center" -->
     <!--  <div style = "display : inline-block"> -->
     <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination"></ul>
+        <ul class="pagination justify-content-center" id="pagination"></ul>
     </nav>
 </div>
 
 
-<div align="center">
-    <select id="_choice" name="choice">
+<div class="row" style="justify-content: space-between; width: 350px; margin: auto">
+    <select id="_choice" name="choice" class="form-control form-control-sm" style="width: 90px">
         <option value="" selected="selected">선택</option>
         <option value="title">제목</option>
         <option value="content">내용</option>
         <option value="writer">작성자</option>
     </select>
-    <input type="text" id="_search" name="search" placeholder="검색">
-    <button type="button" id="btnSearch">검색</button>
+    <input type="text" id="_search" name="search" placeholder="검색" class="form-control form-control-sm" style="width: 200px">
+    <button type="button" id="btnSearch" class="btn btn-outline-primary btn-sm">검색</button>
 </div>
 
 <script type="text/javascript">
@@ -125,6 +132,9 @@
 
         let pageSize = 15;//페이지의 크기(1~10) [1] ~ [10]
 
+        if(totalCount === 0){
+            totalCount = 1;
+        }
         let totalPages = totalCount / pageSize;
         
         if(totalCount % pageSize > 0){

@@ -134,6 +134,7 @@
 				TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
 			FROM QNA
 			WHERE 1=1
+			    AND DEL = 0
 				AND STEP = 0
 				<if test="choice != null and choice != '' and search != null and search != ''">
 					<if test="choice == 'title'">
@@ -145,7 +146,16 @@
 					<if test="choice == 'writer'">
 						AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) LIKE '%'||#{search}||'%'
 					</if>	
-				</if>		
+				</if>
+
+				<if test="kind != null and kind != ''">
+					<if test="kind == 'wait'">
+						AND STATUS = 0
+					</if>
+					<if test="kind == 'complete'">
+						AND STATUS = 1
+					</if>
+				</if>
 			ORDER BY REF DESC, STEP ASC
 			)
 		WHERE RNUM BETWEEN #{start} AND #{end}
@@ -161,6 +171,8 @@
 		SELECT NVL(COUNT(*),0)
 		FROM QNA
 		WHERE 1=1
+			AND STEP = 0
+			AND DEL = 0
 		<if test="choice != null and choice != '' and search != null and search != ''">
 			<if test="choice == 'title'">
 				AND TITLE LIKE '%'||#{search}||'%'
@@ -169,8 +181,17 @@
 				AND CONTENT LIKE '%'||#{search}||'%'
 			</if>
 			<if test="choice == 'writer'">
-				AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) = '%'||#{search}||'%'
+				AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) LIKE '%'||#{search}||'%'
 			</if>	
+		</if>
+
+		<if test="kind != null and kind != ''">
+			<if test="kind == 'wait'">
+				AND STATUS = 0
+			</if>
+			<if test="kind == 'complete'">
+				AND STATUS = 1
+			</if>
 		</if>
 	</select>
 	
