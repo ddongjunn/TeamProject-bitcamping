@@ -13,7 +13,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-
 	$('#summernote').summernote({
 		height: 400,
 		dialogsInBody: true,
@@ -73,13 +72,11 @@ $(document).ready(function() {
 </head>
 <body>
 
-<h1>게시글 수정화면</h1>
-
-<form action="/community/helloUpdateAf.do" method="post">
+<form action="/community/dealUpdateAf.do" method="post">
 
 <!-- boardUpdateAf.do 로 id값 넘겨주는 곳 -->
 <input type="hidden" name="id" value="${data.user_id }">
-<input type="hidden" name="bbstype" value="hello">
+<input type="hidden" name="bbstype" value="deal">
 <input type="hidden" name="community_seq" value="${data.community_seq }">
 
 <table border="1">

@@ -22,5 +22,8 @@ public class CommunityCommentDto implements Serializable{
 	private String content;
 	private String wdate;
 	
+	private int ref;		// 그룹번호
+	private int step;		// 행번호
+	private int depth;		// 깊이 
 	private int del;
 }

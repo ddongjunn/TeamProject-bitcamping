@@ -3,6 +3,7 @@ package com.camping.bit.service;
 import java.util.List;
 
 import com.camping.bit.dto.CommunityCommentDto;
+import com.camping.bit.dto.CommunityCommentParam;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.CommunityLikeDto;
 import com.camping.bit.dto.CommunityParam;
@@ -39,14 +40,8 @@ public interface CommunityService {
 	// 좋아요 취소
 	public void likeDown(CommunityLikeDto dto);
 
-	//좋아요 확인
+	// 좋아요 확인
 	public boolean likeCheck(CommunityLikeDto dto);
-
-	// 댓글 리스트
-	public List<CommunityCommentDto> commentList(int community_seq);
-	
-	// 댓글 입력
-	public void commentWrite(CommunityCommentDto dto);
 	
 	// 자유게시판 리스트
 	public List<CommunityDto> freeList(CommunityParam param);
@@ -78,6 +73,51 @@ public interface CommunityService {
 	// 캠퍼모집 글 수정
 	public void findUpdate(CommunityDto dto);
 	
+	// 중고거래 리스트
+	public List<CommunityDto> dealList(CommunityParam param);
 	
+	// 중고거래 총수
+	public int dealBoardCount(CommunityParam param);
+
+	// 중고거래 글 내용 저장
+	public void dealWrite(CommunityDto dto);
 	
+	// 중고거래 상세보기
+	public CommunityDto dealDetail(CommunityDto dto);
+	
+	// 중고거래 글 수정
+	public void dealUpdate(CommunityDto dto);
+	
+	// 캠핑후기 리스트
+	public List<CommunityDto> reviewList(CommunityParam param);
+	
+	// 캠핑후기 총수
+	public int reviewBoardCount(CommunityParam param);
+
+	// 캠핑후기 글 내용 저장
+	public void reviewWrite(CommunityDto dto);
+	
+	// 캠핑후기 상세보기
+	public CommunityDto reviewDetail(CommunityDto dto);
+	
+	// 캠핑후기 글 수정
+	public void reviewUpdate(CommunityDto dto);
+
+	// 댓글 리스트
+	public List<CommunityCommentDto> getCommentList(CommunityCommentParam param);
+
+	// 댓글 총수
+	public int getCommentCount(CommunityCommentParam param);
+	
+	// 댓글 작성
+	public int writeComment(CommunityCommentDto comment);
+	
+	// 대댓글 
+	public int answerComment(CommunityCommentDto comment);
+	
+	// 댓글 수정
+	public int updateComment(CommunityCommentDto comment);
+	
+	// 댓글 삭제
+	public int deleteComment(int comment_seq);
 }

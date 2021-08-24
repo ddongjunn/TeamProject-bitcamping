@@ -88,7 +88,6 @@
       <put-attribute name = "main" value = "/WEB-INF/views/camping/campingmap.jsp"/>
    </definition>
 
-
    <definition name = "campingdetailreview.tiles" template="/WEB-INF/views/layouts-campingsite.jsp">
       <put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
       <put-attribute name = "top" value = "/WEB-INF/views/camping/campingdetailtop.jsp"/>
@@ -103,7 +102,6 @@
    <definition name = "campingupdatereview.tiles" extends = "campingdetailreview.tiles">
       <put-attribute name = "main" value = "/WEB-INF/views/camping/campingupdatereview.jsp"/>
    </definition>
-
 
    <!-- 영신 -->
    <!-- 캠핑 용품 대여 -->
@@ -172,6 +170,26 @@
    <definition name="qnaAnswer.tiles" extends="noticeList.tiles">
       <put-attribute name="body" value="/WEB-INF/views/cs/cs_qnaAnswer.jsp" />
    </definition>
+  
+   <!-- 고객센터 -->
+   <definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
+      <put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+      <put-attribute name="lnb" value="/WEB-INF/views/cs/cs_lnb.jsp" />
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_notice.jsp" />
+      <put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
+   </definition>
+
+   <definition name="noticeWirte.tiles" extends="noticeList.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeWrite.jsp" />
+   </definition>
+
+   <definition name="noticeDetail.tiles" extends="noticeList.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeDetail.jsp" />
+   </definition>
+
+   <definition name="noticeUpdate.tiles" extends="noticeList.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeUpdate.jsp" />
+   </definition>   
 
 
    <!-- 민경 -->
@@ -188,7 +206,7 @@
    </definition>
 
    <!-- 가입인사 글쓰기 -->
-   <definition name="hellowrite.tiles" extends="community.tiles">
+   <definition name="helloWrite.tiles" extends="community.tiles">
       <put-attribute name="body" value="/WEB-INF/views/community/helloWrite.jsp"/>
    </definition>
 
@@ -208,7 +226,7 @@
    </definition>
 
    <!-- 자유게시판 글쓰기 -->
-   <definition name="freewrite.tiles" extends="community.tiles">
+   <definition name="freeWrite.tiles" extends="community.tiles">
       <put-attribute name="body" value="/WEB-INF/views/community/freeWrite.jsp"/>
    </definition>
 
@@ -225,6 +243,21 @@
    <!-- 중고거래 게시판 -->
    <definition name="deal.tiles" extends="community.tiles">
       <put-attribute name="body" value="/WEB-INF/views/community/deal.jsp"/>
+   </definition>
+   
+   <!-- 중고거래 글쓰기 -->
+   <definition name="dealWrite.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/dealWrite.jsp"/>
+   </definition>
+
+   <!-- 중고거래 작성글 상세화면 -->
+   <definition name="dealDetail.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/dealDetail.jsp"/>
+   </definition>
+
+   <!-- 중고거래 글 수정화면 -->
+   <definition name="dealUpdate.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/dealUpdate.jsp"/>
    </definition>
 
    <!-- 캠퍼모임 게시판 -->
@@ -250,6 +283,21 @@
    <!-- 캠핑후기 게시판 -->
    <definition name="review.tiles" extends="community.tiles">
       <put-attribute name="body" value="/WEB-INF/views/community/review.jsp"/>
+   </definition>
+   
+   <!-- 캠핑후기 글쓰기 -->
+   <definition name="reviewWrite.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/reviewWrite.jsp"/>
+   </definition>
+
+   <!-- 캠핑후기 작성글 상세화면 -->
+   <definition name="reviewDetail.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/reviewDetail.jsp"/>
+   </definition>
+
+   <!-- 캠핑후기 글 수정화면 -->
+   <definition name="reviewUpdate.tiles" extends="community.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/community/reviewUpdate.jsp"/>
    </definition>
 
 </tiles-definitions>

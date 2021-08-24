@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,59 +11,57 @@
 <body>
 
 <table border="1" style="width: 700px">
-<colgroup>
-	<col style="width:30%;" />
-	<col style="width:70%;" />
-</colgroup>
-<thead>
-<tr>
-	<th>작성자</th>
-	<td>
-		${data.nickname }
-	</td>
-</tr>
-<tr>
-	<th>작성날짜</th>
-	<td>
-		${data.wdate }
-	</td>
-</tr>
-<tr>
-	<th>조회수</th>
-	<td>
-		${data.readcount }
-	</td>
-</tr>
-<tr>
-   <th>좋아요수</th>
-   <td class="likeCount">
-      ${likecount}
-   </td>
-</tr>
-<tr>
-	<th>제목</th>
-	<td>
-		${data.title }
-	</td>
-</tr>
-<tr>
-	<th>내용</th>
-	<td>
-		${data.content }
-		
-	</td>
-</tr>
-
-</thead>
+	<colgroup>
+	   <col style="width:30%;" />
+	   <col style="width:70%;" />
+	</colgroup>
+	<thead>
+		<tr>
+		   <th>작성자</th>
+		   <td>
+		      ${data.nickname }
+		   </td>
+		</tr>
+		<tr>
+		   <th>작성날짜</th>
+		   <td>
+		      ${data.wdate }
+		   </td>
+		</tr>
+		<tr>
+		   <th>조회수</th>
+		   <td>
+		      ${data.readcount }
+		   </td>
+		</tr>
+		<tr>
+		   <th>좋아요수</th>
+		   <td class="likeCount">
+		      ${likecount}
+		   </td>
+		</tr>
+		<tr>
+		   <th>제목</th>
+		   <td>
+		      ${data.title }
+		   </td>
+		</tr>
+		<tr>
+		   <th>내용</th>
+		   <td>
+		      ${data.content }
+		   </td>
+		</tr>
+	</thead>
 </table>
 
 <c:if test="${login.id eq data.user_id }">
-	<form name="updateFrm" action="/community/findUpdate.do?bbstype=find" method="POST">
-		<input type="hidden" name="community_seq" value="${data.community_seq}">
-		<input type="hidden" name="user_id" value='${login.id}'>
-		<button type="button" onclick="del(${data.community_seq})">삭제</button>
-		<button type="button" onclick="update()">수정</button>	
-	</form>
+   <form name="updateFrm" action="/community/dealUpdate.do?bbstype=deal" method="POST">
+      <input type="hidden" name="community_seq" value="${data.community_seq}">
+      <input type="hidden" name="user_id" value='${login.id}'>
+	  <button type="button" onclick="del(${data.community_seq})">삭제</button>
+      <button type="button" onclick="update()">수정</button>
+   </form>
 </c:if>
 
 <c:choose>
@@ -82,7 +80,7 @@
       </span>
    </c:otherwise>
 </c:choose>
-<button type="button" onclick="location='/community/find.do'">목록</button>
+<button type="button" onclick="location='/community/deal.do'">목록</button>
 
 <!-- 댓글 영역 시작 -->
 <div class="container">
@@ -117,56 +115,55 @@
 
 <div id="pagination-div">
 
-</div>
+</div> 
 
 <script type="text/javascript">
 
-$(".likeBtn").click(function () {
-    if(${login == null}) {
-       Swal.fire({
-          icon: 'warning',
-          title: '로그인 후 이용해 주세요'
-       })
-       return;
-    }
+   $(".likeBtn").click(function () {
+      if(${login == null}) {
+         Swal.fire({
+            icon: 'warning',
+            title: '로그인 후 이용해 주세요'
+         })
+         return;
+      }
+         $.ajax({
+            url : '/community/likeClick.do',
+            type : 'get',
+            data : {
+               'user_id' : '${login.id}',
+               'community_seq' : '${data.community_seq}'
+            },
+            success : function(data) {
 
-       $.ajax({
-          url : '/community/likeClick.do',
-          type : 'get',
-          data : {
-             'user_id' : '${login.id}',
-             'community_seq' : '${data.community_seq}'
-          },
-          success : function(data) {
+               if(data.result){
+                  $('.likeBtn').empty();
+                  $('.likeBtn').html('<img src="../resources/images/like.png" width="30" height="30">');
+                  $('.likeCount').html(data.likeCount);
+                  return;
+               }
+               $('.likeBtn').empty();
+               $('.likeBtn').html('<img src="../resources/images/delete_like.png" width="30" height="30">');
+               $('.likeCount').html(data.likeCount);
 
-             if(data.result){
-                $('.likeBtn').empty();
-                $('.likeBtn').html('<img src="../resources/images/like.png" width="30" height="30">');
-                $('.likeCount').html(data.likeCount);
-                return;
-             }
-             $('.likeBtn').empty();
-             $('.likeBtn').html('<img src="../resources/images/delete_like.png" width="30" height="30">');
-             $('.likeCount').html(data.likeCount);
-
-          },
-          error : function() {
-             alert('error');
-          }
-       });
- });
+            },
+            error : function() {
+               alert('error');
+            }
+         });
+   });
 
 function del(community_seq) {
-	var check = confirm("삭제하시겠습니까?");
-	if (check) {
-		location='/community/delete.do?community_seq=' + ${data.community_seq} + '&bbstype=find';
-	}
+   var check = confirm("삭제하시겠습니까?");
+   if (check) {
+      location='/community/delete.do?community_seq=' + ${data.community_seq} + '&bbstype=deal';
+   }
 }
 function update() {
-	var check = confirm("수정하시겠습니까?");
-	if (check) {
-		javascript:document.updateFrm.submit();
-	}
+   var check = confirm("수정하시겠습니까?");
+   if (check) {
+      javascript:document.updateFrm.submit();
+   }
 }
 
 /* 댓글 불러오기 */
@@ -606,3 +603,4 @@ $(function(){
 
 </body>
 </html>
+

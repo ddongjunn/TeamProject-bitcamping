@@ -50,6 +50,8 @@
 
             <mvc:mapping path="/community/freeWrite.do"/>
             <mvc:mapping path="/community/findWrite.do"/>
+            <mvc:mapping path="/community/dealWrite.do"/>
+            <mvc:mapping path="/community/reviewWrite.do"/>
 
 
             <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>

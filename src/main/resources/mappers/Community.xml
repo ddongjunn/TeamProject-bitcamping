@@ -7,7 +7,8 @@
 
    <!-- 가입인사 게시글 리스트 -->
    <select id="helloList" parameterType="CommunityParam" resultType="CommunityDto">
-      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE, 
+      		(SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
       FROM(
          SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
          COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
@@ -29,11 +30,11 @@
                </if>
             </if>
             ORDER BY COMMUNITY_SEQ DESC
-            )
+            ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
          </select>
 
-   <!-- 글의 총수 -->
+   <!-- 가입인사 글의 총수 -->
    <select id="helloBoardCount" parameterType="CommunityParam" resultType="Integer">
       SELECT NVL(COUNT(*), 0)
       FROM COMMUNITY_BBS A, MEMBER B
@@ -55,7 +56,7 @@
       </if>
    </select>
 
-   <!-- 글작성후 db에 저장 -->
+   <!-- 가입인사 글작성후 db에 저장 -->
    <!-- dto받은거 db에 넣어주는 쿼리문 작성 id값은 dao 메소드명이랑 일치, dto파라미터타입 -> db에 넣는것, 리절트타입은 db에서 받아오겠다는것 //#{id}-->
    <insert id="helloWrite" parameterType="CommunityDto">
       INSERT INTO COMMUNITY_BBS(
@@ -63,7 +64,7 @@
       VALUES(COMMUNITY_BBS_SEQ.NEXTVAL, #{user_id}, #{title}, SYSDATE, #{content}, #{readcount}, 0, 0, #{bbstype})
    </insert>
 
-   <!-- 글 상세조회, 파라미터가 넣어주는값-->
+   <!-- 가입인사 글 상세조회, 파라미터가 넣어주는값-->
    <select id="helloDetail" parameterType="CommunityDto" resultType="CommunityDto">
       SELECT  COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
                 (
@@ -88,7 +89,7 @@
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
 
-   <!-- 글 수정 -->
+   <!-- 가입인사 글 수정 -->
    <update id="helloUpdate" parameterType="CommunityDto">
       UPDATE COMMUNITY_BBS SET
                          TITLE=#{title},
@@ -97,7 +98,6 @@
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
    
-
    <!-- 좋이요 갯수 가져오는거 -->
    <select id="likeCount" parameterType="int" resultType="Integer">
       SELECT COUNT(*) AS TOTAL
@@ -123,46 +123,83 @@
       WHERE COMMUNITY_SEQ = #{community_seq} AND USER_ID = #{user_id}
    </delete> 
    
-     <!-- 댓글 리스트 -->
-   <select id="commentList" resultType="CommunityCommentDto" parameterType="java.lang.Integer">
-      SELECT * FROM COMMUNITY_BBS_COMMENT
-        WHERE COMMUNITY_SEQ = #{community_seq}
-        ORDER BY COMMENT_SEQ DESC
-   </select>
-   
-   <!-- 댓글 입력 -->
-   <insert id="commentWrite">
-      INSERT INTO COMMUNITY_BBS_COMMENT(
-      COMMENT_SEQ, USER_ID, CONTENT,  WDATE, DEL, COMMUNITY_SEQ)
-      VALUES(COMMUNITY_BBS_COMMENT_SEQ.nextval, '#{user_id}', '#{content}', SYSDATE,0,#{community_seq})
-   </insert>
+    <!-- 댓글 작성 -->
+   	<insert id="writeComment" parameterType="CommunityCommentDto">
+		INSERT INTO COMMUNITY_BBS_COMMENT(COMMENT_SEQ, COMMUNITY_SEQ, USER_ID, CONTENT, REF, STEP, DEPTH, WDATE, DEL)
+		VALUES(COMMUNITY_BBS_COMMENT_SEQ.NEXTVAL, #{community_seq}, #{user_id}, #{content}, (SELECT NVL(MAX(REF)+1, 0) FROM COMMUNITY_BBS_COMMENT), 0, 0, SYSDATE, 0)	
+	</insert>
+
+ 	 <!-- 대댓글 작성 --> 
+	<insert id="answerComment" parameterType="CommunityCommentDto">
+		INSERT INTO COMMUNITY_BBS_COMMENT
+		VALUES(COMMUNITY_BBS_COMMENT_SEQ.NEXTVAL, #{community_seq}, #{user_id}, #{content}, 
+			(SELECT REF FROM COMMUNITY_BBS_COMMENT WHERE COMMENT_SEQ = #{comment_seq}), 
+			(SELECT MAX(STEP) FROM COMMUNITY_BBS_COMMENT WHERE REF = #{ref}) + 1,
+			(SELECT DEPTH FROM COMMUNITY_BBS_COMMENT WHERE COMMENT_SEQ = #{comment_seq}) + 1, SYSDATE, 0)
+	</insert> 
+	
+ 	 <!-- 댓글 수정  -->
+	<update id="updateComment" parameterType="CommunityCommentDto">
+		UPDATE COMMUNITY_BBS_COMMENT
+		SET CONTENT = #{content},
+			WDATE = SYSDATE
+		WHERE COMMENT_SEQ = #{comment_seq}
+	</update> 
+	
+ 	 <!-- 댓글 삭제 -->
+	<update id="deleteComment" parameterType="java.lang.Integer">
+		UPDATE COMMUNITY_BBS_COMMENT
+		SET DEL = 1
+		WHERE COMMENT_SEQ = #{comment_seq}
+	</update> 
+	
+	<!-- 댓글 리스트 뽑아오기 -->
+	<select id="getCommentList" parameterType="CommunityCommentParam" resultType="CommunityCommentDto">
+		SELECT COMMENT_SEQ, COMMUNITY_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, CONTENT, REF, STEP, DEPTH, WDATE, DEL
+		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REF ASC, STEP ASC, DEPTH ASC) AS RNUM, COMMENT_SEQ, COMMUNITY_SEQ, 
+			USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, CONTENT, REF, STEP, DEPTH, WDATE, DEL
+			FROM COMMUNITY_BBS_COMMENT
+			WHERE DEL = 0
+				AND COMMUNITY_SEQ = #{community_seq})
+		WHERE RNUM BETWEEN #{start} AND #{end}
+		ORDER BY REF ASC, STEP ASC, DEPTH ASC 
+	</select>
+	
+  	 <!--  댓글 총 수  --> 
+	<select id="getCommentCount" parameterType="CommunityCommentParam" resultType="java.lang.Integer">
+		SELECT NVL(COUNT(*),0)
+		FROM COMMUNITY_BBS_COMMENT
+		WHERE COMMUNITY_SEQ = #{community_seq}
+			AND DEL = 0
+	</select>  
 
    <!-- 자유게시판 글 리스트 -->
    <select id="freeList" parameterType="CommunityParam" resultType="CommunityDto">
-      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE, 
+      		(SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
       FROM(
-      SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
-      COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
-      FROM COMMUNITY_BBS A, MEMBER B
-      WHERE 1=1
-      AND BBSTYPE = 'free'
-      AND A.USER_ID = B.ID
-      AND DEL = 0
-      <if test='choice != null and choice != " "
+         SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+         COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+         FROM COMMUNITY_BBS A, MEMBER B
+         WHERE 1=1
+             AND BBSTYPE = 'free'
+            AND A.USER_ID = B.ID
+            AND DEL = 0
+            <if test='choice != null and choice != " "
                     and search != null and search != " "'>
-         <if test='choice == "title"'>
-            AND TITLE LIKE '%'||#{search}||'%'
-         </if>
-         <if test='choice == "content"'>
-            AND CONTENT LIKE '%'||#{search}||'%'
-         </if>
-         <if test='choice == "nickname"'>
-            AND B.NICKNAME=#{search}
-         </if>
-      </if>
-      ORDER BY COMMUNITY_SEQ DESC
-      )
-      WHERE RNUM BETWEEN #{start} AND #{end}
+               <if test='choice == "title"'>
+                  AND TITLE LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "content"'>
+                  AND CONTENT LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "nickname"'>
+                  AND B.NICKNAME=#{search}
+               </if>
+            </if>
+            ORDER BY COMMUNITY_SEQ DESC
+            ) C
+            WHERE RNUM BETWEEN #{start} AND #{end}
    </select>
 
    <!-- 자유게시판 글의 총수 -->
@@ -216,30 +253,31 @@
 
    <!-- 캠퍼모집 글 리스트 -->
    <select id="findList" parameterType="CommunityParam" resultType="CommunityDto">
-      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE, 
+      		(SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
       FROM(
-      SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
-      COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
-      FROM COMMUNITY_BBS A, MEMBER B
-      WHERE 1=1
-      AND BBSTYPE = 'find'
-      AND A.USER_ID = B.ID
-      AND DEL = 0
-      <if test='choice != null and choice != " "
+         SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+         COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+         FROM COMMUNITY_BBS A, MEMBER B
+         WHERE 1=1
+             AND BBSTYPE = 'find'
+            AND A.USER_ID = B.ID
+            AND DEL = 0
+            <if test='choice != null and choice != " "
                     and search != null and search != " "'>
-         <if test='choice == "title"'>
-            AND TITLE LIKE '%'||#{search}||'%'
-         </if>
-         <if test='choice == "content"'>
-            AND CONTENT LIKE '%'||#{search}||'%'
-         </if>
-         <if test='choice == "nickname"'>
-            AND B.NICKNAME=#{search}
-         </if>
-      </if>
-      ORDER BY COMMUNITY_SEQ DESC
-      )
-      WHERE RNUM BETWEEN #{start} AND #{end}
+               <if test='choice == "title"'>
+                  AND TITLE LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "content"'>
+                  AND CONTENT LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "nickname"'>
+                  AND B.NICKNAME=#{search}
+               </if>
+            </if>
+            ORDER BY COMMUNITY_SEQ DESC
+            ) C
+            WHERE RNUM BETWEEN #{start} AND #{end}
    </select>
 
    <!-- 캠퍼모집 글의 총수 -->
@@ -283,12 +321,168 @@
    </select>
 
    <!-- 캠퍼모집 글 수정 -->
-   <update id="findUpdate" parameterType="CommunityDto">
+	<update id="findUpdate" parameterType="CommunityDto">
+		UPDATE COMMUNITY_BBS SET
+		                   TITLE=#{title},
+		                   CONTENT=#{content},
+		                   WDATE=SYSDATE
+		WHERE COMMUNITY_SEQ = #{community_seq}
+	</update>
+	
+	<!-- 중고거래 글 리스트 -->
+   <select id="dealList" parameterType="CommunityParam" resultType="CommunityDto">
+      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE, 
+      		(SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
+      FROM(
+         SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+         COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+         FROM COMMUNITY_BBS A, MEMBER B
+         WHERE 1=1
+             AND BBSTYPE = 'deal'
+            AND A.USER_ID = B.ID
+            AND DEL = 0
+            <if test='choice != null and choice != " "
+                    and search != null and search != " "'>
+               <if test='choice == "title"'>
+                  AND TITLE LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "content"'>
+                  AND CONTENT LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "nickname"'>
+                  AND B.NICKNAME=#{search}
+               </if>
+            </if>
+            ORDER BY COMMUNITY_SEQ DESC
+            ) C
+            WHERE RNUM BETWEEN #{start} AND #{end}
+   </select>
+
+   <!-- 중고거래 글의 총수 -->
+   <select id="dealBoardCount" parameterType="CommunityParam" resultType="Integer">
+      SELECT NVL(COUNT(*), 0)
+      FROM COMMUNITY_BBS A, MEMBER B
+      WHERE 1=1
+      AND BBSTYPE='deal'
+      AND A.USER_ID = B.ID
+      AND DEL = 0
+      <if test='choice != null and choice != " "
+           and search != null and search != " "'>
+         <if test='choice == "title"'>
+            AND TITLE LIKE '%'||#{search}||'%'
+         </if>
+         <if test='choice == "content"'>
+            AND CONTENT LIKE '%'||#{search}||'%'
+         </if>
+         <if test='choice == "nickname"'>
+            AND B.NICKNAME=#{search}
+         </if>
+      </if>
+   </select>
+
+   <!-- 중고거래 작성글 저장 -->
+   <insert id="dealWrite" parameterType="CommunityDto">
+      INSERT INTO COMMUNITY_BBS(
+         COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE)
+      VALUES(COMMUNITY_BBS_SEQ.NEXTVAL, #{user_id}, #{title}, SYSDATE, #{content}, #{readcount}, 0, 0, #{bbstype})
+   </insert>
+
+   <!-- 중고거래 글 상세조회, 파라미터가 넣어주는값-->
+   <select id="dealDetail" parameterType="CommunityDto" resultType="CommunityDto">
+      SELECT  COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
+      (
+      SELECT COUNT(*) FROM COMMUNITY_BBS_LIKE WHERE COMMUNITY_BBS_LIKE.USER_ID = #{user_id} <!--현재 로그인한 아이디 -->
+      AND COMMUNITY_BBS_LIKE.COMMUNITY_SEQ = COMMUNITY_BBS.COMMUNITY_SEQ
+      ) AS LIKED_YN, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME
+      FROM COMMUNITY_BBS
+      WHERE COMMUNITY_SEQ = #{community_seq}
+   </select>
+
+   <!-- 중고거래 글 수정 -->
+   <update id="dealUpdate" parameterType="CommunityDto">
       UPDATE COMMUNITY_BBS SET
                          TITLE=#{title},
                          CONTENT=#{content},
                          WDATE=SYSDATE
       WHERE COMMUNITY_SEQ = #{community_seq}
-  </update>
+   </update>
+	
+	<!-- 캠핑후기 글 리스트 -->
+   <select id="reviewList" parameterType="CommunityParam" resultType="CommunityDto">
+      SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE, 
+      		(SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
+      FROM(
+         SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+         COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
+         FROM COMMUNITY_BBS A, MEMBER B
+         WHERE 1=1
+             AND BBSTYPE = 'review'
+            AND A.USER_ID = B.ID
+            AND DEL = 0
+            <if test='choice != null and choice != " "
+                    and search != null and search != " "'>
+               <if test='choice == "title"'>
+                  AND TITLE LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "content"'>
+                  AND CONTENT LIKE '%'||#{search}||'%'
+               </if>
+               <if test='choice == "nickname"'>
+                  AND B.NICKNAME=#{search}
+               </if>
+            </if>
+            ORDER BY COMMUNITY_SEQ DESC
+            ) C
+            WHERE RNUM BETWEEN #{start} AND #{end}
+   </select>
+
+   <!-- 캠핑후기 글의 총수 -->
+   <select id="reviewBoardCount" parameterType="CommunityParam" resultType="Integer">
+      SELECT NVL(COUNT(*), 0)
+      FROM COMMUNITY_BBS A, MEMBER B
+      WHERE 1=1
+      AND BBSTYPE='review'
+      AND A.USER_ID = B.ID
+      AND DEL = 0
+      <if test='choice != null and choice != " "
+           and search != null and search != " "'>
+         <if test='choice == "title"'>
+            AND TITLE LIKE '%'||#{search}||'%'
+         </if>
+         <if test='choice == "content"'>
+            AND CONTENT LIKE '%'||#{search}||'%'
+         </if>
+         <if test='choice == "nickname"'>
+            AND B.NICKNAME=#{search}
+         </if>
+      </if>
+   </select>
+
+   <!-- 캠핑후기 작성글 저장 -->
+   <insert id="reviewWrite" parameterType="CommunityDto">
+      INSERT INTO COMMUNITY_BBS(
+         COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE)
+      VALUES(COMMUNITY_BBS_SEQ.NEXTVAL, #{user_id}, #{title}, SYSDATE, #{content}, #{readcount}, 0, 0, #{bbstype})
+   </insert>
+
+   <!-- 캠핑후기 글 상세조회, 파라미터가 넣어주는값-->
+   <select id="reviewDetail" parameterType="CommunityDto" resultType="CommunityDto">
+      SELECT  COMMUNITY_SEQ, USER_ID, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
+      (
+      SELECT COUNT(*) FROM COMMUNITY_BBS_LIKE WHERE COMMUNITY_BBS_LIKE.USER_ID = #{user_id} <!--현재 로그인한 아이디 -->
+      AND COMMUNITY_BBS_LIKE.COMMUNITY_SEQ = COMMUNITY_BBS.COMMUNITY_SEQ
+      ) AS LIKED_YN, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME
+      FROM COMMUNITY_BBS
+      WHERE COMMUNITY_SEQ = #{community_seq}
+   </select>
+
+   <!-- 캠핑후기 글 수정 -->
+   <update id="reviewUpdate" parameterType="CommunityDto">
+      UPDATE COMMUNITY_BBS SET
+                         TITLE=#{title},
+                         CONTENT=#{content},
+                         WDATE=SYSDATE
+      WHERE COMMUNITY_SEQ = #{community_seq}
+   </update>
 
 </mapper>
