@@ -23,12 +23,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.camping.bit.dto.CommunityCommentDto;
+import com.camping.bit.dto.CommunityCommentParam;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.CommunityLikeDto;
 import com.camping.bit.dto.CommunityParam;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.service.CommunityService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.camping.bit.commons.FileUploadUtil;
 
 @Controller
@@ -84,7 +87,7 @@ public class CommunityController {
    @RequestMapping(value = "helloWrite.do", method = RequestMethod.GET)
    public String helloWrite(Model model) {
       
-      return "hellowrite.tiles";
+      return "helloWrite.tiles";
    }   
    
    // 가입인사글 작성 후
@@ -99,7 +102,6 @@ public class CommunityController {
       service.helloWrite(dto); 
       
       return "redirect:/community/hello.do";
-   
    }
    
    // 가입인사글 상세
@@ -120,7 +122,6 @@ public class CommunityController {
          data = service.helloDetail(dto);
       }
       
-      /* CommunityDto data = service.helloDetail(dto); */
       model.addAttribute("data", data);
       
       int likecount = service.likeCount(dto.getCommunity_seq());
@@ -128,7 +129,6 @@ public class CommunityController {
       
       return "helloDetail.tiles";
    }
-   
    
    // 게시글 삭제
    @RequestMapping(value = "delete.do", method = RequestMethod.GET) 
@@ -147,11 +147,10 @@ public class CommunityController {
       }else {
          return "redirect:/community/review.do";
       }
-      
    }
    
    // 인사게시글 수정
-   @RequestMapping(value = "helloupdate.do", method =  { RequestMethod.GET, RequestMethod.POST })
+   @RequestMapping(value = "helloUpdate.do", method =  { RequestMethod.GET, RequestMethod.POST })
    public String helloUpdate(Model model, CommunityDto dto) {
 
       CommunityDto data = service.helloDetail(dto);
@@ -184,26 +183,15 @@ public class CommunityController {
 
       System.out.println("check = " + check);
       if(check){
-         service.likeDown(dto);
-         map.put("result",false);
-         map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
-         return map;
+		service.likeDown(dto);
+		map.put("result",false);
+		map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
+		return map;
       }
-      service.likeUp(dto);
-      map.put("result",true);
-      map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
-      return map;
-   }
-   
-   // 댓글 입력(아직안함)
-   @RequestMapping("write.do")
-      public void commentWrite(CommunityCommentDto dto) {
-      
-      System.out.println(dto.toString());
-
-      /*dto값을 service로 넘겨*/
-      service.commentWrite(dto); 
-      
+		service.likeUp(dto);
+		map.put("result",true);
+		map.put("likeCount",service.likeCount(dto.getCommunity_seq()));
+		return map;
    }
    
    // 자유게시판
@@ -243,7 +231,7 @@ public class CommunityController {
    @RequestMapping(value = "freeWrite.do", method = RequestMethod.GET)
    public String freeWrite(Model model) {
 
-      return "freewrite.tiles";
+      return "freeWrite.tiles";
    }
 
    // 자유게시판 작성 후
@@ -312,13 +300,108 @@ public class CommunityController {
 
       return "redirect:/community/free.do";
    }
-
- 
+   
    // 중고거래 게시판
    @RequestMapping(value = "deal.do", method = RequestMethod.GET)
-   public String dealboard() {
+   public String dealBoard(Model model, CommunityParam param){
+   
+      int sn = param.getPageNumber();
+      int start = 1 + 15 * sn;
+      int end = 15 + 15 * sn;
+      System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
+      
+      param.setStart(start);
+      param.setEnd(end);
+     
+      // DB 글목록 불러오기
+      List<CommunityDto> list = service.dealList(param);
+      
+      // model 이용해 list룰 "dealList" 짐싸서 보냄
+      model.addAttribute("dealList", list); 
+      
+      // 게시글 총 수
+      int totalCount = service.dealBoardCount(param);
+      model.addAttribute("totalCount", totalCount);
+      System.out.println("게시글 총 글수 = " + totalCount);
+      
+	  // 현재 페이지
+	  int nowPage = param.getPageNumber();
+	  model.addAttribute("nowPage", nowPage + 1);
+      
+      model.addAttribute("search", param.getSearch());
+      model.addAttribute("choice", param.getChoice());
+      
+      return "deal.tiles"; 
+   }
+   
+   // 중고거래 글쓰기
+   @RequestMapping(value = "dealWrite.do", method = RequestMethod.GET)
+   public String dealWrite(Model model) {
+      
+      return "dealWrite.tiles";
+   } 
+   
+   // 중고거래글 작성 후
+   @RequestMapping(value = "dealWriteAf.do", method = RequestMethod.POST)
+   public String dealWriteAf(CommunityDto dto, HttpServletRequest req) {
+      
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+      
+      System.out.println(dto.toString());
 
-      return "deal.tiles";
+      /*dto값을 service로 넘겨*/
+      service.dealWrite(dto); 
+      
+      return "redirect:/community/deal.do";
+   }
+   
+   // 중고거래글 상세
+   @RequestMapping(value = "dealDetail.do", method = RequestMethod.GET)
+   public String dealDetail(HttpSession session, Model model, CommunityDto dto) {
+
+      // 조회수
+      service.readCount(dto.getCommunity_seq());
+
+      CommunityDto data = null;
+
+      if(session.getAttribute("login") != null) {
+         MemberDto user = (MemberDto) session.getAttribute("login");
+         dto.setUser_id(user.getId());
+         data = service.dealDetail(dto);
+      }else {
+         dto.setUser_id("0");
+         data = service.dealDetail(dto);
+      }
+      
+      model.addAttribute("data", data);
+      
+      int likecount = service.likeCount(dto.getCommunity_seq());
+      model.addAttribute("likecount", likecount);
+      
+      return "dealDetail.tiles";
+   }
+   
+   // 중고거래 수정
+   @RequestMapping(value = "dealUpdate.do", method =  { RequestMethod.GET, RequestMethod.POST })
+   public String dealUpdate(Model model, CommunityDto dto) {
+
+      CommunityDto data = service.dealDetail(dto);
+      model.addAttribute("data", data);
+
+      return "dealUpdate.tiles";
+   }
+   
+   // 중고거래 수정 후
+   @RequestMapping(value = "dealUpdateAf.do", method = RequestMethod.POST) 
+      public String dealUpdateAf(CommunityDto dto, HttpServletRequest req) {   
+      
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+      
+      System.out.println(dto.toString());
+      
+      service.dealUpdate(dto);
+      
+      return "redirect:/community/deal.do";
    }
    
    // 캠퍼모임
@@ -428,10 +511,211 @@ public class CommunityController {
       return "redirect:/community/find.do";
    }
 
-   // 캠핑후기 게시판
+   // 캠핑후기
    @RequestMapping(value = "review.do", method = RequestMethod.GET)
-   public String reviewboard() {
+   public String reviewBoard(Model model, CommunityParam param) {
+
+      int sn = param.getPageNumber();
+      int start = 1 + 15 * sn;
+      int end = 15 + 15 * sn;
+      System.out.println("sn = " + sn + " " + "start = " + start + "end = " + end);
+
+      param.setStart(start);
+      param.setEnd(end);
+
+      // DB 글목록 불러오기
+      List<CommunityDto> list = service.reviewList(param);
+
+      // model 이용해 list룰 "reviewList" 짐싸서 보냄
+      model.addAttribute("reviewList", list);
+
+      // 게시글 총 수
+      int totalCount = service.reviewBoardCount(param);
+      model.addAttribute("totalCount", totalCount);
+      System.out.println("게시글 총 글수 = " + totalCount);
+
+      // 현재 페이지
+      int nowPage = param.getPageNumber();
+      model.addAttribute("nowPage", nowPage + 1);
+      
+      model.addAttribute("search", param.getSearch());
+      model.addAttribute("choice", param.getChoice());
 
       return "review.tiles";
    }
+
+   // 캠핑후기 글쓰기
+   @RequestMapping(value = "reviewWrite.do", method = RequestMethod.GET)
+   public String reviewWrite(Model model) {
+
+      return "reviewWrite.tiles";
+   }
+
+   // 캠핑후기 작성 후
+   @RequestMapping(value = "reviewWriteAf.do", method = RequestMethod.POST)
+   public String reviewWriteAf(CommunityDto dto, HttpServletRequest req) {
+
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+      System.out.println(dto.toString());
+
+      /*dto값을 service로 넘겨*/
+      service.reviewWrite(dto);
+
+      return "redirect:/community/review.do";
+
+   }
+
+   // 캠핑후기 상세
+   @RequestMapping(value = "reviewDetail.do", method = RequestMethod.GET)
+   public String reviewDetail(HttpSession session, Model model, CommunityDto dto) {
+	   
+      // 조회수
+      service.readCount(dto.getCommunity_seq());
+	      
+      CommunityDto data = null;
+
+      System.out.println("들어오는 dto = " + dto);
+
+      if(session.getAttribute("login") != null) {
+         MemberDto user = (MemberDto) session.getAttribute("login");
+         dto.setUser_id(user.getId());
+         data = service.reviewDetail(dto);
+      }else {
+         dto.setUser_id("0");
+         data = service.reviewDetail(dto);
+      }
+
+      /* CommunityDto data = service.helloDetail(dto); */
+      model.addAttribute("data", data);
+
+      int likecount = service.likeCount(dto.getCommunity_seq());
+      model.addAttribute("likecount", likecount);
+
+      return "reviewDetail.tiles";
+   }
+
+   // 캠핑후기 글 수정
+   @RequestMapping(value = "reviewUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
+   public String reviewUpdate(Model model, CommunityDto dto) {
+
+      CommunityDto data = service.reviewDetail(dto);
+      model.addAttribute("data", data);
+
+      return "reviewUpdate.tiles";
+   }
+
+   // 캠핑후기 글 수정 후
+   @RequestMapping(value = "reviewUpdateAf.do", method = RequestMethod.POST)
+   public String reviewUpdateAf(CommunityDto dto, HttpServletRequest req) {
+
+      String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+      System.out.println(dto.toString());
+
+      service.reviewUpdate(dto);
+
+      return "redirect:/community/review.do";
+   }
+
+    // 댓글 작성
+	@ResponseBody
+	@RequestMapping(value = "writeComment.do", method = RequestMethod.POST)
+	public int writeComment(CommunityCommentDto comment) {
+		
+		int result = 0;
+		
+	    try {
+	    	result = service.writeComment(comment);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        result = -1;
+	    }
+	    return result;
+	}
+	
+	// 댓글 답글 작성
+	@ResponseBody
+	@RequestMapping(value = "answerComment.do", method = RequestMethod.POST)
+	public int answerComment(CommunityCommentDto comment) {
+		
+		int result = 0;
+		
+	    try {
+	    	result = service.answerComment(comment);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        result = -1;
+	    }
+	    return result;
+	}
+	
+	// 댓글 수정
+	@ResponseBody
+	@RequestMapping(value = "updateComment.do", method = RequestMethod.POST)
+	public int updateComment(CommunityCommentDto comment) {
+		
+		int result = 0;
+		
+	    try {
+	    	result = service.updateComment(comment);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        result = -1;
+	    }
+	    return result;
+	}
+	
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value = "deleteComment.do", method = RequestMethod.POST)
+	public int deleteComment(int comment_seq) {
+		
+		int result = 0;
+		
+	    try {
+	    	result = service.deleteComment(comment_seq);
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	        result = -1;
+	    }
+	    return result;
+	}
+
+	// 댓글 목록 조회
+	// JSON : 자바스크립트 객체 모양의 String
+	// ajax에서는 filter에서 문자열을 잡아주지 못함
+	// produces : 조건에 지정한 미디어 타입과 관련된 응답을 생성하는데 사용한 실제 컨텐츠 타입을 보장한다
+	// --> 응답 데이터의 Content-Type 지정가능
+	// text/html; charset=utf-8
+	@ResponseBody
+	@RequestMapping(value="commentList.do", produces="application/json; charset=utf-8")
+	public HashMap<String, Object> commentList(CommunityCommentParam param){
+		
+		int currentPage = param.getPageNumber();
+		
+		int start = 1 + currentPage * 10;
+		param.setStart(start);
+		
+		int end = (currentPage + 1) * 10;
+		param.setEnd(end);
+		
+		System.out.println(param);
+		
+		HashMap<String, Object> result = new HashMap<>();
+		
+	    List<CommunityCommentDto> comment = service.getCommentList(param);	    
+	    result.put("comment", comment);
+	    
+	    int totalCount = service.getCommentCount(param);
+	    result.put("totalCount", totalCount);
+	    
+	    result.put("param", param);
+	    
+	    // JSON으로 담아도 되지만 편한 방법인 GSON으로 사용	    
+	    // yyyy-MM-dd hh:mm:ss
+	    // Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
+	    
+	    return result;
+	}
 }

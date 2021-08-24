@@ -7,9 +7,7 @@
 
 <html>
 <head>
-<!-- bootstrap 추가 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -17,74 +15,81 @@
 
 <h1>자유게시판</h1>
 
-<!-- 자유게시판 글 리스트 -->
+<!-- 글 작성 리스트 틀-->
 <div align="center">
-<table border="1">
-<colgroup>
-	<col style="width:5%;" />
-	<col style="width:auto;" />
-	<col style="width:15%;" />
-	<col style="width:10%;" />
-	<col style="width:15%;" />
-</colgroup>
-<thead>
-
-<tr>
-	<th>번호</th><th>제목</th><th>닉네임</th><th>조회수</th><th>작성일</th>
-</tr>
-	<c:if test="${empty freeList}">
-		<td colspan="5">작성된 글이 없습니다</td>			
-	</c:if>
-		<c:forEach var="data" items="${freeList}">
-			<tr>
-				<td>${data.community_seq }</td>
-				<td><a href="/community/freeDetail.do?community_seq=${data.community_seq }">${data.title }</a></td>
-				<td>${data.nickname }</td>
-				<td>${data.readcount }</td>
-				<td> 
-					<c:set var="date" value="${data.wdate}"/>
-					${fn:substring(date,2,16)}
-				</td>
+	<table>
+		<colgroup>
+			<col style="width:5%;" />
+			<col style="width:auto;" />
+			<col style="width:15%;" />
+			<col style="width:10%;" />
+			<col style="width:15%;" />
+		</colgroup>
+	<thead>
+		<tr>
+			<th>번호</th><th>제목</th><th>닉네임</th><th>조회수</th><th>작성일</th>
+		</tr>
+					<c:if test="${empty freeList}">
+				<td colspan="3">작성된 글이 없습니다</td>			
+			</c:if>
+			<c:forEach var="data" items="${freeList}">
+				<tr>
+					<td>${data.community_seq }</td>
+					<td>
+						<a href="/community/freeDetail.do?community_seq=${data.community_seq }">
+							${data.title}
+							<c:if test="${data.commentcount ne 0}">
+								<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+							</c:if>
+						</a>
+					</td>
+					<td>${data.nickname }</td>
+					<td>${data.readcount }</td>
+					<td> 
+						<c:set var="date" value="${data.wdate}"/>
+						${fn:substring(date,2,16)}
+					</td>
 				</tr>
-		</c:forEach>
-</thead>
-</table>
+			</c:forEach>
+	</thead>
+	</table>
 </div>
 <br>
 
 <!-- 글검색 -->
 <div align="center">
-<select id="_choice" name="choice">
-	<option value="" selected="selected">선택</option>
-	<option value="title">제목</option>
-	<option value="content">내용</option>
-	<option value="nickname">닉네임</option>
-</select>
-<input type="text" id="_search" name="search" placeholder="검색내용입력.">
-<button type="button" id="btnSearch">검색</button>
+	<select id="_choice" name="choice">
+		<option value="" selected="selected">선택</option>
+		<option value="title">제목</option>
+		<option value="content">내용</option>
+		<option value="nickname">닉네임</option>
+	</select>
+	
+	<input type="text" id="_search" name="search" placeholder="검색내용입력.">
+	<button type="button" id="btnSearch">검색</button>
 </div>
 <br>
 
 <!-- 페이지네이션 -->
 <div class="container" style="text-align: center" >
-     <div style = "display : inline-block">  
-	    <nav aria-label="Page navigation">
-	        <ul class="pagination" id="pagination"></ul>
-	    </nav>
-    </div>
+	<div style = "display : inline-block">  
+		<nav aria-label="Page navigation">
+			<ul class="pagination" id="pagination"></ul>
+		</nav>
+	</div>
 </div>
 
 <!-- 글쓰기 버튼 -->
 <div align="right">
- <a href="/community/freeWrite.do">글쓰기</a> 
+	<a href="/community/freeWrite.do">글쓰기</a> 
 </div>
 
 <script type="text/javascript">
+$(document).ready(function () {
+
 	let choice = '${choice}';
 	let search = '${search}';
-	
-$(document).ready(function () {
-	
+
 	// 페이지네이션
 	let totalCount = ${totalCount}; 	// 글의 총수
 	let pageSize = 15;	// 페이지의 크기 1 ~ 10 [1] ~ [10]
@@ -115,7 +120,48 @@ $(document).ready(function () {
 	});
  	// 검색
 	$("#btnSearch").click(function () {
-		location.href = "/community/free.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();	
+
+		if($('#_choice').val() === ""){
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'bottom-end',
+				showConfirmButton: false,
+				timer: 2000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'error',
+				title: '검색옵션을 선택해주세요!'
+			})
+			return;
+
+		}else if($('#_search').val() ===""){
+			let Toast = Swal.mixin({
+				toast: true,
+				position: 'bottom-end',
+				showConfirmButton: false,
+				timer: 2000,
+				timerProgressBar: true,
+				didOpen: (toast) => {
+					toast.addEventListener('mouseenter', Swal.stopTimer)
+					toast.addEventListener('mouseleave', Swal.resumeTimer)
+				}
+			})
+
+			Toast.fire({
+				icon: 'error',
+				title: '검색어를 입력해주세요!'
+			})
+
+			return;
+		}
+
+		location.href = "/community/free.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
 	});  
 });
 </script>

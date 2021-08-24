@@ -73,8 +73,6 @@ $(document).ready(function() {
 </head>
 <body>
 
-<h1>게시글 수정화면</h1>
-
 <form action="/community/freeUpdateAf.do" method="post">
 
 <!-- boardUpdateAf.do 로 id값 넘겨주는 곳 -->
@@ -104,7 +102,7 @@ $(document).ready(function() {
 	</td>
 </tr>
 <tr>
-	<td colspan="2">
+	<td colspan="2" align="right">
 		<input type="submit" id="submit" value="수정하기">
 	</td>
 </tr>

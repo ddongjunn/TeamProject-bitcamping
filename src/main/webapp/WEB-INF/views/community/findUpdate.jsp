@@ -104,7 +104,7 @@ $(document).ready(function() {
 	</td>
 </tr>
 <tr>
-	<td colspan="2">
+	<td colspan="2" align="right">
 		<input type="submit" id="submit" value="수정하기">
 	</td>
 </tr>
