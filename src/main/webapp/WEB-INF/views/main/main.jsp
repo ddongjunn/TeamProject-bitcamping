@@ -7,118 +7,105 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- page별 contents -->
+<!-- container start -->
 <div id="container">
-    <div class="search-zone mt70">
-        <div class="title">지역별 캠핑장 검색</div>
-        <div class="input-zone mt20">
-            <div>
-                <select>
-                    <option selected>서울</option>
-                    <option>경기</option>
-                    <option>부산</option>
-                    <option>제주도</option>
-                    <option>대전</option>
-                    <option>울산</option>
-                </select>
-                <select>
-                    <option selected>지역1</option>
-                    <option>지역2</option>
-                    <option>지역3</option>
-                    <option>지역4</option>
-                </select>
-            </div>
-            <div>
-                <button class="pr-btn shadow">검색</button>
+    <div class="search-area">
+        <div class="img-area">
+            <img src='/resources/images/camp-bg.png' />
+        </div>
+        <div class="search-container">
+            <div class="title f_wcolor">지역별 캠핑장 검색</div>
+            <div class="search-contents mt50">
+                <input type="text" placeholder="지역을 입력하세요..!" class="shadow"/>
+                <button class="search-btn shadow"></button>
             </div>
         </div>
     </div>
-    <div class="recommend-zone mt50">
-        <div class="title">추천 캠핑장</div>
-        <div class="recommend-card-container mt10">
-            <div class="recommend-card-object">
-                <div class="recommend-card-contents">
-                    <img src="/resources/images/test.jpeg" />
+    <div class="contents-area mt50">
+        <div class="recommend-area">
+            <div class="title" style="text-align: center;">추천 캠핑장</div>
+            <div class="img-slide-container mt50">
+                <div class="img-slide-contents fir">
+                    <img src='/resources/images/camping.jpeg' />
                 </div>
-                <div class="recommend-card-title mt30">
-                    <span class="sub-title">OO 캠핑장</span>
+                <div class="img-slide-contents sec">
+                    <img src='/resources/images/camping.jpeg' />
                 </div>
-            </div>
-            <div class="recommend-card-object">
-                <div class="recommend-card-contents">
-                    <img src="/resources/images/test.jpeg" />
+                <div class="img-slide-contents trd">
+                    <img src='/resources/images/camping.jpeg' />
                 </div>
-                <div class="recommend-card-title mt30">
-                    <span class="sub-title">OO 캠핑장</span>
-                </div>
-            </div>
-            <div class="recommend-card-object">
-                <div class="recommend-card-contents">
-                    <img src="/resources/images/test.jpeg" />
-                </div>
-                <div class="recommend-card-title mt30">
-                    <span class="sub-title">OO 캠핑장</span>
-                </div>
-            </div>
-            <div class="recommend-card-object">
-                <div class="recommend-card-contents">
-                    <img src="/resources/images/test.jpeg" />
-                </div>
-                <div class="recommend-card-title mt30">
-                    <span class="sub-title">OO 캠핑장</span>
+                <!-- <div class="img-slide-contents frd">
+                  <img src='./img/camping.jpeg' />
+                </div> -->
+                <div class="btn-wrapper">
+                    <button class="icon-left-arrow-btn shadow"></button>
+                    <button class="icon-right-arrow-btn shadow"></button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="community-zone mt50">
-        <div class="title">커뮤니티 최신글</div>
-        <div class="community-card-container mt10">
-            <div class="community-card-object">
-                <div class="community-card-title">
-                    가입인사
+        <div class="commuity-area mt50">
+            <div class="title" style="text-align: center;">최신글</div>
+            <div class="community-container mt50">
+                <div class="community-contents">
+                    <div class="sub-title" style="display: block;overflow:hidden">
+                        <span class="fl">캠핑 팁</span>
+                        <span class="fr">+</span>
+                    </div>
+                    <div class="community-contents-list">
+                        <ul>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="community-card-contents mt30">
-                    <ul>
-                        <li>안녕하세요1</li>
-                        <li>안녕하세요2</li>
-                    </ul>
+                <div class="community-contents">
+                    <div class="sub-title" style="display: block;overflow:hidden">
+                        <span class="fl">캠핑후기</span>
+                        <span class="fr">+</span>
+                    </div>
+                    <div class="community-contents-list">
+                        <ul>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="community-card-object">
-                <div class="community-card-title">
-                    자유게시판
+                <div class="community-contents">
+                    <div class="sub-title" style="display: block;overflow:hidden">
+                        <span class="fl">캠핑음식</span>
+                        <span class="fr">+</span>
+                    </div>
+                    <div class="community-contents-list">
+                        <ul>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="community-card-contents mt30">
-                    <ul>
-                        <li>안녕하세요1</li>
-                        <li>안녕하세요2</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="community-card-object">
-                <div class="community-card-title">
-                    캠핑후기
-                </div>
-                <div class="community-card-contents mt30">
-                    <ul>
-                        <li>안녕하세요1</li>
-                        <li>안녕하세요2</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="community-card-object">
-                <div class="community-card-title">
-                    캠퍼모집
-                </div>
-                <div class="community-card-contents mt30">
-                    <ul>
-                        <li>안녕하세요1</li>
-                        <li>안녕하세요2</li>
-                    </ul>
+                <div class="community-contents">
+                    <div class="sub-title" style="display: block;overflow:hidden">
+                        <span class="fl">자유게시판</span>
+                        <span class="fr">+</span>
+                    </div>
+                    <div class="community-contents-list">
+                        <ul>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                            <li>제주도 백패킹시 참고</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- container end -->
 </body>
 </html>

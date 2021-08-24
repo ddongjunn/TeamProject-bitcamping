@@ -40,5 +40,15 @@ public class AdminServiceImpl implements AdminService{
         return dao.getCommunityCount(param);
     }
 
+    @Override
+    public int getCommunityTotalCount() {
+        return dao.getCommunityTotalCount();
+    }
+
+    @Override
+    public int getQnaWaitTotalCount() {
+        return dao.getQnaWaitTotalCount();
+    }
+
 
 }

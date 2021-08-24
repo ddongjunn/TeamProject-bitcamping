@@ -14,88 +14,94 @@
 
 </head>
 <body>
-<div>
+<div class="container-fluid">
     <h2>회원정보</h2>
-    <c:choose>
-        <c:when test="${empty list}">
-            <h1>회원이 없습니다.</h1>
-        </c:when>
-        <c:otherwise>
-            <table border="1" style="width: 100%">
-                <colgroup>
-                    <col style="width:10%;" />
-                    <col style="width:auto;" />
-                    <col style="width:8%;" />
-                    <col style="width:10%;" />
-                    <col style="width:11%;" />
-                    <col style="width:16%;" />
-                    <col style="width:9%;" />
-                </colgroup>
+</div>
 
-                <thead>
+<div class="table-responsive">
+    <div>
+        <table class="table align-items-center">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">가입경로</th>
+                <th scope="col" width="360px">아이디</th>
+                <th scope="col">이름</th>
+                <th scope="col">닉네임</th>
+                <th scope="col">핸드폰</th>
+                <th scope="col">이메일</th>
+                <th scope="col">가입일</th>
+            </tr>
+            </thead>
+            <tbody class="list">
+            <c:if test="${empty list}">
                 <tr>
-                    <th>가입경로</th><th>아이디</th><th>이름</th><th>닉네임</th><th>핸드폰</th><th>이메일</th><th>가입일</th><th>상태</th>
+                    <td colspan="7" style="text-align: center">
+                        해당 조건의 회원이 없습니다.
+                    </td>
                 </tr>
-                </thead>
+            </c:if>
+            <c:forEach var="list" items="${list}">
+                <tr>
+                    <th scope="row">
+                        <c:if test="${list.sns_Type eq 'naver'}">
+                            네이버
+                        </c:if>
+                        <c:if test="${list.sns_Type eq 'kakao'}">
+                            카카오
+                        </c:if>
+                        <c:if test="${list.sns_Type eq 'none'}">
+                            자사
+                        </c:if>
+                    </th>
 
-                <tbody>
-                <c:forEach var="list" items="${list}">
-                    <tr>
-                        <td>
-                            <c:if test="${list.sns_Type eq 'naver'}">
-                                네이버
-                            </c:if>
-                            <c:if test="${list.sns_Type eq 'kakao'}">
-                                카카오
-                            </c:if>
-                            <c:if test="${list.sns_Type eq 'none'}">
-                                자사
-                            </c:if>
-                        </td>
-                        <td>${list.id}</td>
-                        <td>${list.username}</td>
-                        <td>${list.nickname}</td>
-                        <td>${list.phone}</td>
-                        <td>${list.email}</td>
-                        <td>
-                            <c:set var="date" value="${list.create_Date}"/>
-                                ${fn:substring(date,0,11)}
-                        </td>
-                        <td>
-                            <c:if test="${list.auth == '0'}">
-                                활동
-                            </c:if>
-                            <c:if test="${list.auth == '1'}">
-                                탈퇴
-                            </c:if>
-                        </td>
-
-                    </tr>
-                </c:forEach>
-
-                </tbody>
-            </table>
-        </c:otherwise>
-    </c:choose>
+                    <td>${list.id}</td>
+                    <td>${list.username}</td>
+                    <td>${list.nickname}</td>
+                    <td>${list.phone}</td>
+                    <td>${list.email}</td>
+                    <td>
+                        <c:set var="date" value="${list.create_Date}"/>
+                            ${fn:substring(date,0,11)}
+                    </td>
+                    <td>
+                        <c:if test="${list.auth == '0'}">
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-success"></i>
+                                <span class="status">활동</span>
+                            </span>
+                        </c:if>
+                        <c:if test="${list.auth == '1'}">
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-warning"></i>
+                                <span class="status">탈퇴</span>
+                            </span>
+                        </c:if>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <div class="container"> <!-- style = "width : 100%; text-align : center" -->
     <!--  <div style = "display : inline-block"> -->
     <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination"></ul>
+        <ul class="pagination justify-content-center" id="pagination"></ul>
     </nav>
 </div>
 
 
-<div align="center">
-    <select id="_choice" name="choice">
+<div class="row" style="justify-content: space-between; width: 350px; margin:auto">
+    <select id="_choice" name="choice" class="form-control form-control-sm" style="width: 90px">
         <option value="" selected="selected">선택</option>
         <option value="id">아이디</option>
         <option value="username">이름</option>
         <option value="nickname">닉네임</option>
     </select>
-    <input type="text" id="_search" name="search" placeholder="검색">
-    <button type="button" id="btnSearch">검색</button>
+    <input type="text" id="_search" name="search" placeholder="검색" class="form-control form-control-sm"
+           style="width: 200px">
+    <button type="button" id="btnSearch" class="btn btn-outline-primary btn-sm ">검색</button>
 </div>
 
 <script type="text/javascript">
@@ -108,6 +114,9 @@
         //페이지네이션
         let totalCount = ${totalCount};	// 서버로부터 총글의 수를 취득
         //alert(totalCount);
+        if(totalCount === 0){
+            totalCount = 1;
+        }
 
         let nowPage = ${nowPage};	// 서버로부터 현재 페이지를 취득
         //alert(nowPage);
@@ -116,32 +125,32 @@
 
         let totalPages = totalCount / pageSize;
 
-        if(totalCount % pageSize > 0){
+        if (totalCount % pageSize > 0) {
             totalPages++;
         }
 
         /*페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.*/
-        if($('#pagination').data("twbs-pagination")){
+        if ($('#pagination').data("twbs-pagination")) {
             $('#pagination').twbsPagination('destroy');
         }
 
         $("#pagination").twbsPagination({
-            startPage : nowPage,
-            totalPages : totalPages, //전체 페이지
+            startPage: nowPage,
+            totalPages: totalPages, //전체 페이지
             visiblePages: 10, //최대로 보여줄 페이지
             first: '<span sria-hidden="true">«</span>',
             prev: "이전",
             next: "다음",
             last: '<span sria-hidden="true">»</span>',
-            initiateStartPageClick:false,
-            onPageClick: function(event,page){
+            initiateStartPageClick: false,
+            onPageClick: function (event, page) {
                 location.href = "/admin/memberInfo.do?&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
             }
         });
 
         $("#btnSearch").click(function () {
 
-            if($('#_choice').val() === ""){
+            if ($('#_choice').val() === "") {
                 let Toast = Swal.mixin({
                     toast: true,
                     position: 'bottom-end',
@@ -160,7 +169,7 @@
                 })
                 return;
 
-            }else if($('#_search').val() ===""){
+            } else if ($('#_search').val() === "") {
                 let Toast = Swal.mixin({
                     toast: true,
                     position: 'bottom-end',

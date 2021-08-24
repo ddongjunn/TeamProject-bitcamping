@@ -15,4 +15,7 @@ public interface AdminService {
 
     public List<CommunityDto> getCommunity(MypageParam param);
     public int getCommunityCount(MypageParam param);
+
+    public int getCommunityTotalCount();
+    public int getQnaWaitTotalCount();
 }
