@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.camping.bit.dao.RentDao;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
+import com.camping.bit.dto.ProductQnaDto;
 import com.camping.bit.dto.ProductRentDto;
 import com.camping.bit.dto.ProductReviewDto;
 
@@ -26,49 +27,37 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public List<ProductDetailDto> getProductList() {
 		
-		List<ProductDetailDto> list = dao.getProductList();
-		
-		return list;
+		return dao.getProductList();
 	}
 
 	@Override
 	public ProductDetailDto getProductDetail(int product_Seq) {
 
-		ProductDetailDto detail = dao.getProductDetail(product_Seq);
-		
-		return detail;
+		return dao.getProductDetail(product_Seq);
 	}
 
 	@Override
 	public List<ProductRentDto> getRentList(int product_Seq) {
 		
-		List<ProductRentDto> rent = dao.getRentList(product_Seq);
-
-		return rent;
+		return dao.getRentList(product_Seq);
 	}
 
 	@Override
 	public List<ProductOptionDto> getOptionList() {
 
-		List<ProductOptionDto> option = dao.getOptionList();
-		
-		return option;
+		return dao.getOptionList();
 	}
 
 	@Override
 	public ProductOptionDto getOptionDetail(int option_Seq) {
 
-		ProductOptionDto option = dao.getOptionDetail(option_Seq);
-		
-		return option;
+		return dao.getOptionDetail(option_Seq);
 	}
 
 	@Override
 	public ProductRentDto getRentDetail(int rent_Seq) {
 		
-		ProductRentDto rent = dao.getRentDetail(rent_Seq);
-		
-		return rent;
+		return dao.getRentDetail(rent_Seq);
 	}
 
 	@Override
@@ -80,16 +69,31 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public List<ProductReviewDto> getReviewList(int product_Seq) {
 		
-		List<ProductReviewDto> review = dao.getReviewList(product_Seq);
-		
-		return review;
+		return dao.getReviewList(product_Seq);
 	}
 
 	@Override
 	public int getReviewCount(int product_Seq) {
 
-		int reviewCount = dao.getReviewCount(product_Seq);
 		
-		return reviewCount;
+		return dao.getReviewCount(product_Seq);
+	}
+
+	@Override
+	public void writeQnaAf(ProductQnaDto qna) {
+		
+		dao.writeQnaAf(qna);
+	}
+
+	@Override
+	public List<ProductQnaDto> getQnaList(int product_Seq) {
+		
+		return dao.getQnaList(product_Seq);
+	}
+
+	@Override
+	public int getQnaCount(int product_Seq) {
+
+		return dao.getQnaCount(product_Seq);
 	}
 }

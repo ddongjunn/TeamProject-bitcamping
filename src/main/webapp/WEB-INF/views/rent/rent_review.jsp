@@ -38,7 +38,7 @@
 </nav>
 <div id="reviewbox" style="height: auto; margin: auto; width: 80%; padding: 20px; background-color: tomato;">
 
-	<span>리뷰 <fmt:formatNumber value="${reviewCount}" type="number"/> 개</span> <span style="float:right;"><a href="javascript:write();">리뷰쓰기</a></span>
+	<span>리뷰 <fmt:formatNumber value="${reviewCount}" type="number"/> 개</span> <span style="float:right;"><a href="javascript:writereview();">리뷰쓰기</a></span>
 	 <c:forEach items="${review}" var="review">
 	<div class="reviewrow" style="display: flex; background-color: #F7BBBB; ">		
 		<div id="ratebox" class="rate" style="flex: 1 1 15%; padding: 10px; ">
@@ -50,55 +50,46 @@
 				<c:when test="${review.rate eq 1}">⭐</c:when>
 			</c:choose>
 		</div>
-		<div id="reviewtitle" class="reviewtitle" style="flex: 1 1 65%; overflow: hidden; text-overflow: ellipsis; padding: 10px;" >
+		<div id="reviewtitle" onclick="showHide(${review.review_Seq})" class="reviewtitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
 			${review.title}
 		</div>
 		<div class="info" style="flex: 1 1 25%; padding: 10px;" >
 			<span>작성자 : ${review.nickname}</span><br>
-			<span>작성일 : ${review.wdate}</span>
+			<span>작성일 : 
+				<fmt:parseDate value="${review.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/></span>
 		</div>
 	</div>
 	<hr>
-	<div id="reviewcontent" onclick="showHide(this)" class="reviewcontent" style="height: auto; background-color: #CDE8FD; padding: 10px; display: none;" >
-		<div>
-			${review.content}
-		</div>
-		<c:if test="${review.image ne null}">
+	<div id="reviewcontent${review.review_Seq}" class="reviewcontent" style="height: auto; padding: 10px; display: none;" >
+		<div style="background-color: #CDE8FD;">
 			<div>
-				<img src="/resources/upload/${review.image}" alt="상품평 이미지" height="250px" >
+				${review.content}
 			</div>
-		</c:if>
+			<c:if test="${review.image ne null}">
+				<div>
+					<img src="/resources/upload/${review.image}" alt="상품평 이미지" height="250px" >
+				</div>
+			</c:if>
+		</div>
 		<hr>
 	</div>
 	</c:forEach> 
 </div>
 
 <script type="text/javascript">
-
-/* 	$(document).ready(function(){
-			
-		 $("div").click(function(){
-			
-			if($("#reviewcontent").css("display") == "none"){
-				$("#reviewcontent").show();
-			}else{
-				$("#reviewcontent").hide();
-			}
-		}); 
-	}); */
 	
+	function showHide(seq){
 	
-	function showHide(e){
-		
-		if($(e).css("display") == "none"){
-			$(e).show();
+		if($("#reviewcontent"+seq).css("display") == "none"){
+			$("#reviewcontent"+seq).show();
 		}else{
-			$(e).hide();
+			$("#reviewcontent"+seq).hide();
 		}
 	}
 	
 	/* 리뷰작성 popup open */
-	function write(){
+	function writereview(){
 		
 		var order_Seq = 1; // 이부분 나중에 order_Seq 넣어주기
 		var popupWidth = 480;

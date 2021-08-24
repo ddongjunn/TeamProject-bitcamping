@@ -157,11 +157,12 @@
 		}	
 	});
 
-	let totalCount = ${totalCount};	// 서버로부터 총글의 수를 취득
-	//alert(count);
-	let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
-	//alert(pageNum);
+	let totalCount = ${totalCount};	
+	if(totalCount === 0){
+		totalCount = 1;
+	}	
 	
+	let nowPage = ${pageNumber};		
 	let pageSize = 15;
 	
 	let _totalPages = totalCount / pageSize;
@@ -169,7 +170,6 @@
 		_totalPages++;
 	}
 	
-	//$("#pagination").twbsPagination('destroy');	// 페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.
 	
 	$("#pagination").twbsPagination({
 		startPage: nowPage,

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
+import com.camping.bit.dto.ProductQnaDto;
 import com.camping.bit.dto.ProductRentDto;
 import com.camping.bit.dto.ProductReviewDto;
 
@@ -29,5 +30,11 @@ public interface RentDao {
 	public List<ProductReviewDto> getReviewList(int product_Seq);
 	
 	public int getReviewCount(int product_Seq);
+
+	public void writeQnaAf(ProductQnaDto qna);
+
+	public List<ProductQnaDto> getQnaList(int product_Seq);
+
+	public int getQnaCount(int product_Seq);
 	 
 }

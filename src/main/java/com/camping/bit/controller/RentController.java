@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
 import com.camping.bit.dto.ProductOrderDto;
+import com.camping.bit.dto.ProductQnaDto;
 import com.camping.bit.dto.ProductRentDto;
 import com.camping.bit.dto.ProductReviewDto;
 import com.camping.bit.service.RentService;
@@ -90,8 +91,14 @@ public class RentController {
 		List<ProductReviewDto> review = service.getReviewList(product_Seq);
 		model.addAttribute("review", review);
 		
+		List<ProductQnaDto> qna = service.getQnaList(product_Seq);
+		model.addAttribute("qna", qna);
+		
 		int reviewCount = service.getReviewCount(product_Seq);
 		model.addAttribute("reviewCount", reviewCount);
+		
+		int qnaCount = service.getQnaCount(product_Seq);
+		model.addAttribute("qnaCount", qnaCount);
 		
 		return "productDetail.tiles";
 	}
@@ -167,5 +174,20 @@ public class RentController {
 		return "redirect:/";	
 	}
 
+	@RequestMapping(value = "writeQna.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String writeQna(Model model, @RequestParam int product_Seq) {
+		
+		model.addAttribute("product_Seq", product_Seq);
+		
+		return "writeQna.tiles";
+	}
+	
+	@RequestMapping(value = "writeQnaAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String writeQnaAf(ProductQnaDto qna) {
+		
+		service.writeQnaAf(qna);
+				
+		return "redirect:/";	
+	}
 	
 }

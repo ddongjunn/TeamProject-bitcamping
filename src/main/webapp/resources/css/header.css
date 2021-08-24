@@ -5,6 +5,12 @@
   /*transition:all 0.3s;*/ /*메뉴효과 */
   background-color: seagreen;  /*헤더 색상 */
   /* width: 100%; */
+/*   position: fixed;
+  top: 0;
+   margin: 0 auto;
+   left: 0;
+   right: 0;
+   opacity: 90%; */
 }
 #header > .indiv {
   position:relative;
