@@ -36,7 +36,7 @@
 			<hr class="hr">
 			<div class="description">
 				<h4>기본 포함 상품</h4>
-					<span>${item.base_Item}</span>
+				<span>${item.base_Item}</span>
 			</div>
 			<hr class="hr">
 			<div class="price">
@@ -60,7 +60,7 @@
 				<h4>대여 일자</h4>
 				<input id="rent_Sdate" name="rent_Sdate" type="text" placeholder="시작 날짜 선택" autocomplete="off" readonly required> ~ <input id="rent_Edate" name="rent_Edate" type="text" placeholder="반납일 자동 지정" autocomplete="off" readonly required>
 				<span style="font-size: 12px">
-					<br>대여시작일은 일주일 뒤부터 지정 가능합니다
+					<br>대여시작일은 배송 기간을 고려하여 일주일 뒤부터 지정 가능합니다
 					<br>
 				</span>
 			</div>

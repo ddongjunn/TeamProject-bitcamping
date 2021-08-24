@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +14,8 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/summernote-lite.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
+<!-- sweetalert2 -->
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style type="text/css">
 
@@ -62,12 +66,12 @@ h1 { font-size: 1.5em; margin: 10px; }
 </head>
 <body>
 <form id="reviewForm" action="/rent/writeReviewAf.do" method="post" enctype="multipart/form-data" autocomplete="off">
-	<h3>상품후기입력</h3>
+	<h3>상품 후기 입력</h3>
 	
 	<div>별점입력</div>
 	<div>
 		<fieldset class="rating">
-		    <input type="radio" id="star5" name="rate" value="5" /><label class = "full" for="star5"></label>
+		    <input type="radio" id="star5" name="rate" value="5" required /><label class = "full" for="star5"></label>
 		    <!-- <input type="radio" id="star4half" name="rate" value="4.5" /><label class="half" for="star4half"></label> -->
 		    <input type="radio" id="star4" name="rate" value="4" /><label class = "full" for="star4"></label>
 		    <!-- <input type="radio" id="star3half" name="rate" value="3.5" /><label class="half"></label> -->
@@ -83,7 +87,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 	<br>
 	<div>제목</div>
 	<div id="contentbox" style="width: 100%; margin: auto;">
-		<textarea id="title" name="title" style="width: 100%"></textarea>
+		<input type="text" id="title" name="title" placeholder="제목을 입력해 주세요" style="width: 100%">
 	</div>
 	<div>후기 작성</div>
 	<div id="contentbox" style="width: 100%; margin: auto;">
@@ -94,12 +98,13 @@ h1 { font-size: 1.5em; margin: 10px; }
 			<img style="height: 100px;" id="preview-image" src="https://dummyimage.com/500x500/ffffff/000000.png&text=preview+image">
 			<input type="file" name="reviewImage" accept="image/*" id="input-image" style="display: block;">
 	</div>
-	<div>
-		<input type="submit" id="send" value="제출하기">
-	</div>
 	
 	<input type="hidden" name="order_Seq" value="${order_Seq}">
 	<input type="hidden" name="user_Id" value="${login.id}">
+	
+	<div>
+		<input type="button" id="send" value="제출하기">
+	</div>
 	
 </form>
 
@@ -127,12 +132,58 @@ h1 { font-size: 1.5em; margin: 10px; }
 	    readImage(e.target)
 	});
 	
-	$("#send").click(function() {
+	$("#send").click(function() {		
 		
-		$("#reviewForm").submit();
- 		opener.parent.location.reload();
-		//window.close();
-		
+		if(${login == null}) {
+			
+    		Swal.fire({
+    			  icon: 'warning',
+    			  title: '로그인 후 이용해 주세요',
+    			  confirmButtonText: '닫기',
+    			  showCancelButton: true,
+    			  cancelButtonText: '뒤로',
+    		}).then((result) => {
+    			if (result.isConfirmed) {
+    				window.close();
+    			}
+    		});
+    		
+    	} else if($("input[name=rate]:radio:checked").length < 1){
+    		
+			Swal.fire({
+	  			  icon: 'warning',
+	  			  title: '별점을 입력해 주세요!'
+	  		});
+			
+		} else if($("#title").val() == ""){
+			
+			Swal.fire({
+	  			  icon: 'warning',
+	  			  title: '제목을 입력해 주세요!'
+	  		});
+			$("#title").focus();
+			
+		} else if($("#content").val() == ""){
+			
+			Swal.fire({
+	  			  icon: 'warning',
+	  			  title: '후기를 입력해 주세요!'
+	  		});
+			$("#content").focus();
+			
+		} else {
+			
+	 		var params = $("#reviewForm").serialize();
+	 		
+			$.ajax({
+				url : '<c:url value='/rent/writeReviewAf.do' />',
+				data : params,
+				success : function(xh){	
+							opener.parent.location.reload();
+							window.close();
+				}
+			});
+        }
 	});
 	
 </script>

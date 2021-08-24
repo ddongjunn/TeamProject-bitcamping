@@ -79,7 +79,7 @@ public class CsController {
 	@RequestMapping(value = "noticeWrite.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String noticeWrite() {		
 		
-		return "noticeWirte.tiles";
+		return "noticeWrite.tiles";
 	}
 	
 	@RequestMapping(value = "noticeWriteAf.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -298,6 +298,7 @@ public class CsController {
 		
 		int totalCount = service.getQnaCount(param);
 		model.addAttribute("totalCount", totalCount);
+		System.out.println("qnaList()" + totalCount);
 		
 		model.addAttribute("pageNumber", param.getPageNumber() + 1);		
 		model.addAttribute("search", param.getSearch());

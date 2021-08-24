@@ -9,9 +9,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<!-- pagination -->
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
 <style type="text/css">
 .qnaList{
 	width: 85%;
@@ -157,11 +154,12 @@
 		}	
 	});
 
-	let totalCount = ${totalCount};	// 서버로부터 총글의 수를 취득
-	//alert(count);
-	let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
-	//alert(pageNum);
+	let totalCount = ${totalCount};	
+	if(totalCount === 0){
+		totalCount = 1;
+	}	
 	
+	let nowPage = ${pageNumber};		
 	let pageSize = 15;
 	
 	let _totalPages = totalCount / pageSize;
@@ -169,7 +167,6 @@
 		_totalPages++;
 	}
 	
-	//$("#pagination").twbsPagination('destroy');	// 페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.
 	
 	$("#pagination").twbsPagination({
 		startPage: nowPage,

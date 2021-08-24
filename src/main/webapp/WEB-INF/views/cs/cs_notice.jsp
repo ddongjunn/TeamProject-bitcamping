@@ -124,16 +124,18 @@
 	});
 
 	let totalCount = ${totalCount};
+	if(totalCount === 0){
+		totalCount = 1;
+	}
+	
 	let nowPage = ${pageNumber};
 	let pageSize = 15;
-	let _totalPages = totalCount / pageSize;
 	
-	
+	let _totalPages = totalCount / pageSize;	
 	if(totalCount % pageSize > 0){
 		_totalPages++;
 	}
 	
-	//$("#pagination").twbsPagination('destroy');	// 페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.
 	
 	$("#pagination").twbsPagination({
 		startPage: nowPage,

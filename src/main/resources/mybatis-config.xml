@@ -24,11 +24,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.camping.bit.dto.ProductRentDto" alias="ProductRentDto" />
         <typeAlias type="com.camping.bit.dto.ProductOptionDto" alias="ProductOptionDto" />
         <typeAlias type="com.camping.bit.dto.ProductReviewDto" alias="ProductReviewDto" />
+        <typeAlias type="com.camping.bit.dto.ProductQnaDto" alias="ProductQnaDto" />
         <typeAlias type="com.camping.bit.dto.CsNoticeDto" alias="CsNoticeDto" />
         <typeAlias type="com.camping.bit.dto.CsParam" alias="CsParam" />
         <typeAlias type="com.camping.bit.dto.CsNoticeCommentDto" alias="CsNoticeCommentDto" />
         <typeAlias type="com.camping.bit.dto.CsQnaDto" alias="CsQnaDto" />
-		    <typeAlias type="com.camping.bit.dto.CsCommentParam" alias="CsCommentParam" />
+		<typeAlias type="com.camping.bit.dto.CsCommentParam" alias="CsCommentParam" />
 
         <!-- 민경 -->
         <typeAlias type="com.camping.bit.dto.CommunityDto" alias = "CommunityDto"/>

@@ -54,12 +54,11 @@
 	</insert>
 	
 	<select id="getReviewList" parameterType="java.lang.Integer" resultType="ProductReviewDto">
-  		SELECT P.REVIEW_SEQ, P.PRODUCT_SEQ, P.USER_ID, M.NICKNAME, P.ORDER_SEQ, P.TITLE, P.CONTENT, P.IMAGE, P.RATE, P.WDATE, P.DEL, P.STATUS 
-		FROM MEMBER M, PRODUCT_REVIEW P
+  		SELECT REVIEW_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, ORDER_SEQ, TITLE, CONTENT, IMAGE, RATE, WDATE, DEL, STATUS 
+		FROM PRODUCT_REVIEW
 		WHERE 1=1 
-		AND M.ID = P.USER_ID
-		AND DEL != 1 
-		AND PRODUCT_SEQ = #{product_Seq}
+			AND DEL = 0 
+			AND PRODUCT_SEQ = #{product_Seq}
 		ORDER BY WDATE
 	</select>
 	
@@ -69,6 +68,34 @@
 		WHERE 1=1 
 		AND DEL != 1 
 		AND PRODUCT_SEQ = #{product_Seq}
+	</select>
+	
+	<insert id="writeQnaAf" parameterType="ProductQnaDto">
+		INSERT INTO PRODUCT_QNA
+		(QNA_SEQ, PRODUCT_SEQ, USER_ID, TITLE, CONTENT, WDATE, SECRET, DEL, STATUS)
+		VALUES(PRODUCT_QNA_SEQ.NEXTVAL, #{product_Seq}, #{user_Id}, #{title}, #{content}, SYSDATE, #{secret}, 0, 0)
+	</insert>
+	
+	<select id="getQnaList" parameterType="java.lang.Integer" resultType="ProductQnaDto">
+		SELECT QNA_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, TITLE, CONTENT, WDATE, SECRET, DEL, STATUS
+		FROM PRODUCT_QNA
+		WHERE PRODUCT_SEQ = #{product_Seq}
+			AND DEL = 0
+		ORDER BY WDATE
+	</select>
+	
+	<select id="getQnaCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM PRODUCT_QNA
+		WHERE 1=1 
+		AND DEL != 1 
+		AND PRODUCT_SEQ = #{product_Seq}
+	</select>
+	
+	<select id="getRateAvg" parameterType="java.lang.Integer">
+		SELECT AVG(RATE) 
+		FROM PRODUCT_REVIEW
+		WHERE PRODUCT_SEQ = #{product_Seq}
 	</select>
 
 </mapper>

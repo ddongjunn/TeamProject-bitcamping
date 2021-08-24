@@ -7,11 +7,31 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <style>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Favicon -->
+    <link href="/resources/assets/img/brand/favicon.png" rel="icon" type="image/png">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="/resources/assets/vendor/nucleo/css/nucleo.css" rel="stylesheet">
+    <link href="/resources/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+    <!-- Argon CSS -->
+    <link type="text/css" href="/resources/assets/css/argon.css" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="<%=request.getContextPath() %>/resources/jquery/jquery.twbsPagination.min.js"></script>
+
+    <%--<style>
         #header {
             padding: 5px;
             margin-bottom: 5px;
-            background-color: lightgreen;
+
         }
         #lnb {
             width: 15%;
@@ -31,22 +51,26 @@
             padding: 5px;
             background-color: lightblue;
         }
-    </style>
+    </style>--%>
 
     <title>Insert title here</title>
 </head>
 <body>
-<div id="header">
-    <tiles:insertAttribute name="header"/>
-</div>
-<div id="lnb">
+<div class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white">
     <tiles:insertAttribute name="lnb"/>
 </div>
-<div id="content">
+
+<div class="main-content">
+
+    <tiles:insertAttribute name="header"/>
+
     <tiles:insertAttribute name="body"/>
+
 </div>
-<div id="footer">
-    <tiles:insertAttribute name="footer"/>
-</div>
+
+<%--<script src="/resources/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>--%>
+
+<!-- Argon JS -->
+<script src="/resources/assets/js/argon.min.js"></script>
 </body>
 </html>
