@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @Getter
 public class CsParam implements Serializable {
-	
+	private String kind;
 	private String search;
 	private String choice;
 	private int pageNumber;

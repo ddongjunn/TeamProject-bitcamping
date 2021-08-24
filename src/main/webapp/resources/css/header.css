@@ -1,24 +1,20 @@
 /** header start **/
 #header {
-  height:135px; 
+  height:135px;
   padding:0 6.8%;
-  /*transition:all 0.3s;*/ /*메뉴효과 */
-  background-color: seagreen;  /*헤더 색상 */
-  /* width: 100%; */
+  /*transition:all 0.3s;*/
 }
 #header > .indiv {
   position:relative;
 }
 #header > .indiv .logobox {
-  position:absolute; 
-  top:60px; 
-  left:0; 
-  width:115px; 
-  height:40px; 
-  z-index:2; 
+  position:absolute;
+  top:65px;
+  left:0;
+  width:115px;
+  height:40px;
+  z-index:2;
   overflow:hidden;
-  border: 2px solid #FFFFFF;
-  color: #FFFFFF;
 }
 #header > .indiv .logobox {
   display: flex;
@@ -27,42 +23,42 @@
 }
 
 #header > .indiv #menu {
-  display:table; 
-  width:100%; 
-  padding-top:50px; 
+  display:table;
+  width:100%;
+  padding-top:50px;
   text-align:center;
 }
 #header > .indiv #menu > li {
-  display:inline-block; 
-  padding:0 50px; 
+  display:inline-block;
+  padding:0 50px;
   position:relative;
 }
 #header > .indiv #menu > li > a {
-  position:relative; 
+  position:relative;
   font-size:20px;
-  line-height:70px; 
-  color: #FFFFFF;
+  line-height:70px;
   font-weight:800;
+  color: #000000;
 }
 #header > .indiv #menu > li:nth-child(1) > ul {width:230px;}
 #header > .indiv #menu > li > ul li + li {margin-top:10px;}
 #header > .indiv #menu > li > ul li a {
-  display:inline-block; 
-  font-size:15px; color:#333; 
+  display:inline-block;
+  font-size:15px; color:#333;
   font-weight:400;
 }
 
 #header > .indiv #gnb {
-  position:absolute; 
-  top:25px; 
-  right:0; 
-  display:flex; 
+  position:absolute;
+  top:25px;
+  right:0;
+  display:flex;
   z-index:201;
 }
 #header > .indiv #gnb > a {
-  display:inline-block; 
-  font-size:15px; 
-  color: #FFFFFF;
+  display:inline-block;
+  font-size:15px;
+  color: #000000;
 }
 #header > .indiv #gnb > a + a {margin-left:40px;}
 /** header end **/
