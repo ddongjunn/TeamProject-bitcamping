@@ -40,6 +40,12 @@ public interface CampingService {
 	//캠핑장 리뷰 리스트 가져오기
 	public List<CampingBbsDto> campingreview(int contentid);
 	
+	//캠핑장 리뷰 갯수 세기
+	public int getCampingReviewCount(int contentid);
+	
+	//캠핑장 리뷰 더보기 버튼 눌러서 불러오기
+	public List<Map<String,Object>> campingMoreList(Map<String, Object> map);
+	
 	//캠핑디테일 리뷰 상세화면
 	public CampingBbsDto campingdetailreview(CampingBbsDto cbsdto);
 

@@ -150,6 +150,18 @@
 		WHERE CONTENTID = #{contentid} AND DEL = 0 
 	</select>
 	
+	<!-- 캠핑장 리뷰 갯수 구하기 -->
+	<select id="getCampigReviewCount" parameterType = "java.lang.Integer" resultType = "java.lang.Integer">
+		SELECT NVL(COUNT(*),0) FROM CAMPING_BBS WHERE CONTENTID = #{contentid} AND DEL = 0
+	</select>
+	
+	<!-- 캠핑장 리뷰 더보기 불러오기 -->
+	<select id = "campingMoreList" parameterType = "java.util.Map" resultType = "java.util.Map">
+	 	SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL 
+	 	FROM CAMPING_BBS LIMIT #{startNum}, #{count}
+	 	
+	</select>
+	
 	<!-- 캠핑장 리뷰 상세화면 -->
 	<select id = "campingdetailreview" parameterType = "CampingBbsDto" resultType = "CampingBbsDto">
 		SELECT * FROM CAMPING_BBS WHERE REVIEW_SEQ = #{review_seq} AND CONTENTID = #{contentid}

@@ -216,6 +216,7 @@ String campingintro = (String)request.getAttribute("campingintro");
     
     </tbody>	
 </table>
+<button id = "addBtn" onClick = "moreList()">더 많은 리뷰 보기(more)</button>
 <div id = "searchBox">
 <table style = "margin-left : auto; margin-right : auto; margin-top : 3px; margin-bottom : 3px">
 	<tr>
@@ -336,6 +337,7 @@ $("#mapBtn").click(function(){
 	  $('#searchBox').hide();
 	  $('#contents').hide();
 }); //mapBtn 끝나는 곳
+
   $("#reviewBtn").click(function campingbbslist(){
 	 $('#intro').hide();
 	 $('#photos').hide();
@@ -377,9 +379,9 @@ $("#mapBtn").click(function(){
 				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});//ajax reviewBtn 끝나는 곳
-			
 	});//reviewBtn function 끝나는 곳
 	
+		
 	 $("#searchBtn").click(function campingsearchlist(){
 		 $('#intro').hide();
 		 $('#photos').hide();
@@ -465,8 +467,41 @@ $("#mapBtn").click(function(){
 						}
 					}); //ajax searchBtn 끝나는 곳
 			});//searchBtn function 끝나는 곳
-
 }); //document.ready 끝나는 곳
+
+function moreList(){
+	var startNum = $("#reviewlisting tr").length; //tr 몇개 들어있나 구하기(제목, 작성자 줄은 빼기 위해서 1 뺌)
+	var addListHtml = "";
+	console.log("startNum", startNum); //현재 화면에 보이는 글 수 만큼 콘솔에 찍히는지 확인하기
+	var paramData = {"startNum" : startNum}
+	$.ajax({
+		url : '/csite/campingMoreList.do',
+		type : 'get',
+		dataType : 'json',
+		data : paramData,
+		success : function(response){
+			
+			if(response.length>0){
+				var addListHtml = "";
+				for(var i = 0; i<response.length;i++){
+					var idx = Number(StartNum)+Number(i)+1;
+					addListHtml+="<tr>";
+					addListHtml+="<td>" + idx + "</td>";
+					addListHtml+="<td>" + response[i].title + "</td>";
+					addListHtml+="<td>" + response[i].user_id + "</td>";
+					addListHtml+="<td>" + response[i].readcount + "</td>";
+					addListHtml+="</tr>";
+				}
+				$("#reviewlisting").append(addListHtml);
+			}else if(response.length<5){
+					$("#addBtn").remove(); // 더보기로 불러온 글이 5개가 넘지 않으면 더보기 안 나오게 하기
+				}
+			},//success 끝나는 곳
+			error:function(request,status,error){
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}//error 끝나는 곳
+	}); //moreList ajax 끝나는 곳
+} //moreContent 끝나는 곳
 </script>
 </body>
 </html>

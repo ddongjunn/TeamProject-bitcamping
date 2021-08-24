@@ -362,7 +362,7 @@ $(document).ready(function(){
 	$('#map').hide();
 	$('#review').hide();
 	$('#searchBox').hide();
-	 $("#sorting").change(function(){ 
+	$("#sorting").change(function(){ 
 			$("#sortingval").val($("#sorting option:selected").val());
 		});
 $("#introBtn").click(function(){
