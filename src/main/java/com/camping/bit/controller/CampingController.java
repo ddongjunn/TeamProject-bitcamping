@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -134,7 +135,6 @@ public class CampingController{
 		return "campingdetail.tiles";		
 	}
 	
-	
 	//지도 화면 
 	@RequestMapping(value = "campingmap.do", method = RequestMethod.GET)
 	public String campingmap() throws Exception{
@@ -166,8 +166,8 @@ public class CampingController{
 		return jsonInfo;
 
 	}
-
-	//캠핑디테일 화면 리뷰
+	
+	//캠핑디테일 화면 리뷰(캠핑장 리뷰 버튼 눌렀을때 나오는것)
 	@RequestMapping(value = "campingreview.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<CampingBbsDto> campingreview(int contentid) throws Exception {
@@ -176,6 +176,49 @@ public class CampingController{
 	    return boardList;
 	}
 	
+	//캠핑디테일 화면 리뷰 더보기(더보기 버튼 눌렀을 때)
+	@RequestMapping(value = "campingMoreList.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Map<String,Object>>campingMoreList(int startNum) throws Exception{
+		int count = 5;
+		Map<String, Object>map = new HashMap<>();
+		map.put("startNum", startNum);
+		map.put("count", count);
+		List<Map<String,Object>> searchList = service.campingMoreList(map);
+		return searchList;
+	}
+	
+	/*
+	//캠핑장별 리뷰(캠핑장 리뷰 버튼 눌렀을 때 나오는 것)
+	@RequestMapping(value = "campingreview.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String, Object> campingreview(int contentid, @RequestParam(value = "page", defaultValue = "1", required=false)int page) throws Exception{
+		Map<String, Object> result = new HashMap<String, Object>();
+		int limit = 10;
+		int listcount = service.getCampingReviewCount(contentid);
+		
+		//전체 페이지수 
+		int totalpage = (listcount + limit - 1)/limit;
+		
+		//시작 페이지
+		int startpage = ((page-1)/10)*10 + 1;
+		
+		//마지막 페이지
+		int endpage = startpage + 10 -1;
+		
+		if(endpage>totalpage)
+			endpage=totalpage;
+		
+		List<CampingBbsDto> boardList = service.campingreview(contentid);
+		result.put("boardList", boardList);
+		result.put("page", page);
+		result.put("startpage", startpage);
+		result.put("endpage", endpage);
+		
+		return result;
+		
+	}
+	*/
 	//캠핑디테일 리뷰 상세화면 
 	@RequestMapping(value = "campingdetailreview.do", method = RequestMethod.GET)
 	public String campingdetailreview(Model model, CampingBbsDto cbsdto, int contentid, int review_seq, HttpSession session) throws Exception{
@@ -192,7 +235,7 @@ public class CampingController{
 			//System.out.println(userInfo);
 			useridx = userInfo.getId();
 			model.addAttribute("useridx", useridx);
-			System.out.println("useridx : " + useridx);			
+			//System.out.println("useridx : " + useridx);			
 			}else { //login하지 않은 상태에서 
 				model.addAttribute("useridx", "");
 			}
@@ -410,7 +453,7 @@ public class CampingController{
 	@RequestMapping(value = "campingDeleteComment.do", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public String getCampingDeleteComment(int comment_seq) throws Exception{
-		String result;
+		String result = "";
 		if(service.campingDeleteComment(comment_seq)) {
 			result = "success";
 		}else {
@@ -419,6 +462,7 @@ public class CampingController{
 		return result;
 	}	
 	
+	/*
 	//캠핑장 댓글 수정하기
 		@RequestMapping(value = "campingUpdateComment.do", method = {RequestMethod.GET, RequestMethod.POST})
 		@ResponseBody
@@ -433,6 +477,27 @@ public class CampingController{
 			}
 			return result;
 		}	
-
+	*/
+	
+	//캠핑장 댓글 수정하기
+		@RequestMapping(value = "campingUpdateComment.do", method = {RequestMethod.GET, RequestMethod.POST})
+		@ResponseBody
+		public String getCampingUpdateComment(@RequestParam int comment_seq, @RequestParam String content) throws Exception{
+			
+			CampingCommentDto comment = new CampingCommentDto();
+			
+			comment.setComment_seq(comment_seq);
+			comment.setContent(content);
+			
+			String result;
+			if(service.campingUpdateComment(comment)) {
+				result = "success";
+			}else {
+				result = "failed";
+			}
+			return result;
+		}	
+	
+	
 	
 }

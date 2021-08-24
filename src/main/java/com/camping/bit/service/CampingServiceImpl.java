@@ -66,6 +66,16 @@ public class CampingServiceImpl implements CampingService {
 	public List<CampingBbsDto> campingreview(int contentid) {
 		return dao.campingreview(contentid);
 	}
+	
+	@Override //캠핑장 리뷰 갯수 세기
+	public int getCampingReviewCount(int contentid) {
+		return dao.getCampingReviewCount(contentid);
+	}
+	
+	@Override //캠핑장 리뷰 더보기 가져오기
+	public List<Map<String, Object>> campingMoreList(Map<String, Object> map) {
+		return dao.campingMoreList(map);
+	}
 
 	@Override //캠핑장 리뷰 상세화면
 	public CampingBbsDto campingdetailreview(CampingBbsDto cbsdto) {
@@ -98,7 +108,6 @@ public class CampingServiceImpl implements CampingService {
 		return dao.campingSearchReview(param);
 	}
 
-	
 	@Override //캠핑장 좋아요 뿌리기 
 	public Map<String, Object> getCampingLike(Map<String, Object> contentidMap) {
 	return dao.getCampingLike(contentidMap); 
