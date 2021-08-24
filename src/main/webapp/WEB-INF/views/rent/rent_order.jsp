@@ -121,8 +121,10 @@
 								<label for="paymentType">결제 수단 선택</label> 
 								<select id="paymentType" class="form-control" aria-label="Card Holder" aria-describedby="basic-addon1">
 									<option disabled="disabled">선택 하기</option>
-									<option value="1">카드 결제</option>
-									<option value="2">간편 결제</option>
+									<option value="card">신용카드</option>
+									<option value="trans">실시간 계좌이체</option>
+									<option value="vbank">가상계좌</option>
+									<option value="phone">휴대폰 소액결제</option>
 								</select>
 							</div>
 							<div class="form-group col-sm-12">
@@ -141,7 +143,7 @@
 
 	<script type="text/javascript">
 	
-		/* 배송비, 총주문금액 계산 */
+		/* 배송비 포함한 총주문금액 계산 */
 		$("#shipping_Fee").attr("value", 5000*${order.quantity});		
 		var totalprice = parseInt(${item.product_Price}) + parseInt($("#shipping_Fee").val());
 		$("#totalprice").text(totalprice.toLocaleString('ko-KR') + " 원");
@@ -149,27 +151,26 @@
 		
 		
 		function findAddr() {
-			new daum.Postcode(
-					{
-						oncomplete : function(data) {
+			new daum.Postcode({
+				oncomplete : function(data) {
 
-							console.log(data)
-							
-							var roadAddr = data.roadAddress; // 도로명 주소
-							var jibunAddr = data.jibunAddress; // 지번 주소
-							var zonecode = data.zonecode; // 우편번호
+					console.log(data)
+					
+					var roadAddr = data.roadAddress; // 도로명 주소
+					var jibunAddr = data.jibunAddress; // 지번 주소
+					var zonecode = data.zonecode; // 우편번호
 
-							document.getElementById("delivery_post").value = zonecode;
+					document.getElementById("delivery_post").value = zonecode;
 
-							if (roadAddr !== '') {
-								document.getElementById("delivery_addr1").value = roadAddr;
-							} else if (jibunAddr !== '') {
-								document.getElementById("delivery_addr1").value = jibunAddr;
-							}
-							
-							document.getElementById("delivery_addr2").focus();
-						}
-					}).open();
+					if (roadAddr !== '') {
+						document.getElementById("delivery_addr1").value = roadAddr;
+					} else if (jibunAddr !== '') {
+						document.getElementById("delivery_addr1").value = jibunAddr;
+					}
+					
+					document.getElementById("delivery_addr2").focus();
+				}
+			}).open();
 		}
 
 		$(function() {
@@ -185,6 +186,119 @@
 			});
 		});
 		
+		function iamport() {
+			
+			// 정보 입력란 유효성 검사
+			if($("#receiver").val() == ""){
+				Swal.fire({
+					icon : 'warning',
+					text : '받는분을 입력해주세요'
+				});
+				$("#receiver").focus();
+				return;
+
+			}else if($("#phone1").val() == ""){
+				Swal.fire({
+					icon : 'warning',
+					text : '전화번호를 입력해주세요'
+				});
+				$("#phone1").focus();
+				return;
+
+			}else if($("#phone2").val() == ""){
+				Swal.fire({
+					icon : 'warning',
+					text : '전화번호를 입력해주세요'
+				});
+				$("#phone2").focus();
+				return;
+
+			}else if($("#phone3").val() == ""){
+				Swal.fire({
+					icon : 'warning',
+					text : '전화번호를 입력해주세요'
+				});
+				$("#phone3").focus();
+				return;
+
+			}else if($("#delivery_post").val() == "" || $("#delivery_addr1").val() == ""){
+				Swal.fire({
+					icon : 'warning',
+					text : '주소를 입력해주세요'
+				});
+				$("#delivery_post").focus();
+				return;
+
+			}else if($("#delivery_addr2").val() == ""){
+				Swal.fire({
+					icon : 'warning',
+					text : '상세주소를 입력해주세요'
+				});
+				$("##delivery_addr2").focus();
+				return;
+
+			}else if($("#policyagree").is(":checked") == false) {
+				Swal.fire({
+					icon : 'warning',
+					text : '결제 약관에 동의해주세요'
+				});
+				$("#policyagree").focus();
+				return;				
+			
+			}else{
+			
+				//가맹점 식별코드
+				IMP.init('iamport');
+				IMP.request_pay({
+					pg : 'kcp',
+					pay_method : $("#paymentType").val(), // card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
+					merchant_uid : 'merchant_' + new Date().getTime(),
+					name : '${item.product_Name}', //결제창에서 보여질 이름
+					amount : $("#total_Price").val(), //실제 결제되는 가격
+					buyer_email : '${login.email}',
+					buyer_name : '${login.username}',
+					buyer_tel : '${login.phone}',
+					buyer_addr : $("#delivery_addr1").val() + ' ' + $("#delivery_addr2").val(),
+					buyer_postcode : $("#delivery_post").val()
+				}, function(rsp) {
+					console.log(rsp);
+					if (rsp.success) {
+	
+						$.ajax({
+							url : "{서버의 결제 정보를 받는 endpoint}", // 예: https://www.myservice.com/payments/complete
+							method : "POST",
+							headers : {
+								"Content-Type" : "application/json"
+							},
+							data : {
+								imp_uid : rsp.imp_uid,
+								merchant_uid : rsp.merchant_uid
+							}
+						}).done(function(data) {
+							paymentSubmit();
+						})
+						
+						Swal.fire({
+							icon : 'success',
+							text : '결제가 완료되었습니다.'
+						});
+						
+						/* var msg = '결제가 완료되었습니다.';
+						msg += '고유ID : ' + rsp.imp_uid;
+						msg += '상점 거래ID : ' + rsp.merchant_uid;
+						msg += '결제 금액 : ' + rsp.paid_amount;
+						msg += '카드 승인번호 : ' + rsp.apply_num; */
+						
+					} else {
+						Swal.fire({
+							icon : 'error',
+							text : '결제에 실패하였습니다. \n 에러내용 : ' + rsp.error_msg
+						});
+					}
+				});
+			}
+		}
+		
 		function datamaker(){			
 			
 			/* 전화번호 합쳐서 넣어주기 */
@@ -196,73 +310,20 @@
 				$("#memo").attr("value", $("#memodirect").val());
 			}else{
 				$("#memo").attr("value", $("#memoselect").val());
-			}			
+			}
 		}
 		
-		function iamport() {
-
-			if ($("#policyagree").is(":checked") == false) {
-				Swal.fire({
-					icon : 'error',
-					text : '결제 약관에 동의해주세요'
-				});
-				return;
-			}
+		/* 결제 완료 후 결제 정보 db 저장 */
+		function paymentSubmit(){
 			
 			datamaker();
 			
-			//가맹점 식별코드
-			IMP.init('iamport');
-			IMP.request_pay({
-				pg : 'kcp',
-				pay_method : 'card',
-				merchant_uid : 'merchant_' + new Date().getTime(),
-				name : '${item.product_Name}', //결제창에서 보여질 이름
-				amount : 100/* $("#total_Price").val() */, //실제 결제되는 가격
-				buyer_email : '${login.email}',
-				buyer_name : '${login.username}',
-				buyer_tel : '${login.phone}',
-				buyer_addr : '$("#delivery_addr1").val() + $("#delivery_addr2").val()',
-				buyer_postcode : '$("#delivery_post").val()'
-			}, function(rsp) {
-				console.log(rsp);
-				if (rsp.success) {
-
-					$.ajax({
-						url : "{서버의 결제 정보를 받는 endpoint}", // 예: https://www.myservice.com/payments/complete
-						method : "POST",
-						headers : {
-							"Content-Type" : "application/json"
-						},
-						data : {
-							imp_uid : rsp.imp_uid,
-							merchant_uid : rsp.merchant_uid
-						}
-					}).done(function(data) {
-						$("#paymentform").submit();
-					})
-
-					var msg = '결제가 완료되었습니다.';
-					/* msg += '고유ID : ' + rsp.imp_uid;
-					msg += '상점 거래ID : ' + rsp.merchant_uid; */
-					msg += '\n결제 금액 : ' + rsp.paid_amount;
-					/* msg += '카드 승인번호 : ' + rsp.apply_num; */
-				} else {
-					var msg = '결제에 실패하였습니다. \n';
-					msg += '에러내용 : ' + rsp.error_msg;
-				}
-				/* alert(msg); */
-				Swal.fire({
-					icon : 'error',
-					text : msg
-				});
-			});
+			$("#paymentform").submit(); // form submit
 		}
 	</script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
 </html>

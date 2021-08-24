@@ -129,7 +129,30 @@
    
    <definition name="writeReview.tiles" template="/WEB-INF/views/rent/write_review.jsp">
    </definition>
+   
+   <definition name="writeQna.tiles" template="/WEB-INF/views/rent/write_qna.jsp">
+   </definition>
 
+   <!-- 고객센터 -->
+   <definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
+      <put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
+      <put-attribute name="lnb" value="/WEB-INF/views/cs/cs_lnb.jsp" />
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_notice.jsp" />
+      <put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
+   </definition>
+
+   <definition name="noticeWrite.tiles" extends="noticeList.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeWrite.jsp" />
+   </definition>
+
+   <definition name="noticeDetail.tiles" extends="noticeList.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeDetail.jsp" />
+   </definition>
+
+   <definition name="noticeUpdate.tiles" extends="noticeList.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeUpdate.jsp" />
+   </definition>
+   
    <definition name="csMain.tiles" extends="noticeList.tiles">
       <put-attribute name="body" value="/WEB-INF/views/cs/cs_main.jsp" />
    </definition>
@@ -149,26 +172,6 @@
    <definition name="qnaAnswer.tiles" extends="noticeList.tiles">
       <put-attribute name="body" value="/WEB-INF/views/cs/cs_qnaAnswer.jsp" />
    </definition>
-
-   <!-- 고객센터 -->
-   <definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
-      <put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
-      <put-attribute name="lnb" value="/WEB-INF/views/cs/cs_lnb.jsp" />
-      <put-attribute name="body" value="/WEB-INF/views/cs/cs_notice.jsp" />
-      <put-attribute name="footer" value="/WEB-INF/views/commons/footer.jsp" />
-   </definition>
-
-   <definition name="noticeWirte.tiles" extends="noticeList.tiles">
-      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeWrite.jsp" />
-   </definition>
-
-   <definition name="noticeDetail.tiles" extends="noticeList.tiles">
-      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeDetail.jsp" />
-   </definition>
-
-   <definition name="noticeUpdate.tiles" extends="noticeList.tiles">
-      <put-attribute name="body" value="/WEB-INF/views/cs/cs_noticeUpdate.jsp" />
-   </definition>   
 
 
    <!-- 민경 -->
