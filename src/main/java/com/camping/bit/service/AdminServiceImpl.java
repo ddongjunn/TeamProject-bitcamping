@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -48,6 +49,11 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public int getQnaWaitTotalCount() {
         return dao.getQnaWaitTotalCount();
+    }
+
+    @Override
+    public Map<String, Object> regiPathCount() {
+        return dao.regiPathCount();
     }
 
 

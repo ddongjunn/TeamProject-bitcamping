@@ -14,11 +14,11 @@
   transition: all 0.25s cubic-bezier(0.53, 0.01, 0.35, 1.5);
 }
 
-* {
+/** {
   font-family: 'S-CoreDream-3Light', Helvetica, sans-serif;
   font-weight: light;
   -webkit-font-smoothing: antialiased;
-}
+}*/
 
 html {
   background-color: #c2e59c;
@@ -32,7 +32,7 @@ form {
   min-width: 500px;
   box-sizing: border-box;
   padding: 30px 25px;
-  background-color: white;
+  /*background-color: #5e72e4;*/
   border-radius: 40px;
   margin: 40px 0;
   left: 50%;

@@ -104,4 +104,8 @@
         SELECT SUM( (SELECT COUNT(*) FROM QNA WHERE STATUS = 0) + (SELECT COUNT(*) FROM PRODUCT_QNA WHERE STATUS = 0) ) AS WAIT_QNA FROM DUAL
     </select>
 
+    <select id="regiPathCount" resultType="map">
+        SELECT (SELECT count(*) FROM MEMBER WHERE AUTH = 0) AS TOTAL ,(SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'none' AND AUTH = 0) AS BITCAMPING, (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'kakao' AND AUTH = 0) AS KAKAO, (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'naver' AND AUTH = 0) AS NAVER FROM DUAL
+    </select>
+
   </mapper>

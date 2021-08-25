@@ -1,15 +1,24 @@
 package com.camping.bit.controller;
 
+import com.camping.bit.commons.FileUploadUtil;
 import com.camping.bit.dto.*;
 import com.camping.bit.service.AdminService;
 import com.camping.bit.service.CsService;
+import com.camping.bit.service.RentService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -21,8 +30,24 @@ public class AdminController {
     @Autowired
     CsService csService;
 
+    @Autowired
+    RentService rentService;
+
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String main(Model model) {
+
+        //회원가입 경로 통계
+        Map<String,Object> regiPathCount = service.regiPathCount();
+        int total = (Integer.parseInt(String.valueOf(regiPathCount.get("TOTAL"))));
+        int bitcamping = (int) Math.round((Double.parseDouble(String.valueOf(regiPathCount.get("BITCAMPING"))) / total) * 100);
+        int naver = (int) Math.round((Double.parseDouble(String.valueOf(regiPathCount.get("NAVER"))) / total) * 100);
+        int kakao = (int) Math.round((Double.parseDouble(String.valueOf(regiPathCount.get("KAKAO"))) / total) * 100);
+
+        regiPathCount.put("bitcampingPer",bitcamping );
+        regiPathCount.put("naverPer",naver );
+        regiPathCount.put("kakaoPer",kakao );
+        model.addAttribute("regiPath",regiPathCount);
+
 
         model.addAttribute("memberCount",service.memberCount());
         model.addAttribute("qnaCount",service.getQnaWaitTotalCount());
@@ -111,5 +136,42 @@ public class AdminController {
         model.addAttribute("kind",param.getKind());
 
         return "admin-qna.tiles";
+    }
+
+
+    @RequestMapping(value = "product.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String product(Model model) {
+
+        List<ProductDetailDto> list = rentService.getProductList();
+        model.addAttribute("list", list);
+
+        return "admin-rentList.tiles";
+    }
+
+    @RequestMapping(value = "product-regi.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String productRegi() {
+
+        return "admin-productRegi.tiles";
+    }
+
+    @RequestMapping(value = "product-regiAf.do", method = RequestMethod.POST)
+    public String productRegiAf(ProductDetailDto dto, @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail, HttpServletRequest req) {
+
+        String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+        String newFileName = FileUploadUtil.getNewFileName(thumbnail.getOriginalFilename());
+
+        dto.setThumbnail_Name(newFileName);
+
+        File file = new File(fileUpload + "/" + newFileName);
+
+        try {
+            FileUtils.writeByteArrayToFile(file, thumbnail.getBytes());
+            rentService.regiAf(dto);
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/admin/product.do";
     }
 }

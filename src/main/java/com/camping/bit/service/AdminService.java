@@ -5,6 +5,7 @@ import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.MypageParam;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdminService {
 
@@ -18,4 +19,6 @@ public interface AdminService {
 
     public int getCommunityTotalCount();
     public int getQnaWaitTotalCount();
+
+    public Map<String,Object> regiPathCount();
 }

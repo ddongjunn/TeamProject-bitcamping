@@ -79,8 +79,13 @@
                             <span class="nav-link-text">상품관리</span>
                         </a>
                             <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="">
+                                <a class="nav-link " href="/admin/product-regi.do">
                                     <span class="nav-link-text">상품등록</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" style="margin-left: 33px">
+                                <a class="nav-link " href="/admin/product.do">
+                                    <span class="nav-link-text">상품목록</span>
                                 </a>
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
