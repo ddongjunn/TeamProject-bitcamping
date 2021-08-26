@@ -11,6 +11,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/summernote-lite.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
+<link href="/resources/css/campingsite/campingreview1.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
 <% 
@@ -28,11 +29,11 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 </div>
 
 <div style="clear:both"></div>
-<div id="summernotebox" style="width: 500px; margin: auto; float : left">
+<div id="summernotebox">
 		<textarea id="summernote" name="content" ></textarea>
 </div>
 
-<button type = "submit" value = "글쓰기" id = "campingwritereview">글쓰기</button>
+<button type = "submit" value = "글쓰기" id = "campingwritereview" class = "btn btn-outline-success">글쓰기</button>
 
 </form>
 </body>

@@ -74,7 +74,7 @@ public class CampingController{
 	
 	//디테일 화면
 	@RequestMapping(value = "campingdetail.do", method = RequestMethod.GET)
-	public String campingdetail(Model model, HttpServletRequest request, int contentid, HttpSession session) throws Exception {
+	public String campingdetail(Model model, HttpServletRequest request, int contentid, HttpSession session, CampingParam param) throws Exception {
 		CampingDetailDto detaildto = service.getCampingDetail(contentid);
 		CampingListDto listdto = service.getCampingListForDetail(contentid);
 		List<CampingImageDto> imagedto = service.getCampingImage(contentid);
@@ -127,6 +127,19 @@ public class CampingController{
 			System.out.println(e);
 		}
 		
+		int start, end;
+		start = 1 + 10 * param.getPageNumber();
+		end = 10 + 10 * param.getPageNumber();
+		param.setStart(start);
+		param.setEnd(end);
+		//총 글의 갯수
+		int reviewPage = service.getCampingReviewCount(contentid);
+		model.addAttribute("ReviewPage", reviewPage);
+		
+		//현재 페이지
+		int pageNumber = param.getPageNumber();
+		model.addAttribute("pageNumber", pageNumber + 1);
+		
 		model.addAttribute("campingdetail", detaildto);
 		model.addAttribute("campinglistfordetail", listdto);
 		model.addAttribute("campingimage", imagedto);
@@ -166,7 +179,7 @@ public class CampingController{
 		return jsonInfo;
 
 	}
-	
+	/*
 	//캠핑디테일 화면 리뷰(캠핑장 리뷰 버튼 눌렀을때 나오는것)
 	@RequestMapping(value = "campingreview.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -175,6 +188,27 @@ public class CampingController{
 		//System.out.println(contentid + ":" + boardList);
 	    return boardList;
 	}
+	*/
+	
+	//전체 리스트 뿌리기
+	@RequestMapping(value = "campingreview.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<CampingBbsDto> campingreview(Model model, CampingParam param, @RequestParam int contentid) throws Exception {
+		
+		int start, end;
+		start = 1 + 10 * param.getPageNumber();
+		end = 10 + 10 * param.getPageNumber();
+		System.out.println("requestparam contentid : " + contentid);
+		param.setStart(start);
+		param.setEnd(end);
+		param.setContentid(contentid);
+		
+		//db에서 글목록 불러오기 ㅇㅇ
+		List<CampingBbsDto>list = service.getcampingreview(param);
+		//System.out.println("list : " + list.toString());
+		return list;
+			
+		}
 	
 	//캠핑디테일 화면 리뷰 더보기(더보기 버튼 눌렀을 때)
 	@RequestMapping(value = "campingMoreList.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -337,11 +371,21 @@ public class CampingController{
 	}
 	
 	//캠핑장 리뷰 검색하기
-	@RequestMapping(value = "campingSearchReview.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "campingSearchReview.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public List<CampingBbsDto>campingSearchReview(CampingParam param) throws Exception{
+	public List<CampingBbsDto>campingSearchReview(CampingParam param, @RequestParam int contentid) throws Exception{
+		
+		int start, end;
+		start = 1 + 10 * param.getPageNumber();
+		end = 10 + 10 * param.getPageNumber();
+		System.out.println("requestparam contentid : " + contentid);
+		param.setStart(start);
+		param.setEnd(end);
+		param.setContentid(contentid);
+		
 		List<CampingBbsDto> searchList = service.campingSearchReview(param);
 		return searchList;
+	
 	}
 	
 	/*

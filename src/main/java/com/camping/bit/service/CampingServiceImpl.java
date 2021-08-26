@@ -63,8 +63,8 @@ public class CampingServiceImpl implements CampingService {
 	}
 
 	@Override //캠핑장 리뷰 가져오기
-	public List<CampingBbsDto> campingreview(int contentid) {
-		return dao.campingreview(contentid);
+	public List<CampingBbsDto> getcampingreview(CampingParam param) {
+		return dao.getcampingreview(param);
 	}
 	
 	@Override //캠핑장 리뷰 갯수 세기

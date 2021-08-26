@@ -12,6 +12,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/summernote-lite.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
+<link href="/resources/css/campingsite/campingreview1.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
 <% 
@@ -24,15 +25,18 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <input type= "hidden" name="review_seq" value="${campingbbs.review_seq}">
 <input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
 
-${campingbbs.user_id}님 무엇을 수정해볼까요?
+<div style="clear:both"></div>
+<div id = "writer_info">
+	<h2>${campingbbs.user_id}님 무엇을 수정해볼까요?</h2>
+	<h2><input name="title" type = "text" placeholder = "제목을 입력해주세요" value = ${campingbbs.title }></h2>
+</div>
 
-<h3>제목 : <input name="title" type = "text" value = "${campingbbs.title}"></h3>
 <div style="clear:both"></div>
 
-<div id="summernotebox" style="width: 500px; margin: auto; float : left">
+<div id="summernotebox">
 		<textarea id="summernote" name="content" >${campingbbs.content}</textarea>
 </div>
-<button type = "submit" value = "수정하기" id = "campingupdatereview">수정하기</button>
+<button type = "submit" value = "수정하기" id = "campingupdatereview" class = "btn btn-outline-success btn-sm">수정하기</button>
 
 </form>
 </body>

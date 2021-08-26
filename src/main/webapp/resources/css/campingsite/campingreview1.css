@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+#writer_info{
+	text-align : center;
+}
+
+#summernotebox{
+	text-align : center;
+	margin : 30px 200px 30px 250px;
+	width : 800px;
+}
+
+.image, .introduction {
+	margin : 30px 200px 30px 250px;
+	float : left;
+}
+
+#campingwritereview{
+	margin : 30px 200px 30px 600px;
+}
+
+#campingupdatereview{
+	margin : 30px 200px 30px 600px;
+}
+
+
+
+/*리뷰 디테일 화면 */
+
+#review{
+	margin : 30px 200px 30px 250px;
+}
+
+#comments{
+	margin : 30px 200px 30px 250px;
+}
+
+#commentlisting{
+	margin : 30px 200px 30px 250px;
+}

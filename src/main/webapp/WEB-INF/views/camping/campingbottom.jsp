@@ -10,22 +10,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-    .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
-    .wrap * {padding: 0;margin: 0;}
-    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
-    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
-    .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-    .info .close:hover {cursor: pointer;}
-    .info .body {position: relative;overflow: hidden;}
-    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
-    .desc .address {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-    .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
-    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-    .info .link {color: #5085BB;}
-</style> 
+
+<!-- bootstrap 추가 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- bxslider -->
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+<link href="/resources/css/campingsite/campingdetail.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
 
@@ -36,30 +28,38 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 List<CampingImageDto> campingimage = (List<CampingImageDto>)request.getAttribute("campingimage");
 String campingintro = (String)request.getAttribute("campingintro");
 %>
+
+
 <div id ="section">
-		<h2 class="skip">캠핑장 디테일 화면 분할</h2>
-			<div class="layout">
-				<span><button type = "button" id = "introBtn">캠핑장 소개</button></span>
-				<span><button type = "button" id = "mapBtn">오시는 길</button></span>
-				<span><button type = "button" id = "reviewBtn">캠핑장 후기</button></span>
-			
-		</div>
-	</div>
+	<span><button type = "button" id = "introBtn" class="btn btn-outline-success">캠핑장 소개</button></span>
+	<span><button type = "button" id = "mapBtn" class="btn btn-outline-success">오시는 길</button></span>
+	<span><button type = "button" id = "reviewBtn" class="btn btn-outline-success">캠핑장 후기</button></span>
+</div>
 
-
-<div id = "contents">
-	<div id = "intro" class = "layout">
-		<ul class = "layout_5">
-			<li class = "intro">
-				<a href = "campingdetail.do?contentid=<%=campinglist.getContentid()%>">캠핑장 소개</a>
-				<br>
-				<%=campingintro%>			 
+	<div id = "contents">
+		<div id = "intro" class = "layout">
+			<ul class = "layout_5">
+				<li class = "intro">
+					<c:choose>
+					<c:when test = "${campingintro=='none'}">
+						캠핑장 소개글을 꼼꼼하게 준비하고 있습니다!
+					</c:when>
+					<c:otherwise>
+						<%=campingintro%>
+					</c:otherwise>
+				</c:choose>
+			</li>			 
 		</ul>
 	</div>
+	
 	<br>
+	
 	<div id = "sbrscl">
 		주요 시설 : <%=campinglist.getSbrscl() %>
 	</div>
+	
+	<br>
+	
 	<div id = "mainFacility">
 		<c:set value="<%=campingdetail.getGnrlsiteco() %>" var="gnrl" />
 		<c:set value="<%=campingdetail.getAutositeco() %>" var="auto" />
@@ -68,19 +68,19 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<c:set value="<%=campingdetail.getIndvdlcaravsiteco() %>" var="indiv"/>
 		
 				<c:if test ="${gnrl!=0}">
-					<h4>일반야영장 : ${gnrl}</h4>
+					<div>일반야영장 : ${gnrl}</div>
 				</c:if>
 				<c:if test="${auto!=0}">
-					<h4>자동차야영장사이트 : ${auto}</h4>
+					<div>자동차야영장사이트 : ${auto}</div>
 				</c:if>
 				<c:if test="${glamp!=0}">
-					<h4>글램핑시설 : ${glamp}</h4>
+					<div>글램핑시설 : ${glamp}</div>
 				</c:if>
 				<c:if test="${carav!=0}">
-					<h4>카라반 : ${carav}</h4>
+					<div>카라반 : ${carav}</div>
 				</c:if>
 				<c:if test="${indiv!=0}">
-					<h4>개인카라반 : ${indiv}</h4>
+					<div>개인카라반 : ${indiv}</div>
 				</c:if>
 	
 		<c:set value="<%=campinglist.getSitebottomcl1() %>" var="bottom1" />
@@ -92,26 +92,27 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<c:set value = "0" var = "sum"/>
 		(총 <c:out value = "${sum + bottom1  + bottom2 + bottom3 + bottom4 + bottom5 }"/>면)
 	</div>
+	
 	<div id = "siteBottom">
 		바닥 형태 :
 				<c:if test="${bottom1!=0}">
-					<h4>잔디 : ${bottom1}면</h4>
+					<div>잔디 : ${bottom1}면</div>
 				</c:if>
 				<c:if test="${bottom2!=0}">
-					<h4>파쇄석 : ${bottom2}면</h4>
+					<div>파쇄석 : ${bottom2}면</div>
 				</c:if>
 				<c:if test="${bottom3!=0}">
-					<h4>자갈 : ${bottom3}면</h4>
+					<div>자갈 : ${bottom3}면</div>
 				</c:if>
 				<c:if test="${bottom4!=0}">
-					<h4>맨흙 : ${bottom4}면</h4>
+					<div>맨흙 : ${bottom4}면</div>
 				</c:if>
 				<c:if test="${bottom5!=0}">
-					<h4>툴팁 : ${bottom5}면</h4>
+					<div>툴팁 : ${bottom5}면</div>
 				</c:if>
 	</div>
+	
 	<div id = "siteSize">
-		
 		<c:set value="<%=campingdetail.getSitemg1width() %>" var="width1" />
 		<c:set value="<%=campingdetail.getSitemg1vrticl()%>" var="vertical1" />
 		<c:set value="<%=campingdetail.getSitemg1co()%>" var="count1" />
@@ -139,8 +140,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<c:if test="${count2 !=0}">
 		${count2}개
 		</c:if>
-		
-		<h4>사이트 간격 : <%=campingdetail.getSitedstnc() %>M</h4>
+		<div>사이트 간격 : <%=campingdetail.getSitedstnc() %>M</div>
 	</div>
 	
 	<div id = "equip">
@@ -148,8 +148,8 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<c:if test="${equip !='none' }">
 		대여 가능한 장비 : ${equip}
 	</c:if>
-
 	</div>
+	
 	<div id = "trler">
 		<c:set value="<%=campingdetail.getTrleracmpnyat()%>" var="trler" />
 	<c:choose>
@@ -161,6 +161,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</c:otherwise>
 	</c:choose>
 	</div>
+	
 	<div id = "program">
 		<c:set value="<%=campingdetail.getExprnprogrm()%>" var="program" />
 		<c:choose>
@@ -187,7 +188,8 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</c:choose>
 	</div>
 </div> <!-- contents div 끝나는 곳  -->
-<div id="map" style="width:500px;height:400px;"></div> 
+ 
+<div id="map"></div>
 
 <div id = "photos" class = "photos">
 	<table>
@@ -196,31 +198,63 @@ String campingintro = (String)request.getAttribute("campingintro");
 			<c:if test="${i.index%5==0}">
 				</tr><tr>
 			</c:if>
-		    <td><img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/image/csite_alt_image.png'" width = "200" height = "200"></td>
+		    <td><img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" onClick="window.open(this.src)" width = "200" height = "200"></td>
 		</c:forEach>
 	</tr>
 	</table>
-</div>
+
+ 	<ul class = "bxslider">
+		<c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i" end = "14">
+ 			<li><img src = "${campingimage.imageurl}"></li>
+ 		</c:forEach>
+ 	</ul>
+  </div>
+
+
+
+
+
+
 <div id = "review">
-<button type = "button" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>">리뷰 작성하기</button>
-<table border=1>
+<!-- 캠핑장 검색창 -->
+<div id = "select_sorting">
+	<select class = "sorting_select" id = "sorting" title = "정렬">
+		<option value = "image" selected = "selected">--정렬--</option>
+		<option value = "create">최신등록순</option>
+		<option value = "read">조회순</option>
+		<option value = "like">추천순</option>
+	</select>
+</div>
+<span><button type = "button" class="btn btn-outline-success" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>">리뷰 작성하기</button></span>
+
+<table class="table table-hover">
     <thead>
         <tr>
             <td>글번호</td>
             <td>제목</td>
             <td>작성자</td>
             <td>조회수</td>
+            <td>작성일</td>
         </tr>
     </thead>
     <tbody id="reviewlisting">
-    
+    <!-- ajax로 불러와서 뿌려주는 공간 -->
     </tbody>	
 </table>
-<button id = "addBtn" onClick = "moreList()">더 많은 리뷰 보기(more)</button>
+<!-- <button id = "addBtn" class="btn btn-outline-success" onClick = "moreList()">더 많은 리뷰 보기(more)</button>
+ -->
+<div class="container" style = "width : 100%; text-align : center">
+    <div style = "display : inline-block">
+	    <nav aria-label="Page navigation">
+	        <ul class="pagination" id="pagination"></ul>
+	    </nav>
+    </div>
+</div>
+
 <div id = "searchBox">
-<table style = "margin-left : auto; margin-right : auto; margin-top : 3px; margin-bottom : 3px">
+<table>
 	<tr>
-		<td style = "padding-left:5px">
+		<td>
 			<select id = "choice" name = "choice">
 				<option value = "" selected = "selected">--선택--</option>
 				<option value = "title">제목</option>
@@ -228,32 +262,19 @@ String campingintro = (String)request.getAttribute("campingintro");
 				<option value = "writer">작성자</option>
 			</select>
 		</td>
-		<td style = "padding-left:5px">
-			<input type = "text" id = "search" name = "searchWord">
+		<td>
+			<i class="fas fa-search"></i>
+			<input type = "text" id = "search" name = "searchWord" placeholder = "검색어를 입력해주세요" onkeypress="if( event.keyCode == 13 ){searchData();}"/>	   	
 		</td>
-		<td style = "padding-left:5px">
+		<td>
 			<span class = "button blue">
-				<button type = "button" id = "searchBtn">검색</button>
+<!-- 				<button type = "button" id = "searchBtn" class="btn btn-outline-success">검색</button> -->	
+			 <a href = "javascript:campingsearchlist(this)"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "50"></a>
 			</span>
 		</td>
 	</tr>
 </table>
-<!-- 캠핑장 검색창 -->
-<div id = "select_sorting" style = "margin-top : 5px; margin-bottom : 10px">
-	<!-- <label for = "selectListOrder" class = "skip">정렬하기</label> -->
-	<table style = "margin-left : left; margin-right : left; margin-top : 3px; margin-bottom : 3px">
-		<tr>
-			<td style = "padding-left:5px">
-				<select class = "sorting_select" id = "sorting" title = "정렬">
-					<option value = "image" selected = "selected">--정렬--</option>
-					<option value = "create">최신등록순</option>
-					<option value = "read">조회순</option>
-					<option value = "like">추천순</option>
-				</select>
-			</td>
-		</tr>
-	</table>
-</div>
+
 </div>
 </div>
 
@@ -313,12 +334,18 @@ String campingintro = (String)request.getAttribute("campingintro");
 
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	$('.bxslider').bxSlider();
+	$('select').niceSelect();
+
+	
 	$('#map').hide();
 	$('#review').hide();
 	$('#searchBox').hide();
 	 $("#sorting").change(function(){ 
 			$("#sortingval").val($("#sorting option:selected").val());
 		});
+	 
 $("#introBtn").click(function(){
 	 $('#map').hide();
 	 $('#intro').show();
@@ -344,6 +371,7 @@ $("#mapBtn").click(function(){
 	 $('#map').hide();
 	 $('#contents').hide();
 	 $('#review').show();
+	 $('.container').show();
 	 const contentid = new URLSearchParams(location.search).get('contentid');
 	 console.log('content id', contentid)
 			$.ajax({
@@ -352,7 +380,7 @@ $("#mapBtn").click(function(){
 				dataType : 'text',
 				data : {'contentid':contentid},
 				success : function(response){
-					console.log(response);
+					//console.log(response);
 					//alert("success");
 					$("#reviewlisting").html("");
 
@@ -360,7 +388,7 @@ $("#mapBtn").click(function(){
 	
 					if(response == '[]'){
 						let str = "<tr>"
-					    +"<td colspan='4' class='nodata'>아직 등록된 후기가 없습니다. 첫번째 리뷰어가 되어보세요!</td>"
+					    +"<td colspan='5' class='nodata'>아직 등록된 후기가 없습니다. 첫번째 리뷰어가 되어보세요!</td>"
 					    +"</tr>"
 					    $("#reviewlisting").append(str);
 					}
@@ -370,6 +398,7 @@ $("#mapBtn").click(function(){
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
 							+ "<td>" + item.user_id + "</td>"
 							+ "<td>" + item.readcount + "</td>"
+							+"<td>" + item.wdate + "</td>"
 							+ "</tr>";
 						$("#reviewlisting").append(str);
 						$("#searchBox").show();
@@ -397,13 +426,13 @@ $("#mapBtn").click(function(){
 					dataType : 'text',
 					data : paramData,
 					success : function(response){
-						console.log(response);
+						console.log("페이지 눌렀을 때", response);
 						$("#reviewlisting").html("");
 						const parsedResponse = JSON.parse(response);
 		
 						if(response == '[]'){
 							let str = "<tr>"
-						    +"<td colspan='4' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+						    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
 						    +"</tr>"
 						    $("#reviewlisting").append(str);
 						}
@@ -413,6 +442,7 @@ $("#mapBtn").click(function(){
 								+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
 								+ "<td>" + item.user_id + "</td>"
 								+ "<td>" + item.readcount + "</td>"
+								+ "<td>" + item.wdate + "</td>"
 								+ "</tr>";
 							$("#reviewlisting").append(str);
 							$("#searchBox").show();
@@ -447,7 +477,7 @@ $("#mapBtn").click(function(){
 			
 							if(response == '[]'){
 								let str = "<tr>"
-							    +"<td colspan='4' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+							    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
 							    +"</tr>"
 							    $("#reviewlisting").append(str);
 							}
@@ -457,6 +487,7 @@ $("#mapBtn").click(function(){
 									+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
 									+ "<td>" + item.user_id + "</td>"
 									+ "<td>" + item.readcount + "</td>"
+									+"<td>" + item.wdate + "</td>"
 									+ "</tr>";
 								$("#reviewlisting").append(str);
 								$("#searchBox").show();
@@ -467,8 +498,39 @@ $("#mapBtn").click(function(){
 						}
 					}); //ajax searchBtn 끝나는 곳
 			});//searchBtn function 끝나는 곳
+			
+		let totalCount = ${ReviewPage};	// 서버로부터 총글의 수를 취득
+		//alert(totalCount);
+		let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
+		//alert(nowPage);
+
+		let pageSize = 10;//페이지의 크기(1~10) [1] ~ [10]
+
+		let _totalPages = totalCount / pageSize;
+
+		if(totalCount % pageSize > 0){
+			_totalPages++;
+		}
+		 if($('#pagination').data("twbs-pagination")){
+			  $('#pagination').twbsPagination('destroy');}// 페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.
+
+			 $("#pagination").twbsPagination({ 
+				startPage : nowPage,
+				totalPages : (_totalPages==0)?1:_totalPages, //전체 페이지
+				visiblePages: 10, //최대로 보여줄 페이지
+				first: '<span sria-hidden="true">«</span>',
+				prev: "이전",
+				next: "다음",
+				last: '<span sria-hidden="true">»</span>',
+				initiateStartPageClick:false,
+				onPageClick: function(event,page){
+					pagemove(page);
+				}
+			}); //페이지네이션 끝 
 }); //document.ready 끝나는 곳
 
+
+/*
 function moreList(){
 	var startNum = $("#reviewlisting tr").length; //tr 몇개 들어있나 구하기(제목, 작성자 줄은 빼기 위해서 1 뺌)
 	var addListHtml = "";
@@ -502,6 +564,95 @@ function moreList(){
 			}//error 끝나는 곳
 	}); //moreList ajax 끝나는 곳
 } //moreContent 끝나는 곳
+*/
+
+function pagemove(page){ //누르는 순간 페이지네이션에 지금 page 숫자를 알려준다
+	 const pageNumber = page-1;
+	 console.log(pageNumber);
+	 //alert(pageNumber);
+	 const contentid = new URLSearchParams(location.search).get('contentid');
+	 var paramData = {"reviewsorting" : $("#sorting").val(), "contentid" : contentid, "choice" : $("#choice").val(), "search" : $("#search").val(), "pageNumber" : pageNumber};
+	 console.log(paramData);
+		$.ajax({
+			url : '/csite/campingSearchReview.do',
+			type : 'POST',
+			dataType : 'text',
+			//contextType : "text",
+			data : paramData,
+			success : function(response){
+				//alert(JSON.stringify(response));
+				console.log(response);
+				$("#reviewlisting").html("");
+				const parsedResponse = JSON.parse(response);
+
+				if(response == '[]'){
+					let str = "<tr>"
+				    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+				    +"</tr>"
+				    $("#reviewlisting").append(str);
+				}
+				parsedResponse.forEach( (item, idx) => {
+					let str = "<tr>"
+						+ "<td>" + (idx + 1) + "</td>"
+						+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
+						+ "<td>" + item.user_id + "</td>"
+						+ "<td>" + item.readcount + "</td>"
+						+ "<td>" + item.wdate + "</td>"
+						+ "</tr>";
+					$("#reviewlisting").append(str);
+					$("#searchBox").show();
+					});
+				},//success 끝나는 곳
+			error:function(request,status,error){
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}//error 끝나는 곳
+		}); //pagemove ajax 끝나는 곳
+} //pagemove function 끝나는 곳
+
+
+function campingsearchlist(){
+	 $('#intro').hide();
+	 $('#photos').hide();
+	 $('#map').hide();
+	 $('#contents').hide();
+	 $('#review').show();	
+	 const contentid = new URLSearchParams(location.search).get('contentid');
+	 var paramData = {"choice" : $("#choice").val(), "search" : $("#search").val(), "contentid" : contentid};
+
+			$.ajax({
+				url : '/csite/campingSearchReview.do',
+				type : 'get',
+				dataType : 'text',
+				data : paramData,
+				success : function(response){
+					console.log("페이지 눌렀을 때", response);
+					$("#reviewlisting").html("");
+					const parsedResponse = JSON.parse(response);
+	
+					if(response == '[]'){
+						let str = "<tr>"
+					    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+					    +"</tr>"
+					    $("#reviewlisting").append(str);
+					}
+					parsedResponse.forEach( (item, idx) => {
+						let str = "<tr>"
+							+ "<td>" + (idx + 1) + "</td>"
+							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
+							+ "<td>" + item.user_id + "</td>"
+							+ "<td>" + item.readcount + "</td>"
+							+ "<td>" + item.wdate + "</td>"
+							+ "</tr>";
+						$("#reviewlisting").append(str);
+						$("#searchBox").show();
+					});
+				}, 
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			}); //ajax searchBtn 끝나는 곳
+	};//searchBtn function 끝나는 곳
+
 </script>
 </body>
 </html>
