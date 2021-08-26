@@ -61,6 +61,7 @@
       <input type="hidden" name="user_id" value='${login.id}'>
 	  <button type="button" onclick="del(${data.community_seq})">삭제</button>
       <button type="button" onclick="update()">수정</button>
+      <button type="button" onclick="soldout(${data.community_seq})" >거래완료</button>
    </form>
 </c:if>
 
@@ -153,18 +154,58 @@
          });
    });
 
-function del(community_seq) {
-   var check = confirm("삭제하시겠습니까?");
-   if (check) {
-      location='/community/delete.do?community_seq=' + ${data.community_seq} + '&bbstype=deal';
-   }
+/* 글 삭제 알림 */
+function del(community_seq){
+	Swal.fire({
+		  title: '삭제하시겠습니까?',
+		  showDenyButton: true,
+		  confirmButtonText: '삭제하기',
+		  denyButtonText: '취소',
+		}).then((result) => {
+		  /* Read more about isConfirmed, isDenied below */
+		  if (result.isConfirmed) {
+			  location='/community/delete.do?community_seq=' + ${data.community_seq} + '&bbstype=deal';
+		  } else if (result.isDenied) {
+		    return;
+		  }
+		})
 }
-function update() {
-   var check = confirm("수정하시겠습니까?");
-   if (check) {
-      javascript:document.updateFrm.submit();
-   }
+
+/* 글 수정 알림 */
+function update(){
+	Swal.fire({
+		  title: "수정하시겠습니까?",
+		  showDenyButton: true,
+		  confirmButtonText: '수정하기',
+		  denyButtonText: '취소',
+		}).then((result) => {
+		  /* Read more about isConfirmed, isDenied below */
+		  if (result.isConfirmed) {
+			  javascript:document.updateFrm.submit();
+		  } else if (result.isDenied) {
+		    return;
+		  }
+		})
 }
+
+/* 거래완료 알림 */
+function soldout(community_seq){
+	Swal.fire({
+		  title: '거래완료로 바꾸시겠습니까?',
+		  showDenyButton: true,
+		  confirmButtonText: '바꾸기',
+		  denyButtonText: '취소',
+		}).then((result) => {
+		  /* Read more about isConfirmed, isDenied below */
+		  if (result.isConfirmed) {
+			  location='/community/soldout.do?community_seq=' + ${data.community_seq};
+		  } else if (result.isDenied) {
+		    return;
+		  }
+		})
+}
+
+
 
 /* 댓글 불러오기 */
 $(function(){
@@ -233,8 +274,6 @@ $(function(){
             			});
                       break;
                   }
-                  
-                
               },
               error : function(){
               	console.log("ajax 통신 실패");

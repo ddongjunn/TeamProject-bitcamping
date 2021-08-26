@@ -68,6 +68,7 @@
 			height: 500,
 			dialogsInBody: true,
 			lang: "ko-KR",
+			disableResizeEditor: true,	// 크기 조절 기능 삭제
 			toolbar: [
 			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
