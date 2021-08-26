@@ -29,6 +29,7 @@
 </head>
 <body>
 
+<!-- 사용 xx -->
 <%
 CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("campingdetail");
 CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");
@@ -41,7 +42,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<ul>
 		<li style = "list-style : none;">
 			<div class = "image" style = "float : left ; margin-right : 10px" >
-				<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/csite_alt_image.png'" width = "400" height = "400">
+				<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "400" height = "400">
 			</div>
 			<div class = "camping_information" style = "float : left">
 				<div class = "camping_site name">
@@ -243,7 +244,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 			<c:if test="${i.index%5==0}">
 				</tr><tr>
 			</c:if>
-		    <td><img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/image/csite_alt_image.png'" width = "200" height = "200"></td>
+		    <td><img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/csite_alt_image.png'" width = "200" height = "200"></td>
 		</c:forEach>
 	</tr>
 	</table>
@@ -512,7 +513,6 @@ $("#mapBtn").click(function(){
 						}
 					}); //ajax searchBtn 끝나는 곳
 			});//searchBtn function 끝나는 곳
-
 }); //document.ready 끝나는 곳
 </script>
 </body>

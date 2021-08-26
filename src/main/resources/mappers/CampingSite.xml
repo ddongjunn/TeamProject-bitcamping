@@ -98,10 +98,10 @@
 					MODIFIEDTIME DESC
 				</when>
 				<when test = "sorting=='read'">
-					READCOUNT DESC
+					READCOUNT DESC, LIKECOUNT DESC
 				</when>
 				<when test = "sorting=='like'">
-					LIKECOUNT DESC
+					LIKECOUNT DESC, READCOUNT DESC
 				</when>
 				<otherwise>
 					FIRSTIMAGEURL ASC
@@ -144,23 +144,37 @@
 		SELECT FACLTNM FROM CAMPING_LIST WHERE FACLTNM LIKE '%'||#{searchWord}||'%' ORDER BY READCOUNT DESC
 	</select>
 	
-	<!-- 캠핑장 리뷰 리스트 뿌리기 -->
+	<!-- 캠핑장 리뷰 리스트 뿌리기 
 	<select id = "campingreview" parameterType = "java.lang.Integer" resultType = "CampingBbsDto">
 		SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL FROM CAMPING_BBS
 		WHERE CONTENTID = #{contentid} AND DEL = 0 
+	</select>-->
+	
+	<!-- <select id = "campingreview" parameterType = "java.lang.Integer" resultType = "CampingBbsDto">
+		SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL FROM CAMPING_BBS
+		WHERE CONTENTID = #{contentid} AND DEL = 0 
+	</select> -->
+	
+	<select id = "getcampingreview" parameterType = "CampingParam" resultType = "CampingBbsDto">
+	SELECT * FROM
+		(SELECT ROW_NUMBER()OVER(ORDER BY REVIEW_SEQ DESC) AS RNUM, 
+		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL
+		FROM CAMPING_BBS
+		WHERE 1=1 AND CONTENTID = #{contentid} AND DEL = 0)
+		WHERE RNUM BETWEEN ${start} AND ${end}
+		ORDER BY WDATE DESC
 	</select>
 	
 	<!-- 캠핑장 리뷰 갯수 구하기 -->
-	<select id="getCampigReviewCount" parameterType = "java.lang.Integer" resultType = "java.lang.Integer">
+	<select id="getCampingReviewCount" parameterType = "java.lang.Integer" resultType = "java.lang.Integer">
 		SELECT NVL(COUNT(*),0) FROM CAMPING_BBS WHERE CONTENTID = #{contentid} AND DEL = 0
 	</select>
 	
-	<!-- 캠핑장 리뷰 더보기 불러오기 -->
+	<!--  캠핑장 리뷰 더보기 불러오기 
 	<select id = "campingMoreList" parameterType = "java.util.Map" resultType = "java.util.Map">
 	 	SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL 
 	 	FROM CAMPING_BBS LIMIT #{startNum}, #{count}
-	 	
-	</select>
+	</select> -->
 	
 	<!-- 캠핑장 리뷰 상세화면 -->
 	<select id = "campingdetailreview" parameterType = "CampingBbsDto" resultType = "CampingBbsDto">
@@ -206,7 +220,10 @@
 	
 	<!-- 캠핑장 리뷰 검색하기, 정렬하기 -->
 	<select id = "campingSearchReview" parameterType = "CampingParam" resultType = "CampingBbsDto">
-		SELECT TITLE, CONTENT, USER_ID, READCOUNT FROM CAMPING_BBS WHERE 1=1 
+		SELECT * FROM 
+		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM, 
+		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL
+		FROM CAMPING_BBS WHERE 1=1 
 		<if test="choice!=null and choice !='' and search !=null and search !=''">
 			<if test = "choice=='title'">
 				AND title LIKE '%'||#{search}||'%'
@@ -218,7 +235,9 @@
 				AND user_id=#{search}
 			</if>
 		</if>
-		AND CONTENTID = #{contentid} AND DEL = 0 ORDER BY
+		AND CONTENTID = #{contentid} AND DEL = 0)
+		WHERE RNUM BETWEEN ${start} AND ${end}
+		ORDER BY
 			<if test = "reviewsorting!=null and reviewsorting != ''">
 			<choose>
 				<when test = "reviewsorting=='create'">

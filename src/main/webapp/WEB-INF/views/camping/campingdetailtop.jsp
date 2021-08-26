@@ -35,6 +35,7 @@ ALTER TABLE CAMPING_BBS
 ADD CONSTRAINT FK_CAMPING_BBS_CONTENTID_CAMPI FOREIGN KEY (CONTENTID)
 REFERENCES CAMPING_LIST (CONTENTID)
 -->
+<link href="/resources/css/campingsite/campingreview1.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
 <% 
@@ -43,12 +44,13 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("campingdetail");
 %>
 <input type = "hidden" value = "<%=campinglist.getContentid() %>">
-<div class = "image" style = "float : left ; margin-right : 10px; margin-left : 20px; margin-top : 20px" >
+<div class = "image">
 <a href = "campingdetail.do?contentid=<%=campinglist.getContentid() %>">
-<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/image/csite_alt_image.png'" width = "200" height = "200">
+<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "200" height = "200">
 </a>
 </div>
-<div class = "introduction" style = "float : left; margin-right : 10px; margin-left : 20px; margin-top : 20px">
+
+<div class = "introduction">
 <h2><%=campinglist.getFacltnm() %></h2>
 <h3><%=campinglist.getAddr1() %></h3>
 <h5> 시설 : <%=campinglist.getSbrscl() %></h5>
@@ -61,7 +63,7 @@ CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("camping
 	       	홈페이지 준비중 / 
 	    </c:when>
 	    <c:otherwise>
-	        <button type = button onclick = "location.href ='${url}'">홈페이지</button>
+	        <button type = button onclick = "location.href ='${url}'" class = "btn btn-outline-success btn-sm" >홈페이지</button>
 	    </c:otherwise>
 	</c:choose>
 	<c:choose>
@@ -69,14 +71,15 @@ CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("camping
 	        전화예약
 	    </c:when>
 	    <c:otherwise>
-	        <button type = button onclick = "location.href ='${url1}'">예약하기</button>
+	        <button type = button onclick = "location.href ='${url1}'" class = "btn btn-outline-success btn-sm" >예약하기</button>
 	    </c:otherwise>
 	</c:choose>
 <h3>평균 평점 : </h3>
 <span class = "readcount" style = "font-size : 15px">조회수 : <%=campingbbs.getReadcount()%></span>
 <span class = "readcount" style = "font-size : 15px">추천수 : <%=campingbbs.getLike_count()%></span>
-<button type = "button" value = "recommend">도움이 됐어요</button> <h5>이 글에 도움 받은 사람 : 명</h5>
+<button type = "button" value = "recommend" class = "btn btn-outline-success btn-sm" >도움이 됐어요</button> <h5>이 글에 도움 받은 사람 : 명</h5>
 <%} %>
 </div>
+
 </body>
 </html>
