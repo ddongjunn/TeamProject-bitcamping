@@ -96,7 +96,7 @@
 			<div class="total">
 				<span style="font-weight: bold;">
 					총 주문 금액 : <span id="totalprice" style="font-size: 18px"><fmt:formatNumber value="${item.product_Price}" type="number"/></span> 원
-					<input type="hidden" id="total_Price" name="product_Price" value="${item.product_Price}">
+					<input type="hidden" id="total_Price" name="product_Price" value="">
 				</span>
 				<div class="quantity-picker is-small">
 					<button type="button" id="button-minus" class="button-minus">-</button>
@@ -136,6 +136,8 @@ $(document).ready(function () {
 		$("#buybutton").html('품절된 상품입니다');
 		$("#buybutton").css('background-color', '#4c4c4c');
 	}
+	
+	$("#total_Price").attr("value", ${item.product_Price});
 	
 	/* datepicker 기본 설정 */
 	$.datepicker.setDefaults({

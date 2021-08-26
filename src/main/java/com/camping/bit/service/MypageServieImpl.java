@@ -4,6 +4,8 @@ import com.camping.bit.dao.MypageDao;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.MypageParam;
+import com.camping.bit.dto.ProductOrderDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,4 +41,16 @@ public class MypageServieImpl implements  MypageService{
     public void withdrawal(String id) {
         dao.withdrawal(id);
     }
+    
+	@Override
+	public List<ProductOrderDto> getMyOrderList(MypageParam param) {
+		
+		return dao.getMyOrderList(param);
+	}
+
+	@Override
+	public int getMyOrderCount(MypageParam param) {
+		
+		return dao.getMyOrderCount(param);
+	}
 }

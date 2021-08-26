@@ -87,6 +87,7 @@
 			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
 			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
+			disableResizeEditor: true,
 			placeholder: '내용을 입력해 주세요',
 			
 			callbacks: {

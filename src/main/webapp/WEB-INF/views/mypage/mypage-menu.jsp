@@ -45,6 +45,7 @@
 
     <div class="lnb">
         <h3 class="title">상품대여관리</h3>
+        <a href="/account/myOrder.do">내 주문내역</a>
         <a>대여/반납 내역</a>
         <a>상품반납</a>
         <a>상품리뷰</a>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
 		</div>
 		<c:choose>
 			<c:when test="${qna.secret eq 0}">
-				<div id="qnatitle" onclick="showHide(${qna.qna_Seq})" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
+				<div id="qnatitle" onclick="showHideQna(${qna.qna_Seq})" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
 					${qna.title}
 				</div>
 			</c:when>
@@ -80,7 +80,7 @@
 
 <script type="text/javascript">
 
-function showHide(seq){
+function showHideQna(seq){
 	
 	if($("#qnacontent"+seq).css("display") == "none"){
 		$("#qnacontent"+seq).show();

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
 import com.camping.bit.dto.ProductOrderDto;
@@ -27,6 +28,7 @@ import com.camping.bit.dto.ProductQnaDto;
 import com.camping.bit.dto.ProductRentDto;
 import com.camping.bit.dto.ProductReviewDto;
 import com.camping.bit.service.RentService;
+
 import com.camping.bit.commons.FileUploadUtil;
 
 @Controller
@@ -104,33 +106,56 @@ public class RentController {
 	}
 	
 	@RequestMapping(value = "order.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String productOrder(ProductOrderDto dto, Model model) {
+    public String productOrder(ProductOrderDto order, Model model) {
 		
 		// System.out.println(dto.toString());
-		model.addAttribute("order", dto);
+		model.addAttribute("order", order);
 		
-		ProductDetailDto item = service.getProductDetail(dto.getProduct_Seq());
+		ProductDetailDto item = service.getProductDetail(order.getProduct_Seq());
 		model.addAttribute("item", item);
 		
-		ProductRentDto rent = service.getRentDetail(dto.getRent_Seq());
+		ProductRentDto rent = service.getRentDetail(order.getRent_Seq());
 		model.addAttribute("rent", rent);
 		
-		ProductOptionDto option1 = service.getOptionDetail(dto.getOption1_Seq());
+		ProductOptionDto option1 = service.getOptionDetail(order.getOption1_Seq());
 		model.addAttribute("opt1", option1);
 		
-		ProductOptionDto option2 = service.getOptionDetail(dto.getOption2_Seq());
+		ProductOptionDto option2 = service.getOptionDetail(order.getOption2_Seq());
 		model.addAttribute("opt2", option2);
 		
 		return "productOrder.tiles";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "payment.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String productPayment(ProductOrderDto dto, Model model) {
+	@RequestMapping(value = "paymentAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public int paymentAf(ProductOrderDto dto) {
 		
-		System.out.println("결제완료~~!");
+		System.out.println("주문 정보 : " + dto);
 		
-		return "hi";
+		int result = service.paymentAf(dto);
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "complete.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String complete(Model model, String merchant_Uid) {
+		
+		ProductOrderDto order = service.getOrderInfo(merchant_Uid);		
+		model.addAttribute("order", order);
+		
+		ProductDetailDto item = service.getProductDetail(order.getProduct_Seq());
+		model.addAttribute("item", item);
+		
+		ProductRentDto rent = service.getRentDetail(order.getRent_Seq());
+		model.addAttribute("rent", rent);
+		
+		ProductOptionDto option1 = service.getOptionDetail(order.getOption1_Seq());
+		model.addAttribute("opt1", option1);
+		
+		ProductOptionDto option2 = service.getOptionDetail(order.getOption2_Seq());
+		model.addAttribute("opt2", option2);
+		
+		return "rentComplete.tiles";
 	}
 	
 	@RequestMapping(value = "writeReview.do", method = { RequestMethod.GET, RequestMethod.POST })
@@ -145,9 +170,11 @@ public class RentController {
     public String writeReviewAf(ProductReviewDto review, @RequestParam(value = "reviewImage", required = false) MultipartFile reviewImage, HttpServletRequest req) {
 		
 		// System.out.println(reviewImage.isEmpty());
-		System.out.println(review);
+		System.out.println(review.getOrder_Seq());
 		
-		if(!(reviewImage.isEmpty())) {
+		// if(!reviewImage.isEmpty() || reviewImage != null) 이경우 nullpointException 발생
+		
+		if(reviewImage != null) {
 		
 			String fileUpload = req.getServletContext().getRealPath("/resources/upload");
 			
@@ -170,6 +197,8 @@ public class RentController {
 		}else {
 			service.writeReviewAf(review);
 		}
+		
+		service.reviewStatus(review.getOrder_Seq()); // 리뷰 작성여부 0 -> 1 변경
 				
 		return "redirect:/";	
 	}
