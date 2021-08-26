@@ -3,6 +3,7 @@ package com.camping.bit.controller;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.MypageParam;
+import com.camping.bit.dto.ProductOrderDto;
 import com.camping.bit.service.MemberService;
 import com.camping.bit.service.MypageService;
 import org.apache.ibatis.jdbc.Null;
@@ -172,5 +173,32 @@ public class MypageController {
 
         return "redirect:/";
     }
+	
+	@RequestMapping(value = "myOrder.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String myOrder(HttpSession session, Model model, MypageParam param) {
+		
+		MemberDto user = (MemberDto)session.getAttribute("login");		
+		param.setId(user.getId());
+		
+        int sn = param.getPageNumber();
+        int start = 1 + 10 * sn;
+        int end = 10 + 10 * sn;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        //총 글의 갯수
+        int totalCount = service.getMyOrderCount(param);
+        model.addAttribute("totalCount",totalCount);
+
+        //현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+
+		List<ProductOrderDto> order = service.getMyOrderList(param);
+		model.addAttribute("order", order);
+				
+		return "mypage-myOrder.tiles";	
+	}
 
 }

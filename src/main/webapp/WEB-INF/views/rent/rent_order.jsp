@@ -25,19 +25,19 @@
 <body>
 	<main class="page payment-page">
 		<section class="payment-form dark">
-			<div class="container">
+			<div class="container" style="width: 900px;">
 				<div class="block-heading">
 					<h2>결제하기</h2>
-					<!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam urna, dignissim nec auctor in, mattis vitae leo.</p> -->
+					<!-- <p>결제화면입니다</p> -->
 				</div>
 
-				<form id="paymentform" action="/rent/payment.do" method="post">
+				<!-- <form id="paymentform" action="/rent/paymentAf.do" method="post"> -->
 					<!-- 배송 정보 -->
 					<div class="card-details">
 						<h3 class="title">배송 정보 입력</h3>
 						<div class="row">
 							<div class="form-group col-sm-4">
-								<label id="receiver">받는분</label> 
+								<label id="">받는분</label> 
 								<input id="receiver" type="text" name="receiver" class="form-control" placeholder="이름" aria-label="이름" aria-describedby="basic-addon1">
 							</div>
 							<div class="form-group col-sm-8">
@@ -72,7 +72,7 @@
 									<option>배송 전에 연락주세요</option>
 									<option value="direct">직접 입력</option>
 								</select> 
-								<input id="memodirect" name="memodirect" type="text" class="form-control" placeholder="요청 사항 직접 입력" aria-label="Card Holder" aria-describedby="basic-addon1" style="margin-top: 10px">
+								<input id="memodirect" name="memodirect" type="text" class="form-control" placeholder="요청 사항 직접 입력" maxlength="100" aria-label="Card Holder" aria-describedby="basic-addon1" style="margin-top: 10px">
 								<input type="hidden" id="memo" name="memo" value="">
 							</div>
 						</div>
@@ -86,18 +86,18 @@
 						</div>
 						<div class="item">
 							<span class="price">X ${order.quantity}개 </span>
-							<input type="hidden" name="quantity" value="${order.quantity}">
+							<%-- <input type="hidden" name="quantity" value="${order.quantity}"> --%>
 							<p class="item-name">${item.product_Name}</p>
 							<p class="item-description">기본구성 : ${item.base_Item} (<fmt:formatNumber value="${item.product_Price}" type="number" />원)</p>
-							<input type="hidden" name="product_Seq" value="${item.product_Seq}">
+							<%-- <input type="hidden" name="product_Seq" value="${item.product_Seq}"> --%>
 							<input type="hidden" name="product_Price" value="${item.product_Price}">
 							<c:if test="${order.option1_Seq ne 0}">
 								<p class="item-description">옵션 1 : ${opt1.option_Name}</p>
-								<input type="hidden" name="option1_Seq" value="${order.option1_Seq}">
+								<%-- <input type="hidden" name="option1_Seq" value="${order.option1_Seq}"> --%>
 							</c:if>
 							<c:if test="${order.option2_Seq ne 0}">
 								<p class="item-description">옵션 2 : ${opt2.option_Name}</p>
-								<input type="hidden" name="option2_Seq" value="${order.option2_Seq}">
+								<%-- <input type="hidden" name="option2_Seq" value="${order.option2_Seq}"> --%>
 							</c:if>
 							<p class="item-description">대여기간 : ${order.rent_Sdate} ~ ${order.rent_Edate} (${rent.rent_Name})</p>
 							<input type="hidden" name="rent_Seq" value="${order.rent_Seq}">
@@ -128,15 +128,17 @@
 								</select>
 							</div>
 							<div class="form-group col-sm-12">
-								<input type="checkbox" id="policyagree" required="required">
-								<span style="font-size: 13px">주문 상품정보 및 서비스 이용약관에 모두 동의합니다</span>
+								<label for="policyagree">
+									<input type="checkbox" id="policyagree" required="required">
+									<span style="font-size: 13px">주문 상품정보 및 서비스 이용약관에 모두 동의합니다</span>
+								</label>
 							</div>
 							<div class="form-group col-sm-12">
 								<button type="button" class="btn btn-primary btn-block" onclick="iamport()">결제하기</button>
 							</div>
 						</div>
 					</div>
-				</form>
+				<!-- </form> -->
 			</div>
 		</section>
 	</main>
@@ -144,12 +146,13 @@
 	<script type="text/javascript">
 	
 		/* 배송비 포함한 총주문금액 계산 */
-		$("#shipping_Fee").attr("value", 5000*${order.quantity});		
-		var totalprice = parseInt(${item.product_Price}) + parseInt($("#shipping_Fee").val());
+		let shippingfee = 5000 * ${order.quantity};
+		$("#shipping_Fee").attr("value", shippingfee);		
+		let totalprice = parseInt(${order.product_Price}) + parseInt($("#shipping_Fee").val());
 		$("#totalprice").text(totalprice.toLocaleString('ko-KR') + " 원");
 		$("#total_Price").attr("value", totalprice);	
 		
-		
+		/* 카카오 주소검색 */
 		function findAddr() {
 			new daum.Postcode({
 				oncomplete : function(data) {
@@ -172,7 +175,8 @@
 				}
 			}).open();
 		}
-
+		
+		/* 배송 메모 직접입력 시 */
 		$(function() {
 
 			$("#memodirect").hide();
@@ -186,75 +190,89 @@
 			});
 		});
 		
+		/* 배송정보 유효성 검사 & 결제 */
 		function iamport() {
-			
+
 			// 정보 입력란 유효성 검사
 			if($("#receiver").val() == ""){
 				Swal.fire({
 					icon : 'warning',
-					text : '받는분을 입력해주세요'
-				});
-				$("#receiver").focus();
+					text : '받는분을 입력해주세요',
+					didClose: () => {
+						$("#receiver").focus();
+					}			        
+				});			
 				return;
 
 			}else if($("#phone1").val() == ""){
 				Swal.fire({
 					icon : 'warning',
-					text : '전화번호를 입력해주세요'
+					text : '전화번호를 입력해주세요',
+					didClose: () => {
+						$("#phone1").focus();
+					}
 				});
-				$("#phone1").focus();
 				return;
 
 			}else if($("#phone2").val() == ""){
 				Swal.fire({
 					icon : 'warning',
-					text : '전화번호를 입력해주세요'
+					text : '전화번호를 입력해주세요',
+					didClose: () => {
+						$("#phone2").focus();
+					}
 				});
-				$("#phone2").focus();
 				return;
 
 			}else if($("#phone3").val() == ""){
 				Swal.fire({
 					icon : 'warning',
-					text : '전화번호를 입력해주세요'
+					text : '전화번호를 입력해주세요',
+					didClose: () => {
+						$("#phone3").focus();
+					}
 				});
-				$("#phone3").focus();
 				return;
 
 			}else if($("#delivery_post").val() == "" || $("#delivery_addr1").val() == ""){
 				Swal.fire({
 					icon : 'warning',
-					text : '주소를 입력해주세요'
+					text : '주소를 입력해주세요',
+					didClose: () => {
+						$("#delivery_post").focus();
+					}
 				});
-				$("#delivery_post").focus();
 				return;
 
 			}else if($("#delivery_addr2").val() == ""){
 				Swal.fire({
 					icon : 'warning',
-					text : '상세주소를 입력해주세요'
+					text : '상세주소를 입력해주세요',
+					didClose: () => {
+						$("#delivery_addr2").focus();
+					}
 				});
-				$("##delivery_addr2").focus();
 				return;
 
 			}else if($("#policyagree").is(":checked") == false) {
 				Swal.fire({
 					icon : 'warning',
-					text : '결제 약관에 동의해주세요'
+					text : '결제 약관에 동의해주세요',
+					didClose: () => {
+						$("#policyagree").focus();
+					}
 				});
-				$("#policyagree").focus();
-				return;				
+				return;
 			
-			}else{
-			
-				//가맹점 식별코드
-				IMP.init('iamport');
+			}else{			
+				
+				IMP.init('iamport'); //가맹점 식별코드
 				IMP.request_pay({
 					pg : 'kcp',
 					pay_method : $("#paymentType").val(), // card(신용카드), trans(실시간계좌이체), vbank(가상계좌), phone(휴대폰소액결제)
-					merchant_uid : 'merchant_' + new Date().getTime(),
+					merchant_uid : 'bit_' + new Date().getTime(),
 					name : '${item.product_Name}', //결제창에서 보여질 이름
-					amount : $("#total_Price").val(), //실제 결제되는 가격
+					amount : 100, // $("#total_Price").val(), //실제 결제되는 가격
 					buyer_email : '${login.email}',
 					buyer_name : '${login.username}',
 					buyer_tel : '${login.phone}',
@@ -263,19 +281,63 @@
 				}, function(rsp) {
 					console.log(rsp);
 					if (rsp.success) {
+						
+						/* 전화번호 합쳐서 넣어주기 */
+						let phone = $("#phone1").val() + "-" + $("#phone2").val() + "-" + $("#phone3").val();
+						$("#receiver_Phone").attr("value", phone);	
+						
+						/* 배송메모 직접입력일시 입력값 넣어주기 */
+						let dmemo = "";
+						if($("#memoselect").val() == "direct"){
+							
+							dmemo = $("#memodirect").val();
+							// $("#memo").attr("value", $("#memodirect").val());
+						}else{
+							// $("#memo").attr("value", $("#memoselect").val());
+							dmemo = $("#memoselect").val();
+						}
+						
+						let orderData = {
+								"user_Id" : '${login.id}',
+								"product_Seq" : '${item.product_Seq}',
+								"option1_Seq" : '${order.option1_Seq}',
+								"option2_Seq" : '${order.option2_Seq}',
+								"quantity" : '${order.quantity}',
+								"rent_Seq" : '${order.rent_Seq}',
+								"rent_Sdate" : '${order.rent_Sdate}',
+								"rent_Edate" : '${order.rent_Edate}',
+								"product_Price" : '${order.product_Price}',
+								"shipping_Fee" : shippingfee, 
+								"total_Price" : rsp.paid_amount, 
+								"receiver" : $("#receiver").val(),
+								"address" : rsp.buyer_postcode + ' ' + rsp.buyer_addr, 
+								"receiver_Phone" : phone, 
+								"memo" : dmemo, 
+								"payment" : rsp.pay_method, 
+								"merchant_Uid" : rsp.merchant_uid
+						}
+						
+						// console.log(orderData);
 	
 						$.ajax({
-							url : "{서버의 결제 정보를 받는 endpoint}", // 예: https://www.myservice.com/payments/complete
+							url : "/rent/paymentAf.do",
 							method : "POST",
-							headers : {
+							/* headers : {
 								"Content-Type" : "application/json"
+							}, */
+							data : orderData,
+							dataType : 'json',
+							success : function(result){
+								if(result == 1) {
+									// alert("DB저장성공");
+									location.href = "complete.do?merchant_Uid=" + rsp.merchant_uid; 
+								}else{
+									// alert("DB입력실패");
+								}
 							},
-							data : {
-								imp_uid : rsp.imp_uid,
-								merchant_uid : rsp.merchant_uid
+							error : function(a,b,c){
+								
 							}
-						}).done(function(data) {
-							paymentSubmit();
 						})
 						
 						Swal.fire({
@@ -292,38 +354,17 @@
 					} else {
 						Swal.fire({
 							icon : 'error',
-							text : '결제에 실패하였습니다. \n 에러내용 : ' + rsp.error_msg
+							text : '결제에 실패했습니다. \n 에러내용 : ' + rsp.error_msg
 						});
 					}
 				});
 			}
 		}
 		
-		function datamaker(){			
-			
-			/* 전화번호 합쳐서 넣어주기 */
-			var phone = $("#phone1").val() + "-" + $("#phone2").val() + "-" + $("#phone3").val();
-			$("#receiver_Phone").attr("value", phone);	
-			
-			/* 배송메모 직접입력일시 입력값 넣어주기 */
-			if($("#memoselect").val() == "direct"){
-				$("#memo").attr("value", $("#memodirect").val());
-			}else{
-				$("#memo").attr("value", $("#memoselect").val());
-			}
-		}
-		
-		/* 결제 완료 후 결제 정보 db 저장 */
-		function paymentSubmit(){
-			
-			datamaker();
-			
-			$("#paymentform").submit(); // form submit
-		}
 	</script>
 
-	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- 	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
 
 </body>
 </html>

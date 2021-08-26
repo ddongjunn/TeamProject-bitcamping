@@ -67,12 +67,22 @@ public class ProductOrderDto implements Serializable {
     private String memo;
 
     // 결제수단 
-    private int payment;
+    private String payment;
+    
+    // 결제 ID(Iamport 고유 id) 
+    private String merchant_Uid;
 
     // 주문 상태 
     private int order_Status;
 
     // 리뷰 상태 
     private int review_Status;
+    
+    // myOrder 페이지용
+    private String product_Name;
+    private String thumbnail_Name;
+    private String option1_Name;
+    private String option2_Name;
+    private String rent_Name;
 
 }

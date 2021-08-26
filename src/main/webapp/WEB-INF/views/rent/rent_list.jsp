@@ -26,7 +26,11 @@
                 <!-- <div class="bbb_deals_title">Today's Combo Offer</div> -->
                 <div class="bbb_deals_slider_container">
                     <div class=" bbb_deals_item">
-                        <div class="bbb_deals_image"><a href="/rent/detail.do?product_Seq=${list.product_Seq}"><img src="/resources/upload/${list.thumbnail_Name}" alt="" height="250px"></a></div>
+                        <div class="bbb_deals_image" style="width: 300px; height: 250px;">
+                        	<a href="/rent/detail.do?product_Seq=${list.product_Seq}">
+                        		<img src="/resources/upload/${list.thumbnail_Name}" alt="상품 이미지" style="height: 250px !important;">
+                        	</a>
+                        </div>
                         <div class="bbb_deals_content">
                             <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
                                 <div class="bbb_deals_item_name" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/rent/detail.do?product_Seq=${list.product_Seq}">${list.product_Name}</a></div>

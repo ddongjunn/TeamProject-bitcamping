@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.camping.bit.dao.RentDao;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
+import com.camping.bit.dto.ProductOrderDto;
 import com.camping.bit.dto.ProductQnaDto;
 import com.camping.bit.dto.ProductRentDto;
 import com.camping.bit.dto.ProductReviewDto;
@@ -95,5 +96,23 @@ public class RentServiceImpl implements RentService {
 	public int getQnaCount(int product_Seq) {
 
 		return dao.getQnaCount(product_Seq);
+	}
+
+	@Override
+	public int paymentAf(ProductOrderDto dto) {
+		
+		return dao.paymentAf(dto);
+	}
+
+	@Override
+	public ProductOrderDto getOrderInfo(String merchant_Uid) {
+		
+		return dao.getOrderInfo(merchant_Uid);
+	}
+
+	@Override
+	public void reviewStatus(int order_Seq) {
+		
+		dao.reviewStatus(order_Seq);
 	}
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
@@ -8,9 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>리뷰 쓰기</title>
-
- <!-- sweetalert2 -->
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style type="text/css">
 
@@ -23,11 +20,6 @@
 </head>
 <body>
 
-<!-- 
-	리뷰 -> 마이페이지에 추가시
-	order_Seq 넘겨줘야함
- -->
-
 <nav id="review">
 	<ul>
 		<li><a href="#">상품 선택</a></li>
@@ -38,7 +30,7 @@
 </nav>
 <div id="reviewbox" style="height: auto; margin: auto; width: 80%; padding: 20px; background-color: tomato;">
 
-	<span>리뷰 <fmt:formatNumber value="${reviewCount}" type="number"/> 개</span> <span style="float:right;"><a href="javascript:writereview();">리뷰쓰기</a></span>
+	<span>리뷰 <fmt:formatNumber value="${reviewCount}" type="number"/> 개</span> <span style="float:right;"><!-- <a href="javascript:writereview();">리뷰쓰기</a> --></span>
 	 <c:forEach items="${review}" var="review">
 	<div class="reviewrow" style="display: flex; background-color: #F7BBBB; ">		
 		<div id="ratebox" class="rate" style="flex: 1 1 15%; padding: 10px; ">
@@ -50,7 +42,7 @@
 				<c:when test="${review.rate eq 1}">⭐</c:when>
 			</c:choose>
 		</div>
-		<div id="reviewtitle" onclick="showHide(${review.review_Seq})" class="reviewtitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
+		<div id="reviewtitle" onclick="showHideReview(${review.review_Seq})" class="reviewtitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
 			${review.title}
 		</div>
 		<div class="info" style="flex: 1 1 25%; padding: 10px;" >
@@ -79,7 +71,7 @@
 
 <script type="text/javascript">
 	
-	function showHide(seq){
+	function showHideReview(seq){
 	
 		if($("#reviewcontent"+seq).css("display") == "none"){
 			$("#reviewcontent"+seq).show();
@@ -88,7 +80,8 @@
 		}
 	}
 	
-	/* 리뷰작성 popup open */
+	/*
+	// 리뷰작성 popup open
 	function writereview(){
 		
 		var order_Seq = 1; // 이부분 나중에 order_Seq 넣어주기
@@ -102,7 +95,7 @@
 		// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
 		
 		window.open("/rent/writeReview.do?order_Seq=" + order_Seq , "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
-	} 
+	}  */
 	
 </script>
 
