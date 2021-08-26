@@ -88,7 +88,7 @@
             <td>${qna.nickname}</td>
             <td>
                 <fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-                <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+                <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
             </td>
             <td>${qna.readcount}</td>
         </tr>

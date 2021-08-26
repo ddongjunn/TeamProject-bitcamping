@@ -169,8 +169,8 @@ public class LoginController {
         }
 
         if(encoder.matches(dto.getPwd(), member.getPwd())){
+            session.setMaxInactiveInterval(1800);
             session.setAttribute("login",member);
-
             return true;
         }
 

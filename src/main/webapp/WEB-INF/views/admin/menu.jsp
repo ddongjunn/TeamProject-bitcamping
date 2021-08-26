@@ -18,7 +18,7 @@
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
             <a class="navbar-brand" href="/admin/main.do">
-                관리자메인 로고들어갈곳
+                <img src="/resources/images/adminLogo.png" alt="" height="60" width="200">
             </a>
         </div>
         <div class="navbar-inner">
@@ -79,8 +79,13 @@
                             <span class="nav-link-text">상품관리</span>
                         </a>
                             <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="">
+                                <a class="nav-link " href="/admin/product-regi.do">
                                     <span class="nav-link-text">상품등록</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" style="margin-left: 33px">
+                                <a class="nav-link " href="/admin/product.do">
+                                    <span class="nav-link-text">상품목록</span>
                                 </a>
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
