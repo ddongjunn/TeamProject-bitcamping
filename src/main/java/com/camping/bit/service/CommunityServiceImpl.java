@@ -206,6 +206,13 @@ public class CommunityServiceImpl implements CommunityService{
 		dao.dealUpdate(dto);
 	}
 	
+	// 거래완료
+	@Override
+	public void soldout(int community_seq) {
+		
+		dao.soldout(community_seq);
+	}
+	
 	// 캠핑후기 리스트
 	@Override
 	public List<CommunityDto> reviewList(CommunityParam param) {
@@ -284,4 +291,5 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		return dao.deleteComment(comment_seq);
 	}
+	
 }

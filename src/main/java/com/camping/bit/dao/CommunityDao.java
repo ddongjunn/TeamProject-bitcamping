@@ -121,4 +121,7 @@ public interface CommunityDao {
 	
 	// 댓글 삭제
 	public int deleteComment(int comment_seq);
+	
+	// 거래완료
+	public void soldout(int community_seq);
 }

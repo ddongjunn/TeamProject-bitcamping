@@ -23,4 +23,7 @@ public class CommunityParam implements Serializable{
 	
 	private int start;
 	private int end; 
+	
+	private String bbstype;
+	private String kind;
 }

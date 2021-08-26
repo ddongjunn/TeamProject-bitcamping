@@ -29,6 +29,7 @@
                   AND B.NICKNAME=#{search}
                </if>
             </if>
+            
             ORDER BY COMMUNITY_SEQ DESC
             ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
@@ -131,7 +132,7 @@
 
  	 <!-- 대댓글 작성 --> 
 	<insert id="answerComment" parameterType="CommunityCommentDto">
-		INSERT INTO COMMUNITY_BBS_COMMENT
+		INSERT INTO COMMUNITY_BBS_COMMENT(COMMENT_SEQ, COMMUNITY_SEQ, USER_ID, CONTENT, REF, STEP, DEPTH, WDATE, DEL)
 		VALUES(COMMUNITY_BBS_COMMENT_SEQ.NEXTVAL, #{community_seq}, #{user_id}, #{content}, 
 			(SELECT REF FROM COMMUNITY_BBS_COMMENT WHERE COMMENT_SEQ = #{comment_seq}), 
 			(SELECT MAX(STEP) FROM COMMUNITY_BBS_COMMENT WHERE REF = #{ref}) + 1,
@@ -329,7 +330,7 @@
 		WHERE COMMUNITY_SEQ = #{community_seq}
 	</update>
 	
-	<!-- 중고거래 글 리스트 -->
+	<!-- 중고거래 글 리스트 전체-->
    <select id="dealList" parameterType="CommunityParam" resultType="CommunityDto">
       SELECT COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE, 
       		(SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
@@ -338,7 +339,6 @@
          COMMUNITY_SEQ, USER_ID, NICKNAME, TITLE, WDATE, CONTENT, READCOUNT,  LIKECOUNT, DEL, BBSTYPE
          FROM COMMUNITY_BBS A, MEMBER B
          WHERE 1=1
-             AND BBSTYPE = 'deal'
             AND A.USER_ID = B.ID
             AND DEL = 0
             <if test='choice != null and choice != " "
@@ -353,19 +353,32 @@
                   AND B.NICKNAME=#{search}
                </if>
             </if>
+            <if test="kind != null and kind != ''">
+            		AND (A.BBSTYPE = 'sell' OR A.BBSTYPE = 'buy' OR A.BBSTYPE = 'soldout')
+					<if test="kind == 'sell'">
+						AND BBSTYPE = 'sell'
+					</if>
+					<if test="kind == 'buy'">
+						AND BBSTYPE = 'buy'
+					</if>
+					<if test="kind == 'soldout'">
+						AND BBSTYPE = 'soldout'
+					</if>
+			</if>
             ORDER BY COMMUNITY_SEQ DESC
             ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
    </select>
+
 
    <!-- 중고거래 글의 총수 -->
    <select id="dealBoardCount" parameterType="CommunityParam" resultType="Integer">
       SELECT NVL(COUNT(*), 0)
       FROM COMMUNITY_BBS A, MEMBER B
       WHERE 1=1
-      AND BBSTYPE='deal'
       AND A.USER_ID = B.ID
       AND DEL = 0
+      AND (A.BBSTYPE = 'sell' OR A.BBSTYPE = 'buy' OR A.BBSTYPE = 'soldout')
       <if test='choice != null and choice != " "
            and search != null and search != " "'>
          <if test='choice == "title"'>
@@ -406,6 +419,13 @@
                          WDATE=SYSDATE
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
+   
+    <!-- 거래완료 -->
+   	<update id="soldout" parameterType="java.lang.Integer">
+		UPDATE COMMUNITY_BBS
+		SET BBSTYPE = 'soldout'
+		WHERE COMMUNITY_SEQ = #{community_seq}
+	</update>
 	
 	<!-- 캠핑후기 글 리스트 -->
    <select id="reviewList" parameterType="CommunityParam" resultType="CommunityDto">

@@ -79,6 +79,8 @@ public class CommunityController {
       
       model.addAttribute("search", param.getSearch());
       model.addAttribute("choice", param.getChoice());
+      model.addAttribute("bbstype",param.getBbstype());
+      model.addAttribute("kind", param.getKind());
       
       return "hello.tiles"; 
    }
@@ -330,6 +332,11 @@ public class CommunityController {
       
       model.addAttribute("search", param.getSearch());
       model.addAttribute("choice", param.getChoice());
+      model.addAttribute("kind", param.getKind());
+      
+      System.out.println("글목록 : " + list);
+      System.out.println("글갯수 : " + totalCount);
+      
       
       return "deal.tiles"; 
    }
@@ -402,6 +409,16 @@ public class CommunityController {
       service.dealUpdate(dto);
       
       return "redirect:/community/deal.do";
+   }
+   
+   // 거래완료
+   @RequestMapping(value = "soldout.do", method = RequestMethod.GET)
+   public String soldout(int community_seq) {
+	   
+	   service.soldout(community_seq);
+	   
+	   return "redirect:/community/deal.do";
+	   
    }
    
    // 캠퍼모임

@@ -23,7 +23,7 @@
     <div>
 <table class="table align-items-center">
 
-    <colgroup>
+    <colgroup> 
         <col width="10%">
         <col width="10%">
         <col width="45%">

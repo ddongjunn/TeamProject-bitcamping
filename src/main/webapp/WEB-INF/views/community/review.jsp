@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 
 <!DOCTYPE html>
 <html>
@@ -44,9 +45,9 @@
 					</td>
 					<td>${data.nickname }</td>
 					<td>${data.readcount }</td>
-					<td> 
-						<c:set var="date" value="${data.wdate}"/>
-						${fn:substring(date,2,16)}
+					<td>
+						<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy.MM.dd."/>
 					</td>
 				</tr>
 			</c:forEach>

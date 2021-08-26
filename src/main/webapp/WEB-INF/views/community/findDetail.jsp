@@ -156,17 +156,38 @@ $(".likeBtn").click(function () {
        });
  });
 
-function del(community_seq) {
-	var check = confirm("삭제하시겠습니까?");
-	if (check) {
-		location='/community/delete.do?community_seq=' + ${data.community_seq} + '&bbstype=find';
-	}
+/* 글 삭제 알림 */
+function del(community_seq){
+	Swal.fire({
+		  title: '삭제하시겠습니까?',
+		  showDenyButton: true,
+		  confirmButtonText: '삭제하기',
+		  denyButtonText: '취소',
+		}).then((result) => {
+		  /* Read more about isConfirmed, isDenied below */
+		  if (result.isConfirmed) {
+			  location='/community/delete.do?community_seq=' + ${data.community_seq} + '&bbstype=find';
+		  } else if (result.isDenied) {
+		    return;
+		  }
+		})
 }
-function update() {
-	var check = confirm("수정하시겠습니까?");
-	if (check) {
-		javascript:document.updateFrm.submit();
-	}
+
+/* 글 수정 알림 */
+function update(){
+	Swal.fire({
+		  title: "수정하시겠습니까?",
+		  showDenyButton: true,
+		  confirmButtonText: '수정하기',
+		  denyButtonText: '취소',
+		}).then((result) => {
+		  /* Read more about isConfirmed, isDenied below */
+		  if (result.isConfirmed) {
+			  javascript:document.updateFrm.submit();
+		  } else if (result.isDenied) {
+		    return;
+		  }
+		})
 }
 
 /* 댓글 불러오기 */
