@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +50,37 @@ public class AdminController {
         regiPathCount.put("kakaoPer",kakao );
         model.addAttribute("regiPath",regiPathCount);
 
+        //커뮤니티 최신글 받아오기
+        List<CommunityDto> recentCommunity = service.recentCommunity();
+        List<CommunityDto> dealList = new ArrayList<CommunityDto>();
+        List<CommunityDto> freeList = new ArrayList<CommunityDto>();
+        List<CommunityDto> findList = new ArrayList<CommunityDto>();
+        List<CommunityDto> reviewList = new ArrayList<CommunityDto>();
+        for(int i = 0; i < recentCommunity.size(); i++){
+            if(recentCommunity.get(i).getTitle().length() >= 42 ){
+                String str = recentCommunity.get(i).getTitle().substring(0,40);
+                recentCommunity.get(i).setTitle(str + "...");
+            }
+
+                if(recentCommunity.get(i).getBbstype().equals("deal")){
+                    dealList.add(recentCommunity.get(i));
+                }else if(recentCommunity.get(i).getBbstype().equals("free")){
+                    freeList.add(recentCommunity.get(i));
+                }else if(recentCommunity.get(i).getBbstype().equals("find")){
+                    findList.add(recentCommunity.get(i));
+                }else{
+                    reviewList.add(recentCommunity.get(i));
+                }
+        }
+
+        HashMap<String, List<CommunityDto>> communityMap = new HashMap<>();
+        communityMap.put("deal",dealList);
+        communityMap.put("free",freeList);
+        communityMap.put("find",findList);
+        communityMap.put("review",reviewList);
+        model.addAttribute("recentCommunity",communityMap);
+
+        System.out.println(communityMap);
 
         model.addAttribute("memberCount",service.memberCount());
         model.addAttribute("qnaCount",service.getQnaWaitTotalCount());
@@ -174,4 +207,5 @@ public class AdminController {
 
         return "redirect:/admin/product.do";
     }
+
 }

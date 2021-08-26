@@ -1,4 +1,5 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: djlee
@@ -113,42 +114,7 @@
 <div class="container-fluid" style="margin-top: 15px">
     <div class="row">
         <div class="col-xl-8">
-            <div class="card bg-default">
-                <div class="card-header bg-transparent">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="text-light text-uppercase ls-1 mb-1">Overview</h6>
-                            <h5 class="h3 text-white mb-0">Sales value</h5>
-                        </div>
-                        <div class="col">
-                            <ul class="nav nav-pills justify-content-end">
-                                <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales-dark" data-update="{&quot;data&quot;:{&quot;datasets&quot;:[{&quot;data&quot;:[0, 20, 10, 30, 15, 40, 20, 60, 60]}]}}" data-prefix="$" data-suffix="k">
-                                    <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                                        <span class="d-none d-md-block">Month</span>
-                                        <span class="d-md-none">M</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item" data-toggle="chart" data-target="#chart-sales-dark" data-update="{&quot;data&quot;:{&quot;datasets&quot;:[{&quot;data&quot;:[0, 20, 5, 25, 10, 30, 15, 40, 40]}]}}" data-prefix="$" data-suffix="k">
-                                    <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                                        <span class="d-none d-md-block">Week</span>
-                                        <span class="d-md-none">W</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <!-- Chart -->
-                    <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                        <!-- Chart wrapper -->
-                        <canvas id="chart-sales-dark" class="chart-canvas chartjs-render-monitor" width="500" height="350" style="display: block; width: 500px; height: 350px;"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4">
-            <div class="card">
+            <div class="card" >
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
@@ -160,109 +126,8 @@
                 <div class="card-body">
                     <!-- Chart -->
                     <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                        <canvas id="visit-chart" class="chart-canvas chartjs-render-monitor" style="display: block; width: 231px; height: 350px;" width="231" height="350"></canvas>
+                        <canvas id="visit-chart" class="chart-canvas chartjs-render-monitor" style="display: block; width: 231px; height: 100px;" width="500" height="100"></canvas>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xl-8">
-            <div class="card">
-                <div class="card-header border-0">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h3 class="mb-0">Page visits</h3>
-                        </div>
-                        <div class="col text-right">
-                            <a href="#!" class="btn btn-sm btn-primary">See all</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="table-responsive">
-                    <!-- Projects table -->
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Page name</th>
-                            <th scope="col">Visitors</th>
-                            <th scope="col">Unique users</th>
-                            <th scope="col">Bounce rate</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <th scope="row">
-                                /argon/
-                            </th>
-                            <td>
-                                4,569
-                            </td>
-                            <td>
-                                340
-                            </td>
-                            <td>
-                                <i class="fas fa-arrow-up text-success mr-3"></i> 46,53%
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                /argon/index.html
-                            </th>
-                            <td>
-                                3,985
-                            </td>
-                            <td>
-                                319
-                            </td>
-                            <td>
-                                <i class="fas fa-arrow-down text-warning mr-3"></i> 46,53%
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                /argon/charts.html
-                            </th>
-                            <td>
-                                3,513
-                            </td>
-                            <td>
-                                294
-                            </td>
-                            <td>
-                                <i class="fas fa-arrow-down text-warning mr-3"></i> 36,49%
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                /argon/tables.html
-                            </th>
-                            <td>
-                                2,050
-                            </td>
-                            <td>
-                                147
-                            </td>
-                            <td>
-                                <i class="fas fa-arrow-up text-success mr-3"></i> 50,87%
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                /argon/profile.html
-                            </th>
-                            <td>
-                                1,795
-                            </td>
-                            <td>
-                                190
-                            </td>
-                            <td>
-                                <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
@@ -361,11 +226,196 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <th scope="row">
+                                페이스북
+                            </th>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2">0%</span>
+                                    <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-red" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                깃허브
+                            </th>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2">0%</span>
+                                    <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-red" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">
+                                트위터
+                            </th>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2">0%</span>
+                                    <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-red" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="container-fluid" style="margin-bottom: 15px; padding : 0 15px">
+        <h2>최근 게시물</h2>
+    </div>
+    <div class="row">
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">자유게시판</h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="/admin/community.do?bbstype=free" class="btn btn-sm btn-primary">더 보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <c:forEach var="list" items="${recentCommunity.free}">
+                                <tr>
+                                    <!-- a태그 걸어야함 -->
+                                    <td>${list.title} <b>[${list.commentcount}]</b></td>
+                                </tr>
+                            </c:forEach>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">캠퍼모집</h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="admin/community.do?bbstype=find" class="btn btn-sm btn-primary">더 보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <c:forEach var="list" items="${recentCommunity.find}">
+                            <tr>
+                                <!-- a태그 걸어야함 -->
+                                <td>${list.title} <b>[${list.commentcount}]</b></td>
+                            </tr>
+                        </c:forEach>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">캠핑여행&후기</h3>
+                       </div>
+                        <div class="col text-right">
+                            <a href="/admin/memberInfo.do" class="btn btn-sm btn-primary">더 보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <c:forEach var="list" items="${recentCommunity.review}">
+                            <tr>
+                                <!-- a태그 걸어야함 -->
+                                <td>${list.title} <b>[${list.commentcount}]</b></td>
+                            </tr>
+                        </c:forEach>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">중고거래</h3>
+                        </div>
+                        <div class="col text-right">
+                            <a href="/admin/memberInfo.do" class="btn btn-sm btn-primary">더 보기</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <c:forEach var="list" items="${recentCommunity.deal}">
+                            <tr>
+                                <!-- a태그 걸어야함 -->
+                                <td>${list.title} <b>[${list.commentcount}]</b></td>
+                            </tr>
+                        </c:forEach>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <%--<div class="col-lg-6">
+            <div class="card" style="width: 40rem;">
+                <div class="card-header" style="text-align: center; padding: 10px 10px; margin-top: 8px">
+                    <h2>자유게시판</h2>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">자세히보기</a>
+                </div>
+            </div>
+        </div>--%>
     </div>
 </div>
 
@@ -375,7 +425,7 @@
     let ctx = document.getElementById('visit-chart').getContext('2d');
 
     let myChart = new Chart(ctx, {
-        type: 'bar', // 차트의 형태
+        type: 'line', // 차트의 형태
         data: { // 차트에 들어갈 데이터
             labels: [
                 //x 축

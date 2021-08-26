@@ -18,7 +18,7 @@
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
             <a class="navbar-brand" href="/admin/main.do">
-                관리자메인 로고들어갈곳
+                <img src="/resources/images/adminLogo.png" alt="" height="60" width="200">
             </a>
         </div>
         <div class="navbar-inner">

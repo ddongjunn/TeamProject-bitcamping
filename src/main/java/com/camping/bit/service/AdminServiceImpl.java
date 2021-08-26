@@ -56,5 +56,10 @@ public class AdminServiceImpl implements AdminService{
         return dao.regiPathCount();
     }
 
+    @Override
+    public List<CommunityDto> recentCommunity() {
+        return dao.recentCommunity();
+    }
+
 
 }

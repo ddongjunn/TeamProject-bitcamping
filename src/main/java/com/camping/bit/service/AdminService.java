@@ -21,4 +21,7 @@ public interface AdminService {
     public int getQnaWaitTotalCount();
 
     public Map<String,Object> regiPathCount();
+
+    public List<CommunityDto> recentCommunity();
+
 }

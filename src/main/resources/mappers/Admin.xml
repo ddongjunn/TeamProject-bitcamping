@@ -58,8 +58,8 @@
             COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE, USER_ID
             FROM COMMUNITY_BBS
             WHERE 1=1
-            AND BBSTYPE = #{bbstype}
             AND DEL = 0
+            AND BBSTYPE = #{bbstype}
                 <if test="choice != null and choice != '' and search != null and search != ''">
                     <if test="choice == 'title'">
                         AND TITLE LIKE '%'||#{search}||'%'
@@ -107,5 +107,62 @@
     <select id="regiPathCount" resultType="map">
         SELECT (SELECT count(*) FROM MEMBER WHERE AUTH = 0) AS TOTAL ,(SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'none' AND AUTH = 0) AS BITCAMPING, (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'kakao' AND AUTH = 0) AS KAKAO, (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'naver' AND AUTH = 0) AS NAVER FROM DUAL
     </select>
+
+    <select id="recentCommunity" resultType="CommunityDto">
+
+        SELECT TITLE,BBSTYPE,WDATE,COMMUNITY_SEQ,
+               (SELECT NVL(COUNT(*),0)
+               FROM COMMUNITY_BBS_COMMENT
+               WHERE COMMUNITY_BBS.COMMUNITY_SEQ = COMMUNITY_BBS_COMMENT.COMMUNITY_SEQ
+                 AND DEL = 0) AS COMMENTCOUNT
+        FROM COMMUNITY_BBS
+        WHERE BBSTYPE = 'find' AND DEL = 0
+        <![CDATA[
+            AND ROWNUM <= 7
+        ]]>
+
+        UNION
+
+        SELECT TITLE,BBSTYPE,WDATE,COMMUNITY_SEQ,
+               (SELECT NVL(COUNT(*),0)
+                FROM COMMUNITY_BBS_COMMENT
+                WHERE COMMUNITY_BBS.COMMUNITY_SEQ = COMMUNITY_BBS_COMMENT.COMMUNITY_SEQ
+                  AND DEL = 0) AS COMMENTCOUNT
+        FROM COMMUNITY_BBS
+        WHERE BBSTYPE = 'free' AND DEL = 0
+        <![CDATA[
+            AND ROWNUM <= 7
+        ]]>
+
+        UNION
+
+        SELECT TITLE,BBSTYPE,WDATE,COMMUNITY_SEQ,
+               (SELECT NVL(COUNT(*),0)
+                FROM COMMUNITY_BBS_COMMENT
+                WHERE COMMUNITY_BBS.COMMUNITY_SEQ = COMMUNITY_BBS_COMMENT.COMMUNITY_SEQ
+                  AND DEL = 0) AS COMMENTCOUNT
+        FROM COMMUNITY_BBS
+        WHERE DEL = 0
+          AND (BBSTYPE = 'sell' or BBSTYPE = 'buy' or BBSTYPE = 'soldout')
+        <![CDATA[
+            AND ROWNUM <= 7
+        ]]>
+
+        UNION
+
+        SELECT TITLE,BBSTYPE,WDATE,COMMUNITY_SEQ,
+               (SELECT NVL(COUNT(*),0)
+                FROM COMMUNITY_BBS_COMMENT
+                WHERE COMMUNITY_BBS.COMMUNITY_SEQ = COMMUNITY_BBS_COMMENT.COMMUNITY_SEQ
+                  AND DEL = 0) AS COMMENTCOUNT
+        FROM COMMUNITY_BBS
+        WHERE BBSTYPE = 'review' AND DEL = 0
+        <![CDATA[
+          AND ROWNUM <= 7
+        ]]>
+        ORDER BY BBSTYPE, WDATE DESC
+
+    </select>
+
 
   </mapper>

@@ -13,7 +13,12 @@
             COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE
             FROM COMMUNITY_BBS
                 WHERE 1=1
+                <if test="dealType == all">
+                    AND (BBSTYPE = 'sell' or BBSTYPE = 'buy' or BBSTYPE = 'soldout')
+                </if>
+                <if test="dealType == null and dealType '' ">
                     AND BBSTYPE = #{bbstype}
+                </if>
                     AND USER_ID = #{id}
                     AND DEL = 0
                     <if test="choice != null and choice != '' and search != null and search != ''">
@@ -34,7 +39,12 @@
         SELECT NVL(COUNT(*), 0)
         FROM COMMUNITY_BBS
         WHERE 1=1
-            AND BBSTYPE = #{bbstype}
+            <if test="dealType == all">
+                AND (BBSTYPE = 'sell' or BBSTYPE = 'buy' or BBSTYPE = 'soldout')
+            </if>
+            <if test="dealType == null and dealType '' ">
+                AND BBSTYPE = #{bbstype}
+            </if>
             AND USER_ID = #{id}
             AND DEL = 0
         <if test="choice != null and choice != '' and search != null and search != ''">
