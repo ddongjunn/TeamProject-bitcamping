@@ -30,7 +30,7 @@
                </if>
             </if>
             
-            ORDER BY COMMUNITY_SEQ DESC
+            ORDER BY WDATE DESC
             ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
          </select>
@@ -99,7 +99,7 @@
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
    
-   <!-- 좋이요 갯수 가져오는거 -->
+   <!-- 좋아요 갯수 가져오는거 -->
    <select id="likeCount" parameterType="int" resultType="Integer">
       SELECT COUNT(*) AS TOTAL
       FROM COMMUNITY_BBS_LIKE
@@ -198,7 +198,7 @@
                   AND B.NICKNAME=#{search}
                </if>
             </if>
-            ORDER BY COMMUNITY_SEQ DESC
+            ORDER BY WDATE DESC
             ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
    </select>
@@ -276,7 +276,7 @@
                   AND B.NICKNAME=#{search}
                </if>
             </if>
-            ORDER BY COMMUNITY_SEQ DESC
+            ORDER BY WDATE DESC
             ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
    </select>
@@ -341,6 +341,19 @@
          WHERE 1=1
             AND A.USER_ID = B.ID
             AND DEL = 0
+            AND (A.BBSTYPE = 'sell' OR A.BBSTYPE = 'buy' OR A.BBSTYPE = 'soldout')
+           <if test="kind != null and kind != ''">
+	     		<if test="kind == 'sell'">
+					AND BBSTYPE = 'sell'
+				</if>
+				<if test="kind == 'buy'">
+					AND BBSTYPE = 'buy'
+				</if>
+				<if test="kind == 'soldout'">
+					AND BBSTYPE = 'soldout'
+				</if>
+	      </if>
+	           
             <if test='choice != null and choice != " "
                     and search != null and search != " "'>
                <if test='choice == "title"'>
@@ -353,19 +366,8 @@
                   AND B.NICKNAME=#{search}
                </if>
             </if>
-            <if test="kind != null and kind != ''">
-            		AND (A.BBSTYPE = 'sell' OR A.BBSTYPE = 'buy' OR A.BBSTYPE = 'soldout')
-					<if test="kind == 'sell'">
-						AND BBSTYPE = 'sell'
-					</if>
-					<if test="kind == 'buy'">
-						AND BBSTYPE = 'buy'
-					</if>
-					<if test="kind == 'soldout'">
-						AND BBSTYPE = 'soldout'
-					</if>
-			</if>
-            ORDER BY COMMUNITY_SEQ DESC
+           
+            ORDER BY WDATE DESC
             ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
    </select>
@@ -378,7 +380,19 @@
       WHERE 1=1
       AND A.USER_ID = B.ID
       AND DEL = 0
-      AND (A.BBSTYPE = 'sell' OR A.BBSTYPE = 'buy' OR A.BBSTYPE = 'soldout')
+	  AND (A.BBSTYPE = 'sell' OR A.BBSTYPE = 'buy' OR A.BBSTYPE = 'soldout')
+           <if test="kind != null and kind != ''">
+	     		<if test="kind == 'sell'">
+					AND BBSTYPE = 'sell'
+				</if>
+				<if test="kind == 'buy'">
+					AND BBSTYPE = 'buy'
+				</if>
+				<if test="kind == 'soldout'">
+					AND BBSTYPE = 'soldout'
+				</if>
+	      </if>
+		
       <if test='choice != null and choice != " "
            and search != null and search != " "'>
          <if test='choice == "title"'>
@@ -391,6 +405,7 @@
             AND B.NICKNAME=#{search}
          </if>
       </if>
+     
    </select>
 
    <!-- 중고거래 작성글 저장 -->
@@ -414,6 +429,7 @@
    <!-- 중고거래 글 수정 -->
    <update id="dealUpdate" parameterType="CommunityDto">
       UPDATE COMMUNITY_BBS SET
+      					 BBSTYPE=#{bbstype},
                          TITLE=#{title},
                          CONTENT=#{content},
                          WDATE=SYSDATE
@@ -451,7 +467,7 @@
                   AND B.NICKNAME=#{search}
                </if>
             </if>
-            ORDER BY COMMUNITY_SEQ DESC
+            ORDER BY WDATE DESC
             ) C
             WHERE RNUM BETWEEN #{start} AND #{end}
    </select>
