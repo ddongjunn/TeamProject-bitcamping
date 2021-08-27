@@ -36,8 +36,8 @@ td{
   padding-bottom: 30px;
 }
 .option-content {
- /*  border-bottom: 1px solid #e0e0e0; */
-  margin : 10px 200px 30px 100px;
+   border-bottom: 1px solid #e0e0e0; 
+   margin : 10px 200px 0 100px;
 }
 .category {
   font-size: 19px;

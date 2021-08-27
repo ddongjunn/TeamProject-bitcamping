@@ -146,9 +146,15 @@ public class CampingServiceImpl implements CampingService {
 	}
 	
 	@Override //캠핑장 리뷰에 달린 댓글 뿌리기 
-	public List<CampingCommentDto> campingShowComment(int review_seq) {
-		return dao.campingShowComment(review_seq);
+	public List<CampingCommentDto> getCampingReviewComment(CampingParam param) {
+		return dao.getCampingReviewComment(param);
 	}
+	
+	@Override //캠핑장 리뷰 댓글 갯수세기
+	public int getCampingReviewCommentCount(int review_seq) {
+		return dao.getCampingReviewCommentCount(review_seq);
+	}
+
 
 	@Override //캠핑장 리뷰에 댓글 달기 
 	public Boolean campingWriteComment(CampingCommentDto cc) {
@@ -165,4 +171,5 @@ public class CampingServiceImpl implements CampingService {
 		return dao.campingUpdateComment(cc);
 	}
 
+	
 }

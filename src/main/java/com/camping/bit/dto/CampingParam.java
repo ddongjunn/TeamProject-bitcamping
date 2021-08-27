@@ -42,6 +42,11 @@ public class CampingParam implements Serializable{
 	
 	private int contentid;
 	
+	private int review_seq;
+	
+	private String id;
+	private String nickname;
+	
 	public CampingParam() {
 		
 	}
@@ -50,7 +55,7 @@ public class CampingParam implements Serializable{
 			String searchWord, String[] searchDo, String[] searchCl, String[] lctCl, String[] induty, String[] resveCl,
 			String eqpmnLendCl, String exprnProgrm, String[] animalCmgCl, String[] sbrsCl, String siteBottomCl1,
 			String siteBottomCl2, String siteBottomCl3, String siteBottomCl4, String siteBottomCl5, String choice,
-			String search, String reviewsorting, int contentid) {
+			String search, String reviewsorting, int contentid, int review_seq, String id, String nickname) {
 		super();
 		this.pageNumber = pageNumber;
 		this.start = start;
@@ -77,7 +82,12 @@ public class CampingParam implements Serializable{
 		this.search = search;
 		this.reviewsorting = reviewsorting;
 		this.contentid = contentid;
+		this.review_seq = review_seq;
+		this.id = id;
+		this.nickname = nickname;
 	}
+
+
 
 	public int getPageNumber() {
 		return pageNumber;
@@ -290,4 +300,14 @@ public class CampingParam implements Serializable{
 	public void setContentid(int contentid) {
 		this.contentid = contentid;
 	}
+
+	public int getReview_seq() {
+		return review_seq;
+	}
+
+	public void setReview_seq(int review_seq) {
+		this.review_seq = review_seq;
+	}
+	
+	
 }

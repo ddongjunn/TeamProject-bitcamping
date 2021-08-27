@@ -90,8 +90,11 @@ public interface CampingDao {
 	//캠핑장 좋아요 수 갯수(likecount)
 	public int getCampingLikecount(int contentid);
 	
-	//캠핑장 리뷰 보여주기
-	public List<CampingCommentDto> campingShowComment(int review_seq);
+	//캠핑장 리뷰 뿌리기
+	public List<CampingCommentDto> getCampingReviewComment(CampingParam param);
+	
+	//캠핑장 리뷰 댓글 갯수세기 
+	public int getCampingReviewCommentCount(int review_seq);
 	
 	//캠핑장 리뷰 댓글달기
 	public Boolean campingWriteComment(CampingCommentDto cc);

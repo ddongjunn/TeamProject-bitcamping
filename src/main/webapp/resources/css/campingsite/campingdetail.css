@@ -43,7 +43,7 @@
     }
     
     #searchBox{
-    	margin : 0 150px 30px 0;
+    	margin : 0 150px 30px 300px;
     }
     /*슬라이더*/
     
@@ -431,4 +431,5 @@ ul.bxslider {
     top: 20px;
     margin: 0;
 }
-  
+ 
+/*아이콘 등장하는 리스트*/

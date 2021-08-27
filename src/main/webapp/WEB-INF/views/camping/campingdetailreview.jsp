@@ -43,7 +43,6 @@ REFERENCES MEMBER (id);-->
 <body>
 <% 
 CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailreview");
-//List<CampingCommentDto> commentList = (List<CampingCommentDto>)request.getAttribute("commentList");
 %>
 <input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
 <input type="hidden" name="user_id" value="${login.id}">
@@ -61,71 +60,32 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 	<button type = "button" id = 'deleteBtn' class = "btn btn-outline-success btn-sm" >리뷰 삭제하기</button>
 </c:if>
 </div>
-<div id = "commentlist" style = "margin-left :10px;">
-<c:choose>
-<c:when test="${not empty useridx}">
-<div id = "comments">
+<div id = "commentlist">
 <div id = "writer">
-${login.id}님 댓글을 남겨주세요!
+	<c:choose>
+		<c:when test="${not empty useridx}">
+			${login.id}님 댓글을 남겨주세요!
+			<textarea name = "comment" id = "content" placeholder="댓글을 입력해주세요" rows = "5" cols = "100" ></textarea>
+			<button type = "button" id = "writeCommentBtn" class = "btn btn-outline-success btn-sm" >등록</button> 
+		</c:when>
+		<c:otherwise>
+			댓글 등록은 로그인 후 가능합니다!
+		</c:otherwise>
+	</c:choose>
 </div>
-<textarea name = "comment" id = "content" placeholder="댓글을 입력해주세요" rows = "5" cols = "100" ></textarea>
-<button type = "button" id = "writeCommentBtn" class = "btn btn-outline-success btn-sm" >등록</button> 
-</div>
-
-</c:when>
-<c:otherwise>
-댓글 등록은 로그인 후 가능합니다!
-</c:otherwise>
-</c:choose>
- <%-- <table border="1">
+ 
+ <table>
     <thead>
-    <h2>댓글 목록</h2>
         <tr>
-            <td>내용</td>
-            <td>작성자</td>
-            <td>작성일</td>
+          <td></td>
+          <td></td>
         </tr>
     </thead>
     <tbody id="commentlisting">
-   
-    <c:forEach items = "${commentList}" var = "comment" varStatus = "i">
-    <fmt:formatDate var="formatdate" value="${comment.wdate}" pattern="yyyy년 MM월 dd일"/>
-    <tr>
-    <td> ${comment.content}</td>
-    <td>${comment.user_id}</td>
-    <td>${formatdate}</td>
-    </tr>
-    </c:forEach>
+    <!-- ajax로 불러와서 뿌려주는 공간 -->
     </tbody>	
-</table> --%>
- 
- <div id = "commentlisting">
-   <c:forEach items = "${commentList}" var = "comment" varStatus = "i">
-    <fmt:formatDate var="formatdate" value="${comment.wdate}" pattern="yyyy년 MM월 dd일"/>
-    <ul>
-    	
-	    <li>
-	    ${comment.user_id}
-	    ${formatdate}
-	     
-	    <div id = "hided">
-	    <c:if test="${useridx==comment.user_id}">
-	   
-	    <button type = "button" id = 'commentUpdateBtn' class = "btn btn-outline-success btn-sm" onClick = "commentUpdate(${comment.comment_seq}, '${comment.content}')">수정</button>
-	    <button type = "button" id = 'commentDeleteBtn' class = "btn btn-outline-success btn-sm" onClick = "commentDelete(${comment.comment_seq})">삭제</button>
-	    </c:if>
-	    </div>
-	    </li>
-	  	<li>
-	  	<div class = "commentContent${comment.comment_seq}">
-	    ${comment.content}
-	    </div>
-	    </li>
-	    
-    </ul>
-     <div id = "updateform"></div>
-    </c:forEach>
- </div>
+</table>
+
  
  <div class="container" style = "width : 100%; text-align : center">
     <div style = "display : inline-block">
@@ -139,6 +99,8 @@ ${login.id}님 댓글을 남겨주세요!
 </body>
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	comments(); //댓글뿌리기
 	
 	$("#updateBtn").click(function(){ //리뷰 수정하기
 		location.href = "campingupdatereview.do?review_seq=" +<%=campingbbs.getReview_seq()%> + "&contentid=" + <%=campingbbs.getContentid()%>;
@@ -173,6 +135,13 @@ $(document).ready(function(){
 		const content =  $("#content").val();
 		<fmt:formatDate var="formatdate" value="${today}" pattern="yyyy년 MM월 dd일"/>
 		const wdate = "${formatdate}";
+		
+		let today = new Date();   
+
+		let year = today.getFullYear(); // 년도
+		let month = leadZero((today.getMonth() + 1),2);  // 월
+		let date = today.getDate();  // 날짜
+		
 		var paramData = {"user_id" : user_id, "review_seq" : review_seq, "content" : content};
 		console.log(paramData);
 		$.ajax({
@@ -184,10 +153,18 @@ $(document).ready(function(){
 				//console.log(result);
 				if(result == "success"){
 				//$("#commentlisting").html("");
-					let str = 
-						"<li>" + user_id + "님의 소중한 댓글이 추가되었습니다" + wdate +  "</li>"
-						+"<li>" + content + "</li>";
-					$("#commentlisting").append(str);
+					let str = "<tr>"
+						+ "<td>" + user_id + "</td>"
+						+ "<td>" + year + "-" + month + "-" + date + "</td>"
+						+ "</tr>"
+						+ "<tr>"
+						+ "<td>" + content + "</td>"
+						+ "<td>" + "<a href = 'javascript:commentUpdate();'>수정</a>" 
+						+ "<a href = 'javascript:commentDelete();'>삭제</a>" 
+						+ "</td>" + "</tr>";
+					
+					$("#commentlisting").prepend(str);
+				
 				}
 			}, //success 끝나는 곳
 			error:function(request,status,error){
@@ -198,7 +175,7 @@ $(document).ready(function(){
 	});//writeCommentBtn 끝나는 곳
 	
 	
-	let totalCount = ${ReviewPage};	// 서버로부터 총글의 수를 취득
+	let totalCount = ${commentPage};	// 서버로부터 총글의 수를 취득
 	//alert(totalCount);
 	let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
 	//alert(nowPage);
@@ -241,7 +218,7 @@ $(document).ready(function(){
 			console.log(result);
 			if(result == "success"){
 				alert("삭제 성공");
-				location.href = "campingdetailreview.do?contentid=" + <%=campingbbs.getContentid()%> + "&review_seq=" + <%=campingbbs.getReview_seq()%>;	
+				$('.commentContent' + comment_seq).remove();
 			}
 		}, //success 끝나는 곳
 		error:function(request,status,error){
@@ -253,13 +230,13 @@ $(document).ready(function(){
 	function commentUpdate(comment_seq,content){ //폼보여주는 function
 	console.log("commentUpdateBtn 클릭");
 	//const content = $("#commentUpdateBtn").val();
-	console.log(comment_seq, content);
+	//console.log(comment_seq, content);
 	//$('.commentContent'+comment_seq).hide();
 	let str = `<textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요" rows="5" cols = "100">${'${content}'}'</textarea>
         <button type="button" id="sendUpdateBtn" onClick="update(${'${comment_seq}'})" class = "btn btn-outline-success btn-sm" >수정</button>`;
-	console.log(str);
+	//console.log(str);
 	//$("#updateform").append(str);
-	$('.commentContent' + comment_seq).html(str);
+	$('.commentArea' + comment_seq).html(str);
 	}; //commentUpdateBtn 클릭 끝
 	
 	
@@ -278,7 +255,7 @@ $(document).ready(function(){
 			if(result == "success"){
 				//alert("수정 성공");
 				let str = `${'${updateContent}'}`;
-				$('.commentContent' + comment_seq).html(str);
+				$('.commentArea' + comment_seq).html(str);
 			}
 		}, //success 끝나는 곳
 		error:function(request,status,error){
@@ -288,15 +265,57 @@ $(document).ready(function(){
 		}); //ajax sendUpdateBtn 끝나는 곳  
 	};//function update 끝나는 곳
 
+	function comments(){ //댓글 뿌려주기
+		 const review_seq = new URLSearchParams(location.search).get('review_seq');
+		 var paramData = {"review_seq" : review_seq};
+		 //console.log(paramData);
+			$.ajax({
+				url : '/csite/campingReviewComment.do',
+				type : 'get',
+				dataType : 'text',
+				data : paramData,
+				success : function(response){
+					//alert(JSON.stringify(response));
+					//console.log(response);
+					$("#reviewlisting").html("");
+					const parsedResponse = JSON.parse(response);
+	
+					if(response == '[]'){
+						let str = "<tr>"
+					    +"<td colspan='2' class='nodata'>아직 아무도 댓글을 달지 않았어요! 첫 댓글을 달아볼까요?</td>"
+					    +"</tr>"
+					    $("#commentlisting").append(str);
+					}
+					parsedResponse.forEach( (item, idx) => {
+						let str = "<tr>"
+							+ "<td>" + item.user_id + "</td>"
+							+ "<td>" + item.wdate+ "</td>"
+							+ "</tr>"
+							+ "<tr class = commentArea" + item.comment_seq + ">"
+							+ "<td>" + item.content + "</td>"
+							+ "<td>" + "<a href = 'javascript:commentUpdate(" + item.comment_seq + ",&quot;" + item.content + "&quot;);'>수정</a>" 
+							+ "<a href = 'javascript:commentDelete(" + item.comment_seq + ");'>삭제</a>" 
+							+ "</td>"+ "</tr>";
+					
+						$("#commentlisting").append(str);
+						});
+					},//success 끝나는 곳
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}//error 끝나는 곳
+			}); //pagemove ajax 끝나는 곳
+		}; //comments function 끝나는 곳
+		
+		
 	function pagemove(page){ //누르는 순간 페이지네이션에 지금 page 숫자를 알려준다
 		 const pageNumber = page-1;
-		 console.log(pageNumber);
+		 //console.log(pageNumber);
 		 //alert(pageNumber);
-		 const contentid = new URLSearchParams(location.search).get('contentid');
-		 var paramData = {"reviewsorting" : $("#sorting").val(), "contentid" : contentid, "choice" : $("#choice").val(), "search" : $("#search").val(), "pageNumber" : pageNumber};
-		 console.log(paramData);
+		 const review_seq = new URLSearchParams(location.search).get('review_seq');
+		 var paramData = {"review_seq" : review_seq, "pageNumber" : pageNumber};
+		// console.log(paramData);
 			$.ajax({
-				url : '/csite/campingSearchReview.do',
+				url : '/csite/campingReviewComment.do',
 				type : 'POST',
 				dataType : 'text',
 				//contextType : "text",
@@ -304,25 +323,26 @@ $(document).ready(function(){
 				success : function(response){
 					//alert(JSON.stringify(response));
 					console.log(response);
-					$("#reviewlisting").html("");
+					$("#commentlisting").html("");
 					const parsedResponse = JSON.parse(response);
 	
 					if(response == '[]'){
 						let str = "<tr>"
-					    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+					    +"<td colspan='2' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
 					    +"</tr>"
-					    $("#reviewlisting").append(str);
+					    $("#commentlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
 						let str = "<tr>"
-							+ "<td>" + (idx + 1) + "</td>"
-							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
 							+ "<td>" + item.user_id + "</td>"
-							+ "<td>" + item.readcount + "</td>"
-							+ "<td>" + item.wdate + "</td>"
-							+ "</tr>";
-						$("#reviewlisting").append(str);
-						$("#searchBox").show();
+							+ "<td>" + item.wdate+ "</td>"
+							+ "</tr>"
+							+ "<tr class = commentArea" + item.comment_seq + ">"
+							+ "<td>" + item.content + "</td>"
+							+ "<td>" + "<a href = 'javascript:commentUpdate(" + item.comment_seq + ",&quot;" + item.content + "&quot;);'>수정</a>" 
+							+ "<a href = 'javascript:commentDelete(" + item.comment_seq + ");'>삭제</a>" 
+							+ "</td>"+ "</tr>";
+						$("#commentlisting").append(str);
 						});
 					},//success 끝나는 곳
 				error:function(request,status,error){
@@ -330,6 +350,17 @@ $(document).ready(function(){
 				}//error 끝나는 곳
 			}); //pagemove ajax 끝나는 곳
 		} //pagemove function 끝나는 곳
+		
+		
+			
+			
+			   function leadZero(num, n) {
+		            var leadZero = "";
+		            num = num.toString();
+		            if (num.length < n) { for (var i = 0; i < n - num.length; i++) leadZero += "0"; }
+		            return leadZero + num;
+		        } //월 앞에 0붙이기
+		
 
 </script>
 </html>
