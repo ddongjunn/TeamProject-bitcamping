@@ -21,6 +21,10 @@
                 <div class="bbb_deals" style="margin-bottom: 50px;">
                     <!-- <div class="ribbon ribbon-top-right"><span><small class="cross">x </small>4</span></div> -->
                     <!-- <div class="bbb_deals_title">Today's Combo Offer</div> -->
+                    <div style="float: right; z-index: 1;">
+                    	<a href="/admin/product-update.do?product_Seq=${list.product_Seq}">수정</a>
+                    	<a href="javascript:confirm(${list.product_Seq});">삭제</a>
+                    	</div>
                     <div class="bbb_deals_slider_container">
                         <div class=" bbb_deals_item">
                             <div class="bbb_deals_image"><a href="/rent/detail.do?product_Seq=${list.product_Seq}"><img src="/resources/upload/${list.thumbnail_Name}" alt="" height="250px"></a></div>
@@ -54,6 +58,25 @@
         </c:forEach>
     </div>
 </div>
+
+<script type="text/javascript">
+
+	function confirm(product_Seq){
+		Swal.fire({
+		  title: '삭제하시겠습니까?',
+		  showCancelButton: true,
+		  confirmButtonText: '삭제하기',
+		  denyButtonText: '취소',
+		}).then((result) => {
+			  if (result.isConfirmed) {
+				  location.href="/admin/product-delete.do?product_Seq=" + product_Seq;
+			  } else if (result.isDenied) {
+			    	return;
+			  }
+		})
+	}
+
+</script>
 
 </body>
 </html>

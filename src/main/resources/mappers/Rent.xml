@@ -15,8 +15,10 @@
 	</insert>
 	
 	<select id="getProductList" resultType="ProductDetailDto">
-		SELECT *
+		SELECT PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
+  		CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL, (SELECT NVL(AVG(RATE), 0) FROM PRODUCT_REVIEW WHERE PRODUCT_SEQ = PRODUCT.PRODUCT_SEQ) AS RATE
   		FROM PRODUCT
+  		WHERE DEL = 0
 		ORDER BY WDATE DESC
 	</select>
 	
@@ -116,6 +118,27 @@
 		UPDATE PRODUCT_ORDER
 		SET REVIEW_STATUS = 1
 		WHERE ORDER_SEQ = #{order_Seq}
+	</update>
+	
+	<update id="productUpdateAf" parameterType="ProductDetailDto">
+		UPDATE PRODUCT
+		SET PRODUCT_NAME = #{product_Name}, 
+			PRODUCT_DESC = #{product_Desc}, 
+			BASE_ITEM = #{base_Item}, 
+			PRODUCT_PRICE = #{product_Price}, 
+			PRODUCT_STOCK = #{product_Stock}, 
+			THUMBNAIL_NAME = #{thumbnail_Name}, 
+  			CONTENT = #{content}, 
+  			INCLUDE_LIGHT = #{include_Light}, 
+  			INCLUDE_GRILL = #{include_Grill}, 
+  			RENT_TYPE = #{rent_Type}
+  		WHERE PRODUCT_SEQ = #{product_Seq}
+	</update>
+	
+	<update id="productDelete" parameterType="ProductDetailDto">
+		UPDATE PRODUCT
+		SET DEL = 1
+  		WHERE PRODUCT_SEQ = #{product_Seq}
 	</update>
 
 </mapper>

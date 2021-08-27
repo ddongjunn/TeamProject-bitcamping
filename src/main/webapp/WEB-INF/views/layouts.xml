@@ -93,6 +93,10 @@
    <definition name="admin-rentList.tiles" extends="adminmain.tiles">
       <put-attribute name="body" value="/WEB-INF/views/admin/rentList-admin.jsp" />
    </definition>
+   
+   <definition name="admin-productUpdate.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/rentUpdate-admin.jsp" />
+   </definition>
 
    <definition name="admin-community-deal.tiles" extends="adminmain.tiles">
       <put-attribute name="body" value="/WEB-INF/views/admin/community-deal.jsp" />
