@@ -24,10 +24,10 @@
         <h3 class="title">활동정보</h3>
         <a href="/account/community.do?bbstype=hello">가입인사</a>
         <a href="/account/community.do?bbstype=free">자유게시판</a>
-        <a href="/account/community.do?bbstype=deal">중고거래</a>
+        <a href="/account/community-deal.do?">중고거래</a>
         <a href="/account/community.do?bbstype=review">캠핑&여행 후기</a>
         <a href="/account/community.do?bbstype=find">캠퍼 모집</a>
-        <a href="/account/csite-review.do">캠핑장 리뷰</a>
+        <a href="/account/camping-review.do">캠핑장 리뷰</a>
     </div>
 
     <div class="lnb">

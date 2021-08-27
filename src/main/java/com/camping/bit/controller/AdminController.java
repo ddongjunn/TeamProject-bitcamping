@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,14 +63,14 @@ public class AdminController {
                 recentCommunity.get(i).setTitle(str + "...");
             }
 
-                if(recentCommunity.get(i).getBbstype().equals("deal")){
-                    dealList.add(recentCommunity.get(i));
+                if(recentCommunity.get(i).getBbstype().equals("review")){
+                    reviewList.add(recentCommunity.get(i));
                 }else if(recentCommunity.get(i).getBbstype().equals("free")){
                     freeList.add(recentCommunity.get(i));
                 }else if(recentCommunity.get(i).getBbstype().equals("find")){
                     findList.add(recentCommunity.get(i));
                 }else{
-                    reviewList.add(recentCommunity.get(i));
+                    dealList.add(recentCommunity.get(i));
                 }
         }
 
@@ -78,9 +79,8 @@ public class AdminController {
         communityMap.put("free",freeList);
         communityMap.put("find",findList);
         communityMap.put("review",reviewList);
-        model.addAttribute("recentCommunity",communityMap);
 
-        System.out.println(communityMap);
+        model.addAttribute("recentCommunity",communityMap);
 
         model.addAttribute("memberCount",service.memberCount());
         model.addAttribute("qnaCount",service.getQnaWaitTotalCount());
@@ -206,6 +206,67 @@ public class AdminController {
         }
 
         return "redirect:/admin/product.do";
+    }
+
+    @RequestMapping(value = "community-deal.do", method = RequestMethod.GET)
+    public String communityDeal(HttpSession session, Model model, MypageParam param){
+
+        int sn = param.getPageNumber();
+        int start = 1 + 15 * sn;
+        int end = 15 + 15 * sn;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        // DB 글목록 불러오기
+        List<CommunityDto> list = service.dealList(param);
+
+        // model 이용해 list룰 "dealList" 짐싸서 보냄
+        model.addAttribute("dealList", list);
+
+        // 게시글 총 수
+        int totalCount = service.dealCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        // 현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+        model.addAttribute("kind", param.getKind());
+
+        return "admin-community-deal.tiles";
+    }
+
+    @RequestMapping(value = "camping-review.do", method = RequestMethod.GET)
+    public String campingReview(HttpSession session, Model model, CampingParam param){
+
+        int sn = param.getPageNumber();
+        int start = 1 + 15 * sn;
+        int end = 15 + 15 * sn;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        // DB 글목록 불러오기
+        List<CampingBbsDto> list = service.campingReviewList(param);
+        System.out.println("campingreview : " + list);
+        // model 이용해 list룰 "dealList" 짐싸서 보냄
+        model.addAttribute("list", list);
+
+        // 게시글 총 수
+        int totalCount = service.campingReviewCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        // 현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+
+        return "admin-camping-review.tiles";
     }
 
 }

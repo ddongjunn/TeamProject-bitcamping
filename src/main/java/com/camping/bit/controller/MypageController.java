@@ -1,9 +1,6 @@
 package com.camping.bit.controller;
 
-import com.camping.bit.dto.CommunityDto;
-import com.camping.bit.dto.MemberDto;
-import com.camping.bit.dto.MypageParam;
-import com.camping.bit.dto.ProductOrderDto;
+import com.camping.bit.dto.*;
 import com.camping.bit.service.MemberService;
 import com.camping.bit.service.MypageService;
 import org.apache.ibatis.jdbc.Null;
@@ -66,33 +63,79 @@ public class MypageController {
         model.addAttribute("nowPage", nowPage + 1);
 
         model.addAttribute("bbstype", param.getBbstype());
-       /* switch (param.getBbstype()) {
-            case "free":
-                model.addAttribute("bbstype", "자유게시판");
-                break;
-            case "deal":
-                model.addAttribute("bbstype", "중고거래");
-                break;
-            case "review":
-                model.addAttribute("bbstype", "캠핑&여행 후기");
-                break;
-            case "find":
-                model.addAttribute("bbstype", "캠퍼 모집");
-                break;
-        }*/
-
         model.addAttribute("search", param.getSearch());
         model.addAttribute("choice", param.getChoice());
 
         return "mypage-community.tiles";
     }
 
+    @RequestMapping(value = "community-deal.do", method = RequestMethod.GET)
+    public String communityDeal(HttpSession session, Model model, MypageParam param){
 
-    @RequestMapping(value = "csite-review.do", method = RequestMethod.GET)
-    public String mypageCampingReview() {
+        int sn = param.getPageNumber();
+        int start = 1 + 15 * sn;
+        int end = 15 + 15 * sn;
 
+        param.setStart(start);
+        param.setEnd(end);
 
-        return "mypage-csite-review.tiles";
+        //세션에 있는 아이디로 param 셋팅
+        MemberDto user = (MemberDto) session.getAttribute("login");
+        param.setId(user.getId());
+
+        // DB 글목록 불러오기
+        List<CommunityDto> list = service.dealList(param);
+
+        // model 이용해 list룰 "dealList" 짐싸서 보냄
+        model.addAttribute("dealList", list);
+
+        // 게시글 총 수
+        int totalCount = service.dealCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        // 현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+        model.addAttribute("kind", param.getKind());
+
+        return "mypage-community-deal.tiles";
+    }
+
+    @RequestMapping(value = "camping-review.do", method = RequestMethod.GET)
+    public String campingReview(HttpSession session, Model model, CampingParam param){
+
+        int sn = param.getPageNumber();
+        int start = 1 + 15 * sn;
+        int end = 15 + 15 * sn;
+
+        //세션에 있는 아이디로 param 셋팅
+        MemberDto user = (MemberDto) session.getAttribute("login");
+        param.setId(user.getId());
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        // DB 글목록 불러오기
+        List<CampingBbsDto> list = service.campingReviewList(param);
+        System.out.println("campingreview : " + list);
+        // model 이용해 list룰 "dealList" 짐싸서 보냄
+        model.addAttribute("list", list);
+
+        // 게시글 총 수
+        int totalCount = service.campingReviewCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        // 현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+
+        return "mypage-camping-review.tiles";
     }
 
     @RequestMapping(value = "update.do", method = { RequestMethod.GET,RequestMethod.POST} )

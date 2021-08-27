@@ -1,8 +1,6 @@
 package com.camping.bit.service;
 
-import com.camping.bit.dto.CommunityDto;
-import com.camping.bit.dto.MemberDto;
-import com.camping.bit.dto.MypageParam;
+import com.camping.bit.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -24,4 +22,9 @@ public interface AdminService {
 
     public List<CommunityDto> recentCommunity();
 
+    public List<CommunityDto> dealList(MypageParam param);
+    public int dealCount(MypageParam param);
+
+    public List<CampingBbsDto> campingReviewList(CampingParam param);
+    public int campingReviewCount (CampingParam param);
 }

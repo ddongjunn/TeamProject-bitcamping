@@ -26,6 +26,10 @@ public class CampingBbsDto implements Serializable{
 	private Date wdate;
 	private int readcount;
 	private String user_id;
+	private String nickname;
 	private int revisit;
 	private int like_count;
+	private int commentCount;
+	private String campingName;
+
 }

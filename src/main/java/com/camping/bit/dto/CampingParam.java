@@ -41,6 +41,8 @@ public class CampingParam implements Serializable{
 	private String reviewsorting;
 	
 	private int contentid;
+	private String id;
+	private String nickname;
 	
 	public CampingParam() {
 		
@@ -289,5 +291,13 @@ public class CampingParam implements Serializable{
 
 	public void setContentid(int contentid) {
 		this.contentid = contentid;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

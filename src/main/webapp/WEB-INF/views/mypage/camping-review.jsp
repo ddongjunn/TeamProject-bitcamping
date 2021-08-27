@@ -15,82 +15,51 @@
     <title>Title</title>
 </head>
 <body>
-<c:choose>
-    <c:when test="${bbstype eq 'hello'}">
-        <div class="container-fluid" >
-            <h2>가입인사</h2>
-        </div>
-    </c:when>
-    <c:when test="${bbstype eq 'free'}">
-        <div class="container-fluid" >
-            <h2>자유게시판</h2>
-        </div>
-    </c:when>
-    <c:when test="${bbstype eq 'review'}">
-        <div class="container-fluid" >
-            <h2>캠핑&여행후기</h2>
-        </div>
-    </c:when>
-    <c:otherwise>
-        <div class="container-fluid" >
-            <h2>캠퍼모집</h2>
-        </div>
-    </c:otherwise>
-</c:choose>
+<div class="container-fluid" >
+    <h2>캠핑장리뷰</h2>
+</div>
+
 <div class="table-responsive">
     <div>
         <table class="table align-items-center">
             <thead class="thead-light">
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>조회수</th>
-                    <th>작성일</th>
-                </tr>
+            <tr>
+                <th>번호</th>
+                <th>캠핑장</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>좋아요</th>
+                <th>작성일</th>
+            </tr>
             </thead>
             <tbody class="list">
-                <c:if test="${empty list}">
-                    <tr>
-                        <td colspan="5" style="text-align: center">
-                            작성된 게시글이 없습니다.
-                        </td>
-                    </tr>
-                </c:if>
-                <c:forEach var="data" items="${list}">
-                    <c:if test="${data.del != '1'}">
-                        <tr>
-                            <td>${data.community_seq }</td>
+            <c:if test="${empty list}">
+                <tr>
+                    <td colspan="5" style="text-align: center">
+                        작성된 게시글이 없습니다.
+                    </td>
+                </tr>
+            </c:if>
+            <c:forEach var="data" items="${list}">
+                <tr>
+                    <td>${data.review_seq}</td>
+                    <td>${data.campingName}</td>
+                    <td>
+                        <a href='${pageContext.request.contextPath}/csite/campingdetailreview.do?review_seq=${data.review_seq}&contentid=${data.contentid}'>
+                                ${data.title}
+                        </a>
+                        <span style="font-size: 13px; color: tomato;">[${data.commentCount}]</span>
+                    </td>
 
-                            <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
-                            <c:if test="${bbstype eq 'free'}">
-                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'find'}">
-                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'deal'}">
-                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'review'}">
-                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'hello'}">
-                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-
-                            <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
-                            </td>
-
-                            <td>${data.nickname}</td>
-                            <td>${data.readcount}</td>
-                            <td>
-                                <fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-                                <fmt:formatDate value="${formatedDate}" pattern="yyyy.MM.dd HH:mm"/>
-                            </td>
-                        </tr>
-                    </c:if>
-                </c:forEach>
+                    <td>${data.nickname}</td>
+                    <td>${data.readcount}</td>
+                    <td>${data.like_count}</td>
+                    <td>
+                        <fmt:formatDate value="${data.wdate}" pattern="yyyy.MM.dd HH:mm"/>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
@@ -135,7 +104,7 @@
             totalCount = 1;
         }
         let totalPages = totalCount / pageSize;
-        
+
         if(totalCount % pageSize > 0){
             totalPages++;
         }
@@ -155,7 +124,7 @@
             last: '<span sria-hidden="true">»</span>',
             initiateStartPageClick:false,
             onPageClick: function(event,page){
-                location.href = "/admin/community.do?bbstype=" + '${bbstype}' + "&pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
+                location.href = "/account/camping-review.do?" + "pageNumber=" + (page - 1) + "&choice=" + choice + "&search=" + search;
             }
         });
 
@@ -201,7 +170,7 @@
                 return;
             }
 
-            location.href = "/admin/community.do?bbstype=" + '${bbstype}' + "&choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
+            location.href = "/account/camping-review.do?" + "choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
         });
     });
 </script>
