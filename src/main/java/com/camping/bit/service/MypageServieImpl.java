@@ -1,10 +1,7 @@
 package com.camping.bit.service;
 
 import com.camping.bit.dao.MypageDao;
-import com.camping.bit.dto.CommunityDto;
-import com.camping.bit.dto.MemberDto;
-import com.camping.bit.dto.MypageParam;
-import com.camping.bit.dto.ProductOrderDto;
+import com.camping.bit.dto.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,4 +50,26 @@ public class MypageServieImpl implements  MypageService{
 		
 		return dao.getMyOrderCount(param);
 	}
+
+    @Override
+    public List<CommunityDto> dealList(MypageParam param) {
+        return dao.dealList(param);
+    }
+
+    @Override
+    public int dealCount(MypageParam param) {
+        return dao.dealCount(param);
+    }
+
+    @Override
+    public List<CampingBbsDto> campingReviewList(CampingParam param) {
+        return dao.campingReviewList(param);
+    }
+
+    @Override
+    public int campingReviewCount(CampingParam param) {
+        return dao.campingReviewCount(param);
+    }
+
+
 }

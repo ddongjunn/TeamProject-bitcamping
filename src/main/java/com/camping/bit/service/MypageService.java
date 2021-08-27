@@ -1,9 +1,6 @@
 package com.camping.bit.service;
 
-import com.camping.bit.dto.CommunityDto;
-import com.camping.bit.dto.MemberDto;
-import com.camping.bit.dto.MypageParam;
-import com.camping.bit.dto.ProductOrderDto;
+import com.camping.bit.dto.*;
 
 import java.util.List;
 
@@ -20,4 +17,10 @@ public interface MypageService {
     
 	public List<ProductOrderDto> getMyOrderList(MypageParam param);
 	public int getMyOrderCount(MypageParam param);
+
+    public List<CommunityDto> dealList(MypageParam param);
+    public int dealCount(MypageParam param);
+
+    public List<CampingBbsDto> campingReviewList(CampingParam param);
+    public int campingReviewCount (CampingParam param);
 }

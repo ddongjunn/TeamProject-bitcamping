@@ -120,6 +120,9 @@
 
         let nowPage = ${nowPage};	// 서버로부터 현재 페이지를 취득
         //alert(nowPage);
+        if(totalCount === 0){
+            totalCount = 1;
+        }
 
         let pageSize = 15;//페이지의 크기(1~10) [1] ~ [10]
 

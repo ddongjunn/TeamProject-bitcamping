@@ -53,7 +53,7 @@
                                 </a>
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="/admin/community.do?bbstype=deal">
+                                <a class="nav-link " href="/admin/community-deal.do">
                                     <span class="nav-link-text">중고거래</span>
                                 </a>
                             </li>
@@ -68,7 +68,7 @@
                                 </a>
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="/admin/community.do?bbstype=hello">
+                                <a class="nav-link " href="/admin/camping-review.do">
                                     <span class="nav-link-text">캠핑장리뷰</span>
                                 </a>
                             </li>
