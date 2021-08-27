@@ -64,13 +64,13 @@
                             ${fn:substring(date,0,11)}
                     </td>
                     <td>
-                        <c:if test="${list.auth == '0'}">
+                        <c:if test="${list.auth != '-1'}">
                             <span class="badge badge-dot mr-4">
                                 <i class="bg-success"></i>
                                 <span class="status">활동</span>
                             </span>
                         </c:if>
-                        <c:if test="${list.auth == '1'}">
+                        <c:if test="${list.auth == '-1'}">
                             <span class="badge badge-dot mr-4">
                                 <i class="bg-warning"></i>
                                 <span class="status">탈퇴</span>

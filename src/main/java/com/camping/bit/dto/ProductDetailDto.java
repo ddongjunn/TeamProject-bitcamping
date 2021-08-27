@@ -66,4 +66,7 @@ public class ProductDetailDto implements Serializable{
 
     // 상품 삭제 
     private int del;
+    
+    // 상품 평균 별점
+    private double rate;
 }

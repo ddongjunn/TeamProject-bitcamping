@@ -83,6 +83,10 @@
    <definition name="admin-rentList.tiles" extends="adminmain.tiles">
       <put-attribute name="body" value="/WEB-INF/views/admin/rentList-admin.jsp" />
    </definition>
+   
+   <definition name="admin-productUpdate.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/rentUpdate-admin.jsp" />
+   </definition>
 
    <!-- 효경 -->
    <definition name = "campinglist.tiles" extends = "main.tiles">

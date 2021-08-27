@@ -207,5 +207,55 @@ public class AdminController {
 
         return "redirect:/admin/product.do";
     }
+    
+	/* 영신 */
+    @RequestMapping(value = "product-update.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String productUpdate(int product_Seq, Model model) {
+    	
+    	ProductDetailDto item = rentService.getProductDetail(product_Seq);
+    	model.addAttribute("item", item);    	
+    	
+        return "admin-productUpdate.tiles";
+    }
+    
+    @RequestMapping(value = "product-updateAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String productUpdateAf(ProductDetailDto dto, @RequestParam(value = "thumbnail", required = false) MultipartFile thumbnail, HttpServletRequest req) {
+
+    	// 썸네일 사진 새로 등록한 경우
+    	if(!thumbnail.isEmpty()) {
+	        String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+	
+	        String newFileName = FileUploadUtil.getNewFileName(thumbnail.getOriginalFilename());
+	
+	        dto.setThumbnail_Name(newFileName);
+	
+	        File file = new File(fileUpload + "/" + newFileName);
+	
+	        try {
+	            FileUtils.writeByteArrayToFile(file, thumbnail.getBytes());
+	            rentService.productUpdateAf(dto);
+	        }catch(IOException e) {
+	            e.printStackTrace();
+	        }
+	    // 썸네일 사진 새로 등록하지 않은 경우
+    	}else {
+    		ProductDetailDto original = rentService.getProductDetail(dto.getProduct_Seq()); // 기존 썸네일명 가져오기
+    		// System.out.println(original.getThumbnail_Name());
+    		dto.setThumbnail_Name(original.getThumbnail_Name()); // 수정된 dto에 넣어주기
+    		rentService.productUpdateAf(dto);
+    	}
+
+        return "redirect:/admin/product.do";
+    }
+    
+    @RequestMapping(value = "product-delete.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String productDelete(int product_Seq) {
+    	
+    	System.out.println(product_Seq);
+    	
+    	rentService.productDelete(product_Seq);
+    	
+        return "redirect:/admin/product.do";
+    }
 
 }
