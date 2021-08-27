@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--
   Created by IntelliJ IDEA.
@@ -25,11 +26,6 @@
             <h2>자유게시판</h2>
         </div>
     </c:when>
-    <c:when test="${bbstype eq 'deal'}">
-        <div class="container-fluid" >
-            <h2>중고거래</h2>
-        </div>
-    </c:when>
     <c:when test="${bbstype eq 'review'}">
         <div class="container-fluid" >
             <h2>캠핑&여행후기</h2>
@@ -37,7 +33,7 @@
     </c:when>
     <c:otherwise>
         <div class="container-fluid" >
-            <h2>캠핑장리뷰</h2>
+            <h2>캠퍼모집</h2>
         </div>
     </c:otherwise>
 </c:choose>
@@ -68,26 +64,29 @@
 
                             <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
                             <c:if test="${bbstype eq 'free'}">
-                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a>
                             </c:if>
                             <c:if test="${bbstype eq 'find'}">
-                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a>
                             </c:if>
                             <c:if test="${bbstype eq 'deal'}">
-                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a>
                             </c:if>
                             <c:if test="${bbstype eq 'review'}">
-                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a>
                             </c:if>
                             <c:if test="${bbstype eq 'hello'}">
-                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a>
                             </c:if>
+
+                            <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+                            </td>
 
                             <td>${data.nickname}</td>
                             <td>${data.readcount}</td>
                             <td>
-                                <c:set var="date" value="${data.wdate}"/>
-                                    ${fn:substring(date,2,19)}
+                                <fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                <fmt:formatDate value="${formatedDate}" pattern="yyyy.MM.dd HH:mm"/>
                             </td>
                         </tr>
                     </c:if>

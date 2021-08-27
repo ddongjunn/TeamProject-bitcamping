@@ -286,9 +286,9 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="margin-bottom: 15px; padding : 0 15px">
+    <%--<div class="container-fluid" style="margin-bottom: 15px; padding : 0 15px">
         <h2>최근 게시물</h2>
-    </div>
+    </div>--%>
     <div class="row">
         <div class="col-xl-3">
             <div class="card">
@@ -308,8 +308,13 @@
                         <thead class="thead-light">
                             <c:forEach var="list" items="${recentCommunity.free}">
                                 <tr>
-                                    <!-- a태그 걸어야함 -->
-                                    <td>${list.title} <b>[${list.commentcount}]</b></td>
+                                    <td>
+                                        <!--태그 걸어야함 -->
+                                        <a href="/community/dealDetail.do?community_seq=${list.community_seq }">
+                                                ${list.title}
+                                        </a>
+                                        <span style="font-size: 13px; color: tomato;">[${list.commentcount}]</span>
+                                    </td>
                                 </tr>
                             </c:forEach>
                         </thead>
@@ -336,8 +341,13 @@
                         <thead class="thead-light">
                         <c:forEach var="list" items="${recentCommunity.find}">
                             <tr>
-                                <!-- a태그 걸어야함 -->
-                                <td>${list.title} <b>[${list.commentcount}]</b></td>
+                                <td>
+                                    <!--태그 걸어야함 -->
+                                    <a href="/community/dealDetail.do?community_seq=${list.community_seq }">
+                                            ${list.title}
+                                    </a>
+                                    <span style="font-size: 13px; color: tomato;">[${list.commentcount}]</span>
+                                </td>
                             </tr>
                         </c:forEach>
                         </thead>
@@ -364,9 +374,15 @@
                         <thead class="thead-light">
                         <c:forEach var="list" items="${recentCommunity.review}">
                             <tr>
-                                <!-- a태그 걸어야함 -->
-                                <td>${list.title} <b>[${list.commentcount}]</b></td>
+                                <td>
+                                    <!--태그 걸어야함 -->
+                                    <a href="/community/dealDetail.do?community_seq=${list.community_seq }">
+                                            ${list.title}
+                                    </a>
+                                    <span style="font-size: 13px; color: tomato;">[${list.commentcount}]</span>
+                                </td>
                             </tr>
+
                         </c:forEach>
                         </thead>
                     </table>
@@ -392,8 +408,13 @@
                         <thead class="thead-light">
                         <c:forEach var="list" items="${recentCommunity.deal}">
                             <tr>
-                                <!-- a태그 걸어야함 -->
-                                <td>${list.title} <b>[${list.commentcount}]</b></td>
+                                <td>
+                                    <!--태그 걸어야함 -->
+                                    <a href="/community/dealDetail.do?community_seq=${list.community_seq }">
+                                            ${list.title}
+                                    </a>
+                                    <span style="font-size: 13px; color: tomato;">[${list.commentcount}]</span>
+                                </td>
                             </tr>
                         </c:forEach>
                         </thead>

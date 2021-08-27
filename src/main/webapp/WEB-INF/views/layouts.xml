@@ -25,6 +25,7 @@
       <put-attribute name="main" value="/WEB-INF/views/login/normal.jsp"/>
    </definition>
 
+
    <!-- 마이페이지 -->
    <definition name="mypagemain.tiles" template="/WEB-INF/views/layouts-board.jsp">
       <put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
@@ -57,6 +58,15 @@
       <put-attribute name="body" value="/WEB-INF/views/mypage/mypage-myorder.jsp" />
    </definition>
 
+   <definition name="mypage-community-deal.tiles" extends="mypagemain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/mypage/community-deal.jsp" />
+   </definition>
+
+   <definition name="mypage-camping-review.tiles" extends="mypagemain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/mypage/camping-review.jsp" />
+   </definition>
+
+
    <!-- 관리자 페이지 -->
    <definition name="adminmain.tiles" template="/WEB-INF/views/layouts-admin.jsp">
       <put-attribute name="header" value="/WEB-INF/views/admin/header.jsp" />
@@ -82,6 +92,18 @@
 
    <definition name="admin-rentList.tiles" extends="adminmain.tiles">
       <put-attribute name="body" value="/WEB-INF/views/admin/rentList-admin.jsp" />
+   </definition>
+   
+   <definition name="admin-productUpdate.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/rentUpdate-admin.jsp" />
+   </definition>
+
+   <definition name="admin-community-deal.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/community-deal.jsp" />
+   </definition>
+
+   <definition name="admin-camping-review.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/camping-review.jsp" />
    </definition>
 
    <!-- 효경 -->

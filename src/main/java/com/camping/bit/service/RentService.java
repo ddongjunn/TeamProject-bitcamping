@@ -43,4 +43,8 @@ public interface RentService {
 
 	public void reviewStatus(int order_Seq);
 
+	public void productUpdateAf(ProductDetailDto dto);
+
+	public void productDelete(int product_Seq);
+
 }

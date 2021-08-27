@@ -115,4 +115,16 @@ public class RentServiceImpl implements RentService {
 		
 		dao.reviewStatus(order_Seq);
 	}
+
+	@Override
+	public void productUpdateAf(ProductDetailDto dto) {
+		
+		dao.productUpdateAf(dto);
+	}
+
+	@Override
+	public void productDelete(int product_Seq) {
+		
+		dao.productDelete(product_Seq);
+	}
 }

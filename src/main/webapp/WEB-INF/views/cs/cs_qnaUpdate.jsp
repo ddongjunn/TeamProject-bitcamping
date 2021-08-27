@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,10 +14,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
 
 <style type="text/css">
-	.reviewWrite{
+	.noticeWrite{
 		width: 85%;
 	}
-	.reviewWrite td{
+	.noticeWrite td{
 		padding: 10px 0px;
 		border-bottom: 1px solid gray;
 	}
@@ -36,17 +38,29 @@
 <body>
 
 
-<form id="reviewWriteForm" action="/community/reivewWriteAf.do" method="post" enctype="multipart/form-data" >
-<table class="reviewWrite">
+<form id="qnaWriteForm" action="/cs/qnaWriteAf.do" method="post">
+<table class="qnaWrite">
 	<tbody>
 		<tr>
 			<td>
-				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요" required>
+				<input type="text" class="title" name="title" value="${qna.title}" placeholder="제목을 입력해 주세요" required>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<label for="secret">
+					<input type="checkbox" name="secret" id="secret" value="1"> 비밀글 설정
+				</label>
+			<%-- <c:if test="${login.auth eq 3}">
+					<label for="notice">
+						<input type="checkbox" name="notice" id="notice" value="1"> 공지글 설정
+					</label>
+				</c:if> --%>
 			</td>
 		</tr>	
 		<tr>
 			<td>
-				<textarea id="summernote" name="content" required></textarea>
+				<textarea id="summernote" name="content" required>${qna.content}</textarea>
 			</td>
 		</tr>
 	</tbody>
@@ -55,8 +69,8 @@
 	<input type="submit" value="등록">
 </div>
 
-<input type="hidden" name="user_id" value="${login.id}">
-<input type="hidden" name="bbstype" value="review">
+<input type="hidden" name="user_Id" value="${login.id}">
+
 </form>
 
 <script type="text/javascript">
@@ -68,7 +82,6 @@
 			height: 500,
 			dialogsInBody: true,
 			lang: "ko-KR",
-			disableResizeEditor: true,	// 크기 조절 기능 삭제
 			toolbar: [
 			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
@@ -83,6 +96,7 @@
 			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
 			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
+			disableResizeEditor: true,
 			placeholder: '내용을 입력해 주세요',
 			
 			callbacks: {

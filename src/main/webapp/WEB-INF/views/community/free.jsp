@@ -17,8 +17,8 @@
 <h1>자유게시판</h1>
 
 <!-- 글 작성 리스트 틀-->
-<div align="center">
-	<table>
+<div class="container">
+	<table class="table table-sm">
 		<colgroup>
 			<col style="width:5%;" />
 			<col style="width:auto;" />
@@ -27,8 +27,12 @@
 			<col style="width:15%;" />
 		</colgroup>
 	<thead>
-		<tr>
-			<th>번호</th><th>제목</th><th>닉네임</th><th>조회수</th><th>작성일</th>
+		<tr class="table-success"> 
+			<th>번호</th>
+			<th>제목</th>
+			<th>닉네임</th>
+			<th>조회수</th>
+			<th>작성일</th>
 		</tr>
 					<c:if test="${empty freeList}">
 				<td colspan="3">작성된 글이 없습니다</td>			
@@ -95,6 +99,9 @@ $(document).ready(function () {
 	let totalCount = ${totalCount}; 	// 글의 총수
 	let pageSize = 15;	// 페이지의 크기 1 ~ 10 [1] ~ [10]
 	let nowPage = ${nowPage}; // 현재 페이지
+	if(totalCount === 0){
+        totalCount = 1;
+    }
 	let totalPages = totalCount / pageSize;
 	
 	if(totalCount % pageSize > 0) {

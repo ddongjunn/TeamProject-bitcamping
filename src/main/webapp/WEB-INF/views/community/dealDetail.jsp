@@ -56,7 +56,7 @@
 </table>
 
 <c:if test="${login.id eq data.user_id }">
-   <form name="updateFrm" action="/community/dealUpdate.do?bbstype=deal" method="POST">
+   <form name="updateFrm" action="/community/dealUpdate.do?bbstype=${data.bbstype }" method="POST">
       <input type="hidden" name="community_seq" value="${data.community_seq}">
       <input type="hidden" name="user_id" value='${login.id}'>
 	  <button type="button" onclick="del(${data.community_seq})">삭제</button>

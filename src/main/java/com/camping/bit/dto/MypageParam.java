@@ -11,8 +11,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MypageParam implements Serializable {
     private String id;
+    private String kind;
     private String bbstype;
-    private String dealType;
 
     private String choice;
     private String search;

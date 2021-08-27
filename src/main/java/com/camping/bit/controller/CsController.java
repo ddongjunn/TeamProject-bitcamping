@@ -352,9 +352,19 @@ public class CsController {
 		service.answerStatus(answer.getRef());
 		
 		/*
-		 * CsQnaDto qna = service.getQnaDetail(qna_Seq); model.addAttribute("qna", qna);
+		 * CsQnaDto qna = service.getQnaDetail(qna_Seq); 
+		 * model.addAttribute("qna", qna);
 		 */
 		
 		return "redirect:/cs/qna.do";
+	}
+	
+	@RequestMapping(value = "qnaUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String qnaUpdate(int qna_Seq, Model model) {
+		
+		CsQnaDto qna = service.getQnaDetail(qna_Seq);
+		model.addAttribute("qna", qna);
+		
+		return "qnaUpdate.tiles";
 	}
 }
