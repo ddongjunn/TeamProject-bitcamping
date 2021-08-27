@@ -36,7 +36,7 @@
 <body>
 
 
-<form id="reviewWriteForm" action="/community/helloWriteAf.do" method="post" enctype="multipart/form-data" >
+<form id="reviewWriteForm" action="/community/reivewWriteAf.do" method="post" enctype="multipart/form-data" >
 <table class="reviewWrite">
 	<tbody>
 		<tr>

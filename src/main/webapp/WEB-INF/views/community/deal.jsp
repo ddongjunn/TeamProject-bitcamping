@@ -26,22 +26,20 @@
 	<br>
 
 	<!-- 글 작성 리스트 틀-->
-	<div align="center">
-		<table>
+	<div class="container">
+		<table class="table table-sm">
 			<colgroup>
 				<col style="width: 5%;" />
 				<col style="width: auto;" />
-				<col style="width: 15%;" />
 				<col style="width: 15%;" />
 				<col style="width: 10%;" />
 				<col style="width: 15%;" />
 			</colgroup>
 			<thead>
-				<tr>
+				<tr class="table-success">
 					<th>번호</th>
 					<th>제목</th>
 					<th>닉네임</th>
-					<th>상태</th>
 					<th>조회수</th>
 					<th>작성일</th>
 				</tr>
@@ -53,6 +51,17 @@
 						<td>${data.community_seq }</td>
 						<td>
 							<a href="/community/dealDetail.do?community_seq=${data.community_seq }">
+									<c:choose>
+										<c:when test="${data.bbstype eq 'buy'}">
+											<span style="font-size: 13px; color: red;">[삽니다]</span>
+										</c:when>
+										<c:when test="${data.bbstype eq 'sell'}">
+											<span style="font-size: 13px; color: orange;">[팝니다]</span>
+										</c:when>
+										<c:otherwise>
+											<span style="font-size: 13px; color: blue;">[거래완료]</span>
+										</c:otherwise>
+									</c:choose>
 									${data.title} 
 									<c:if test="${data.commentcount ne 0}">
 										<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
@@ -60,19 +69,6 @@
 							</a>
 						</td>
 						<td>${data.nickname }</td>
-						<td>
-							<c:choose>
-								<c:when test="${data.bbstype eq 'buy'}">
-									<span style="font-size: 13px; color: red;">[삽니다]</span>
-								</c:when>
-								<c:when test="${data.bbstype eq 'sell'}">
-									<span style="font-size: 13px; color: orange;">[팝니다]</span>
-								</c:when>
-								<c:otherwise>
-									<span style="font-size: 13px; color: blue;">[거래완료]</span>
-								</c:otherwise>
-							</c:choose>
-						</td>
 						<td>${data.readcount }</td>
 						<td>
 							<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -122,6 +118,9 @@ $(document).ready(function () {
 	let totalCount = ${totalCount}; 	// 글의 총수
 	let pageSize = 15;	// 페이지의 크기 1 ~ 10 [1] ~ [10]
 	let nowPage = ${nowPage}; // 현재 페이지
+	if(totalCount === 0){
+        totalCount = 1;
+    }
 	let totalPages = totalCount / pageSize;
 	
 	if(totalCount % pageSize > 0) {

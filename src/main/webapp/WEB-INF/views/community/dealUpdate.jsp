@@ -40,6 +40,12 @@
 	<tbody>
 		<tr>
 			<td>
+				<label><input type="radio" name="bbstype" value="sell"> 팝니다 </label>
+				<label><input type="radio" name="bbstype" value="buy"> 삽니다 </label>
+			</td>
+		</tr>
+		<tr>
+			<td>
 				<input type="text" class="title" name="title" value="${data.title}" placeholder="제목을 입력해 주세요" required />
 			</td>
 		</tr>
@@ -55,14 +61,16 @@
 </div>
 
 <input type="hidden" name="id" value="${data.user_id }">
-<input type="hidden" name="bbstype" value="deal">
 <input type="hidden" name="community_seq" value="${data.community_seq }">
 
 </form>
 
 <script type="text/javascript">
 
+
 	$(document).ready(function() {
+		
+		$("input:radio[name='bbstype']:radio[value='${data.bbstype}']").prop("checked", true);	
 		
 		/* summernote 설정 */
 		$('#summernote').summernote({

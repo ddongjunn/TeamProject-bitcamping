@@ -41,13 +41,13 @@
 	<tbody>
 		<tr>
 			<td>
-				<label><input type="radio" name="bbstype" value="sell"> 팝니다 </label>
-				<label><input type="radio" name="bbstype" value="buy"> 삽니다 </label>
+				<label><input type="radio" id="choice" name="bbstype" value="sell"> 팝니다 </label>
+				<label><input type="radio" id="choice" name="bbstype" value="buy"> 삽니다 </label>
 			</td>
-		</tr>	
+		</tr>
 		<tr>
 			<td>
-				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요" required>
+				<input type="text" id="title" class="title" name="title" placeholder="제목을 입력해 주세요" required>
 			</td>
 		</tr>
 			
@@ -69,7 +69,7 @@
 	</tbody>
 </table>
 <div class="submitbox">
-	<input type="submit" value="등록">
+	<input type="button" value="등록">
 </div>
 
 <input type="hidden" name="user_id" value="${login.id}">
