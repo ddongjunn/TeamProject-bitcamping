@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,10 +56,47 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<br>
 	
 	<div id = "sbrscl">
-		주요 시설 : <%=campinglist.getSbrscl() %>
+		<c:set value = "<%=campinglist.getSbrscl() %>" var = "service"/>
+		<c:if test="${fn:contains(service, '전기')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/plug.png" width = "30">전기</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '무선인터넷')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/wi-fi.png" width = "30">무선인터넷</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '장작판매')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/firewood.png" width = "30">장작판매</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '온수')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/hot-water.png" width = "30">온수</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '마트.편의점')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/shopping-cart.png" width = "30">마트.편의점</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '트렘폴린')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/trampoline.png" width = "30">트렘폴린</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '물놀이장')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/water-park.png" width = "30">물놀이장</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '놀이터')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/slider.png" width = "30">놀이터</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '산책로')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/river-trail.png" width = "30">산책로</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '운동시설')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/gym.png" width = "30">운동시설</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '운동장')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/playground.png" width = "30">운동장</span>
+		</c:if>
+	
+	
+	
 	</div>
 	
 	<br>
+	
 	
 	<div id = "mainFacility">
 		<c:set value="<%=campingdetail.getGnrlsiteco() %>" var="gnrl" />
@@ -217,6 +255,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 
 <div id = "review">
 <!-- 캠핑장 검색창 -->
+
 <div id = "select_sorting">
 	<select class = "sorting_select" id = "sorting" title = "정렬">
 		<option value = "image" selected = "selected">--정렬--</option>
@@ -225,7 +264,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<option value = "like">추천순</option>
 	</select>
 </div>
-<span><button type = "button" class="btn btn-outline-success" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>">리뷰 작성하기</button></span>
+<button type = "button" class="btn btn-outline-success" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>">리뷰 작성하기</button>
 
 <table class="table table-hover">
     <thead>
