@@ -37,7 +37,7 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 List<CampingImageDto> campingimage = (List<CampingImageDto>)request.getAttribute("campingimage");
 String campingintro = (String)request.getAttribute("campingintro");
 %>
-<a href = "campinglist.do">목록으로 돌아가기</a>
+<!-- <a href = "campinglist.do">목록으로 돌아가기</a> -->
 <div class = "camping_list">
 	<ul>
 		<li style = "list-style : none;">

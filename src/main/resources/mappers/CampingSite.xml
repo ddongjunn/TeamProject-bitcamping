@@ -144,11 +144,11 @@
 		SELECT FACLTNM FROM CAMPING_LIST WHERE FACLTNM LIKE '%'||#{searchWord}||'%' ORDER BY READCOUNT DESC
 	</select>
 	
-	
+	<!-- 캠핑장 리뷰 뿌리기 -->
 	<select id = "getcampingreview" parameterType = "CampingParam" resultType = "CampingBbsDto">
 	SELECT * FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY REVIEW_SEQ DESC) AS RNUM, 
-		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL
+		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL, NICKNAME, COMMENTCOUNT
 		FROM CAMPING_BBS
 		WHERE 1=1 AND CONTENTID = #{contentid} AND DEL = 0)
 		WHERE RNUM BETWEEN ${start} AND ${end}
@@ -167,8 +167,8 @@
 	
 	<!-- 캠핑장 리뷰 쓰기 후처리 -->
 	<insert id = "campingwritereviewAf" parameterType = "CampingBbsDto">
-		INSERT INTO CAMPING_BBS(REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL) 
-		VALUES(CAMPING_BBS_SEQ.NEXTVAL,#{contentid},#{title},#{content},SYSDATE,0,#{user_id}, 0,0,0)
+		INSERT INTO CAMPING_BBS(REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL, NICKNAME) 
+		VALUES(CAMPING_BBS_SEQ.NEXTVAL,#{contentid},#{title},#{content},SYSDATE,0,#{user_id}, 0,0,0, #{nickname})
 	</insert>
 	
 	<!-- 캠핑장 리뷰 조회수 증가-->
@@ -190,7 +190,7 @@
 	<select id = "campingSearchReview" parameterType = "CampingParam" resultType = "CampingBbsDto">
 		SELECT * FROM 
 		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM, 
-		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL
+		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT, LIKE_COUNT, DEL, NICKNAME
 		FROM CAMPING_BBS WHERE 1=1 
 		<if test="choice!=null and choice !='' and search !=null and search !=''">
 			<if test = "choice=='title'">
@@ -200,7 +200,7 @@
 				AND content LIKE '%'||#{search}||'%'
 			</if>
 			<if test = "choice=='writer'">
-				AND user_id=#{search}
+				AND nickname = #{search}
 			</if>
 		</if>
 		AND CONTENTID = #{contentid} AND DEL = 0)
@@ -266,7 +266,7 @@
 		<!-- 캠핑장 댓글 뿌리기(처음) -->
 		<select id="getCampingReviewComment" parameterType = "CampingParam" resultType = "CampingComment">
 			SELECT * FROM
-			(SELECT ROW_NUMBER()OVER(ORDER BY COMMENT_SEQ DESC) AS RNUM, USER_ID, CONTENT, WDATE, COMMENT_SEQ FROM CAMPING_BBS_COMMENT
+			(SELECT ROW_NUMBER()OVER(ORDER BY COMMENT_SEQ DESC) AS RNUM, USER_ID, CONTENT, WDATE, COMMENT_SEQ, NICKNAME FROM CAMPING_BBS_COMMENT
 			WHERE 1=1 AND REVIEW_SEQ = #{review_seq}) WHERE RNUM BETWEEN ${start} AND ${end}
 			ORDER BY WDATE DESC
 		</select>
@@ -276,10 +276,18 @@
 			SELECT NVL(COUNT(*),0) FROM CAMPING_BBS_COMMENT WHERE REVIEW_SEQ = #{review_seq}
 		</select>
 		
+		<update id="plusCommentCount" parameterType = "java.lang.Integer" >
+			UPDATE CAMPING_BBS SET COMMENTCOUNT=COMMENTCOUNT+1 WHERE REVIEW_SEQ = #{review_seq} 
+		</update>
+	
+		<update id="minusCommentCount" parameterType = "java.lang.Integer" >
+			UPDATE CAMPING_BBS SET COMMENTCOUNT=COMMENTCOUNT-1 WHERE REVIEW_SEQ = #{review_seq} 
+		</update>
+		
 		<!-- 캠핑장 리뷰 댓글 달기 -->
 		<insert id = "campingWriteComment" parameterType = "CampingComment">
-			INSERT INTO CAMPING_BBS_COMMENT(COMMENT_SEQ, REVIEW_SEQ, USER_ID, CONTENT, WDATE, REF, STEP, DEPTH)
-			VALUES(CAMPING_BBS_COMMENT_SEQ.NEXTVAL, #{review_seq}, #{user_id}, #{content}, SYSDATE, 0, 0, 0) 
+			INSERT INTO CAMPING_BBS_COMMENT(COMMENT_SEQ, REVIEW_SEQ, USER_ID, CONTENT, WDATE, REF, STEP, DEPTH, NICKNAME)
+			VALUES(CAMPING_BBS_COMMENT_SEQ.NEXTVAL, #{review_seq}, #{user_id}, #{content}, SYSDATE, 0, 0, 0, #{nickname}) 
 		</insert>
 		
 		<!-- 캠핑장 리뷰 삭제하기 -->

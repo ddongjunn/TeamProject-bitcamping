@@ -21,10 +21,12 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 <form name = "write_review_form" method="post" action="campingwritereviewAf.do" enctype = "multipart/form-data" autocomplete = "off">
 
 <div style="clear:both"></div>
+
 <div id = "writer_info">
 <input type="hidden" name="user_id" value="${login.id}">
+<input type="hidden" name = "nickname" value ="${login.nickname}">
 <input type = "hidden" name = "contentid" value = '<%=campinglist.getContentid() %>'>
-	<h2>${login.id}님의 소중한 리뷰</h2>
+	<h2>${login.nickname}님의 소중한 리뷰</h2>
 	<h2><input name="title" type = "text" placeholder = "제목을 입력해주세요"></h2>
 </div>
 

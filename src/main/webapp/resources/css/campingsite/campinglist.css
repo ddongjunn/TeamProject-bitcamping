@@ -4,7 +4,7 @@
     position: relative;
     text-align: center;
     width: 400px;
-    margin: 10px 200px 50px 100px;
+    margin: 10px 200px 0 100px;
     
 }
 #search {
@@ -36,7 +36,7 @@ td{
   padding-bottom: 30px;
 }
 .option-content {
-   border-bottom: 1px solid #e0e0e0; 
+   /*border-bottom: 1px solid #e0e0e0;   */
    margin : 10px 200px 0 100px;
 }
 .category {
@@ -69,7 +69,7 @@ a{
 }
 
 .search_sorting{
-	margin : 100px 100px 0 100px;
+	margin : 0 100px 0 100px;
 }
 /*페이지네이션*/
 .pagination > li > a

@@ -93,6 +93,12 @@ public interface CampingService {
 	//캠핑장 리뷰 뿌리기
 	public List<CampingCommentDto> getCampingReviewComment(CampingParam param);
 	
+	//캠핑장 리뷰에 댓글 쓸때마다 갯수 증가시키기
+	public void plusCommentCount(int review_seq);
+	
+	//캠핑장 리뷰에 댓글 쓸때마다 갯수 감소시키기
+	public void minusCommentCount(int review_seq);
+	
 	//캠핑장 리뷰 댓글 갯수세기 
 	public int getCampingReviewCommentCount(int review_seq);
 	

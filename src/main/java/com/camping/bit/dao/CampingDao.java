@@ -96,6 +96,12 @@ public interface CampingDao {
 	//캠핑장 리뷰 댓글 갯수세기 
 	public int getCampingReviewCommentCount(int review_seq);
 	
+	//캠핑장 리뷰에 댓글 쓸때마다 갯수 증가시키기
+	public void plusCommentCount(int review_seq);
+	
+	//캠핑장 리뷰에 댓글 삭제하면 갯수 감소시키기
+	public void minusCommentCount(int review_seq);
+	
 	//캠핑장 리뷰 댓글달기
 	public Boolean campingWriteComment(CampingCommentDto cc);
 	
