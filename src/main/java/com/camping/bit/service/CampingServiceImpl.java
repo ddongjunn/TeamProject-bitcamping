@@ -150,6 +150,18 @@ public class CampingServiceImpl implements CampingService {
 		return dao.getCampingReviewComment(param);
 	}
 	
+	@Override //캠핑장 리뷰에 댓글 쓸때마다 갯수 증가시키기
+	public void plusCommentCount(int review_seq) {
+		dao.plusCommentCount(review_seq);
+		
+	}
+	
+	@Override //캠핑장 리뷰에 댓글 삭제하면 갯수 감소시키기
+	public void minusCommentCount(int review_seq) {
+		dao.minusCommentCount(review_seq);
+		
+	}
+	
 	@Override //캠핑장 리뷰 댓글 갯수세기
 	public int getCampingReviewCommentCount(int review_seq) {
 		return dao.getCampingReviewCommentCount(review_seq);
@@ -158,11 +170,13 @@ public class CampingServiceImpl implements CampingService {
 
 	@Override //캠핑장 리뷰에 댓글 달기 
 	public Boolean campingWriteComment(CampingCommentDto cc) {
+		dao.plusCommentCount(cc.getReview_seq());
 		return dao.campingWriteComment(cc);
 	}
 
 	@Override //캠핑장 리뷰에 댓글 삭제하기
 	public Boolean campingDeleteComment(int comment_seq) {
+		dao.minusCommentCount(comment_seq);
 		return dao.campingDeleteComment(comment_seq);
 	}
 
@@ -170,6 +184,5 @@ public class CampingServiceImpl implements CampingService {
 	public Boolean campingUpdateComment(CampingCommentDto cc) {
 		return dao.campingUpdateComment(cc);
 	}
-
 	
 }

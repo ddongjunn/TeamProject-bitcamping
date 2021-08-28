@@ -26,4 +26,5 @@ public class CampingCommentDto {
 	private int ref;
 	private int step;
 	private int depth;
+	private String nickname;
 }

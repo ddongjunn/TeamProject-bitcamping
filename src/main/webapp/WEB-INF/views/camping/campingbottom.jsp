@@ -11,7 +11,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 캠핑장 DB 수정 
+ALTER TABLE CAMPING_BBS ADD NICKNAME NUMBER(8) DEFAULT '0' NOT NULL; 
 
+ -->
 <!-- bootstrap 추가 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -419,7 +422,7 @@ $("#mapBtn").click(function(){
 				dataType : 'text',
 				data : {'contentid':contentid},
 				success : function(response){
-					//console.log(response);
+					console.log(response);
 					//alert("success");
 					$("#reviewlisting").html("");
 
@@ -434,12 +437,13 @@ $("#mapBtn").click(function(){
 					parsedResponse.forEach( (item, idx) => {
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
-							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
-							+ "<td>" + item.user_id + "</td>"
+							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.readcount + "</td>"
 							+"<td>" + item.wdate + "</td>"
 							+ "</tr>";
 						$("#reviewlisting").append(str);
+						console.log(item.commentcount);
 						$("#searchBox").show();
 					});
 				}, 
@@ -478,8 +482,8 @@ $("#mapBtn").click(function(){
 						parsedResponse.forEach( (item, idx) => {
 							let str = "<tr>"
 								+ "<td>" + (idx + 1) + "</td>"
-								+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
-								+ "<td>" + item.user_id + "</td>"
+								+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+								+ "<td>" + item.nickname + "</td>"
 								+ "<td>" + item.readcount + "</td>"
 								+ "<td>" + item.wdate + "</td>"
 								+ "</tr>";
@@ -523,9 +527,10 @@ $("#mapBtn").click(function(){
 							parsedResponse.forEach( (item, idx) => {
 								let str = "<tr>"
 									+ "<td>" + (idx + 1) + "</td>"
-									+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
-									+ "<td>" + item.user_id + "</td>"
+									+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+									+ "<td>" + item.nickname + "</td>"
 									+ "<td>" + item.readcount + "</td>"
+									+ "<td>" + item.commentcount + "</td>"
 									+"<td>" + item.wdate + "</td>"
 									+ "</tr>";
 								$("#reviewlisting").append(str);
@@ -633,9 +638,10 @@ function pagemove(page){ //누르는 순간 페이지네이션에 지금 page �
 				parsedResponse.forEach( (item, idx) => {
 					let str = "<tr>"
 						+ "<td>" + (idx + 1) + "</td>"
-						+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
-						+ "<td>" + item.user_id + "</td>"
+						+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+						+ "<td>" + item.nickname + "</td>"
 						+ "<td>" + item.readcount + "</td>"
+						+ "<td>" + item.commentcount + "</td>"
 						+ "<td>" + item.wdate + "</td>"
 						+ "</tr>";
 					$("#reviewlisting").append(str);
@@ -678,8 +684,9 @@ function campingsearchlist(){
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
-							+ "<td>" + item.user_id + "</td>"
+							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.readcount + "</td>"
+							+ "<td>" + item.commentcount + "</td>"
 							+ "<td>" + item.wdate + "</td>"
 							+ "</tr>";
 						$("#reviewlisting").append(str);
