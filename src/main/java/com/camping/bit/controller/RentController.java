@@ -131,9 +131,9 @@ public class RentController {
     public int paymentAf(ProductOrderDto dto) {
 		
 		System.out.println("주문 정보 : " + dto);
-		
+
 		int result = service.paymentAf(dto);
-		
+
 		return result;
 	}
 	

@@ -139,7 +139,10 @@ public class LoginController {
     public String logout(HttpSession session) {
         MemberDto dto = (MemberDto) session.getAttribute("login");
 
-        System.out.println("logout : " + dto.toString());
+        if(session.getAttribute("login") == null){
+            return "redirect:/";
+        }
+
         if(dto.getSns_Type().equals("null")){
 
             session.removeAttribute("login");
