@@ -367,4 +367,20 @@ public class CsController {
 		
 		return "qnaUpdate.tiles";
 	}
+	
+	@RequestMapping(value = "qnaUpdateAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String qnaUpdateAf(CsQnaDto qna) {
+		
+		service.qnaUpdateAf(qna);
+		
+		return "redirect:/cs/qna.do";
+	}
+	
+	@RequestMapping(value = "qnaDelete.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String qnaDelete(int qna_Seq) {
+		
+		service.qnaDelete(qna_Seq);
+		
+		return "redirect:/cs/qna.do";
+	}
 }

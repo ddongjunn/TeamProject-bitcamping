@@ -106,7 +106,7 @@
 				
 			</div>
 			<hr class="hr">
-			<button type="submit" id="buybutton" class="buy--btn">이 제품 대여하기</button>
+			<button type="button" id="buybutton" class="buy--btn">이 제품 대여하기</button>
 		</div>
 	</section>
 </form>
@@ -217,6 +217,16 @@ $(document).ready(function () {
 
 	/* quantity picker 동작 설정 */
     $(".quantity-picker").each(function() {
+    	
+    	  // 재고에 따라 최대 구매 가능 수량 제한
+    	  // 재고 10개 이상일 경우 - 최대 10개 구매 가능
+    	  // 재고 10개 미만일 경우 - 최대 남은 재고만큼 구매 가능
+    	  let stock = ${item.product_Stock};
+    	  let maxbuy = 10;
+    	  if(stock < 10){
+    		  maxbuy = ${item.product_Stock};
+    	  }
+    	
     	  var input = $(this).find("input");
     	  var plus = $(this).find(".button-plus");
     	  var minus = $(this).find(".button-minus");
@@ -238,7 +248,7 @@ $(document).ready(function () {
 
     	    // Set disabled state when max / min qty reached
     	    $(minus).prop("disabled", val <= min);
-    	    $(plus).prop("disabled", val >= max);
+    	    $(plus).prop("disabled", val >= maxbuy);
     	  };
     	  
     	  updateState();
@@ -282,9 +292,11 @@ $(document).ready(function () {
 	
 });
 
-function reload(){
-	$("#reviewcontent").load("/rent/regi.do");
-}
+	function reload(){
+		$("#reviewcontent").load("/rent/regi.do");
+	}
+
+//	$("#buybutton")
 
 
 </script>

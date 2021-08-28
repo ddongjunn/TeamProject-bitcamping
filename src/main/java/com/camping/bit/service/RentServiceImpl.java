@@ -99,9 +99,9 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public int paymentAf(ProductOrderDto dto) {
+	public int paymentAf(ProductOrderDto order) {
 		
-		return dao.paymentAf(dto);
+		return dao.paymentAf(order);
 	}
 
 	@Override
@@ -126,5 +126,11 @@ public class RentServiceImpl implements RentService {
 	public void productDelete(int product_Seq) {
 		
 		dao.productDelete(product_Seq);
+	}
+
+	@Override
+	public void reduceStock(ProductOrderDto order) {
+		
+		dao.reduceStock(order);
 	}
 }

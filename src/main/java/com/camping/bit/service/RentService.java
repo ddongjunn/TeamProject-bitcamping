@@ -37,7 +37,7 @@ public interface RentService {
 
 	public int getQnaCount(int product_Seq);
 
-	public int paymentAf(ProductOrderDto dto);
+	public int paymentAf(ProductOrderDto order);
 
 	public ProductOrderDto getOrderInfo(String merchant_Uid);
 
@@ -46,5 +46,7 @@ public interface RentService {
 	public void productUpdateAf(ProductDetailDto dto);
 
 	public void productDelete(int product_Seq);
+
+	public void reduceStock(ProductOrderDto order);
 
 }

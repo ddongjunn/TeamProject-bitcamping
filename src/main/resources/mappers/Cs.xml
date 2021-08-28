@@ -207,6 +207,20 @@
 			#{title}, #{content}, SYSDATE, 0, 0, #{secret}, 0)
 	</insert>
 	
+	<update id="qnaUpdateAf" parameterType="CsQnaDto">
+		UPDATE QNA
+		SET TITLE = #{title},
+			CONTENT = #{content},
+			SECRET = #{secret}
+		WHERE QNA_SEQ = #{qna_Seq}
+	</update>
+	
+	<update id="qnaDelete" parameterType="java.lang.Integer">
+		UPDATE QNA
+		SET DEL = 1
+		WHERE QNA_SEQ = #{qna_Seq}
+	</update>
+	
 	<update id="answerStatus" parameterType="java.lang.Integer">
 		UPDATE QNA
 		SET STATUS = 1

@@ -151,4 +151,16 @@ public class CsServiceImpl implements CsService{
 		
 		return dao.getCommentCount(param);
 	}
+
+	@Override
+	public void qnaUpdateAf(CsQnaDto qna) {
+
+		dao.qnaUpdateAf(qna);
+	}
+
+	@Override
+	public void qnaDelete(int qna_Seq) {
+
+		dao.qnaDelete(qna_Seq);
+	}
 }

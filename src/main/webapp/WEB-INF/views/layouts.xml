@@ -208,7 +208,10 @@
    <definition name="qnaAnswer.tiles" extends="noticeList.tiles">
       <put-attribute name="body" value="/WEB-INF/views/cs/cs_qnaAnswer.jsp" />
    </definition>
-
+   
+   <definition name="qnaUpdate.tiles" extends="noticeList.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/cs/cs_qnaUpdate.jsp" />
+   </definition>
    <!-- 민경 -->
    <definition name="community.tiles" template="/WEB-INF/views/layouts-board.jsp">
       <put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />
