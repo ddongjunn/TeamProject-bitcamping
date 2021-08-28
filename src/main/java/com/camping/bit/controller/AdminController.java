@@ -319,4 +319,30 @@ public class AdminController {
         return "admin-camping-review.tiles";
     }
 
+    @RequestMapping(value = "product-qna.do", method = RequestMethod.GET)
+    public String productQna(Model model, CsParam param){
+
+        int sn = param.getPageNumber();
+        int start = 1 + 15 * sn;
+        int end = (sn + 1) * 15;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        List<CsQnaDto> qna = csService.getQnaList(param);
+        model.addAttribute("qna", qna);
+
+        System.out.println("qna=" + qna);
+
+        int totalCount = csService.getQnaCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        model.addAttribute("pageNumber", param.getPageNumber() + 1);
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+        model.addAttribute("kind",param.getKind());
+
+        return "admin-product-qna.tiles";
+    }
+
 }

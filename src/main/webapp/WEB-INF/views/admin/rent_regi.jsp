@@ -6,7 +6,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
 
-<form name="regi_frm" method="post" action="/admin/regiAf.do" enctype="multipart/form-data" autocomplete="off">
+<form name="regi_frm" method="post" action="/admin/product-regiAf.do" enctype="multipart/form-data" autocomplete="off">
   <h1>상품 등록</h1>
   <div class="question">
 	<input type="text" name="product_Name" maxlength="100" autocomplete="off" required />

@@ -129,7 +129,9 @@ public class RentController {
 	@ResponseBody
 	@RequestMapping(value = "paymentAf.do", method = { RequestMethod.GET, RequestMethod.POST })
     public int paymentAf(ProductOrderDto order) {
-		
+
+		System.out.println("paymentAf order = " + order);
+
 		int result = service.paymentAf(order); // DB에 주문정보 저장
 		
 		service.reduceStock(order);

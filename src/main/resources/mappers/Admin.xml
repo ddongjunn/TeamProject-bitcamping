@@ -102,7 +102,7 @@
     </select>
 
     <select id="getQnaWaitTotalCount" resultType="int">
-        SELECT SUM( (SELECT COUNT(*) FROM QNA WHERE STATUS = 0) + (SELECT COUNT(*) FROM PRODUCT_QNA WHERE STATUS = 0) ) AS WAIT_QNA FROM DUAL
+        SELECT SUM( (SELECT COUNT(*) FROM QNA WHERE STATUS = 0 AND STEP = 0) + (SELECT COUNT(*) FROM PRODUCT_QNA WHERE STATUS = 0 ) ) AS WAIT_QNA FROM DUAL
     </select>
 
     <select id="regiPathCount" resultType="map">

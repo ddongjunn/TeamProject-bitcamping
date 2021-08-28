@@ -90,16 +90,6 @@
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
                                 <a class="nav-link " href="">
-                                    <span class="nav-link-text">재고관리</span>
-                                </a>
-                            </li>
-                            <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="">
-                                    <span class="nav-link-text">대여관리</span>
-                                </a>
-                            </li>
-                            <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="">
                                     <span class="nav-link-text">주문관리</span>
                                 </a>
                             </li>
