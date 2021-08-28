@@ -278,8 +278,8 @@
             <if test='choice == "content"'>
                 AND CONTENT LIKE '%'||#{search}||'%'
             </if>
-            <if test="choice == 'writer'">
-                AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) = #{search}
+            <if test="choice == 'name'">
+                AND (SELECT FACLTNM FROM CAMPING_LIST WHERE CAMPING_BBS.CONTENTID = CAMPING_LIST.CONTENTID) LIKE '%'||#{search}||'%'
             </if>
         </if>
         ORDER BY WDATE DESC
@@ -299,8 +299,8 @@
             <if test="choice == 'content'">
                 AND CONTENT LIKE '%'||#{search}||'%'
             </if>
-            <if test="choice == 'writer'">
-                AND (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) = #{search}
+            <if test="choice == 'name'">
+                AND (SELECT FACLTNM FROM CAMPING_LIST WHERE CAMPING_BBS.CONTENTID = CAMPING_LIST.CONTENTID) LIKE '%'||#{search}||'%'
             </if>
         </if>
     </select>

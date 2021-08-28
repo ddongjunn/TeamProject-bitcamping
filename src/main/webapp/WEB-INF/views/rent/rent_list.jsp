@@ -107,20 +107,7 @@
 
 <script type="text/javascript">
 
-// onLoad="rateStyle(${list.rate}, 'rating${list.product_Seq}')"
 
-	$(document).ready(function(){
-		rateStyle(${list.rate}, 'rating${list.product_Seq}');
-	})
-     		
-	function rateStyle(num, divID) {
-		var ratingRounded = Math.floor(num);
-		$("#"+divID+" .star-over").slice(0, ratingRounded).addClass('star-visible');
-	  	var partialShade = Math.round((num-ratingRounded)*100);
-	  	if (partialShade!= 0) {
-	  		$($("#"+divID+" .star-over").get(ratingRounded)).addClass('star-visible').css("width", partialShade+"%");
-		}
-	}
 	
 </script>
 

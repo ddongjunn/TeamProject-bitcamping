@@ -22,3 +22,5 @@ public class CommunityCommentParam implements Serializable{
 	private int start;
 	private int end;
 }
+
+
