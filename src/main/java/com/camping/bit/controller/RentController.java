@@ -133,7 +133,7 @@ public class RentController {
 		int result = service.paymentAf(order); // DB에 주문정보 저장
 		
 		service.reduceStock(order);
-		
+
 		return result;
 	}
 	

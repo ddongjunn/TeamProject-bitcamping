@@ -78,7 +78,7 @@
         <option value="" selected="selected">선택</option>
         <option value="title">제목</option>
         <option value="content">내용</option>
-        <option value="writer">작성자</option>
+        <option value="name">캠핑장</option>
     </select>
     <input type="text" id="_search" name="search" placeholder="검색" class="form-control form-control-sm" style="width: 200px">
     <button type="button" id="btnSearch" class="btn btn-outline-primary btn-sm">검색</button>

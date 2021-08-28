@@ -23,30 +23,30 @@
         <c:if test="${user.sns_Type eq 'none'}">
             <div class="userid">
                 <label for="userid"> 아이디 </label> <br>
-                <input type="text" id="userid" value="${user.id}" size="20" disabled>
+                <input type="text" id="userid" value="${user.id}" size="25" disabled>
             </div>
         </c:if>
 
         <div class="username">
             <label for="username"> 이름 </label> <br>
-            <input type="text" id="username" value="${user.username}" disabled>
+            <input type="text" id="username" value="${user.username}" size="25" disabled>
         </div>
 
         <div class="nickname">
             <label for="nickname"> 닉네임 </label> <br>
-            <input type="text" id="nickname" name="nickname" value="${user.nickname}" maxlength="10">
+            <input type="text" id="nickname" name="nickname" value="${user.nickname}" size="25" maxlength="10">
             <span class="error_msg"></span>
         </div>
 
         <div class="phone">
             <label for="phone"> 휴대폰 </label> <br>
-            <input type="text" id="phone" name="phone" value="${user.phone}" maxlength="13">
+            <input type="text" id="phone" name="phone" value="${user.phone}" size="25" maxlength="13">
             <span class="error_msg"></span>
         </div>
 
         <div class="email">
             <label for="email"> 이메일 </label> <br>
-            <input type="text" id="email" name="email" value="${user.email}">
+            <input type="text" id="email" name="email" size="25" value="${user.email}">
             <span class="error_msg"></span>
         </div>
 
