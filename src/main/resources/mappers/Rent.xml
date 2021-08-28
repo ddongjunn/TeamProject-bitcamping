@@ -104,7 +104,7 @@
 		INSERT INTO PRODUCT_ORDER (ORDER_SEQ, USER_ID, ORDER_DATE, PRODUCT_SEQ, OPTION1_SEQ, OPTION2_SEQ, QUANTITY, 
 			RENT_SEQ, RENT_SDATE, RENT_EDATE, PRODUCT_PRICE, SHIPPING_FEE, TOTAL_PRICE, 
 			RECEIVER, ADDRESS, RECEIVER_PHONE, MEMO, PAYMENT, MERCHANT_UID, ORDER_STATUS, REVIEW_STATUS) 
-		VALUES (ORDER_SEQ.NEXTVAL, #{user_Id}, SYSDATE, #{product_Seq}, #{option1_Seq}, #{option2_Seq}, #{quantity}, 
+		VALUES (PRODUCT_ORDER_SEQ.NEXTVAL, #{user_Id}, SYSDATE, #{product_Seq}, #{option1_Seq}, #{option2_Seq}, #{quantity}, 
 			#{rent_Seq}, #{rent_Sdate}, #{rent_Edate}, #{product_Price}, #{shipping_Fee}, #{total_Price}, 
 			#{receiver}, #{address}, #{receiver_Phone}, #{memo}, #{payment}, #{merchant_Uid}, 1, 0)
 	</insert>
@@ -139,6 +139,12 @@
 		UPDATE PRODUCT
 		SET DEL = 1
   		WHERE PRODUCT_SEQ = #{product_Seq}
+	</update>
+	
+	<update id="reduceStock" parameterType="ProductOrderDto">
+		UPDATE PRODUCT
+		SET PRODUCT_STOCK = PRODUCT_STOCK - #{quantity}
+		WHERE PRODUCT_SEQ = #{product_Seq}
 	</update>
 
 </mapper>

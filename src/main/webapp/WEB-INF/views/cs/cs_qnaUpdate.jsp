@@ -38,7 +38,8 @@
 <body>
 
 
-<form id="qnaWriteForm" action="/cs/qnaWriteAf.do" method="post">
+<form id="qnaUpdateForm" action="/cs/qnaUpdateAf.do" method="post">
+<input type="hidden" name="qna_Seq" value="${qna.qna_Seq}">
 <table class="qnaWrite">
 	<tbody>
 		<tr>
@@ -51,11 +52,6 @@
 				<label for="secret">
 					<input type="checkbox" name="secret" id="secret" value="1"> 비밀글 설정
 				</label>
-			<%-- <c:if test="${login.auth eq 3}">
-					<label for="notice">
-						<input type="checkbox" name="notice" id="notice" value="1"> 공지글 설정
-					</label>
-				</c:if> --%>
 			</td>
 		</tr>	
 		<tr>
@@ -69,13 +65,16 @@
 	<input type="submit" value="등록">
 </div>
 
-<input type="hidden" name="user_Id" value="${login.id}">
-
 </form>
 
 <script type="text/javascript">
 
 	$(document).ready(function() {
+		
+		/* 비밀글 여부 가져오기 */
+		if(${qna.secret eq 1}){
+			$("#secret").prop("checked", true);
+		}
 		
 		/* summernote 설정 */
 		$('#summernote').summernote({

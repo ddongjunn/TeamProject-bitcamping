@@ -54,4 +54,8 @@ public interface CsService {
 
 	public int getCommentCount(CsCommentParam param);
 
+	public void qnaUpdateAf(CsQnaDto qna);
+
+	public void qnaDelete(int qna_Seq);
+
 }

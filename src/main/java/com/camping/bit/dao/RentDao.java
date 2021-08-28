@@ -47,5 +47,7 @@ public interface RentDao {
 	public void productUpdateAf(ProductDetailDto dto);
 
 	public void productDelete(int product_Seq);
+
+	public void reduceStock(ProductOrderDto order);
 	 
 }
