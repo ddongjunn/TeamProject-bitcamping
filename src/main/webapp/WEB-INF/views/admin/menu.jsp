@@ -85,12 +85,12 @@
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
                                 <a class="nav-link " href="/admin/product.do">
-                                    <span class="nav-link-text">상품목록</span>
+                                    <span class="nav-link-text">상품리스트</span>
                                 </a>
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="">
-                                    <span class="nav-link-text">주문관리</span>
+                                <a class="nav-link " href="/admin/order-list.do">
+                                    <span class="nav-link-text">주문리스트</span>
                                 </a>
                             </li>
                             <li class="nav-item" style="margin-left: 33px">

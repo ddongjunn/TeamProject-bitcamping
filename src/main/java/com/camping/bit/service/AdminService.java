@@ -27,4 +27,8 @@ public interface AdminService {
 
     public List<CampingBbsDto> campingReviewList(CampingParam param);
     public int campingReviewCount (CampingParam param);
+
+    public List<ProductOrderDto> orderList(MypageParam param);
+    public int orderListCount(MypageParam param);
+    public ProductOrderDto getOrderInfo(String merchant_Uid);
 }

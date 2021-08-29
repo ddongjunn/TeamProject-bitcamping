@@ -25,24 +25,14 @@
 			<th>주문번호</th> <td>${order.merchant_Uid}</td>
 		</tr>
 		<tr>
-			<th>배송지 정보</th> 
-			<td>
-				${order.receiver}<br>
-				${order.address}<br>
-				${order.receiver_Phone}<br>
-				배송메세지 : ${order.memo}
-			</td>
-		</tr>	
-		<tr>
 			<th>상품명</th> 
 			<td>
-				${item.product_Name}<br>
-				${rent.rent_Name}
+				${item.product_Name} &nbsp;/&nbsp; 옵션 : (${rent.rent_Name})
 				<c:if test="${order.option1_Seq ne 0}">
-					<br>${opt1.option_Name}
+					+ ${opt1.option_Name}
 				</c:if>
 				<c:if test="${order.option2_Seq ne 0}">
-					<br>${opt2.option_Name}
+					+ ${opt2.option_Name}
 				</c:if>
 			</td>
 		</tr>
@@ -79,9 +69,21 @@
 			<fmt:formatNumber value="${order.total_Price}" type="number"/>원		
 			</td>
 		</tr>
+		<tr>
+			<th>배송지 정보</th>
+			<td>
+				${order.receiver}<br>
+				${order.address}<br>
+				${order.receiver_Phone}<br>
+			</td>
+		</tr>
+		<tr>
+			<th>배송메세지</th>
+			<td>${order.memo}</td>
+		</tr>
 	</table>
 	<div style="width: 300px; margin: auto;">
-		<button type="button" onclick="location.href='/main.do'">홈으로</button><button type="button" onclick="location.href='/account/myOrder.do'">마이페이지</button>
+		<button type="button" onclick="">목록</button>
 	</div>
 </div>
 </body>

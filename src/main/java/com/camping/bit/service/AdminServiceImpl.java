@@ -79,5 +79,20 @@ public class AdminServiceImpl implements AdminService{
         return dao.campingReviewCount(param);
     }
 
+    @Override
+    public List<ProductOrderDto> orderList(MypageParam param) {
+        return dao.orderList(param);
+    }
+
+    @Override
+    public int orderListCount(MypageParam param) {
+        return dao.orderListCount(param);
+    }
+
+    @Override
+    public ProductOrderDto getOrderInfo(String merchant_Uid) {
+        return dao.getOrderInfo(merchant_Uid);
+    }
+
 
 }
