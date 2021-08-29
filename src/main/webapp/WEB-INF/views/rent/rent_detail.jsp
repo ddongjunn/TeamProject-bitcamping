@@ -15,6 +15,8 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!-- sweetAlert2 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
 </head>
 <body>
 

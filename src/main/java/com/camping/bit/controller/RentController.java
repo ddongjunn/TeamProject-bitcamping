@@ -3,13 +3,16 @@ package com.camping.bit.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.camping.bit.dto.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,13 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.camping.bit.dto.MemberDto;
-import com.camping.bit.dto.ProductDetailDto;
-import com.camping.bit.dto.ProductOptionDto;
-import com.camping.bit.dto.ProductOrderDto;
-import com.camping.bit.dto.ProductQnaDto;
-import com.camping.bit.dto.ProductRentDto;
-import com.camping.bit.dto.ProductReviewDto;
 import com.camping.bit.service.RentService;
 
 import com.camping.bit.commons.FileUploadUtil;
@@ -89,26 +85,66 @@ public class RentController {
 		
 		List<ProductOptionDto> option = service.getOptionList();		
 		model.addAttribute("option", option);		
-		
-		List<ProductReviewDto> review = service.getReviewList(product_Seq);
-		model.addAttribute("review", review);
-		
-		List<ProductQnaDto> qna = service.getQnaList(product_Seq);
-		model.addAttribute("qna", qna);
-		
-		int reviewCount = service.getReviewCount(product_Seq);
-		model.addAttribute("reviewCount", reviewCount);
-		
-		int qnaCount = service.getQnaCount(product_Seq);
-		model.addAttribute("qnaCount", qnaCount);
-		
+
 		return "productDetail.tiles";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "detail-review.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String,Object> productDetailReivew(Model model, ProductParam param) {
+
+		int sn = param.getPageNumber();
+		int start = 1 + 5 * sn;
+		int end = 5 + 5 * sn;
+
+		param.setStart(start);
+		param.setEnd(end);
+
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		List<ProductReviewDto> review = service.getReviewList(param);
+		map.put("reviewList",review);
+
+		int totalCount = service.getReviewCount(param);
+		map.put("totalCount",totalCount);
+
+		//현재 페이지
+		int nowPage = param.getPageNumber();
+		map.put("nowPage",nowPage + 1);
+
+		return map;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "detail-qna.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public Map<String,Object> productDetailQna(Model model, ProductParam param) {
+
+		int sn = param.getPageNumber();
+		int start = 1 + 5 * sn;
+		int end = 5 + 5 * sn;
+
+		param.setStart(start);
+		param.setEnd(end);
+
+		Map<String,Object> map = new HashMap<String,Object>();
+
+		List<ProductQnaDto> qna = service.getQnaList(param);
+		map.put("qna", qna);
+
+
+		int qnaCount = service.getQnaCount(param);
+		map.put("totalCount", qnaCount);
+
+		//현재 페이지
+		int nowPage = param.getPageNumber();
+		map.put("nowPage",nowPage + 1);
+
+		return map;
 	}
 	
 	@RequestMapping(value = "order.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String productOrder(ProductOrderDto order, Model model) {
-		
-		// System.out.println(dto.toString());
+
 		model.addAttribute("order", order);
 		
 		ProductDetailDto item = service.getProductDetail(order.getProduct_Seq());
@@ -212,13 +248,14 @@ public class RentController {
 		
 		return "writeQna.tiles";
 	}
-	
+
+	@ResponseBody
 	@RequestMapping(value = "writeQnaAf.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String writeQnaAf(ProductQnaDto qna) {
-		
+
 		service.writeQnaAf(qna);
-				
-		return "redirect:/";	
+
+		return "success";
 	}
 	
 }

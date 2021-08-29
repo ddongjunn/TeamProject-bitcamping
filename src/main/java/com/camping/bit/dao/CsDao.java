@@ -2,11 +2,7 @@ package com.camping.bit.dao;
 
 import java.util.List;
 
-import com.camping.bit.dto.CsCommentParam;
-import com.camping.bit.dto.CsNoticeCommentDto;
-import com.camping.bit.dto.CsNoticeDto;
-import com.camping.bit.dto.CsParam;
-import com.camping.bit.dto.CsQnaDto;
+import com.camping.bit.dto.*;
 
 public interface CsDao {
 
@@ -57,5 +53,7 @@ public interface CsDao {
 	public void qnaUpdateAf(CsQnaDto qna);
 
 	public void qnaDelete(int qna_Seq);
+
+	public ProductQnaDto getQna(int qna_seq);
 
 }
