@@ -11,10 +11,47 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- <style type="text/css"> -->
+
+<style type="text/css">
+.boxType {
+	 border: 0.4em inset #009688;
+}
+
+
+
+</style>
+
 </head>
 <body>
 
-<h1>자유게시판</h1>
+
+<div class="boxType">
+    <div class="box_top">
+        <div class="box_title">자유게시판은 군민 여러분이 나누고 싶은 글을 게시하는 공간입니다.</div>
+    </div>
+    <div class="text">
+        <ul class="bu">
+            <li>불건전성, 상업성 광고, 유언비어, 저속한 표현, 특정인 또는 단체에 대한 비방(명예훼손), 정치적 목적이나 성향, 반복적 게시물, 저작권 침해, 기타 불법
+                정보 등의 <span class="em_orange">유해게시물은 관리자에 의해 통보없이 삭제</span>될 수 있습니다.</li>
+            <li>주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
+                <p class="point margin_t_15 margin_b_15"><span class="skip">주의</span>개인정보가 포함되어 있는 글은 일차적으로 글쓰기시 차단되오니, 이점 유념하여 작성하여 주시기 바랍니다.</p>
+            </li>
+            <li><span class="inner">답변을 원하시는 내용 또는 생활불편사항은 민원시청 게시판를 이용하세요.</span>
+                <a href="/www/selectBbsNttList.do?bbsNo=48&amp;key=141" class="btn link small" target="_blank" title="새창">민원신청 바로가기</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<div class="sub_title">
+<h2>자유게시판</h2>
+</div>
+
+<div align="center">
+<img src="../resources/images/free.png" height="300" width="1300px">
+</div>
 
 <!-- 글 작성 리스트 틀-->
 <div class="container">
@@ -30,9 +67,9 @@
 		<tr class="table-success"> 
 			<th>번호</th>
 			<th>제목</th>
-			<th>닉네임</th>
-			<th>조회수</th>
+			<th>작성자</th>
 			<th>작성일</th>
+			<th>조회수</th>
 		</tr>
 					<c:if test="${empty freeList}">
 				<td colspan="3">작성된 글이 없습니다</td>			
@@ -49,11 +86,11 @@
 						</a>
 					</td>
 					<td>${data.nickname }</td>
-					<td>${data.readcount }</td>
 					<td>
 						<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-						<fmt:formatDate value="${formatedDate}" pattern="yyyy.MM.dd."/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
 					</td>
+					<td>${data.readcount }</td>
 				</tr>
 			</c:forEach>
 	</thead>

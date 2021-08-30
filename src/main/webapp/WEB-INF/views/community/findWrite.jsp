@@ -1,4 +1,4 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -41,25 +41,18 @@
 	<tbody>
 		<tr>
 			<td>
-				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요" required>
+				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요">
 			</td>
 		</tr>	
 		<tr> 
 			<td>
-				<textarea id="summernote" name="content">
-				<p>&lt;수제비 멤버스 가입 양식&gt;</p> <p>&nbsp;</p> <p>1. 응시종목 :</p> 
-				<p>ex) 정보처리기사 / 빅데이터 분석기사 등</p> <p>&nbsp;</p> <p>2.전공여부 :</p> 
-				<p>ex) 전공(IT관련) / 비전공</p> <p>&nbsp;</p> 
-				<p>3. 체크리스트(&nbsp;https://cafe.naver.com/soojebi/19981&nbsp;) 확인여부 :</p> 
-				<p>ex) 반드시 확인해주세요!</p> <p>&nbsp;</p> <p>4. 하고 싶은 말 :</p> 
-				<p>ex) 앞으로 잘 부탁드립니다~!</p> <p>﻿</p>
-				</textarea>
+				<textarea id="summernote" name="content"></textarea>
 			</td>
 		</tr>
 	</tbody>
 </table>
 <div class="submitbox">
-	<input type="submit" id="write" value="등록">
+		<input type="button" name="upload" value="등록하기">
 </div>
 
 <input type="hidden" name="user_id" value="${login.id}">
@@ -120,6 +113,34 @@
 	  	});     	
 	}
 	
+		
+		$('input[name="upload"]').click(function () {
+
+			//alert($('input[name=title]').val()); 
+			//alert($('#summernote').val());
+			
+		    if($('input[name=title]').val() == "") {
+				Swal.fire({
+					icon : 'warning',
+					text : '제목을 입력해주세요',
+					didClose: () => {
+						$('input[name=title]').focus();
+					}			        
+				});	
+				return;
+				
+			}else if($('#summernote').val() == "") {
+				Swal.fire({
+					icon : 'warning',
+					text : '내용을 입력해주세요',
+					didClose: () => {
+						$('#summernote').focus();
+					}			
+				});
+				return;
+			}
+			document.getElementById('findWriteForm').submit(); 
+		});
 </script>
 
 </body>

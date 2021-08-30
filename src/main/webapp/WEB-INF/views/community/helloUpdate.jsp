@@ -40,7 +40,7 @@
 	<tbody>
 		<tr>
 			<td>
-				<input type="text" class="title" name="title" value="${data.title}" placeholder="제목을 입력해 주세요" required />
+				<input type="text" class="title" name="title" value="${data.title}" placeholder="제목을 입력해 주세요"/>
 			</td>
 		</tr>
 		<tr>
@@ -51,7 +51,7 @@
 	</tbody>
 </table>
 <div class="submitbox">
-	<input type="submit" value="수정">
+	<input type="button" name="update" value="수정하기">
 </div>
 
 <input type="hidden" name="id" value="${data.user_id }">
@@ -112,7 +112,36 @@
 	    	}
 	  	});     	
 	}
+	$('input[name="update"]').click(function () {
 
+		//alert($('input[name=title]').val()); 
+		//alert($('#summernote').val());
+		
+		var content = $("#summernote").val();
+		//alert("content" + content.length);
+		
+		if($('input[name=title]').val() == "") {
+			Swal.fire({
+				icon : 'warning',
+				text : '제목을 입력해주세요',
+				didClose: () => {
+					$('input[name=title]').focus();
+				}			        
+			});	
+			return;
+			
+		}else if(content.length < 12) {
+			Swal.fire({
+				icon : 'warning',
+				text : '내용을 입력해주세요',
+				didClose: () => {
+					$('#summernote').focus();
+				}			
+			});
+			return;
+		}
+		document.getElementById('helloUpdateForm').submit(); 
+	});
 </script>
 
 </body>

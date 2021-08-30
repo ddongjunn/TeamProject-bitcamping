@@ -41,18 +41,18 @@
 	<tbody>
 		<tr>
 			<td>
-				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요" required>
+				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요">
 			</td>
 		</tr>	
 		<tr>
 			<td>
-				<textarea id="summernote" name="content" required></textarea>
+				<textarea id="summernote" name="content"></textarea>
 			</td>
 		</tr>
 	</tbody>
 </table>
 <div class="submitbox">
-	<input type="submit" value="등록">
+	<input type="button" name="upload" value="등록하기">
 </div>
 
 <input type="hidden" name="user_id" value="${login.id}">
@@ -95,6 +95,7 @@
 		});
 	});
 	
+	
 	/* summernote 파일 저장 */
 	function sendFile(file, el) {
 		var form_data = new FormData();
@@ -113,6 +114,33 @@
 	  	});     	
 	}
 
+	$('input[name="upload"]').click(function () {
+
+		//alert($('input[name=title]').val()); 
+		//alert($('#summernote').val());
+		
+		if($('input[name=title]').val() == "") {
+			Swal.fire({
+				icon : 'warning',
+				text : '제목을 입력해주세요',
+				didClose: () => {
+					$('input[name=title]').focus();
+				}			        
+			});	
+			return;
+			
+		}else if($('#summernote').val() == "") {
+			Swal.fire({
+				icon : 'warning',
+				text : '내용을 입력해주세요',
+				didClose: () => {
+					$('#summernote').focus();
+				}			
+			});
+			return;
+		}
+		document.getElementById('freeWriteForm').submit();
+	});
 </script>
 
 </body>

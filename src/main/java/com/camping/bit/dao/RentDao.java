@@ -2,19 +2,15 @@ package com.camping.bit.dao;
 
 import java.util.List;
 
-import com.camping.bit.dto.ProductDetailDto;
-import com.camping.bit.dto.ProductOptionDto;
-import com.camping.bit.dto.ProductOrderDto;
-import com.camping.bit.dto.ProductQnaDto;
-import com.camping.bit.dto.ProductRentDto;
-import com.camping.bit.dto.ProductReviewDto;
+
+import com.camping.bit.dto.*;
 
 public interface RentDao {
 	
 	// 상품 등록
 	public void regiAf(ProductDetailDto dto);
 
-	public List<ProductDetailDto> getProductList();
+	public List<ProductDetailDto> getProductList(CommonsParam param);
 
 	public ProductDetailDto getProductDetail(int product_Seq);
 
@@ -28,15 +24,15 @@ public interface RentDao {
 
 	public void writeReviewAf(ProductReviewDto review);
 	
-	public List<ProductReviewDto> getReviewList(int product_Seq);
+	public List<ProductReviewDto> getReviewList(ProductParam param);
 	
-	public int getReviewCount(int product_Seq);
+	public int getReviewCount(ProductParam param);
 
 	public void writeQnaAf(ProductQnaDto qna);
 
-	public List<ProductQnaDto> getQnaList(int product_Seq);
+	public List<ProductQnaDto> getQnaList(ProductParam param);
 
-	public int getQnaCount(int product_Seq);
+	public int getQnaCount(ProductParam param);
 
 	public int paymentAf(ProductOrderDto dto);
 
@@ -49,5 +45,7 @@ public interface RentDao {
 	public void productDelete(int product_Seq);
 
 	public void reduceStock(ProductOrderDto order);
+
+	public int getProductCount(CommonsParam param);
 	 
 }

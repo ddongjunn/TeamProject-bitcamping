@@ -29,9 +29,9 @@
 		<tr class="table-success">
 			<th>번호</th>
 			<th>제목</th>
-			<th>닉네임</th>
-			<th>조회수</th>
+			<th>작성자</th>
 			<th>작성일</th>
+			<th>조회수</th>
 		</tr>
 					<c:if test="${empty findList}">
 				<td colspan="3">작성된 글이 없습니다</td>			
@@ -48,11 +48,11 @@
 						</a>
 					</td>
 					<td>${data.nickname }</td>
-					<td>${data.readcount }</td>
 					<td>
 						<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-						<fmt:formatDate value="${formatedDate}" pattern="yyyy.MM.dd."/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
 					</td>
+					<td>${data.readcount }</td>
 				</tr>
 			</c:forEach>
 	</thead>

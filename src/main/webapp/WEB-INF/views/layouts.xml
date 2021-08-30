@@ -87,7 +87,7 @@
    </definition>
 
    <definition name="admin-productRegi.tiles" extends="adminmain.tiles">
-      <put-attribute name="body" value="/WEB-INF/views/rent/rent_regi.jsp" />
+      <put-attribute name="body" value="/WEB-INF/views/admin/rent_regi.jsp" />
    </definition>
 
    <definition name="admin-rentList.tiles" extends="adminmain.tiles">
@@ -104,6 +104,18 @@
 
    <definition name="admin-camping-review.tiles" extends="adminmain.tiles">
       <put-attribute name="body" value="/WEB-INF/views/admin/camping-review.jsp" />
+   </definition>
+
+   <definition name="admin-product-qna.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/product-qna.jsp" />
+   </definition>
+
+   <definition name="admin-orderlist.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/orderList.jsp" />
+   </definition>
+
+   <definition name="admin-orderdetail.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/orderDetail.jsp" />
    </definition>
 
    <!-- 효경 -->

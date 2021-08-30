@@ -15,15 +15,17 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!-- sweetAlert2 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
 </head>
 <body>
 
-<form action="/rent/order.do" method="post">
+<form id="orderForm" action="/rent/order.do" method="post">
 	<section class="product" id="productinfo">
 		<div class="product__photo">
 			<div class="photo-container">
 				<div class="photo-main">
-					<img src="/resources/upload/${item.thumbnail_Name}" style="max-width: 700px; max-height: 550px;" alt="상품 썸네일 이미지">
+					<img src="/resources/upload/${item.thumbnail_Name}" style="max-width: 100%; max-height: 100%;" alt="상품 썸네일 이미지">
 					<input type="hidden" name="product_Seq" value="${item.product_Seq}">
 				</div>
 			</div>
@@ -106,7 +108,7 @@
 				
 			</div>
 			<hr class="hr">
-			<button type="button" id="buybutton" class="buy--btn">이 제품 대여하기</button>
+			<button type="submit" id="buybutton" class="buy--btn">이 제품 대여하기</button>
 		</div>
 	</section>
 </form>
@@ -124,10 +126,29 @@
 	${item.content}
 </div>
 
-
-
-
 <script type="text/javascript">
+
+/* 대여 버튼 클릭시 유효성 검사 */
+$("#buybutton").click(function(){
+	if(${login eq null}){
+		Swal.fire({
+			icon : 'warning',
+			text : '로그인 후 이용해주세요'
+		});
+		return;
+	}else if($("#rent_Sdate").val() == ""){
+		Swal.fire({
+			icon : 'warning',
+			text : '대여일을 입력해주세요',
+			didClose: () => {
+				$("#rent_Sdate").focus();
+			}
+		});
+		return;
+	}else{
+		$("#orderForm").submit();
+	}
+});
 	
 $(document).ready(function () {
 	
@@ -295,9 +316,6 @@ $(document).ready(function () {
 	function reload(){
 		$("#reviewcontent").load("/rent/regi.do");
 	}
-
-//	$("#buybutton")
-
 
 </script>
 

@@ -71,7 +71,7 @@ body {
     font-family: 'S-CoreDream-3Light', 'Manrope', sans-serif !important
 }
 
-.login_modal-window{
+/*.login_modal-window{
 	position: fixed !important;
 	top: 450px !important;
 	left: 50% !important;
@@ -80,7 +80,7 @@ body {
 	z-index: 799 !important;
 	width: 100vw !important;
 	height: 100vh !important;
-}
+}*/
 .mydiv {
     margin-top: 50px;
     margin-bottom: 50px

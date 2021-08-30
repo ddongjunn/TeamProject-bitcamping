@@ -15,11 +15,9 @@
 
 </head>
 <body>
-<form id="qnaForm" action="/rent/writeQnaAf.do" method="post" autocomplete="off">
-	<h3>상품 문의</h3>
-	
+<form id="qnaCommentForm" action="/rent/writeQnaCommentAf.do" method="post" autocomplete="off">
+	<h3>답변 달기</h3>
 	<span>제목</span> 
-	<label for="secret"><span style="float: right"><input type="checkbox" id="secret" name="secret" value="1">비밀글 설정</span></label>
 	<div id="contentbox" style="width: 100%; margin: auto;">
 		<input type="text" id="title" name="title" placeholder="제목을 입력해 주세요" style="width: 100%">
 	</div>
@@ -28,17 +26,17 @@
 		<textarea id="content" rows="8" name="content" placeholder="문의 내용을 입력해 주세요" style="width: 100%"></textarea>
 	</div>
 	
-	<input type="hidden" name="product_Seq" value="${product_Seq}">
+	<input type="hidden" name="qna_Seq" value="">
 	<input type="hidden" name="user_Id" value="${login.id}">
 	
 	<div>
-		<input type="button" id="sendqna" value="제출하기">
+		<input type="button" id="sendQnaComment" value="제출하기">
 	</div>
 </form>
 
 <script type="text/javascript">
 	
-	$("#sendqna").click(function() {		
+	$("#sendQnaComment").click(function() {
 		
 		if(${login == null}) {
 			
@@ -66,20 +64,20 @@
 			
 			Swal.fire({
 	  			  icon: 'warning',
-	  			  title: '문의 내용을 입력해 주세요!'
+	  			  title: '답변 내용을 입력해 주세요!'
 	  		});
 			$("#content").focus();
 			
 		} else {
 			
-	 		var params = $("#qnaForm").serialize();
+	 		var params = $("#qnaCommentForm").serialize();
 	 		
 			$.ajax({
-				url : '<c:url value='/rent/writeQnaAf.do' />',
+				url : '<c:url value='/rent/writeQnaCommentAf.do' />',
 				data : params,
-				success : function(data){
-					opener.writeQna();
-					window.close();
+				success : function(xh){	
+							opener.parent.location.reload();
+							window.close();
 				}
 			});
         }
