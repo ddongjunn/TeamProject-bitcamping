@@ -12,8 +12,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- 캠핑장 DB 수정 
-ALTER TABLE CAMPING_BBS ADD NICKNAME NUMBER(8) DEFAULT '0' NOT NULL; 
+ALTER TABLE CAMPING_BBS ADD NICKNAME VARCHAR2(20) DEFAULT '0' NOT NULL;
 
+ALTER TABLE CAMPING_BBS ADD COMMENTCOUNT NUMBER(8) DEFAULT '0' NOT NULL;
+
+ALTER TABLE CAMPING_BBS_COMMENT ADD NICKNAME VARCHAR2(20) DEFAULT '0' NOT NULL;
  -->
 <!-- bootstrap 추가 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -234,7 +237,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 
 <div id = "photos" class = "photos">
 	<table>
-	<tr>
+	<tr class = "smallphotos">
 		<c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i" end = "14">
 			<c:if test="${i.index%5==0}">
 				</tr><tr>
@@ -250,11 +253,6 @@ String campingintro = (String)request.getAttribute("campingintro");
  		</c:forEach>
  	</ul>
   </div>
-
-
-
-
-
 
 <div id = "review">
 <!-- 캠핑장 검색창 -->
@@ -344,12 +342,12 @@ String campingintro = (String)request.getAttribute("campingintro");
         '        </div>' + 
         '        <div class="body">' + 
         '            <div class="img">' +
-        '                <img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src="<%=request.getContextPath()%>/resources/image/csite_alt_image.png">' +
+        '                <img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src=\'<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png\'">' +
         '           </div>' + 
         '            <div class="desc">' + 
         '                <div class="address"><%=campinglist.getAddr1().substring(0,15)+"..."%></div>' + 
         '                <div class="jibun ellipsis"><%=campinglist.getTel()%></div>' + 
-        '                <div><a href="<%=campinglist.getHomepage() %>" target="_blank" class="link">홈페이지</a></div>' + 
+        '               <div><c:url value="<%=campinglist.getHomepage() %>" var="url" /><c:choose><c:when test="${fn:contains(url, 'http')}"><a href="${url}" target="_blank" class="link">홈페이지</a></c:when><c:otherwise><a href="\'http://${url}\'" target="_blank" class="link">홈페이지</a></c:otherwise></c:choose></div>' + 
         '            </div>' + 
         '        </div>' + 
         '    </div>' +    
@@ -378,6 +376,12 @@ String campingintro = (String)request.getAttribute("campingintro");
 $(document).ready(function(){
 	
 	$('.bxslider').bxSlider();
+	
+	setTimeout(() => {
+		$('.bx-viewport').css("height", "600px");
+		document.getElementsByClassName('bx-viewport')[0].height = '600px';
+	}, 3000);
+	
 	$('select').niceSelect();
 
 	
@@ -414,6 +418,7 @@ $("#mapBtn").click(function(){
 	 $('#contents').hide();
 	 $('#review').show();
 	 $('.container').show();
+	 $("#sorting").val("image").prop("selected", true);
 	 const contentid = new URLSearchParams(location.search).get('contentid');
 	 console.log('content id', contentid)
 			$.ajax({
@@ -435,9 +440,11 @@ $("#mapBtn").click(function(){
 					    $("#reviewlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
+						
+						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
-							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.readcount + "</td>"
 							+"<td>" + item.wdate + "</td>"
@@ -461,7 +468,8 @@ $("#mapBtn").click(function(){
 		 $('#contents').hide();
 		 $('#review').show();	
 		 const contentid = new URLSearchParams(location.search).get('contentid');
-		 var paramData = {"choice" : $("#choice").val(), "search" : $("#search").val(), "contentid" : contentid};
+		/*  $("#sorting").val($("#sorting option:selected").val()); */
+		 var paramData = { "choice" : $("#choice").val(), "search" : $("#search").val(), "contentid" : contentid};
 	
 				$.ajax({
 					url : '/csite/campingSearchReview.do',
@@ -480,9 +488,10 @@ $("#mapBtn").click(function(){
 						    $("#reviewlisting").append(str);
 						}
 						parsedResponse.forEach( (item, idx) => {
+							let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
 							let str = "<tr>"
 								+ "<td>" + (idx + 1) + "</td>"
-								+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+								+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 								+ "<td>" + item.nickname + "</td>"
 								+ "<td>" + item.readcount + "</td>"
 								+ "<td>" + item.wdate + "</td>"
@@ -504,7 +513,6 @@ $("#mapBtn").click(function(){
 			 $('#contents').hide();
 			 $('#review').show();	
 		
-			 $("#sorting").val($("#sorting option:selected").val());
 			 const contentid = new URLSearchParams(location.search).get('contentid');
 			 var paramData = {"reviewsorting" : $("#sorting").val(), "contentid" : contentid, "choice" : $("#choice").val(), "search" : $("#search").val()};
 		
@@ -525,12 +533,13 @@ $("#mapBtn").click(function(){
 							    $("#reviewlisting").append(str);
 							}
 							parsedResponse.forEach( (item, idx) => {
+								
+								let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
 								let str = "<tr>"
 									+ "<td>" + (idx + 1) + "</td>"
-									+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+									+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 									+ "<td>" + item.nickname + "</td>"
 									+ "<td>" + item.readcount + "</td>"
-									+ "<td>" + item.commentcount + "</td>"
 									+"<td>" + item.wdate + "</td>"
 									+ "</tr>";
 								$("#reviewlisting").append(str);
@@ -574,42 +583,6 @@ $("#mapBtn").click(function(){
 }); //document.ready 끝나는 곳
 
 
-/*
-function moreList(){
-	var startNum = $("#reviewlisting tr").length; //tr 몇개 들어있나 구하기(제목, 작성자 줄은 빼기 위해서 1 뺌)
-	var addListHtml = "";
-	console.log("startNum", startNum); //현재 화면에 보이는 글 수 만큼 콘솔에 찍히는지 확인하기
-	var paramData = {"startNum" : startNum}
-	$.ajax({
-		url : '/csite/campingMoreList.do',
-		type : 'get',
-		dataType : 'json',
-		data : paramData,
-		success : function(response){
-			
-			if(response.length>0){
-				var addListHtml = "";
-				for(var i = 0; i<response.length;i++){
-					var idx = Number(StartNum)+Number(i)+1;
-					addListHtml+="<tr>";
-					addListHtml+="<td>" + idx + "</td>";
-					addListHtml+="<td>" + response[i].title + "</td>";
-					addListHtml+="<td>" + response[i].user_id + "</td>";
-					addListHtml+="<td>" + response[i].readcount + "</td>";
-					addListHtml+="</tr>";
-				}
-				$("#reviewlisting").append(addListHtml);
-			}else if(response.length<5){
-					$("#addBtn").remove(); // 더보기로 불러온 글이 5개가 넘지 않으면 더보기 안 나오게 하기
-				}
-			},//success 끝나는 곳
-			error:function(request,status,error){
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			}//error 끝나는 곳
-	}); //moreList ajax 끝나는 곳
-} //moreContent 끝나는 곳
-*/
-
 function pagemove(page){ //누르는 순간 페이지네이션에 지금 page 숫자를 알려준다
 	 const pageNumber = page-1;
 	 console.log(pageNumber);
@@ -636,12 +609,12 @@ function pagemove(page){ //누르는 순간 페이지네이션에 지금 page �
 				    $("#reviewlisting").append(str);
 				}
 				parsedResponse.forEach( (item, idx) => {
+					let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
 					let str = "<tr>"
 						+ "<td>" + (idx + 1) + "</td>"
-						+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>[" + item.commentCount + "]</font></td>"	
+						+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 						+ "<td>" + item.nickname + "</td>"
 						+ "<td>" + item.readcount + "</td>"
-						+ "<td>" + item.commentcount + "</td>"
 						+ "<td>" + item.wdate + "</td>"
 						+ "</tr>";
 					$("#reviewlisting").append(str);
@@ -662,7 +635,7 @@ function campingsearchlist(){
 	 $('#contents').hide();
 	 $('#review').show();	
 	 const contentid = new URLSearchParams(location.search).get('contentid');
-	 var paramData = {"choice" : $("#choice").val(), "search" : $("#search").val(), "contentid" : contentid};
+	 var paramData = {"reviewsorting" : $("#sorting").val(), "choice" : $("#choice").val(), "search" : $("#search").val(), "contentid" : contentid};
 
 			$.ajax({
 				url : '/csite/campingSearchReview.do',
@@ -681,12 +654,12 @@ function campingsearchlist(){
 					    $("#reviewlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
+						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
-							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a></td>"	
+							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.readcount + "</td>"
-							+ "<td>" + item.commentcount + "</td>"
 							+ "<td>" + item.wdate + "</td>"
 							+ "</tr>";
 						$("#reviewlisting").append(str);

@@ -32,10 +32,10 @@
     #photos{
    		margin : 30px 150px 0 150px;
     }
-    
+
     #map{
     	margin : 30px 150px 30px 150px;
-    	width: 500px;
+    	width: 900px;
     	height: 400px;
     }
     .option-content{
@@ -45,7 +45,9 @@
     #searchBox{
     	margin : 0 150px 30px 300px;
     }
-    /*슬라이더*/
+    
+    
+/*슬라이더*/
     
 /** VARIABLES
 ===================================*/
@@ -73,6 +75,7 @@ ul.bxslider {
 .bx-viewport {
   /*fix other elements on the page moving (on Chrome)*/
   -webkit-transform: translatez(0);
+  height : 400px;
 }
 /** THEME
 ===================================*/
