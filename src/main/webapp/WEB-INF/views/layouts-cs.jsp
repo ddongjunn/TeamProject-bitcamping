@@ -12,28 +12,27 @@
 #header {
   padding: 5px;
   margin-bottom: 5px;
-  background-color: lightgreen;
+  width: 100%;
 }
-/* #box{
-	display: flex;
-} */
 #lnb {
-  width: 15%;
-  height: auto;
-  min-height: 800px;
+  width: 25%;
+  height: 100%;
+  min-height: 900px;
   padding: 50px 15px;
   float: left;  
-  background-color: tomato;
+  border-right: 1px solid black;
+  text-align: right;
+  
 }
 #content {
-  width: 85%;
-  padding: 50px;
+  width: 75%;
+  padding: 20px 100px 20px 20px;
   float: left;
+  text-align: center;
 }
 #footer {
   clear: both;
   padding: 5px;
-  background-color: lightblue;
 }
 
 </style>

@@ -76,7 +76,15 @@
 		</c:if>
 	</div>
 	</c:forEach> 
+	
+<!-- 	<div class="container">
+	    <nav aria-label="Page navigation">
+	        <ul class="pagination" id="paginationQna" style="justify-content: center;"></ul>
+	    </nav>
+	</div> -->
 </div>
+
+
 
 <script type="text/javascript">
 
@@ -117,6 +125,34 @@ function writeqna(){
 	
 	window.open("/rent/writeQna.do?product_Seq=" + product_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
 }
+
+	/* pagination */
+	/* let totalCountQna = ${totalCount};
+	if(totalCountQna === 0){
+		totalCountQna = 1;
+	}
+	
+	let nowPageQna = ${nowPage};
+	let pageSizeQna = 10;
+	
+	let _totalPagesQna = totalCountQna / pageSizeQna;	
+	if(totalCountQna % pageSizeQna > 0){
+		_totalPagesQna++;
+	}
+	
+	$("#paginationQna").twbsPagination({
+		startPage: nowPageQna,
+		totalPages: _totalPagesQna,
+		visiblePages: 10,
+		first:'<span sria-hidden="true">«</span>',
+		prev:"이전",
+		next:"다음",
+		last:'<span sria-hidden="true">»</span>',
+		initiateStartPageClick:false,		// onPageClick 자동 실행되지 않도록 한다
+		onPageClick:function(event, page){
+			location.href = "/rent/detail.do?pageNumber=" + (page - 1);	
+		}
+	}); */
 
 </script>
 

@@ -30,6 +30,7 @@
 
    <!-- page별 css -->
    <link rel="stylesheet" type="text/css" href="/resources/css/home.css" />
+   <link rel="stylesheet" type="text/css" href="/resources/css/board.css" />
 
    <meta charset="UTF-8">
    <title>Insert title here</title>
@@ -168,7 +169,7 @@
          </div>
       </div>
    </div>
-
+</div>
 
 <script type="text/javascript">
 	//로그인 모달

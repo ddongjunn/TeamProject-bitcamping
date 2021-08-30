@@ -173,9 +173,24 @@ public class AdminController {
 
 
     @RequestMapping(value = "product.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String product(Model model) {
+    public String product(CommonsParam param, Model model) {
+    	
+    	int sn = param.getPageNumber();
+        int start = 1 + 9 * sn;
+        int end = 9 + 9 * sn;
 
-        List<ProductDetailDto> list = rentService.getProductList();
+        param.setStart(start);
+        param.setEnd(end);
+
+        //총 글의 갯수
+        int totalCount = rentService.getProductCount(param);
+        model.addAttribute("totalCount",totalCount);
+
+        //현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+
+        List<ProductDetailDto> list = rentService.getProductList(param);
         model.addAttribute("list", list);
 
         return "admin-rentList.tiles";

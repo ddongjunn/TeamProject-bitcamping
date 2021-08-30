@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.sidemenu{
+	padding-left: 150px;
+}
+.parentmenu{
+	font-size: 2em;
+	font-weight: bold;
+}
+.childmenu{
+	margin: 15px 10px;
+	font-weight: bold;
+}
+.childmenu > a:hover{
+	color: #ff0080 !important;
+	text-decoration: none;
+}

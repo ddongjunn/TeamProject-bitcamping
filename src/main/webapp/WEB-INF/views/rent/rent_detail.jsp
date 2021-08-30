@@ -18,12 +18,12 @@
 </head>
 <body>
 
-<form action="/rent/order.do" method="post">
+<form id="orderForm" action="/rent/order.do" method="post">
 	<section class="product" id="productinfo">
 		<div class="product__photo">
 			<div class="photo-container">
 				<div class="photo-main">
-					<img src="/resources/upload/${item.thumbnail_Name}" style="max-width: 700px; max-height: 550px;" alt="상품 썸네일 이미지">
+					<img src="/resources/upload/${item.thumbnail_Name}" style="max-width: 100%; max-height: 100%;" alt="상품 썸네일 이미지">
 					<input type="hidden" name="product_Seq" value="${item.product_Seq}">
 				</div>
 			</div>
@@ -124,10 +124,29 @@
 	${item.content}
 </div>
 
-
-
-
 <script type="text/javascript">
+
+/* 대여 버튼 클릭시 유효성 검사 */
+$("#buybutton").click(function(){
+	if(${login eq null}){
+		Swal.fire({
+			icon : 'warning',
+			text : '로그인 후 이용해주세요'
+		});
+		return;
+	}else if($("#rent_Sdate").val() == ""){
+		Swal.fire({
+			icon : 'warning',
+			text : '대여일을 입력해주세요',
+			didClose: () => {
+				$("#rent_Sdate").focus();
+			}
+		});
+		return;
+	}else{
+		$("#orderForm").submit();
+	}
+});
 	
 $(document).ready(function () {
 	
@@ -295,9 +314,6 @@ $(document).ready(function () {
 	function reload(){
 		$("#reviewcontent").load("/rent/regi.do");
 	}
-
-//	$("#buybutton")
-
 
 </script>
 

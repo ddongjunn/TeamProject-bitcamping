@@ -8,29 +8,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-.noticeList{
-	width: 85%;
-}
-.noticeList > th, td{
-	padding: 5px;
-	border-bottom: solid 1px gray;
-	border-collapse: collapse;
-	text-align: center;
-}
-.buttonbox{
-	width: 85%;
-	margin-top: 20px;
-	text-align: right;
-}
-.searchbox{
-	width: 85%;
-}
-</style>
+
 </head>
 <body>
 
-<table class="noticeList">
+<div class="boardtitle">
+	<span>공지사항</span>
+</div>
+
+<table class="tablelist">
 
 	<colgroup>
 		<col width="10%">
@@ -75,12 +61,12 @@
 
 <c:if test="${login.auth eq 1}">
 	<div class="buttonbox">
-		<button onclick="location.href='/cs/noticeWrite.do'">글쓰기</button>
+		<button id="btnWrite" onclick="location.href='/cs/noticeWrite.do'">글쓰기</button>
 	</div>
 </c:if>
 
 <!-- pagination -->
-<div class="container">
+<div class="pgcontainer">
     <nav aria-label="Page navigation">
         <ul class="pagination" id="pagination" style="justify-content:center;"></ul>
     </nav>

@@ -8,35 +8,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<style type="text/css">
-.qnaList{
-	width: 85%;
-}
-.qnaList > th, td{
-	padding: 5px;
-	border-bottom: solid 1px gray;
-	border-collapse: collapse;
-	text-align: center;
-}
-.buttonbox{
-	width: 85%;
-	margin-top: 20px;
-	text-align: right;
-}
-.searchbox{
-	width: 85%;
-}
-</style>
 </head>
 <body>
 
-<table class="qnaList">
+<div class="boardtitle">
+	<span>QnA</span>
+</div>
+
+<table class="tablelist">
 
 	<colgroup>
 		<col width="10%">
-		<col width="10%">
-		<col width="45%">
+		<col width="15%">
+		<col width="40%">
 		<col width="10%">
 		<col width="15%">	
 		<col width="10%">	
@@ -99,11 +83,11 @@
 </table>
 
 <div class="buttonbox">
-	<button onclick="location.href='/cs/qnaWrite.do'">글쓰기</button>
+	<button id="btnWrite" onclick="location.href='/cs/qnaWrite.do'">글쓰기</button>
 </div>
 
 <!-- pagination -->
-<div class="container">
+<div class="pgcontainer">
     <nav aria-label="Page navigation">
         <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
     </nav>

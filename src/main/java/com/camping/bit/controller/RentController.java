@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.camping.bit.dto.CommonsParam;
+import com.camping.bit.dto.CsParam;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
@@ -39,9 +41,24 @@ public class RentController {
 	RentService service;
 	
 	@RequestMapping(value = "list.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String rentList(Model model) {
+    public String rentList(CommonsParam param, Model model) {
 		
-		List<ProductDetailDto> list = service.getProductList();		
+        int sn = param.getPageNumber();
+        int start = 1 + 9 * sn;
+        int end = 9 + 9 * sn;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        //총 글의 갯수
+        int totalCount = service.getProductCount(param);
+        model.addAttribute("totalCount",totalCount);
+
+        //현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+		
+		List<ProductDetailDto> list = service.getProductList(param);		
 		model.addAttribute("list", list);
 		
 		return "rentList.tiles";

@@ -2,6 +2,8 @@ package com.camping.bit.dao;
 
 import java.util.List;
 
+import com.camping.bit.dto.CommonsParam;
+import com.camping.bit.dto.CsParam;
 import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.dto.ProductOptionDto;
 import com.camping.bit.dto.ProductOrderDto;
@@ -14,7 +16,7 @@ public interface RentDao {
 	// 상품 등록
 	public void regiAf(ProductDetailDto dto);
 
-	public List<ProductDetailDto> getProductList();
+	public List<ProductDetailDto> getProductList(CommonsParam param);
 
 	public ProductDetailDto getProductDetail(int product_Seq);
 
@@ -49,5 +51,7 @@ public interface RentDao {
 	public void productDelete(int product_Seq);
 
 	public void reduceStock(ProductOrderDto order);
+
+	public int getProductCount(CommonsParam param);
 	 
 }
