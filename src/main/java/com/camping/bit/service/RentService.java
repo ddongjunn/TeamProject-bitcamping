@@ -2,11 +2,19 @@ package com.camping.bit.service;
 
 import java.util.List;
 
-import com.camping.bit.dto.*;
+
+import com.camping.bit.dto.CommonsParam;
+import com.camping.bit.dto.CsParam;
+import com.camping.bit.dto.ProductDetailDto;
+import com.camping.bit.dto.ProductOptionDto;
+import com.camping.bit.dto.ProductOrderDto;
+import com.camping.bit.dto.ProductQnaDto;
+import com.camping.bit.dto.ProductRentDto;
+import com.camping.bit.dto.ProductReviewDto;
 
 public interface RentService {
 
-	public List<ProductDetailDto> getProductList();
+	public List<ProductDetailDto> getProductList(CommonsParam param);
 
 	public void regiAf(ProductDetailDto dto);
 
@@ -44,5 +52,6 @@ public interface RentService {
 
 	public void reduceStock(ProductOrderDto order);
 
+	public int getProductCount(CommonsParam param);
 
 }

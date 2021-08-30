@@ -194,7 +194,14 @@
 		function iamport() {
 
 			// 정보 입력란 유효성 검사
-			if($("#receiver").val() == ""){
+			if(${login eq null}){
+				Swal.fire({
+					icon : 'warning',
+					text : '로그인 후 이용해주세요'
+				});
+				return;
+				
+			}else if($("#receiver").val() == ""){
 				Swal.fire({
 					icon : 'warning',
 					text : '받는분을 입력해주세요',

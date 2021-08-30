@@ -7,6 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.RentDao;
+import com.camping.bit.dto.CommonsParam;
+import com.camping.bit.dto.CsParam;
+import com.camping.bit.dto.ProductDetailDto;
+import com.camping.bit.dto.ProductOptionDto;
+import com.camping.bit.dto.ProductOrderDto;
+import com.camping.bit.dto.ProductQnaDto;
+import com.camping.bit.dto.ProductRentDto;
+import com.camping.bit.dto.ProductReviewDto;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -21,9 +29,9 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<ProductDetailDto> getProductList() {
+	public List<ProductDetailDto> getProductList(CommonsParam param) {
 		
-		return dao.getProductList();
+		return dao.getProductList(param);
 	}
 
 	@Override
@@ -129,4 +137,9 @@ public class RentServiceImpl implements RentService {
 		dao.reduceStock(order);
 	}
 
+	@Override
+	public int getProductCount(CommonsParam param) {
+
+		return dao.getProductCount(param);
+	}
 }

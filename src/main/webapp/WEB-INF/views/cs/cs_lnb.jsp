@@ -5,17 +5,22 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="/resources/css/sidemenu.css" />
 </head>
 <body>
 
-<div>
-	<a href="/cs/csMain.do">고객센ㅋ터</a>
-</div>
-<div>
-	<a href="/cs/notice.do">공지사항</a>
-</div>
-<div>
-	<a href="/cs/qna.do">Q & A</a>
+<div class="sidemenu">
+	<div class="parentmenu">
+		<a href="/cs/csMain.do">고객센터</a>
+	</div>
+	<hr>
+	<div class="childmenu">
+		<a href="/cs/notice.do">> 공지사항</a>
+	</div>
+	<div class="childmenu">
+		<a href="/cs/qna.do">> Q & A</a>
+	</div>
 </div>
 
 

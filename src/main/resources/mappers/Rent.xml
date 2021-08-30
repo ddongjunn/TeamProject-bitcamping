@@ -14,12 +14,24 @@
   		#{content}, #{include_Light}, #{include_Grill}, #{rent_Type}, SYSDATE, 0)
 	</insert>
 	
-	<select id="getProductList" resultType="ProductDetailDto">
+	<select id="getProductList" parameterType="CommonsParam" resultType="ProductDetailDto">
 		SELECT PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
-  		CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL, (SELECT NVL(AVG(RATE), 0) FROM PRODUCT_REVIEW WHERE PRODUCT_SEQ = PRODUCT.PRODUCT_SEQ) AS RATE
-  		FROM PRODUCT
-  		WHERE DEL = 0
+  		CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL, (SELECT NVL(AVG(RATE), 0) FROM PRODUCT_REVIEW WHERE PRODUCT_SEQ = P.PRODUCT_SEQ) AS RATE
+  		FROM (
+  			SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+				PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
+  				CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL
+			FROM PRODUCT
+			WHERE DEL = 0
+  			) P
+  		WHERE RNUM BETWEEN #{start} AND #{end}
 		ORDER BY WDATE DESC
+	</select>
+	
+	<select id="getProductCount" parameterType="CommonsParam" resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE DEL = 0
 	</select>
 	
 	<select id="getProductDetail" parameterType="java.lang.Integer" resultType="ProductDetailDto">

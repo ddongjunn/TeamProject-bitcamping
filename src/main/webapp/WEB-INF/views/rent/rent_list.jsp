@@ -75,22 +75,8 @@
 	                                    <div class="available_title">상품 재고 <span>${list.product_Stock}</span>개</div>
 	                                    <div class="sold_stars ml-auto"> 
 	                                    	<div id="rating${list.product_Seq}">
-										        <i class="star star-under fa fa-star">
-												  <i class="star star-over fa fa-star"></i>
-												</i>
-												<i class="star star-under fa fa-star">
-												  <i class="star star-over fa fa-star"></i>
-												</i>
-												<i class="star star-under fa fa-star">
-												  <i class="star star-over fa fa-star"></i>
-												</i>
-												<i class="star star-under fa fa-star">
-												  <i class="star star-over fa fa-star"></i>
-												</i>
-												<i class="star star-under fa fa-star">
-												  <i class="star star-over fa fa-star"></i>
-												</i>
-										      </div>                                    	
+
+										    </div>                                    	
 	                                    </div>
 	                                    <span>(${list.rate})</span>
 	                                </div>
@@ -105,9 +91,41 @@
     </div>
 </div>
 
+<!-- pagination -->
+<div class="container">
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
+    </nav>
+</div>
+
 <script type="text/javascript">
 
-
+	let totalCount = ${totalCount};
+	if(totalCount === 0){
+		totalCount = 1;
+	}
+	
+	let nowPage = ${nowPage};
+	let pageSize = 10;
+	
+	let _totalPages = totalCount / pageSize;	
+	if(totalCount % pageSize > 0){
+		_totalPages++;
+	}
+	
+	$("#pagination").twbsPagination({
+		startPage: nowPage,
+		totalPages: _totalPages,
+		visiblePages: 10,
+		first:'<span sria-hidden="true">«</span>',
+		prev:"이전",
+		next:"다음",
+		last:'<span sria-hidden="true">»</span>',
+		initiateStartPageClick:false,		// onPageClick 자동 실행되지 않도록 한다
+		onPageClick:function(event, page){
+			location.href = "/rent/list.do?pageNumber=" + (page - 1);	
+		}
+	});
 	
 </script>
 
