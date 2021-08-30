@@ -35,7 +35,9 @@
 </head>
 <body>
 
-
+	<div align="left">
+	<img src="../resources/images/deal.jpg" height="300" width="800px">
+	</div>
 <form id="dealWriteForm" action="/community/dealWriteAf.do" method="post" enctype="multipart/form-data" >
 <table class="dealwWrite">
 	<tbody>
@@ -47,7 +49,7 @@
 		</tr>
 		<tr>
 			<td>
-				<input type="text" id="title" class="title" name="title" placeholder="제목을 입력해 주세요" required>
+				<input type="text" id="title" class="title" name="title" placeholder="제목을 입력해 주세요">
 			</td>
 		</tr>
 			
@@ -69,7 +71,7 @@
 	</tbody>
 </table>
 <div class="submitbox">
-	<input type="button" value="등록">
+	<input type="button" name="upload" value="등록하기">
 </div>
 
 <input type="hidden" name="user_id" value="${login.id}">
@@ -129,7 +131,44 @@
 	    	}
 	  	});     	
 	}
+	$('input[name="upload"]').click(function () {
 
+		//alert($('input[name=title]').val()); 
+		//alert($('#summernote').val());
+		// alert($("input[name=bbstype]:radio:checked").val());
+		
+		if($("input[name=bbstype]:radio:checked").length == 0){
+			Swal.fire({
+				icon : 'warning',
+				text : '카테고리를 선택해주세요',
+				didClose: () => {
+					$("input[name=bbstype]:radio:checked").focus();
+				}			        
+			});	
+			return;
+			
+		}else if($('input[name=title]').val() == "") {
+			Swal.fire({
+				icon : 'warning',
+				text : '제목을 입력해주세요',
+				didClose: () => {
+					$('input[name=title]').focus();
+				}			        
+			});	
+			return;
+			
+		}else if($('#summernote').val() == "") {
+			Swal.fire({
+				icon : 'warning',
+				text : '내용을 입력해주세요',
+				didClose: () => {
+					$('#summernote').focus();
+				}			
+			});
+			return;
+		}
+		document.getElementById('dealWriteForm').submit(); 
+	});
 </script>
 
 </body>

@@ -15,7 +15,9 @@
 <body>
 
 	<h1>중고거래 게시판</h1>
-
+	<div align="center">
+	<img src="../resources/images/deal.jpg" height="300" width="1300px">
+	</div>
 	<div class="container-fluid">
 		<a href="/community/deal.do" class="badge badge-pill badge-default">전체글</a>
 		<a href="/community/deal.do?kind=sell"
@@ -39,9 +41,9 @@
 				<tr class="table-success">
 					<th>번호</th>
 					<th>제목</th>
-					<th>닉네임</th>
-					<th>조회수</th>
+					<th>작성자</th>
 					<th>작성일</th>
+					<th>조회수</th>
 				</tr>
 				<c:if test="${empty dealList}">
 					<td colspan="3">작성된 글이 없습니다</td>
@@ -69,11 +71,11 @@
 							</a>
 						</td>
 						<td>${data.nickname }</td>
-						<td>${data.readcount }</td>
 						<td>
 							<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-							<fmt:formatDate value="${formatedDate}" pattern="yyyy.MM.dd."/>
+							<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
 						</td>
+						<td>${data.readcount }</td>
 					</tr>
 				</c:forEach>
 			</thead>
@@ -87,7 +89,7 @@
 			<option value="" selected="selected">선택</option>
 			<option value="title">제목</option>
 			<option value="content">내용</option>
-			<option value="nickname">닉네임</option>
+			<option value="nickname">작성자</option>
 		</select> <input type="text" id="_search" name="search" placeholder="검색내용입력.">
 		<button type="button" id="btnSearch">검색</button>
 	</div>

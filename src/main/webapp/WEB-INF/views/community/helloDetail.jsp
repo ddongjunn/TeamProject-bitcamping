@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
   
 <!DOCTYPE html>
 <html>
@@ -35,7 +36,8 @@
 		<tr>
 		   <th>작성날짜</th>
 		   <td>
-		      ${data.wdate }
+			 	<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
 		   </td>
 		</tr>
 		<tr>
@@ -308,6 +310,9 @@ function update(){
               	/* 댓글 페이징 */ 
             	let totalCount = data.totalCount;
             	let nowPage = pageNumber;
+            	if(totalCount === 0){
+                    totalCount = 1;
+                }
             	let pageSize = 10;
             	let _totalPages = totalCount / pageSize;
             	
