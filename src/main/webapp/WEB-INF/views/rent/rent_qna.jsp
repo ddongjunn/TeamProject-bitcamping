@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 
-<style type="text/css">
+	<style type="text/css">
 
-.qnatitle:hover {
-   text-decoration: underline;
-}
+		.qnatitle:hover {
+			text-decoration: underline;
+		}
 
-</style>
+	</style>
 
 </head>
 <body>
@@ -37,13 +37,11 @@
 	<div id="_qnaContent">
 	</div>
 
-	</c:forEach> 
 </div>
 
 <nav aria-label="Page navigation">
 	<ul class="pagination justify-content-center" id="pagination2"></ul>
 </nav>
-
 
 
 <script type="text/javascript">
@@ -166,80 +164,50 @@
 		qnaAjax();
 	}
 
-function showHideQna(seq){
-	
-	if($("#qnacontent"+seq).css("display") == "none"){
-		$("#qnacontent"+seq).show();
-	}else{
-		$("#qnacontent"+seq).hide();
-	}
-}
+	function showHideQna(seq){
 
-function noPermission(id, seq){
-
-	if("${login.id}" == id || "${login.auth}" == 1){
-		showHideQna(seq);
-	} else {
-		Swal.fire({
-			  icon: 'error',
-			  title: '접근 권한이 없습니다',
-			  text: '비밀글은 작성자와 관리자만 조회할 수 있습니다',
-			didClose:() => {
-			  	/*modalOn();*/
-			}
-		});
-	}
-}
-
-/* 리뷰작성 popup open */
-function writeqna(){
-	
-	var product_Seq = ${item.product_Seq}; // 이부분 나중에 order_Seq 넣어주기
-	var popupWidth = 480;
-	var popupHeight = 520;
-
-	var popupX = (window.screen.width / 2) - (popupWidth / 2);
-	// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
-
-	var popupY= (window.screen.height / 2) - (popupHeight / 2);
-	// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
-	
-	window.open("/rent/writeQna.do?product_Seq=" + product_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
-}
-
-<<<<<<< HEAD
-	/* pagination */
-	/* let totalCountQna = ${totalCount};
-	if(totalCountQna === 0){
-		totalCountQna = 1;
-	}
-	
-	let nowPageQna = ${nowPage};
-	let pageSizeQna = 10;
-	
-	let _totalPagesQna = totalCountQna / pageSizeQna;	
-	if(totalCountQna % pageSizeQna > 0){
-		_totalPagesQna++;
-	}
-	
-	$("#paginationQna").twbsPagination({
-		startPage: nowPageQna,
-		totalPages: _totalPagesQna,
-		visiblePages: 10,
-		first:'<span sria-hidden="true">«</span>',
-		prev:"이전",
-		next:"다음",
-		last:'<span sria-hidden="true">»</span>',
-		initiateStartPageClick:false,		// onPageClick 자동 실행되지 않도록 한다
-		onPageClick:function(event, page){
-			location.href = "/rent/detail.do?pageNumber=" + (page - 1);	
+		if($("#qnacontent"+seq).css("display") == "none"){
+			$("#qnacontent"+seq).show();
+		}else{
+			$("#qnacontent"+seq).hide();
 		}
-	}); */
-=======
+	}
+
+	function noPermission(id, seq){
+
+		if("${login.id}" == id || "${login.auth}" == 1){
+			showHideQna(seq);
+		} else {
+			Swal.fire({
+				icon: 'error',
+				title: '접근 권한이 없습니다',
+				text: '비밀글은 작성자와 관리자만 조회할 수 있습니다',
+				didClose:() => {
+					/*modalOn();*/
+				}
+			});
+		}
+	}
+
+	/* 리뷰작성 popup open */
+	function writeqna(){
+
+		var product_Seq = ${item.product_Seq}; // 이부분 나중에 order_Seq 넣어주기
+		var popupWidth = 480;
+		var popupHeight = 520;
+
+		var popupX = (window.screen.width / 2) - (popupWidth / 2);
+		// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+
+		var popupY= (window.screen.height / 2) - (popupHeight / 2);
+		// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
+
+		window.open("/rent/writeQna.do?product_Seq=" + product_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
+	}
+
 	function searchParam(key) {
 		return new URLSearchParams(location.search).get(key);
 	}
->>>>>>> master
 
 </script>
 
