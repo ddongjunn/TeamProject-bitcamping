@@ -5,12 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ibatis.annotations.Mapper;
 
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class ProductQnaDto {
 
 	// 상품 QNA SEQ 
@@ -42,5 +43,8 @@ public class ProductQnaDto {
 
     // 답변 상태 
     private int status;
-    
+
+    private String answercontent;
+    private String answerwdate;
+
 }

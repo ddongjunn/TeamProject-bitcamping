@@ -2,16 +2,11 @@ package com.camping.bit.service;
 
 import java.util.List;
 
+import com.camping.bit.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.camping.bit.dao.RentDao;
-import com.camping.bit.dto.ProductDetailDto;
-import com.camping.bit.dto.ProductOptionDto;
-import com.camping.bit.dto.ProductOrderDto;
-import com.camping.bit.dto.ProductQnaDto;
-import com.camping.bit.dto.ProductRentDto;
-import com.camping.bit.dto.ProductReviewDto;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -68,16 +63,16 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<ProductReviewDto> getReviewList(int product_Seq) {
+	public List<ProductReviewDto> getReviewList(ProductParam param) {
 		
-		return dao.getReviewList(product_Seq);
+		return dao.getReviewList(param);
 	}
 
 	@Override
-	public int getReviewCount(int product_Seq) {
+	public int getReviewCount(ProductParam param) {
 
 		
-		return dao.getReviewCount(product_Seq);
+		return dao.getReviewCount(param);
 	}
 
 	@Override
@@ -87,15 +82,15 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<ProductQnaDto> getQnaList(int product_Seq) {
+	public List<ProductQnaDto> getQnaList(ProductParam param) {
 		
-		return dao.getQnaList(product_Seq);
+		return dao.getQnaList(param);
 	}
 
 	@Override
-	public int getQnaCount(int product_Seq) {
+	public int getQnaCount(ProductParam param) {
 
-		return dao.getQnaCount(product_Seq);
+		return dao.getQnaCount(param);
 	}
 
 	@Override
@@ -133,4 +128,5 @@ public class RentServiceImpl implements RentService {
 		
 		dao.reduceStock(order);
 	}
+
 }

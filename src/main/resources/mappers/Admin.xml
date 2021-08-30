@@ -102,7 +102,7 @@
     </select>
 
     <select id="getQnaWaitTotalCount" resultType="int">
-        SELECT SUM( (SELECT COUNT(*) FROM QNA WHERE STATUS = 0) + (SELECT COUNT(*) FROM PRODUCT_QNA WHERE STATUS = 0) ) AS WAIT_QNA FROM DUAL
+        SELECT SUM( (SELECT COUNT(*) FROM QNA WHERE STATUS = 0 AND STEP = 0) + (SELECT COUNT(*) FROM PRODUCT_QNA WHERE STATUS = 0 ) ) AS WAIT_QNA FROM DUAL
     </select>
 
     <select id="regiPathCount" resultType="map">
@@ -303,6 +303,68 @@
                 AND (SELECT FACLTNM FROM CAMPING_LIST WHERE CAMPING_BBS.CONTENTID = CAMPING_LIST.CONTENTID) LIKE '%'||#{search}||'%'
             </if>
         </if>
+    </select>
+
+    <select id="orderList" parameterType="MypageParam" resultType="ProductOrderDto">
+            SELECT ORDER_SEQ, USER_ID, ORDER_DATE, PRODUCT_SEQ, OPTION1_SEQ, OPTION2_SEQ, QUANTITY,
+                   RENT_SEQ, RENT_SDATE, RENT_EDATE, PRODUCT_PRICE, SHIPPING_FEE, TOTAL_PRICE,
+                   RECEIVER, ADDRESS, RECEIVER_PHONE, MEMO, PAYMENT, MERCHANT_UID, ORDER_STATUS, REVIEW_STATUS,
+                   (SELECT PRODUCT_NAME FROM PRODUCT WHERE PRODUCT_SEQ = P.PRODUCT_SEQ) AS PRODUCT_NAME,
+                   (SELECT THUMBNAIL_NAME FROM PRODUCT WHERE PRODUCT_SEQ = P.PRODUCT_SEQ) AS THUMBNAIL_NAME,
+                   (SELECT OPTION_NAME FROM PRODUCT_OPTION WHERE OPTION_SEQ = P.OPTION1_SEQ) AS OPTION1_NAME,
+                   (SELECT OPTION_NAME FROM PRODUCT_OPTION WHERE OPTION_SEQ = P.OPTION2_SEQ) AS OPTION2_NAME,
+                   (SELECT RENT_NAME FROM PRODUCT_RENT WHERE RENT_SEQ = P.RENT_SEQ) AS RENT_NAME,
+                    (SELECT USERNAME FROM MEMBER WHERE ID = USER_ID) AS USERNAME,
+                    (SELECT PHONE FROM MEMBER WHERE ID = USER_ID) AS PHONE
+            FROM (
+                     SELECT ROW_NUMBER()OVER(ORDER BY ORDER_DATE DESC) AS RNUM,
+                            ORDER_SEQ, USER_ID, ORDER_DATE, PRODUCT_SEQ, OPTION1_SEQ, OPTION2_SEQ, QUANTITY,
+                            RENT_SEQ, RENT_SDATE, RENT_EDATE, PRODUCT_PRICE, SHIPPING_FEE, TOTAL_PRICE,
+                            RECEIVER, ADDRESS, RECEIVER_PHONE, MEMO, PAYMENT, MERCHANT_UID, ORDER_STATUS, REVIEW_STATUS,
+                            (SELECT USERNAME FROM MEMBER WHERE ID = USER_ID) AS USERNAME,
+                            (SELECT PHONE FROM MEMBER WHERE ID = USER_ID) AS PHONE
+                     FROM PRODUCT_ORDER
+                     WHERE 1=1
+                    <if test="choice != null and choice != '' and search != null and search != ''">
+                        <if test="choice == 'name'">
+                            AND (SELECT USERNAME FROM MEMBER WHERE ID = USER_ID) = #{search}
+                        </if>
+                        <if test="choice == 'phone'">
+                            AND (SELECT PHONE FROM MEMBER WHERE ID = USER_ID) = #{search}
+                        </if>
+                    </if>
+                 ORDER BY ORDER_DATE DESC
+                 ) P
+            WHERE RNUM BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="orderListCount" parameterType="MypageParam" resultType="Integer">
+        SELECT NVL(COUNT(*), 0)
+        FROM PRODUCT_ORDER
+        WHERE 1=1
+        <if test="choice != null and choice != '' and search != null and search != ''">
+            <if test="choice == 'name'">
+                AND (SELECT USERNAME FROM MEMBER WHERE ID = USER_ID) = #{search}
+            </if>
+            <if test="choice == 'phone'">
+                AND (SELECT PHONE FROM MEMBER WHERE ID = USER_ID) = #{search}
+            </if>
+        </if>
+    </select>
+
+    <select id="getOrderInfo" parameterType="String" resultType="ProductOrderDto">
+        SELECT ORDER_SEQ, USER_ID, ORDER_DATE, PRODUCT_SEQ, OPTION1_SEQ, OPTION2_SEQ, QUANTITY,
+               RENT_SEQ, RENT_SDATE, RENT_EDATE, PRODUCT_PRICE, SHIPPING_FEE, TOTAL_PRICE,
+               RECEIVER, ADDRESS, RECEIVER_PHONE, MEMO, PAYMENT, MERCHANT_UID, ORDER_STATUS, REVIEW_STATUS,
+               (SELECT USERNAME FROM MEMBER WHERE MEMBER.ID = PRODUCT_ORDER.USER_ID) AS USERNAME,
+               (SELECT PHONE FROM MEMBER WHERE MEMBER.ID = PRODUCT_ORDER.USER_ID) AS PHONE,
+               (SELECT PRODUCT_NAME FROM PRODUCT WHERE PRODUCT.PRODUCT_SEQ = PRODUCT_ORDER.PRODUCT_SEQ) AS PRODUCT_NAME,
+               (SELECT THUMBNAIL_NAME FROM PRODUCT WHERE PRODUCT.PRODUCT_SEQ = PRODUCT_ORDER.PRODUCT_SEQ) AS THUMBNAIL_NAME,
+               (SELECT OPTION_NAME FROM PRODUCT_OPTION WHERE PRODUCT_OPTION.OPTION_SEQ = PRODUCT_ORDER.OPTION1_SEQ) AS OPTION1_NAME,
+               (SELECT OPTION_NAME FROM PRODUCT_OPTION WHERE PRODUCT_OPTION.OPTION_SEQ = PRODUCT_ORDER.OPTION2_SEQ) AS OPTION2_NAME,
+               (SELECT RENT_NAME FROM PRODUCT_RENT WHERE PRODUCT_RENT.RENT_SEQ = PRODUCT_ORDER.RENT_SEQ) AS RENT_NAME
+        FROM PRODUCT_ORDER
+        WHERE MERCHANT_UID = #{merchant_Uid}
     </select>
 
 

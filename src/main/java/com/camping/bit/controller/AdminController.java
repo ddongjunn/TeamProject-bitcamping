@@ -319,4 +319,67 @@ public class AdminController {
         return "admin-camping-review.tiles";
     }
 
+    @RequestMapping(value = "product-qna.do", method = RequestMethod.GET)
+    public String productQna(Model model, CsParam param){
+
+        int sn = param.getPageNumber();
+        int start = 1 + 15 * sn;
+        int end = (sn + 1) * 15;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        List<CsQnaDto> qna = csService.getQnaList(param);
+        model.addAttribute("qna", qna);
+
+        System.out.println("qna=" + qna);
+
+        int totalCount = csService.getQnaCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        model.addAttribute("pageNumber", param.getPageNumber() + 1);
+        model.addAttribute("search", param.getSearch());
+        model.addAttribute("choice", param.getChoice());
+        model.addAttribute("kind",param.getKind());
+
+        return "admin-product-qna.tiles";
+    }
+
+    @RequestMapping(value = "order-list.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String orderList(HttpSession session, Model model, MypageParam param) {
+
+        int sn = param.getPageNumber();
+        int start = 1 + 10 * sn;
+        int end = 10 + 10 * sn;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        //총 글의 갯수
+        int totalCount = service.orderListCount(param);
+        model.addAttribute("totalCount",totalCount);
+
+        //현재 페이지
+        int nowPage = param.getPageNumber();
+        model.addAttribute("nowPage", nowPage + 1);
+
+        List<ProductOrderDto> order = service.orderList(param);
+        model.addAttribute("order", order);
+
+        return "admin-orderlist.tiles";
+    }
+
+   @RequestMapping(value = "order-detail.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String orderDetail(Model model, String merchant_Uid) {
+
+        System.out.println(merchant_Uid);
+
+        ProductOrderDto order = service.getOrderInfo(merchant_Uid);
+        model.addAttribute("order", order);
+
+        System.out.println(order);
+
+        return "admin-orderdetail.tiles";
+    }
+
 }

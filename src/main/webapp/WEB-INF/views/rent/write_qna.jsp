@@ -77,9 +77,9 @@
 			$.ajax({
 				url : '<c:url value='/rent/writeQnaAf.do' />',
 				data : params,
-				success : function(xh){	
-							opener.parent.location.reload();
-							window.close();
+				success : function(data){
+					opener.writeQna();
+					window.close();
 				}
 			});
         }
