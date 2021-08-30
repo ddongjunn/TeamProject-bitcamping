@@ -316,4 +316,17 @@ public class CampingParam implements Serializable{
 		this.id = id;
 	}
 
+	@Override
+	public String toString() {
+		return "CampingParam [pageNumber=" + pageNumber + ", start=" + start + ", end=" + end + ", sorting=" + sorting
+				+ ", doNm=" + doNm + ", sigunguNm=" + sigunguNm + ", searchWord=" + searchWord + ", searchDo="
+				+ Arrays.toString(searchDo) + ", searchCl=" + Arrays.toString(searchCl) + ", lctCl="
+				+ Arrays.toString(lctCl) + ", induty=" + Arrays.toString(induty) + ", resveCl="
+				+ Arrays.toString(resveCl) + ", eqpmnLendCl=" + eqpmnLendCl + ", exprnProgrm=" + exprnProgrm
+				+ ", animalCmgCl=" + Arrays.toString(animalCmgCl) + ", sbrsCl=" + Arrays.toString(sbrsCl)
+				+ ", siteBottomCl1=" + siteBottomCl1 + ", siteBottomCl2=" + siteBottomCl2 + ", siteBottomCl3="
+				+ siteBottomCl3 + ", siteBottomCl4=" + siteBottomCl4 + ", siteBottomCl5=" + siteBottomCl5 + ", choice="
+				+ choice + ", search=" + search + ", reviewsorting=" + reviewsorting + ", contentid=" + contentid
+				+ ", id=" + id + ", nickname=" + nickname + ", review_seq=" + review_seq + "]";
+	}
 }

@@ -41,6 +41,11 @@ public class CampingServiceImpl implements CampingService {
 	public int getCampingCount(CampingParam param) {
 		return dao.getCampingCount(param);
 	}
+	
+	//캠핑장 검색 결과 개수 구하기
+	public int getCampingSearchCount(CampingParam param) {
+		return dao.getCampingSearchCount(param);
+	}
 
 	@Override //캠핑장 클릭시 조회수 증가
 	public int getCampingReadcount(int contentid) {
@@ -183,6 +188,32 @@ public class CampingServiceImpl implements CampingService {
 	@Override //캠핑장 리뷰에 댓글 수정하기
 	public Boolean campingUpdateComment(CampingCommentDto cc) {
 		return dao.campingUpdateComment(cc);
+	}
+
+	@Override
+	public List<CampingListDto> campingMainSearch(CampingParam param) {
+		return dao.campingMainSearch(param);
+	}
+
+	@Override //캠핑장 리뷰 도움이 됐어요 likecount 가져오는 용
+	public Map<String, Object> getCampingHelpInfo(int review_seq) {
+		return dao.getCampingHelpInfo(review_seq);
+	}
+
+	@Override //해당 사용자가 도움이 됐어요 눌렀는지 아닌지 확인하는 용
+	public Map<String, Object> getCampingHelp(Map<String, Object> reviewseqMap) {
+		return dao.getCampingHelp(reviewseqMap);
+	}
+
+	@Override //캠핑장 도움이 됐어요 증가시키기
+	public boolean plusCampingHelp(CampingLikeDto clike) {
+		dao.plusCampingHelpcount(clike.getContentid());
+		return dao.plusCampingHelp(clike);
+	}
+
+	@Override //캠핑장 도움 수 증가
+	public void plusCampingHelpcount(int contentid) {
+		dao.plusCampingHelpcount(contentid);
 	}
 	
 }
