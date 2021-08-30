@@ -94,7 +94,7 @@
                                 </a>
                             </li>
                             <li class="nav-item" style="margin-left: 33px">
-                                <a class="nav-link " href="">
+                                <a class="nav-link " href="/admin/product-qna.do">
                                     <span class="nav-link-text">상품Q&A</span>
                                 </a>
                             </li>
