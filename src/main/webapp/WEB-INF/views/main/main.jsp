@@ -199,6 +199,16 @@
 <!-- container end -->
 
 <script type="text/javascript">
+
+$(document).ready(function(){
+
+	$('.search-btn.shadow').click(function(){
+		const searchWord = $(".shadow").val();
+		location.href = "./csite/campinglist.do?searchWord=" + searchWord;
+	});
+});
+
+
 	
 	/* recommend slider */
 	$('.tarkikComandSlider').slick({

@@ -7,6 +7,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,9 +48,9 @@ CampingLikeDto campinglike = (CampingLikeDto)request.getAttribute("campinglike")
 String login_id = (String)request.getAttribute("login_id");
 
 %>
-<a href = "campinglist.do">목록으로 돌아가기</a> 
+<!-- <a href = "campinglist.do">목록으로 돌아가기</a>  -->
 <input type = "hidden" name = "login_id" value = "${login.id}">
-<input type = "text" value = "${login_id}"/>
+<input type = "hidden" value = "${login_id}"/>
 <!--<input type="hidden" name="user_id" value="login.id"> -->
 
 <div class = "camping_list">
@@ -62,7 +64,7 @@ String login_id = (String)request.getAttribute("login_id");
 					<h2 class = "camping_site_name">	
 							<%=campinglist.getFacltnm()%>
 						<span class = "readcount" style = "font-size : 15px">조회수 : <%=campinglist.getReadcount()%></span>
-						<span class = "readcount" style = "font-size : 15px">추천수 : <%=campinglist.getLikecount()%></span>
+						<span class = "likecount" style = "font-size : 15px">추천수 : <%=campinglist.getLikecount()%></span>
 					</h2>
 				</div>
 				<hr>
@@ -75,24 +77,38 @@ String login_id = (String)request.getAttribute("login_id");
 				 <div> 시설 : <%=campinglist.getSbrscl() %></div>
 				<c:url value="<%=campinglist.getHomepage() %>" var="url" />
 				<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
-					<c:choose>
-					  	<c:when test="${url eq 'none'}">
-					       	홈페이지 준비중 / 
-					    </c:when>
-					    <c:otherwise>
-					        <button type = button onclick = "location.href ='${url}'" class="btn btn-outline-success btn-sm">홈페이지</button>
-					    </c:otherwise>
+						<c:choose>
+						<c:when test="${camping.homepage eq 'none'}">
+							<span><img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
+							홈페이지 준비중</span>
+						</c:when>
+						<c:otherwise>
+						<img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
+							<c:choose>
+							<c:when test="${fn:contains(url, 'http')}">
+								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='${url}'" >홈페이지</button>
+								</c:when>
+							<c:otherwise>
+								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+							</c:otherwise>
+							</c:choose>
+						</c:otherwise>
 					</c:choose>
 					<c:choose>
 					  	<c:when test="${url1 eq 'none'}">
 					        전화예약
 					    </c:when>
 					    <c:otherwise>
-					        <button type = button onclick = "location.href ='${url1}'" class = "btn btn-outline-success btn-sm">예약하기</button>
+					    <c:choose>
+							<c:when test="${fn:contains(url, 'http')}">
+					       		 <button type = button onclick = "location.href ='${url1}'" class = "btn btn-outline-success btn-sm">예약하기</button>
+							</c:when>
+							<c:otherwise>	
+								<button type = button onclick = "location.href ='http://${url1}'" class = "btn btn-outline-success btn-sm" target = "_blank">예약하기</button>			    
+					    	</c:otherwise>
+					    </c:choose>
 					    </c:otherwise>
 					</c:choose>
-				
-
 
 <input type = "hidden" name = "campingidx" value = "${campingidx}"/>
 <input type = "hidden" name = "useridx" value = "${useridx}"/>
@@ -145,6 +161,7 @@ $(document).ready(function(){
 		 console.log(paramData); */
 		 const contentid = "${campingidx}";
 		 const user_id = "${useridx}";
+		 const likecount = "${likecount}";
 		var paramData = {"contentid" : contentid, "user_id" : user_id}
 		console.log(paramData);
 		 if($(this).children('svg').attr('class')=="bi bi-suit-heart"){
@@ -156,9 +173,8 @@ $(document).ready(function(){
 		dataType : 'text',
 		success : function(result){
 			if(result !=-1){
-				//alert("하트 누르기");
-				
-			 	location.href = "campingdetail.do?contentid=" + contentid;	
+				$('.likecount').html("");
+				$('.likecount').html('추천수 : ' + result);
 			}
 		}, 
 		error:function(request,status,error){
@@ -175,25 +191,17 @@ $(document).ready(function(){
 		dataType : 'text',
 		success : function(result){
 			if(result != -1){
-				//alert("하트 없애기");
-			 	location.href = "campingdetail.do?contentid=" + contentid;	
+				$('.likecount').html("");	
+				$('.likecount').html('추천수 : ' + result);
 			}
 		}, 
 		error:function(request,status,error){
 		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});//꽉 찬 하트 ajax 끝나는 곳
-		$(this).html('<svg class = "heart3" xmlns = "http://www.w3.org/2000/svg" width = "30" height = "30" fill ="currentColor" class = "bi bi-suit-heart" viewBox = "0 -20 480 480"><path d="m348 0c-43 .0664062-83.28125 21.039062-108 56.222656-24.71875-35.183594-65-56.1562498-108-56.222656-70.320312 0-132 65.425781-132 140 0 72.679688 41.039062 147.535156 118.6875 216.480469 35.976562 31.882812 75.441406 59.597656 117.640625 82.625 2.304687 1.1875 5.039063 1.1875 7.34375 0 42.183594-23.027344 81.636719-50.746094 117.601563-82.625 77.6875-68.945313 118.726562-143.800781 118.726562-216.480469 0-74.574219-61.679688-140-132-140zm-108 422.902344c-29.382812-16.214844-224-129.496094-224-282.902344 0-66.054688 54.199219-124 116-124 41.867188.074219 80.460938 22.660156 101.03125 59.128906 1.539062 2.351563 4.160156 3.765625 6.96875 3.765625s5.429688-1.414062 6.96875-3.765625c20.570312-36.46875 59.164062-59.054687 101.03125-59.128906 61.800781 0 116 57.945312 116 124 0 153.40625-194.617188 266.6875-224 282.902344zm0 0"/></svg>');
-		}//꽉 찬 하트 비우기 끝
+		$(this).html('<svg xmlns = "http://www.w3.org/2000/svg" width = "30" height = "30" fill ="currentColor" class = "bi bi-suit-heart" viewBox = "0 -20 480 480"><path d="m348 0c-43 .0664062-83.28125 21.039062-108 56.222656-24.71875-35.183594-65-56.1562498-108-56.222656-70.320312 0-132 65.425781-132 140 0 72.679688 41.039062 147.535156 118.6875 216.480469 35.976562 31.882812 75.441406 59.597656 117.640625 82.625 2.304687 1.1875 5.039063 1.1875 7.34375 0 42.183594-23.027344 81.636719-50.746094 117.601563-82.625 77.6875-68.945313 118.726562-143.800781 118.726562-216.480469 0-74.574219-61.679688-140-132-140zm-108 422.902344c-29.382812-16.214844-224-129.496094-224-282.902344 0-66.054688 54.199219-124 116-124 41.867188.074219 80.460938 22.660156 101.03125 59.128906 1.539062 2.351563 4.160156 3.765625 6.96875 3.765625s5.429688-1.414062 6.96875-3.765625c20.570312-36.46875 59.164062-59.054687 101.03125-59.128906 61.800781 0 116 57.945312 116 124 0 153.40625-194.617188 266.6875-224 282.902344zm0 0"/></svg>');
+		 }//꽉 찬 하트 비우기 끝
 	});//heart-click function 끝나는 곳 
-	
-	$(".heart-click").click(function(){
-		 const contentid = "${campingidx}";
-		 const user_id = "${useridx}";
-		var paramData = {"contentid" : contentid, "user_id" : user_id}
-		console.log(paramData);
-		
-	}); //heart-click function 끝나는 곳
 });//document.ready 끝나는 곳
 </script>
 </body>

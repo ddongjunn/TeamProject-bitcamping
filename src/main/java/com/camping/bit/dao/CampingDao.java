@@ -25,6 +25,9 @@ public interface CampingDao {
 	//캠핑장 갯수 구하기 
 	public int getCampingCount(CampingParam param);
 	
+	//캠핑장 검색 결과 개수 구하기
+	public int getCampingSearchCount(CampingParam param);
+	
 	//캠핑장 클릭 조회수 증가
 	public int getCampingReadcount(int contentid);
 	
@@ -110,6 +113,21 @@ public interface CampingDao {
 	
 	//캠핑장 리뷰 댓글 수정하기
 	public Boolean campingUpdateComment(CampingCommentDto cc);
+	
+	//캠핑장 메인 화면 검색하기
+	public List<CampingListDto> campingMainSearch(CampingParam param);
+	
+	//도움이 됐어요 위해 likecount 각각 몇개 있나 검사하는 용
+	public Map<String, Object> getCampingHelpInfo(int review_seq);
+	
+	//캠핑장 도움이 됐어요 (사용자가 도움이 됐어요 눌렀는지 안 눌렀는지 확인용)
+	public Map<String, Object> getCampingHelp(Map<String, Object> reviewseqMap);
+	
+	//캠핑장 도움이 됐어요 증가시키기
+	public boolean plusCampingHelp(CampingLikeDto clike);
+	
+	//캠핑장 도움 수 증가시키기(개수)
+	public void plusCampingHelpcount(int contentid);
 
 	
 }

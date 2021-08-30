@@ -46,12 +46,12 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 %>
 <input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
 <input type="hidden" name="user_id" value="${login.id}">
-<h2><%=campingbbs.getUser_id() %>님의 소중한 리뷰</h2>
+<h2><%=campingbbs.getNickname() %>님의 소중한 리뷰</h2>
 <div style="clear:both"></div>
 <div id = "review">
 <h3>후기 번호 : <%=campingbbs.getReview_seq() %></h3>
 <h3>제목 : <%=campingbbs.getTitle() %></h3>
-<h3>작성일 : <%=campingbbs.getWdate() %> </h3>
+<h3 class = "date"></h3>
 <h3>내용 : <%=campingbbs.getContent() %></h3>
 
 <c:set var = "id" value = '<%=campingbbs.getUser_id()%>'/>
@@ -101,6 +101,7 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 $(document).ready(function(){
 	
 	comments(); //댓글뿌리기
+	dateformat();
 	
 	$("#updateBtn").click(function(){ //리뷰 수정하기
 		location.href = "campingupdatereview.do?review_seq=" +<%=campingbbs.getReview_seq()%> + "&contentid=" + <%=campingbbs.getContentid()%>;
@@ -164,6 +165,7 @@ $(document).ready(function(){
 						+ "<a href = 'javascript:commentDelete();'>삭제</a>" 
 						+ "</td>" + "</tr>";
 					$(".nodata").html("");
+					document.getElementById("content").value='';
 					$("#commentlisting").prepend(str);
 				
 				}
@@ -241,7 +243,7 @@ $(document).ready(function(){
 	}; //commentUpdateBtn 클릭 끝
 	
 	
-	function update(comment_seq){	
+	function update(comment_seq){//실제 수정하는 function
 	console.log("update되나요click");
 	var updateContent = $('[name=content_'+comment_seq+']').val();
 	var paramData = {"comment_seq" : comment_seq, "content" : updateContent};
@@ -256,7 +258,8 @@ $(document).ready(function(){
 			if(result == "success"){
 				//alert("수정 성공");
 				let str = `${'${updateContent}'}`;
-				$('.commentUpdate' + comment_seq).html(str);
+				$('#commentUpdate' + comment_seq).html("");
+				$('#commentUpdate' + comment_seq).html(str);
 			}
 		}, //success 끝나는 곳
 		error:function(request,status,error){
@@ -270,6 +273,7 @@ $(document).ready(function(){
 		 const review_seq = new URLSearchParams(location.search).get('review_seq');
 		 var paramData = {"review_seq" : review_seq};
 		 //console.log(paramData);
+		 	
 			$.ajax({
 				url : '/csite/campingReviewComment.do',
 				type : 'get',
@@ -279,6 +283,7 @@ $(document).ready(function(){
 					//alert(JSON.stringify(response));
 					//console.log(response);
 					$("#reviewlisting").html("");
+					const user_id = "${login.id}";
 					const parsedResponse = JSON.parse(response);
 	
 					if(response == '[]'){
@@ -286,23 +291,22 @@ $(document).ready(function(){
 					    +"<td colspan='2' class='nodata'>아직 아무도 댓글을 달지 않았어요! 첫 댓글을 달아볼까요?</td>"
 					    +"</tr>"
 					    $("#commentlisting").append(str);
+					    $(".container").remove();
 					}
 					
-						parsedResponse.forEach( (item, idx) => {
+					parsedResponse.forEach( (item, idx) => {
+						let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);'>수정</a><a href = 'javascript:commentDelete(${'${item.comment_seq}'});'>삭제</a></td>` : ""; 
 						let str = "<tr class = commentArea" + item.comment_seq+ ">"
 							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.wdate+ "</td>"
 							+ "</tr>"
 							+ "<tr class = commentArea" + item.comment_seq + " id = commentUpdate" + item.comment_seq + ">"
 							+ "<td>" + item.content + "</td>"
-							+ "<c:if test='${not empty useridx}'>"
-							+ "<td>" + "<a href = 'javascript:commentUpdate(" + item.comment_seq + ",&quot;" + item.content + "&quot;);'>수정</a>" 
-							+ "<a href = 'javascript:commentDelete(" + item.comment_seq + ");'>삭제</a>" 
-							+ "</td>"+ +"</c:if>"+ "</tr>";
+							+ conditionalString + "</tr>";
 							console.log(item.user_id);
 							//console.log(${login.id});
 						$("#commentlisting").append(str);
-						}); //response foreach문 끝나는 곳
+					}); //response foreach문 끝나는 곳
 						
 				
 				/* 	parsedResponse.forEach( (item, idx) => {
@@ -323,7 +327,7 @@ $(document).ready(function(){
 				error:function(request,status,error){
 				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}//error 끝나는 곳
-			}); //pagemove ajax 끝나는 곳
+			}); //comments ajax 끝나는 곳
 		}; //comments function 끝나는 곳
 		
 		
@@ -345,7 +349,7 @@ $(document).ready(function(){
 					console.log(response);
 					$("#commentlisting").html("");
 					const parsedResponse = JSON.parse(response);
-	
+					const user_id = "${login.id}";
 					if(response == '[]'){
 						let str = "<tr>"
 					    +"<td colspan='2' class='nodata'>에러가 발생했어요</td>"
@@ -353,15 +357,14 @@ $(document).ready(function(){
 					    $("#commentlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
+						let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${item.comment_seq}, &quot;${item.content}&quot;);'>수정</a><a href = 'javascript:commentDelete(${item.comment_seq});'>삭제</a></td>` : "";
 						let str = "<tr>"
 							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.wdate+ "</td>"
 							+ "</tr>"
 							+ "<tr class = commentArea" + item.comment_seq + ">"
 							+ "<td>" + item.content + "</td>"
-							+ "<td>" + "<a href = 'javascript:commentUpdate(" + item.comment_seq + ",&quot;" + item.content + "&quot;);'>수정</a>" 
-							+ "<a href = 'javascript:commentDelete(" + item.comment_seq + ");'>삭제</a>" 
-							+ "</td>"+ "</tr>";
+							+ conditionalString + "</tr>";
 						$("#commentlisting").append(str);
 						});
 					},//success 끝나는 곳
@@ -371,16 +374,39 @@ $(document).ready(function(){
 			}); //pagemove ajax 끝나는 곳
 		} //pagemove function 끝나는 곳
 		
-		
 			
-			
-			   function leadZero(num, n) {
-		            var leadZero = "";
-		            num = num.toString();
-		            if (num.length < n) { for (var i = 0; i < n - num.length; i++) leadZero += "0"; }
-		            return leadZero + num;
-		        } //월 앞에 0붙이기
+	   function leadZero(num, n) {//월 앞에 0붙이기
+            var leadZero = "";
+            num = num.toString();
+            if (num.length < n) { for (var i = 0; i < n - num.length; i++) leadZero += "0"; }
+            return leadZero + num;
+        } 
 		
+	   function dateformat(){
+		   const dateformat = "${dateformat}";
+		   $('.date').html("");
+		   $('.date').html('작성일 :' + dateformat);
+	   }
+		
+		
+		
+		/* 	parseResponse = {
+				'list': [
+					{
+					'writerId': 11,
+					'content': 'hello'
+					},
+					
+				],
+				'loginId': 11
+			}
+			
+			const loginid = response; 
+			
+			parsedResponse.list.forEach((item, idx) ={
+					///
+					item.writerId == parsedResponse.loginId
+			})*/
 
 </script>
 </html>

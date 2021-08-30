@@ -30,63 +30,141 @@
 </nav>
 
 <div id="qnacontent" style="height: auto; margin: auto; width: 80%; background-color: gray;">
-	<span>문의 <fmt:formatNumber value="${qnaCount}" type="number"/> 개</span> <span style="float:right;"><a href="javascript:writeqna();">문의하기</a></span>
-	 <c:forEach items="${qna}" var="qna">
-	<div class="qnarow" style="display: flex; background-color: #F7BBBB; ">
-		<div id="statusbox" class="status" style="flex: 1 1 15%; padding: 10px; ">
-			<c:choose>
-				<c:when test="${qna.status eq 0}">답변대기중</c:when>
-				<c:when test="${qna.status eq 1}">답변완료</c:when>
-			</c:choose>
-		</div>
-		<c:choose>
-			<c:when test="${qna.secret eq 0}">
-				<div id="qnatitle" onclick="showHideQna(${qna.qna_Seq})" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
-					${qna.title}
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div id="qnatitle" onclick="noPermission('${qna.user_Id}', '${qna.qna_Seq}')" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
-					🔒 ${qna.title}
-				</div>
-			</c:otherwise>
-		</c:choose>
-		<div class="info" style="flex: 1 1 25%; padding: 10px;" >
-			<span>작성자 : ${qna.nickname}</span><br>
-			<span>작성일 : 
-				<fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss" />
-				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd" />
-			</span>
-		</div>
+
+	<div id="_qnaHeader">
 	</div>
-	<hr>	
-	
-	<div id="qnacontent${qna.qna_Seq}" class="qnacontent" style="height: auto; padding: 10px; display: none;" >
-		<!-- 문의 내용 -->
-		<div style="background-color: #CDE8FD;">
-			${qna.content}
-		</div>
-		<hr>
-		<!-- 답변 내용 -->
-		<c:if test="${qna.status eq 1}">
-			<div style="background-color: #CDE8FD;">
-				나중에 답변 들어갈 자리
-			</div>
-			<hr>
-		</c:if>
+
+	<div id="_qnaContent">
 	</div>
+
 	</c:forEach> 
-	
-<!-- 	<div class="container">
-	    <nav aria-label="Page navigation">
-	        <ul class="pagination" id="paginationQna" style="justify-content: center;"></ul>
-	    </nav>
-	</div> -->
 </div>
+
+<nav aria-label="Page navigation">
+	<ul class="pagination justify-content-center" id="pagination2"></ul>
+</nav>
 
 
 
 <script type="text/javascript">
+
+	$(document).ready(function () {
+		qnaAjax();
+	})
+
+	function qnaAjax(pageNumber) {
+
+		if(pageNumber === undefined){
+			pageNumber = 0;
+		}
+
+		let header = "";
+		let content = "";
+
+		$.ajax({
+			url : '/rent/detail-qna.do',
+			type : 'post',
+			dataType : 'json',
+			data :  {'product_Seq' : searchParam('product_Seq') , 'pageNumber' : pageNumber },
+			success : function (data) {
+
+
+
+				header += '<span>문의' + data.totalCount +'개</span>'
+				header += '<span style="float:right;"><a href="javascript:writeqna();">문의하기</a></span>'
+				$('#_qnaHeader').html(header);
+
+				$.each(data.qna, function (index, item) {
+					content += '<div class="qnarow" style="display: flex; background-color: #F7BBBB; ">' // start <div=qnarow>
+					content += '<div id="statusbox" class="status" style="flex: 1 1 15%; padding: 10px; ">'
+					content +=	item.status === 0 ? '답변대기중' : '답변완료'
+					content += '</div>'
+
+					content += item.secret === 0  ?
+							'<div id="qnatitle" onclick="showHideQna(' + item.qna_Seq + ')" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >'
+							:
+							'<div id="qnatitle" onclick="noPermission(\'' + item.user_Id + '\', ' + item.qna_Seq + ')" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;">'  + '🔒'
+					content += item.title
+					content +=	'</div>'
+
+					content += '<div class="info" style="flex: 1 1 25%; padding: 10px;" >'
+					content += '<span>작성자 : ' + item.nickname + '</span> <br>'
+					content += '<span>작성일 : ' + item.wdate.substr(0,10) + '</span>'
+					content += '</div>'
+
+					content += '</div>' // end <div=qnarow>
+
+					content += '<div id="qnacontent' + item.qna_Seq + '" class="qnacontent" style="height: auto; padding: 10px; display: none;" >'
+					content += '<div style="background-color: #CDE8FD;">'
+					content += item.content
+					content += '</div id="qna_answer">'
+					if(item.status === 1){
+						content += '<div class="qnarow" style="display: flex; background-color: #ffd600; ">'
+
+						content += '<div class="qna_answer" style="flex: 1 1 25%; padding: 10px 0 0 20px;">' //답변내용
+						content += item.answercontent
+						content += '</div>'
+
+						content += '<div style="background-color: #8CC63F;" >'
+						content += '<span>작성자 : ' + '관리자' + '</span> <br>'
+						content += '<span>작성일 : ' + item.answerwdate.substr(0,10) + '</span>'
+						content += '</div>'
+
+						content += '</div>'
+					}
+					content += '</div>'
+				});
+
+				$('#_qnaContent').html(content);
+
+				//pagination start
+				let totalCount = data.totalCount;	// 서버로부터 총글의 수를 취득
+				//alert(totalCount);
+
+				let nowPage = data.nowPage;	// 서버로부터 현재 페이지를 취득
+				//alert(nowPage);
+
+				if(totalCount === 0){
+					totalCount = 1;
+				}
+
+				let pageSize = 5;//페이지의 크기(1~10) [1] ~ [10]
+
+				let totalPages = totalCount / pageSize;
+
+				if(totalCount % pageSize > 0){
+					totalPages++;
+				}
+
+				/*페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.*/
+				if($('#pagination2').data("twbs-pagination")){
+					$('#pagination2').twbsPagination('destroy');
+				}
+
+				$("#pagination2").twbsPagination({
+					startPage : nowPage,
+					totalPages : totalPages, //전체 페이지
+					visiblePages: 10, //최대로 보여줄 페이지
+					first: '<span sria-hidden="true">«</span>',
+					prev: "이전",
+					next: "다음",
+					last: '<span sria-hidden="true">»</span>',
+					initiateStartPageClick:false,
+					onPageClick: function(event,page){
+						qnaAjax(page - 1);
+					}
+				});
+
+
+			}, error : function () {
+
+			}
+		})
+	}
+
+	function writeQna() {
+		qnaAjax();
+	}
 
 function showHideQna(seq){
 	
@@ -97,15 +175,18 @@ function showHideQna(seq){
 	}
 }
 
-function noPermission(id, seq){	
-	
+function noPermission(id, seq){
+
 	if("${login.id}" == id || "${login.auth}" == 1){
-		showHide(seq);
+		showHideQna(seq);
 	} else {
 		Swal.fire({
 			  icon: 'error',
 			  title: '접근 권한이 없습니다',
 			  text: '비밀글은 작성자와 관리자만 조회할 수 있습니다',
+			didClose:() => {
+			  	/*modalOn();*/
+			}
 		});
 	}
 }
@@ -126,6 +207,7 @@ function writeqna(){
 	window.open("/rent/writeQna.do?product_Seq=" + product_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
 }
 
+<<<<<<< HEAD
 	/* pagination */
 	/* let totalCountQna = ${totalCount};
 	if(totalCountQna === 0){
@@ -153,6 +235,11 @@ function writeqna(){
 			location.href = "/rent/detail.do?pageNumber=" + (page - 1);	
 		}
 	}); */
+=======
+	function searchParam(key) {
+		return new URLSearchParams(location.search).get(key);
+	}
+>>>>>>> master
 
 </script>
 

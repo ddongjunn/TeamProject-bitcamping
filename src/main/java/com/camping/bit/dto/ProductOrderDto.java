@@ -85,4 +85,7 @@ public class ProductOrderDto implements Serializable {
     private String option2_Name;
     private String rent_Name;
 
+    private String username;
+    private String phone;
+
 }

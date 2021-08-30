@@ -52,6 +52,8 @@
             <mvc:mapping path="/community/findWrite.do"/>
             <mvc:mapping path="/community/dealWrite.do"/>
             <mvc:mapping path="/community/reviewWrite.do"/>
+            
+            <mvc:mapping path="/rent/writeQna.do"/>
 
 
             <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>

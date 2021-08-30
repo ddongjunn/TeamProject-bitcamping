@@ -247,3 +247,8 @@ a{
   button{
   border : none;
   }
+  
+  /*캠핑장 아무 결과도 안 나올때 이미지*/
+  .nosearchpic{
+  	margin : 10px 200px 50px 400px;
+  }

@@ -5,6 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!-- 사용 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +30,7 @@
 </head>
 <body>
 
-<!-- 사용 xx -->
+
 <%
 CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("campingdetail");
 CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");

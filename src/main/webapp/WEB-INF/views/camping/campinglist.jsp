@@ -47,6 +47,10 @@ String siteBottomCl5 = request.getParameter("siteBottomCl5");
 String user_id = (String)request.getAttribute("user_id");
 
 String searchWord = (String)request.getParameter("searchWord");
+
+String addressRegion = request.getParameter("addressRegion");
+String doNm = request.getParameter("doNm");
+String sigunguNm = request.getParameter("sigunguNm");
 %>  
 <html>
 <head>
@@ -168,7 +172,7 @@ String searchWord = (String)request.getParameter("searchWord");
 					 <label for="c_lct_cl06">강</label>
 			<input type="checkbox" name="lctCl" id="호수" class="check01" value="호수" title="29"/>
 					 <label for="c_lct_cl07">호수</label>
-			<input type="checkbox" name="lctCl" id="도수" class="check01" value="도심" title="30"/>
+			<input type="checkbox" name="lctCl" id="도심" class="check01" value="도심" title="30"/>
 					 <label for="c_lct_cl08">도심</label>
 		</div>
 	</td>
@@ -217,8 +221,8 @@ String searchWord = (String)request.getParameter("searchWord");
 		<div class="check_w">
 			<input type="checkbox" name="animalCmgCl" id="가능" value="가능" title="39" class="check01"/>
 					<label for="c_animalCmgCl01">가능</label>
-			<input type="checkbox" name="animalCmgCl" id="가능(소형견)" value="가능(소형견)" title="40" class="check01"/>
-					<label for="c_animalCmgCl01">가능(소형견)</label>
+			<input type="checkbox" name="animalCmgCl" id="소형견" value="소형견" title="40" class="check01"/>
+					<label for="c_animalCmgCl01">소형견</label>
 			<input type="checkbox" name="animalCmgCl" id="불가능" value="불가능" title="41" class="check01"/>
 					<label for="c_animalCmgCl01">불가능</label>
 		</div>
@@ -245,7 +249,7 @@ String searchWord = (String)request.getParameter("searchWord");
 					 <label for="searchSbrsClCode03">장작판매</label>
 			<input type="checkbox" name="sbrsCl" id="온수" value="온수" title="46" class="check01"/>
 					 <label for="searchSbrsClCode04">온수</label>
-		 	<input type="checkbox" name="sbrsCl" id="마트.편의점" value="마트.편의점" title="47" class="check01"/>
+		 	<input type="checkbox" name="sbrsCl" id="편의점" value="편의점" title="47" class="check01"/>
 			 		 <label for="searchSbrsClCode011">마트.편의점</label>
 			 		 
 			<div>
@@ -306,10 +310,15 @@ String searchWord = (String)request.getParameter("searchWord");
 			</td>
 		</tr>
 	</table>
+	<div class = "howmany">
+${campingSearchPage}개의 캠핑장이 기다리고 있습니다
+</div>
 </div>
 
 <br>
 <!-- 리스트 시작 -->
+<c:choose>
+<c:when test= "${campingSearchPage != 0}">
 <c:forEach items = "${campinglist}" var = "camping" varStatus = "i">
 	<div class = "camping_search_list">
 		<ul>
@@ -359,8 +368,15 @@ String searchWord = (String)request.getParameter("searchWord");
 							홈페이지 준비중</span>
 						</c:when>
 						<c:otherwise>
+						<c:url value="${camping.homepage}" var="url" />
 						<img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
-							<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='${url}'" >홈페이지</button>
+							<c:choose>
+							<c:when test="${fn:contains(url, 'http')}">
+								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='${url}'" >홈페이지</button></c:when>
+							<c:otherwise>
+								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+							</c:otherwise>
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 					<div id = "service">
@@ -405,6 +421,11 @@ String searchWord = (String)request.getParameter("searchWord");
 		</ul>
 	</div>
 </c:forEach>
+</c:when>
+<c:otherwise>
+<img src ="<%=request.getContextPath()%>/resources/images/campingsite/nosearch.png" class = "nosearchpic" width = "500" height = "500">
+</c:otherwise>
+</c:choose>
 
 <div class="container" style = "width : 100%; text-align : center">
     <div style = "display : inline-block">
@@ -481,8 +502,14 @@ $(document).ready(function () {
 	$("#<%=siteBottomCl5%>").prop("checked", true);
 	<% } %> 
 	
+<%if (searchWord!= null){ %>
+	document.getElementById("search").value="<%=searchWord%>";
+	<% } %>  
+
+
+	
 //페이지네이션
-let totalCount = ${campingPage};	// 서버로부터 총글의 수를 취득
+let totalCount = ${campingSearchPage};	// 서버로부터 총글의 수를 취득
 //alert(totalCount);
 let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
 //alert(nowPage);
@@ -508,7 +535,7 @@ if($('#pagination').data("twbs-pagination")){
 		initiateStartPageClick:false,
 		onPageClick: function(event,page){
 			var pa = window.location.search.split("&pageNumber");
-			if (window.location.href.indexOf("?") > -1 && window.location.href.indexOf("&")>-1) {
+			if (window.location.href.indexOf("?") > -1 || window.location.href.indexOf("&")>-1) {
 				location.href = "campinglist.do"+ pa[0] + "&pageNumber=" + (page - 1);
 			}else{
 				location.href = "campinglist.do?" + "pageNumber=" + (page - 1);}
@@ -591,6 +618,7 @@ if($('#pagination').data("twbs-pagination")){
 
 	            //권역 기본 생성
 	            var areaKeys1 = Object.keys(area);
+	            console.log(areaKeys1);
 	            areaKeys1.forEach(function(Region){
 	                a1.append("<option value="+Region+">"+Region+"</option>");
 	            });
@@ -613,6 +641,7 @@ if($('#pagination').data("twbs-pagination")){
 	                var Region = a1.val();
 	                var Do = $(this).val();
 	                var keys = Object.keys(area[Region][Do]);
+	                console.log(keys);
 	                keys.forEach(function(SiGunGu){
 	                    a3.append("<option value="+area[Region][Do][SiGunGu]+">"+area[Region][Do][SiGunGu]+"</option>");    
 	                });

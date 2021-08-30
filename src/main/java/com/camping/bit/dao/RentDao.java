@@ -2,6 +2,7 @@ package com.camping.bit.dao;
 
 import java.util.List;
 
+
 import com.camping.bit.dto.CommonsParam;
 import com.camping.bit.dto.CsParam;
 import com.camping.bit.dto.ProductDetailDto;
@@ -30,15 +31,15 @@ public interface RentDao {
 
 	public void writeReviewAf(ProductReviewDto review);
 	
-	public List<ProductReviewDto> getReviewList(int product_Seq);
+	public List<ProductReviewDto> getReviewList(ProductParam param);
 	
-	public int getReviewCount(int product_Seq);
+	public int getReviewCount(ProductParam param);
 
 	public void writeQnaAf(ProductQnaDto qna);
 
-	public List<ProductQnaDto> getQnaList(int product_Seq);
+	public List<ProductQnaDto> getQnaList(ProductParam param);
 
-	public int getQnaCount(int product_Seq);
+	public int getQnaCount(ProductParam param);
 
 	public int paymentAf(ProductOrderDto dto);
 

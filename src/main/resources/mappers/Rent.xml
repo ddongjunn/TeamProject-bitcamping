@@ -67,16 +67,21 @@
   		#{title}, #{content}, #{image, jdbcType=VARCHAR}, #{rate}, SYSDATE, 0, 0)
 	</insert>
 	
-	<select id="getReviewList" parameterType="java.lang.Integer" resultType="ProductReviewDto">
-  		SELECT REVIEW_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, ORDER_SEQ, TITLE, CONTENT, IMAGE, RATE, WDATE, DEL, STATUS 
-		FROM PRODUCT_REVIEW
-		WHERE 1=1 
-			AND DEL = 0 
-			AND PRODUCT_SEQ = #{product_Seq}
-		ORDER BY WDATE
+	<select id="getReviewList" parameterType="ProductParam" resultType="ProductReviewDto">
+  		SELECT REVIEW_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME,
+  		       ORDER_SEQ, TITLE, CONTENT, IMAGE, RATE, WDATE, DEL, STATUS
+		FROM (
+			SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+			       REVIEW_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME,
+				   ORDER_SEQ, TITLE, CONTENT, IMAGE, RATE, WDATE, DEL, STATUS FROM PRODUCT_REVIEW
+		    WHERE DEL = 0
+			  AND PRODUCT_SEQ = #{product_Seq}
+			 ORDER BY WDATE
+			)
+		WHERE RNUM BETWEEN #{start} AND #{end}
 	</select>
 	
-	<select id="getReviewCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getReviewCount" parameterType="ProductParam" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM PRODUCT_REVIEW
 		WHERE 1=1 
@@ -86,24 +91,37 @@
 	
 	<insert id="writeQnaAf" parameterType="ProductQnaDto">
 		INSERT INTO PRODUCT_QNA
-		(QNA_SEQ, PRODUCT_SEQ, USER_ID, TITLE, CONTENT, WDATE, SECRET, DEL, STATUS)
-		VALUES(PRODUCT_QNA_SEQ.NEXTVAL, #{product_Seq}, #{user_Id}, #{title}, #{content}, SYSDATE, #{secret}, 0, 0)
+		(QNA_SEQ, PRODUCT_SEQ, USER_ID, TITLE, CONTENT, WDATE, SECRET, DEL, STATUS, REF, STEP)
+		VALUES(PRODUCT_QNA_SEQ.NEXTVAL, #{product_Seq}, #{user_Id}, #{title}, #{content},
+		       SYSDATE, #{secret}, 0, 0, (SELECT NVL(MAX(REF),0) FROM PRODUCT_QNA) + 1, 0)
 	</insert>
 	
-	<select id="getQnaList" parameterType="java.lang.Integer" resultType="ProductQnaDto">
-		SELECT QNA_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, TITLE, CONTENT, WDATE, SECRET, DEL, STATUS
-		FROM PRODUCT_QNA
-		WHERE PRODUCT_SEQ = #{product_Seq}
-			AND DEL = 0
-		ORDER BY WDATE
+	<select id="getQnaList" parameterType="ProductParam" resultType="ProductQnaDto">
+
+		SELECT QNA_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME,
+		       TITLE, CONTENT, WDATE, SECRET, DEL, STATUS, REF, STEP,
+			   NVL(( SELECT CONTENT FROM PRODUCT_QNA WHERE REF = P.REF AND STEP = 1 ),0)AS ANSWERCONTENT,
+			   ( SELECT WDATE FROM PRODUCT_QNA WHERE REF = P.REF AND STEP = 1 ) AS ANSWERWDATE
+		FROM(
+		    	SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+					 QNA_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME,
+					 TITLE, CONTENT, WDATE, SECRET, DEL, STATUS, REF, STEP
+		    	FROM PRODUCT_QNA
+				WHERE PRODUCT_SEQ = #{product_Seq}
+				  AND DEL = 0
+				  AND STEP = 0
+				ORDER BY WDATE DESC, REF DESC
+			) P
+		WHERE RNUM BETWEEN #{start} AND #{end}
 	</select>
 	
-	<select id="getQnaCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getQnaCount" parameterType="ProductParam" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM PRODUCT_QNA
-		WHERE 1=1 
-		AND DEL != 1 
-		AND PRODUCT_SEQ = #{product_Seq}
+		WHERE 1=1
+		  AND DEL = 0
+		  AND STEP = 0
+		  AND PRODUCT_SEQ = #{product_Seq}
 	</select>
 	
 	<select id="getRateAvg" parameterType="java.lang.Integer">

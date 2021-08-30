@@ -94,8 +94,7 @@
    <update id="helloUpdate" parameterType="CommunityDto">
       UPDATE COMMUNITY_BBS SET
                          TITLE=#{title},
-                         CONTENT=#{content},
-                         WDATE=SYSDATE
+                         CONTENT=#{content}
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
    
@@ -247,8 +246,7 @@
    <update id="freeUpdate" parameterType="CommunityDto">
       UPDATE COMMUNITY_BBS SET
                          TITLE=#{title},
-                         CONTENT=#{content},
-                         WDATE=SYSDATE
+                         CONTENT=#{content}
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
 
@@ -325,8 +323,7 @@
 	<update id="findUpdate" parameterType="CommunityDto">
 		UPDATE COMMUNITY_BBS SET
 		                   TITLE=#{title},
-		                   CONTENT=#{content},
-		                   WDATE=SYSDATE
+		                   CONTENT=#{content}
 		WHERE COMMUNITY_SEQ = #{community_seq}
 	</update>
 	
@@ -431,8 +428,7 @@
       UPDATE COMMUNITY_BBS SET
       					 BBSTYPE=#{bbstype},
                          TITLE=#{title},
-                         CONTENT=#{content},
-                         WDATE=SYSDATE
+                         CONTENT=#{content}
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
    
@@ -516,8 +512,7 @@
    <update id="reviewUpdate" parameterType="CommunityDto">
       UPDATE COMMUNITY_BBS SET
                          TITLE=#{title},
-                         CONTENT=#{content},
-                         WDATE=SYSDATE
+                         CONTENT=#{content}
       WHERE COMMUNITY_SEQ = #{community_seq}
    </update>
 
