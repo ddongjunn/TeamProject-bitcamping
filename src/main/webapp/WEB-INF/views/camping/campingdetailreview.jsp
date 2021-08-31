@@ -51,7 +51,10 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <div id = "review">
 <h3>후기 번호 : <%=campingbbs.getReview_seq() %></h3>
 <h3>제목 : <%=campingbbs.getTitle() %></h3>
-<h3 class = "date"></h3>
+<c:set var="writtendate" value="<%=campingbbs.getWdate()%>" />
+
+<h3 class = "date">작성일 : <fmt:formatDate value="${writtendate}" type="both"/></h3>
+
 <h3>내용 : <%=campingbbs.getContent() %></h3>
 
 <c:set var = "id" value = '<%=campingbbs.getUser_id()%>'/>
@@ -101,7 +104,6 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 $(document).ready(function(){
 	
 	comments(); //댓글뿌리기
-	dateformat();
 	
 	$("#updateBtn").click(function(){ //리뷰 수정하기
 		location.href = "campingupdatereview.do?review_seq=" +<%=campingbbs.getReview_seq()%> + "&contentid=" + <%=campingbbs.getContentid()%>;
@@ -135,8 +137,6 @@ $(document).ready(function(){
 		const nickname = "${login.nickname}";
 		const review_seq = new URLSearchParams(location.search).get('review_seq');
 		const content =  $("#content").val();
-		<fmt:formatDate var="formatdate" value="${today}" pattern="yyyy년 MM월 dd일"/>
-		const wdate = "${formatdate}";
 		
 		let today = new Date();   
 
@@ -210,7 +210,8 @@ $(document).ready(function(){
 
 	function commentDelete(comment_seq){	
 	console.log("delete되나요click");
-	var paramData = {"comment_seq" : comment_seq};
+	const review_seq = new URLSearchParams(location.search).get('review_seq');
+	var paramData = {"comment_seq" : comment_seq, "review_seq" : review_seq};
 	console.log(paramData);
 	 $.ajax({
 		url : '/csite/campingDeleteComment.do',
@@ -235,7 +236,7 @@ $(document).ready(function(){
 	//const content = $("#commentUpdateBtn").val();
 	//console.log(comment_seq, content);
 	//$('.commentContent'+comment_seq).hide();
-	let str = `<textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요" rows="5" cols = "100">${'${content}'}'</textarea>
+	let str = `<textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요" rows="5" cols = "100">${'${content}'}</textarea>
         <button type="button" id="sendUpdateBtn" onClick="update(${'${comment_seq}'})" class = "btn btn-outline-success btn-sm" >수정</button>`;
 	//console.log(str);
 	//$("#updateform").append(str);
@@ -257,7 +258,8 @@ $(document).ready(function(){
 			console.log(result);
 			if(result == "success"){
 				//alert("수정 성공");
-				let str = `${'${updateContent}'}`;
+				let str = `<td>${'${updateContent}'}</td>`;
+				str += `<td><a href = 'javascript:commentUpdate(${'${comment_seq}'}, &quot;${'${content}'}&quot;);'>수정</a><a href = 'javascript:commentDelete(${'${comment_seq}'});'>삭제</a></td>`;
 				$('#commentUpdate' + comment_seq).html("");
 				$('#commentUpdate' + comment_seq).html(str);
 			}
@@ -303,11 +305,12 @@ $(document).ready(function(){
 							+ "<tr class = commentArea" + item.comment_seq + " id = commentUpdate" + item.comment_seq + ">"
 							+ "<td>" + item.content + "</td>"
 							+ conditionalString + "</tr>";
-							console.log(item.user_id);
+							//console.log(item.user_id);
 							//console.log(${login.id});
 						$("#commentlisting").append(str);
-					}); //response foreach문 끝나는 곳
 						
+					}); //response foreach문 끝나는 곳
+					//$(".date").append(item.wdate);
 				
 				/* 	parsedResponse.forEach( (item, idx) => {
 						
@@ -328,6 +331,7 @@ $(document).ready(function(){
 				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}//error 끝나는 곳
 			}); //comments ajax 끝나는 곳
+			
 		}; //comments function 끝나는 곳
 		
 		
@@ -380,33 +384,7 @@ $(document).ready(function(){
             num = num.toString();
             if (num.length < n) { for (var i = 0; i < n - num.length; i++) leadZero += "0"; }
             return leadZero + num;
-        } 
-		
-	   function dateformat(){
-		   const dateformat = "${dateformat}";
-		   $('.date').html("");
-		   $('.date').html('작성일 :' + dateformat);
-	   }
-		
-		
-		
-		/* 	parseResponse = {
-				'list': [
-					{
-					'writerId': 11,
-					'content': 'hello'
-					},
-					
-				],
-				'loginId': 11
-			}
-			
-			const loginid = response; 
-			
-			parsedResponse.list.forEach((item, idx) ={
-					///
-					item.writerId == parsedResponse.loginId
-			})*/
+        }; //leadZero 끝나는 곳
 
 </script>
 </html>

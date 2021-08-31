@@ -20,5 +20,7 @@ public class CampingLikeDto {
 	
 	private String login_id;
 	//1이면 캠핑장, 2이면 리뷰, 3이면 댓글
+	
+	private int review_seq;
 
 }

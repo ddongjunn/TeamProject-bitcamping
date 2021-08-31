@@ -1,5 +1,6 @@
 package com.camping.bit.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +110,7 @@ public interface CampingService {
 	public Boolean campingWriteComment(CampingCommentDto cc);
 	
 	//캠핑장 리뷰 삭제하기
-	public Boolean campingDeleteComment(int comment_seq);
+	public Boolean campingDeleteComment(CampingCommentDto cc);
 	
 	//캠핑장 리뷰 댓글 수정하기
 	public Boolean campingUpdateComment(CampingCommentDto cc);
@@ -127,7 +128,9 @@ public interface CampingService {
 	public boolean plusCampingHelp(CampingLikeDto clike);
 	
 	//캠핑장 도움 수 증가시키기(개수)
-	public void plusCampingHelpcount(int contentid);
+	public void plusCampingHelpcount(int review_seq);
 	
+	//캠핑장 도움이 됐어요 수 카운팅하기 
+	public int getCampingHelpcount(int reivew_seq);	
 	
 }

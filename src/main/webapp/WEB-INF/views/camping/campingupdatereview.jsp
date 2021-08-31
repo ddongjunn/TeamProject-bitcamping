@@ -28,13 +28,13 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <div style="clear:both"></div>
 <div id = "writer_info">
 	<h2>${login.nickname}님 무엇을 수정해볼까요?</h2>
-	<h2><input name="title" type = "text" placeholder = "제목을 입력해주세요" value = ${campingbbs.title }></h2>
+	<h2><input name="title" type = "text" placeholder = "제목을 입력해주세요" value = "${campingbbs.title}"></h2>
 </div>
 
 <div style="clear:both"></div>
 
 <div id="summernotebox">
-		<textarea id="summernote" name="content" >${campingbbs.content}</textarea>
+		<textarea id="summernote" name="content" wrap = "hard">${campingbbs.content}</textarea>
 </div>
 <button type = "submit" value = "수정하기" id = "campingupdatereview" class = "btn btn-outline-success btn-sm">수정하기</button>
 

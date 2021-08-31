@@ -29,7 +29,8 @@ th{
 	vertical-align: middle;
 }
 td{
-	width : 750px;
+	width : 83%;
+	text-align : left;
 }
 .detailSearch {
   display: none;
@@ -37,7 +38,11 @@ td{
 }
 .option-content {
    /*border-bottom: 1px solid #e0e0e0;   */
-   margin : 10px 200px 0 100px;
+   margin : 10px 100px 0 100px;
+}
+
+#total{
+	margin : 10px 0 0 0;
 }
 .category {
   font-size: 19px;
@@ -60,8 +65,8 @@ td{
 	margin : 10px 200px 50px 100px;
 }
 
-a{
-	color : #3cc74b;
+.camping_site.name{
+	color : #3cc74b !Important;
 }
 
 .camping_search_list{

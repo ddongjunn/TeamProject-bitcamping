@@ -1,7 +1,10 @@
 package com.camping.bit.dto;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
