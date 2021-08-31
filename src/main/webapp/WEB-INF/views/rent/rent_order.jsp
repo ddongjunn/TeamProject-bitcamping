@@ -156,8 +156,6 @@
 		function findAddr() {
 			new daum.Postcode({
 				oncomplete : function(data) {
-
-					console.log(data)
 					
 					var roadAddr = data.roadAddress; // 도로명 주소
 					var jibunAddr = data.jibunAddress; // 지번 주소
@@ -324,7 +322,7 @@
 								"merchant_Uid" : rsp.merchant_uid
 						}
 						
-						// console.log(orderData);
+						console.log("orderData =  " + orderData);
 	
 						$.ajax({
 							url : "/rent/paymentAf.do",
@@ -337,6 +335,7 @@
 							success : function(result){
 
 								console.log(result);
+
 								if(result == 1) {
 									
 									Swal.fire({

@@ -83,24 +83,37 @@
 		<hr>
 			<div class="content_row">
 				<div class="customer_content">
-					<div class="phohe"><img src="../resources/images/cs_phone.png" >
-						<span class="content_title">전화문의</span> 
+					<div class="phohe"><img src="../resources/images/cs_phone.png" style="margin-bottom: 15px" >
+						<span class="content_title" >전화문의</span>
+                        <p></p>
 						<div id="a">
+                            <p>
+                                <br>
+                            </p>
 							<p>080-022-0182</p>
 							<p>월~일: 오전 9시 ~ 오후 8시</p>
 						</div>
 					</div>
-					<div class="chat"><img src="../resources/images/cs_chat.png">
-						<span class="content_title">1:1 채팅문의</span> 
+					<div class="chat"><img src="../resources/images/cs_chat.png" style="margin-bottom: 15px">
+						<span class="content_title">1:1 채팅문의</span>
+                        <p>
+                            <br>
+                        </p>
 						<p><a href="http://pf.kakao.com/_sDxgUs/chat" target="_blank">1:1 채팅문의하기</a></p>
 					</div>
-					<div class="email"><img src="../resources/images/cs_email.png">
+					<div class="email"><img src="../resources/images/cs_email.png" style="margin-bottom: 15px">
 						<span class="content_title">1:1 Email 문의</span>
-						<p><a href="mailto:ddongjunn@gmail.com">1:1 E-mail 문의</a></p>
+                        <p>
+                            <br>
+                        </p>
+						<p><a href="mailto:ddongjunn@gmail.com">E-mail 문의하기</a></p>
 					</div>
-					<div class="location"><img src="../resources/images/cs_location.png">
+					<div class="location"><img src="../resources/images/cs_location.png" style="margin-bottom: 15px">
 						<span class="content_title">위치안내</span>
 						<div id="a">
+                            <p>
+                                <br>
+                            </p>
 							<p>서울 용산구 효창원로69길 8</p>
 						</div> 
 					</div>
