@@ -46,7 +46,17 @@
 		</tr>	
 		<tr> 
 			<td>
-				<textarea id="summernote" name="content"></textarea>
+				<textarea id="summernote" name="content">
+					<p><br /> ※ 제목 양식 : [지역] ~모집합니다/그외 단어 첨부 삼가</p> 
+					<p>&nbsp;</p> <p>&nbsp;</p> 
+					<p>1. 활동명(닉네임):</p> <p>&nbsp;</p> 
+					<p>2. 연락처(전화번호 필수-한글차용 가능/카톡만 등록 불가능/해외거주자 경우 국제 전화번호 등록):</p> <p>&nbsp;</p> 
+					<p>3. 캠핑지역:</p> <p>&nbsp;</p> 
+					<p>4. 캠핑날짜(ex: 21/06/29- 21/06/30):</p> <p>&nbsp;</p> 
+					<p>5. 캠핑유형(글램핑,차박 etc) :</p> <p>&nbsp;</p> 
+					<p>6. 모집인원:</p> <p>&nbsp;</p> 
+					<p>7. 모집소개:</p>
+				</textarea>
 			</td>
 		</tr>
 	</tbody>
@@ -118,6 +128,7 @@
 
 			//alert($('input[name=title]').val()); 
 			//alert($('#summernote').val());
+			var content = $("#summernote").val();
 			
 		    if($('input[name=title]').val() == "") {
 				Swal.fire({
@@ -129,7 +140,7 @@
 				});	
 				return;
 				
-			}else if($('#summernote').val() == "") {
+			}else if(content.length < 378) {
 				Swal.fire({
 					icon : 'warning',
 					text : '내용을 입력해주세요',

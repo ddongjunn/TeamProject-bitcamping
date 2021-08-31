@@ -335,6 +335,8 @@
 							data : orderData,
 							dataType : 'json',
 							success : function(result){
+
+								console.log(result);
 								if(result == 1) {
 									// alert("DB저장성공");
 									location.href = "complete.do?merchant_Uid=" + rsp.merchant_uid; 

@@ -10,49 +10,51 @@
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 <!-- <style type="text/css"> -->
-
-<style type="text/css">
-.boxType {
-	 border: 0.4em inset #009688;
-}
-
-
-
-</style>
+<link rel="stylesheet" type="text/css" href="/resources/css/community.css" />
 
 </head>
 <body>
 
+<main class="board">
+<div class="maintitle">
+<h2>자유게시판</h2>
+</div>
 
-<div class="boxType">
-    <div class="box_top">
-        <div class="box_title">자유게시판은 군민 여러분이 나누고 싶은 글을 게시하는 공간입니다.</div>
+<div class="communitybox">
+    <div class="freebox_top">
+    	<img src="../resources/images/book.png" height="65px" width="75px">
+        <div class="freebox_title">자유게시판은 캠퍼분들이 나누고 싶은 글을 게시하는 공간입니다.</div>
     </div>
-    <div class="text">
+    <hr id="dotline">
+    <div class="freetext">
         <ul class="bu">
             <li>불건전성, 상업성 광고, 유언비어, 저속한 표현, 특정인 또는 단체에 대한 비방(명예훼손), 정치적 목적이나 성향, 반복적 게시물, 저작권 침해, 기타 불법
                 정보 등의 <span class="em_orange">유해게시물은 관리자에 의해 통보없이 삭제</span>될 수 있습니다.</li>
             <li>주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
-                <p class="point margin_t_15 margin_b_15"><span class="skip">주의</span>개인정보가 포함되어 있는 글은 일차적으로 글쓰기시 차단되오니, 이점 유념하여 작성하여 주시기 바랍니다.</p>
-            </li>
-            <li><span class="inner">답변을 원하시는 내용 또는 생활불편사항은 민원시청 게시판를 이용하세요.</span>
-                <a href="/www/selectBbsNttList.do?bbsNo=48&amp;key=141" class="btn link small" target="_blank" title="새창">민원신청 바로가기</a>
+                <p class="point"><img src="../resources/images/point.png" height="30px" width="30px">개인정보가 포함되어 있는 글은 일차적으로 글쓰기시 차단되오니, 이점 유념하여 작성하여 주시기 바랍니다.</p>
             </li>
         </ul>
     </div>
 </div>
 
-
-<div class="sub_title">
-<h2>자유게시판</h2>
-</div>
-
+<!-- 글검색 -->
 <div align="center">
-<img src="../resources/images/free.png" height="300" width="1300px">
+	<select id="_choice" name="choice">
+		<option value="" selected="selected">선택</option>
+		<option value="title">제목</option>
+		<option value="content">내용</option>
+		<option value="nickname">닉네임</option>
+	</select>
+	
+	<input type="text" id="_search" name="search" placeholder="검색내용입력.">
+	<button type="button" id="btnSearch">검색</button>
 </div>
+<br>
 
+<div>&nbsp; 총 ${totalCount}건</div> 
 <!-- 글 작성 리스트 틀-->
 <div class="container">
 	<table class="table table-sm">
@@ -98,19 +100,6 @@
 </div>
 <br>
 
-<!-- 글검색 -->
-<div align="center">
-	<select id="_choice" name="choice">
-		<option value="" selected="selected">선택</option>
-		<option value="title">제목</option>
-		<option value="content">내용</option>
-		<option value="nickname">닉네임</option>
-	</select>
-	
-	<input type="text" id="_search" name="search" placeholder="검색내용입력.">
-	<button type="button" id="btnSearch">검색</button>
-</div>
-<br>
 
 <!-- 페이지네이션 -->
 <div class="container" style="text-align: center" >
@@ -125,7 +114,7 @@
 <div align="right">
 	<a href="/community/freeWrite.do">글쓰기</a> 
 </div>
-
+</main>
 <script type="text/javascript">
 $(document).ready(function () {
 

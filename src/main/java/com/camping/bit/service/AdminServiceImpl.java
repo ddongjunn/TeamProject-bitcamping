@@ -94,5 +94,35 @@ public class AdminServiceImpl implements AdminService{
         return dao.getOrderInfo(merchant_Uid);
     }
 
+    @Override
+    public List<ProductQnaDto> productQnaList(CsParam param) {
+        return dao.productQnaList(param);
+    }
+
+    @Override
+    public int productQnaListCount(CsParam param) {
+        return dao.productQnaListCount(param);
+    }
+
+    @Override
+    public List<CsQnaDto> csQnaList(CsParam param) {
+        return dao.csQnaList(param);
+    }
+
+    @Override
+    public int csQnaListCount(CsParam param) {
+        return dao.productQnaListCount(param);
+    }
+
+    @Override
+    public String getTodaySales() {
+        return dao.getTodaySales();
+    }
+
+    @Override
+    public Map<String, Object> weeklySales() {
+        return dao.weeklySales();
+    }
+
 
 }

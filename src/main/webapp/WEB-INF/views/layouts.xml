@@ -181,6 +181,12 @@
    <definition name="writeQna.tiles" template="/WEB-INF/views/rent/write_qna.jsp">
    </definition>
 
+   <definition name="writeQnaComment.tiles" template="/WEB-INF/views/rent/write_qna_comment.jsp">
+   </definition>
+
+   <definition name="writeCsQna-admin.tiles" template="/WEB-INF/views/rent/write_csQna_Popup.jsp">
+   </definition>
+
    <!-- 고객센터 -->
    <definition name="noticeList.tiles" template="/WEB-INF/views/layouts-cs.jsp">
       <put-attribute name="header" value="/WEB-INF/views/commons/header.jsp" />

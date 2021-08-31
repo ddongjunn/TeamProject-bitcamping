@@ -70,7 +70,7 @@
                         <div class="row">
                             <div class="col">
                                 <h5 class="card-title text-uppercase text-muted mb-0">오늘의 매출</h5>
-                                <span class="h2 font-weight-bold mb-0">0원</span>
+                                <span class="h2 font-weight-bold mb-0">${todaySales}원</span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
@@ -91,8 +91,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">답변 대기중인 문의글</h5>
-                                <span class="h2 font-weight-bold mb-0">${qnaCount}</span>
+                                <h5 class="card-title text-uppercase text-muted mb-0">답변 대기중인 문의글 </h5>
+                                <span class="h2 font-weight-bold mb-0">${qnaCount} </span>
                             </div>
                             <div class="col-auto">
                                 <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -118,8 +118,8 @@
                 <div class="card-header bg-transparent">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                            <h5 class="h3 mb-0">Total orders</h5>
+                            <%--<h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>--%>
+                            <h5 class="h3 mb-0">매출통계</h5>
                         </div>
                     </div>
                 </div>
@@ -443,66 +443,66 @@
 
 
 <script type="text/javascript">
-    let ctx = document.getElementById('visit-chart').getContext('2d');
 
-    let myChart = new Chart(ctx, {
-        type: 'line', // 차트의 형태
-        data: { // 차트에 들어갈 데이터
-            labels: [
-                //x 축
-                '1','2','3','4','5','6','7'
-            ],
-            datasets: [
-                { //데이터
-                    fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-                    data: [
-                        100,19,25,20,23,26,25 //x축 label에 대응되는 데이터 값
-                    ],
-                    backgroundColor: [
-                        //색상
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        //경계선 색상
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1 //경계선 굵기
-                }/* ,
-                        {
-                            label: 'test2',
-                            fill: false,
-                            data: [
-                                8, 34, 12, 24
-                            ],
-                            backgroundColor: 'rgb(157, 109, 12)',
-                            borderColor: 'rgb(157, 109, 12)'
-                        } */
-            ]
-        },
-        options: {
-            maintainAspectRatio: false, // default value. false일 경우 포함된 div의 크기에 맞춰서 그려짐.
-            scales: {
-                yAxes: [
+    $(document).ready(function () {
+        const ctx = document.getElementById('visit-chart');
+        const config = {
+            type: 'line',
+            data: {
+                labels: ['${days[6]}','${days[5]}','${days[4]}','${days[3]}','${days[2]}','${days[1]}','${days[0]}'],
+                datasets: [
                     {
-                        ticks: {
-                            beginAtZero: true
-                        }
+                        label: '주',
+                        data: [ '${sales.A}','${sales.B}','${sales.C}','${sales.D}','${sales.E}','${sales.F}','${sales.G}'],
+                        backgroundColor: 'yellow',
+                        borderColor: 'red',
+                        borderWidth: 1,
+                        fill : false
+                    },
+                    {
+                        label: '월',
+                        data: [0, 0, 0, 0, 0, 0],
+                        backgroundColor: 'orange',
+                        borderColor: 'gray',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '년',
+                        data: [0, 0, 0, 0, 0, 0],
+                        backgroundColor: 'yellow',
+                        borderColor: 'gray',
+                        borderWidth: 1
                     }
                 ]
+            },
+            options: {
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '차트, 그것이 알고 싶다.'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '색상'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '변곡량'
+                        }
+                    }
+                },
             }
         }
-    });
 
+        const chart = new Chart(ctx, config);
+
+});
 
 </script>
 </body>

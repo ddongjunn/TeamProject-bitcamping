@@ -108,7 +108,7 @@
 				
 			</div>
 			<hr class="hr">
-			<button type="submit" id="buybutton" class="buy--btn">이 제품 대여하기</button>
+			<button type="button" id="buybutton" class="buy--btn">이 제품 대여하기</button>
 		</div>
 	</section>
 </form>

@@ -130,7 +130,7 @@
 			});	
 			return;
 			
-		}else if(content.length < 12) {
+		}else if(content.length < 378) {
 			Swal.fire({
 				icon : 'warning',
 				text : '내용을 입력해주세요',

@@ -97,7 +97,6 @@
 	</insert>
 	
 	<select id="getQnaList" parameterType="ProductParam" resultType="ProductQnaDto">
-
 		SELECT QNA_SEQ, PRODUCT_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME,
 		       TITLE, CONTENT, WDATE, SECRET, DEL, STATUS, REF, STEP,
 			   NVL(( SELECT CONTENT FROM PRODUCT_QNA WHERE REF = P.REF AND STEP = 1 ),0)AS ANSWERCONTENT,
@@ -176,5 +175,22 @@
 		SET PRODUCT_STOCK = PRODUCT_STOCK - #{quantity}
 		WHERE PRODUCT_SEQ = #{product_Seq}
 	</update>
+
+	<update id="updateProductQnaStatus" parameterType="ProductQnaDto">
+		UPDATE PRODUCT_QNA SET STATUS = 1 WHERE QNA_SEQ = #{qna_Seq}
+	</update>
+
+	<insert id="productQnaAnswer" parameterType="ProductQnaDto">
+		INSERT INTO PRODUCT_QNA VALUES(PRODUCT_QNA_SEQ.nextval, (SELECT PRODUCT_SEQ FROM PRODUCT_QNA WHERE QNA_SEQ = #{qna_Seq}), #{user_Id}, '답변', #{content}, SYSDATE, 0, 0, 0,
+									   (SELECT REF FROM PRODUCT_QNA WHERE QNA_SEQ = #{qna_Seq}), 1)
+	</insert>
+
+	<update id="updateCsQnaStatus" parameterType="CsQnaDto">
+		UPDATE QNA SET STATUS = 1 WHERE QNA_SEQ = #{qna_Seq}
+	</update>
+
+	<insert id="csQnaAnswer" parameterType="CsQnaDto">
+		INSERT INTO QNA VALUES (QNA_SEQ.nextval, #{user_Id}, (SELECT REF FROM QNA WHERE QNA_SEQ = #{qna_Seq}), 1, 0, #{title}, #{content}, SYSDATE, 0, 1, 0, 0)
+	</insert>
 
 </mapper>

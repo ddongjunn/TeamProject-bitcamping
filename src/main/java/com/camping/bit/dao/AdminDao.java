@@ -17,6 +17,8 @@ public interface AdminDao {
 
     public int getCommunityTotalCount();
     public int getQnaWaitTotalCount();
+    public String getTodaySales();
+    public Map<String,Object> weeklySales();
 
     public Map<String,Object> regiPathCount();
     public List<CommunityDto>recentCommunity();
@@ -30,4 +32,12 @@ public interface AdminDao {
     public List<ProductOrderDto> orderList(MypageParam param);
     public int orderListCount(MypageParam param);
     public ProductOrderDto getOrderInfo(String merchant_Uid);
+
+    public List<ProductQnaDto> productQnaList(CsParam param);
+    public int productQnaListCount (CsParam param);
+
+    public List<CsQnaDto> csQnaList(CsParam param);
+    public int csQnaListCount(CsParam param);
+
+
 }

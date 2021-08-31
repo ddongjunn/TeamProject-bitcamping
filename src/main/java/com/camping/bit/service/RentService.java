@@ -47,4 +47,9 @@ public interface RentService {
 
 	public int getProductCount(CommonsParam param);
 
+	public void updateProductQnaStatus(ProductQnaDto dto);
+	public void productQnaAnswer(ProductQnaDto dto);
+
+	public void updateCsQnaStatus(CsQnaDto dto);
+	public void csQnaAnswer(CsQnaDto dto);
 }

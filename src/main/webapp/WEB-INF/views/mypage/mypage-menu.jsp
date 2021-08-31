@@ -56,7 +56,7 @@
         <h3 class="title">고객센터</h3>
         <a href="/cs/qnaWrite.do">1:1 게시글 문의</a>
         <a href="http://pf.kakao.com/_sDxgUs/chat" target="_blank">1:1 채팅 문의</a>
-        <a href="mailto:ddongjunn@gmail.com">1:1 E-mail 문의</a>
+        <a href="mailto:ddongjunn@gmail.com">Email 문의하기</a>
     </div>
     <div class="lnb">
         <h3 class="title">비트캠핑 고객센터</h3>
