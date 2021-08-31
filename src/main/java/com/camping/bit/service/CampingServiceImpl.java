@@ -1,5 +1,6 @@
 package com.camping.bit.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -180,9 +181,9 @@ public class CampingServiceImpl implements CampingService {
 	}
 
 	@Override //캠핑장 리뷰에 댓글 삭제하기
-	public Boolean campingDeleteComment(int comment_seq) {
-		dao.minusCommentCount(comment_seq);
-		return dao.campingDeleteComment(comment_seq);
+	public Boolean campingDeleteComment(CampingCommentDto cc) {
+		dao.minusCommentCount(cc.getReview_seq());
+		return dao.campingDeleteComment(cc);
 	}
 
 	@Override //캠핑장 리뷰에 댓글 수정하기
@@ -207,7 +208,7 @@ public class CampingServiceImpl implements CampingService {
 
 	@Override //캠핑장 도움이 됐어요 증가시키기
 	public boolean plusCampingHelp(CampingLikeDto clike) {
-		dao.plusCampingHelpcount(clike.getContentid());
+		dao.plusCampingHelpcount(clike.getReview_seq());
 		return dao.plusCampingHelp(clike);
 	}
 
@@ -215,5 +216,10 @@ public class CampingServiceImpl implements CampingService {
 	public void plusCampingHelpcount(int contentid) {
 		dao.plusCampingHelpcount(contentid);
 	}
-	
+
+	@Override //캠핑장 도움 수 세기 
+	public int getCampingHelpcount(int reivew_seq) {
+		return dao.getCampingHelpcount(reivew_seq);
+	}
+
 }

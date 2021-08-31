@@ -249,7 +249,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 
  	<ul class = "bxslider">
 		<c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i" end = "14">
- 			<li><img src = "${campingimage.imageurl}"></li>
+ 			<li><img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" onClick="window.open(this.src)"></li>
  		</c:forEach>
  	</ul>
   </div>
@@ -274,6 +274,7 @@ String campingintro = (String)request.getAttribute("campingintro");
             <td>제목</td>
             <td>작성자</td>
             <td>조회수</td>
+            <td>추천수</td>
             <td>작성일</td>
         </tr>
     </thead>
@@ -291,32 +292,25 @@ String campingintro = (String)request.getAttribute("campingintro");
     </div>
 </div>
 
-<div id = "searchBox">
-<table>
-	<tr>
-		<td>
-			<select id = "choice" name = "choice">
-				<option value = "" selected = "selected">--선택--</option>
-				<option value = "title">제목</option>
-				<option value = "content">내용</option>
-				<option value = "writer">작성자</option>
-			</select>
-		</td>
-		<td>
-			<i class="fas fa-search"></i>
-			<input type = "text" id = "search" name = "searchWord" placeholder = "검색어를 입력해주세요" onkeypress="if( event.keyCode == 13 ){searchData();}"/>	   	
-		</td>
-		<td>
-			<span class = "button blue">
-<!-- 				<button type = "button" id = "searchBtn" class="btn btn-outline-success">검색</button> -->	
-			 <a href = "javascript:campingsearchlist(this)"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "50"></a>
-			</span>
-		</td>
-	</tr>
-</table>
+<div class = "rows">
+<div class = "col_first" style = "display : inline-block">		
+	<select id = "choice" name = "choice">
+		<option value = "" selected = "selected">--선택--</option>
+		<option value = "title">제목</option>
+		<option value = "content">내용</option>
+		<option value = "writer">작성자</option>
+	</select>
+</div>
+<div class = "col_second" style = "display : inline-block">
 
+	<input type = "text" id = "search" name = "searchWord" placeholder = "검색어를 입력해주세요" onkeypress="if( event.keyCode == 13 ){searchData();}"/>	   	
 </div>
+	<a href = "javascript:campingsearchlist(this)"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "50"></a>
 </div>
+
+	
+</div>
+
 
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=105020d5be336948ef903114d3711ff8"></script>
 	<script>	    
@@ -347,7 +341,7 @@ String campingintro = (String)request.getAttribute("campingintro");
         '            <div class="desc">' + 
         '                <div class="address"><%=campinglist.getAddr1().substring(0,15)+"..."%></div>' + 
         '                <div class="jibun ellipsis"><%=campinglist.getTel()%></div>' + 
-        '               <div><c:url value="<%=campinglist.getHomepage() %>" var="url" /><c:choose><c:when test="${fn:contains(url, 'http')}"><a href="${url}" target="_blank" class="link">홈페이지</a></c:when><c:otherwise><a href="\'http://${url}\'" target="_blank" class="link">홈페이지</a></c:otherwise></c:choose></div>' + 
+        '               <div><c:url value="<%=campinglist.getHomepage() %>" var="url" /><c:choose><c:when test="${fn:contains(url, 'http')}"><a href="${url}" target="_blank" class="link">홈페이지</a></c:when><c:otherwise><a href="http:&#47;&#47;${url}" target="_blank" class="link">홈페이지</a></c:otherwise></c:choose></div>' + 
         '            </div>' + 
         '        </div>' + 
         '    </div>' +    
@@ -427,7 +421,7 @@ $("#mapBtn").click(function(){
 				dataType : 'text',
 				data : {'contentid':contentid},
 				success : function(response){
-					console.log(response);
+					//console.log(response);
 					//alert("success");
 					$("#reviewlisting").html("");
 
@@ -435,7 +429,7 @@ $("#mapBtn").click(function(){
 	
 					if(response == '[]'){
 						let str = "<tr>"
-					    +"<td colspan='5' class='nodata'>아직 등록된 후기가 없습니다. 첫번째 리뷰어가 되어보세요!</td>"
+					    +"<td colspan='6' class='nodata'>아직 등록된 후기가 없습니다. 첫번째 리뷰어가 되어보세요!</td>"
 					    +"</tr>"
 					    $("#reviewlisting").append(str);
 					}
@@ -447,10 +441,11 @@ $("#mapBtn").click(function(){
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.readcount + "</td>"
+							+ "<td>" + item.like_count + "</td>"
 							+"<td>" + item.wdate + "</td>"
 							+ "</tr>";
 						$("#reviewlisting").append(str);
-						console.log(item.commentcount);
+						//console.log(item.commentcount);
 						$("#searchBox").show();
 					});
 				}, 
@@ -483,7 +478,7 @@ $("#mapBtn").click(function(){
 		
 						if(response == '[]'){
 							let str = "<tr>"
-						    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+						    +"<td colspan='6' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
 						    +"</tr>"
 						    $("#reviewlisting").append(str);
 						}
@@ -494,6 +489,7 @@ $("#mapBtn").click(function(){
 								+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 								+ "<td>" + item.nickname + "</td>"
 								+ "<td>" + item.readcount + "</td>"
+								+ "<td>" + item.like_count + "</td>"
 								+ "<td>" + item.wdate + "</td>"
 								+ "</tr>";
 							$("#reviewlisting").append(str);
@@ -528,7 +524,7 @@ $("#mapBtn").click(function(){
 			
 							if(response == '[]'){
 								let str = "<tr>"
-							    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+							    +"<td colspan='6' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
 							    +"</tr>"
 							    $("#reviewlisting").append(str);
 							}
@@ -540,6 +536,7 @@ $("#mapBtn").click(function(){
 									+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 									+ "<td>" + item.nickname + "</td>"
 									+ "<td>" + item.readcount + "</td>"
+									+ "<td>" + item.like_count + "</td>"
 									+"<td>" + item.wdate + "</td>"
 									+ "</tr>";
 								$("#reviewlisting").append(str);
@@ -604,7 +601,7 @@ function pagemove(page){ //누르는 순간 페이지네이션에 지금 page �
 
 				if(response == '[]'){
 					let str = "<tr>"
-				    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+				    +"<td colspan='6' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
 				    +"</tr>"
 				    $("#reviewlisting").append(str);
 				}
@@ -615,6 +612,7 @@ function pagemove(page){ //누르는 순간 페이지네이션에 지금 page �
 						+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 						+ "<td>" + item.nickname + "</td>"
 						+ "<td>" + item.readcount + "</td>"
+						+ "<td>" + item.like_count + "</td>"
 						+ "<td>" + item.wdate + "</td>"
 						+ "</tr>";
 					$("#reviewlisting").append(str);
@@ -649,7 +647,7 @@ function campingsearchlist(){
 	
 					if(response == '[]'){
 						let str = "<tr>"
-					    +"<td colspan='5' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
+					    +"<td colspan='6' class='nodata'>검색 조건을 충족하는 결과가 없어요</td>"
 					    +"</tr>"
 					    $("#reviewlisting").append(str);
 					}
@@ -660,6 +658,7 @@ function campingsearchlist(){
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
 							+ "<td>" + item.nickname + "</td>"
 							+ "<td>" + item.readcount + "</td>"
+							+ "<td>" + item.like_count + "</td>"
 							+ "<td>" + item.wdate + "</td>"
 							+ "</tr>";
 						$("#reviewlisting").append(str);

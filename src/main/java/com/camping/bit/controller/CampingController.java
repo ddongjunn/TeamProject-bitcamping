@@ -1,24 +1,21 @@
 package com.camping.bit.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,9 +31,7 @@ import com.camping.bit.dto.CampingListDto;
 import com.camping.bit.dto.CampingParam;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.service.CampingService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -206,6 +201,7 @@ public class CampingController{
 		CampingDetailDto detaildto = service.getCampingDetail(contentid);
 		CampingListDto listdto = service.getCampingListForDetail(contentid);
 		String useridx;  //사용자 아이디 받아올 변수
+		
 		try {
 			if(session.getAttribute("login") != null) { //로그인을 한 경우에
 				
@@ -226,26 +222,25 @@ public class CampingController{
 		//도움이 됐어요
 		Map<String, Object> resultMap = null;
 		Map<String, Object> reviewseqMap = new HashMap<>();
-		int reviewidx = review_seq; //캠핑장 고유번호
-		String useridx1 = "";  //사용자 아이디 받아올 변수
-	
+		int reviewidx = review_seq; //리뷰 고유번호
+		int campingidx1 = contentid;
 		try {
 			if(session.getAttribute("login") != null) { //로그인을 한 경우에
 				
 			//@SuppressWarnings("unchecked")
 			MemberDto userInfo = (MemberDto)session.getAttribute("login");
-			//System.out.println(userInfo);
-			useridx = userInfo.getId();
+			useridx= userInfo.getId();
+			//System.out.println("useridx1 : " + useridx);
 			
 			resultMap = service.getCampingHelpInfo(reviewidx); //CAMPING_LIST에서 해당 CONTENTID를 가진 캠핑장의 CONTENTID와 LIKECOUNT를 가져옴
 			
 			//System.out.println("resultMap : " + resultMap);
 			reviewseqMap.put("reviewidx", reviewidx); //CAMPING_LIKE테이블에서 검사할 CONTENTID
-			reviewseqMap.put("useridx1", useridx1);//CAMPING_LIKE테이블에서 검사할 USERID
+			reviewseqMap.put("useridx", useridx);//CAMPING_LIKE테이블에서 검사할 USERID
 			//System.out.println("contentidMap :" + contentidMap);
 			Map<String, Object> helpcheckMap = service.getCampingHelp(reviewseqMap); //위에서 만든 MAP으로 검사를 돌림
 			
-			//System.out.println("likecheckmap: " + likecheckMap);
+			//System.out.println("helpcheckmap: " + helpcheckMap);
 			if(helpcheckMap == null) {//지금 로그인하고 있는 사용자가 한번도 하트를 누르지 않았으므로 null값이 나옴
 				model.addAttribute("helpcheck", 0); //likecheck를 0으로 넘김
 			}else {//지금 로그인 한 사용자가 하트를 눌렀으므로 null값이 아닌 값이 넘어감
@@ -254,8 +249,10 @@ public class CampingController{
 			} //지금 로그인한 사용자가 좋아요를 이미 눌렀다면
 			model.addAttribute("likecount", resultMap.get("likecount"));
 			model.addAttribute("reviewidx", reviewidx);
-			model.addAttribute("useridx1", useridx1);
-			//System.out.println("useridx : " + useridx);			
+			model.addAttribute("useridx", useridx);
+			model.addAttribute("campingidx", campingidx1);
+			//System.out.println("useridx : " + useridx);
+			
 			}else { //login하지 않은 상태에서 
 				resultMap = service.getCampingLikeInfo(contentid);
 				model.addAttribute("useridx", "");
@@ -263,6 +260,7 @@ public class CampingController{
 				//System.out.println("로그인상태가 아님");
 				model.addAttribute("likecount", resultMap.get("likecount"));
 				model.addAttribute("reviewidx", reviewidx);
+				model.addAttribute("campingidx", campingidx1);
 			}
 		} catch (Exception e) {
 			// 에러났을때
@@ -285,10 +283,12 @@ public class CampingController{
 	
 	//캠핑디테일 리뷰 상세화면(윗부분)
 	@RequestMapping(value = "campingdetailtop.do", method = RequestMethod.GET)
-	public String campingdetailtop(Model model, CampingBbsDto cbsdto, int contentid) throws Exception{
+	public String campingdetailtop(Model model, CampingBbsDto cbsdto, int contentid, HttpSession session, @RequestParam int review_seq) throws Exception{
 		CampingBbsDto campingbbs = service.campingdetailreview(cbsdto);
 		CampingDetailDto detaildto = service.getCampingDetail(contentid);
 		CampingListDto listdto = service.getCampingListForDetail(contentid);
+		
+		
 		
 		model.addAttribute("campingdetail", detaildto);
 		model.addAttribute("campinglistfordetail", listdto);
@@ -486,9 +486,9 @@ public class CampingController{
 	//캠핑장 리뷰에 댓글 삭제하기
 	@RequestMapping(value = "campingDeleteComment.do", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String getCampingDeleteComment(int comment_seq) throws Exception{
+	public String getCampingDeleteComment(CampingCommentDto cbs) throws Exception{
 		String result = "";
-		if(service.campingDeleteComment(comment_seq)) {
+		if(service.campingDeleteComment(cbs)) {
 			result = "success";
 		}else {
 			result = "failed";
@@ -538,10 +538,11 @@ public class CampingController{
 		public int plusCampingHelp(CampingLikeDto clike) throws Exception{
 			int result = 0;
 			if(service.plusCampingHelp(clike)) {
-				result = service.getCampingLikecount(clike.getContentid());
+				result = service.getCampingHelpcount(clike.getReview_seq());
 			}else {
 				result = -1;
 			}
 			return result;
 		}	
+
 }

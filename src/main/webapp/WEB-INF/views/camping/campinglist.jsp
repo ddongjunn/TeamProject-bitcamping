@@ -222,7 +222,7 @@ String sigunguNm = request.getParameter("sigunguNm");
 			<input type="checkbox" name="animalCmgCl" id="가능" value="가능" title="39" class="check01"/>
 					<label for="c_animalCmgCl01">가능</label>
 			<input type="checkbox" name="animalCmgCl" id="소형견" value="소형견" title="40" class="check01"/>
-					<label for="c_animalCmgCl01">소형견</label>
+					<label for="c_animalCmgCl01">가능(소형견)</label>
 			<input type="checkbox" name="animalCmgCl" id="불가능" value="불가능" title="41" class="check01"/>
 					<label for="c_animalCmgCl01">불가능</label>
 		</div>
@@ -297,7 +297,7 @@ String sigunguNm = request.getParameter("sigunguNm");
 
 <!-- 캠핑장 정렬 -->
 <div class = "search_sorting">
-	<table>
+<!-- 	<table>
 		<tr>
 			<td style = "padding-left:5px">
 				<select id = "sorting" title = "정렬" class="sorting_select">
@@ -309,9 +309,16 @@ String sigunguNm = request.getParameter("sigunguNm");
 				</select>
 			</td>
 		</tr>
-	</table>
-	<div class = "howmany">
-${campingSearchPage}개의 캠핑장이 기다리고 있습니다
+	</table> -->
+	<select id = "sorting" title = "정렬" class="sorting_select">
+		<option value = "image" selected = "selected">--정렬--</option>
+		<option value = "create">최신등록순</option>
+		<option value = "update">업데이트순</option>
+		<option value = "read">조회순</option>
+		<option value = "like">추천순</option>
+	</select>
+<div class = "howmany">
+	${campingSearchPage}개의 캠핑장이 기다리고 있습니다
 </div>
 </div>
 
@@ -535,10 +542,14 @@ if($('#pagination').data("twbs-pagination")){
 		initiateStartPageClick:false,
 		onPageClick: function(event,page){
 			var pa = window.location.search.split("&pageNumber");
-			if (window.location.href.indexOf("?") > -1 || window.location.href.indexOf("&")>-1) {
+			if (window.location.href.indexOf("?") > -1 && window.location.href.indexOf("&")>-1) {
 				location.href = "campinglist.do"+ pa[0] + "&pageNumber=" + (page - 1);
+			}else if(window.location.href.indexOf("?")>-1){
+				var sa = window.location.search.split("do");
+				location.href = "campinglist.do" + sa[0] + "&pageNumber=" + (page - 1);
 			}else{
-				location.href = "campinglist.do?" + "pageNumber=" + (page - 1);}
+				location.href = "campinglist.do?" + "pageNumber=" + (page - 1);
+			}
 			//alert(window.location.search);;
 		}
 	}); //페이지네이션 끝
