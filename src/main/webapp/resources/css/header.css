@@ -4,33 +4,38 @@
   font-weight: normal;
   font-style: normal;
 }
-*{
-  font-family: S-CoreDream-3Light !important;
-}
-
-/** header start **/
 @font-face {
-  font-family: 'S-CoreDream-3Light';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-  font-weight: normal;
+  font-family: 'LotteMartHappy';
   font-style: normal;
+  font-weight: 400;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff');
 }
+
+@font-face {
+  font-family: 'LotteMartHappy';
+  font-style: normal;
+  font-weight: 700;
+  src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff') format('woff');
+}
+
 *{
   font-family: S-CoreDream-3Light !important;
 }
-
-#header {
-  height:120px;
+/** header start **/
+#ground{
+	height: 100%;
+}
+#ground > #header {
+  height: 180px;
   padding:0 6.8%;
   /* transition:all 0.3s; */ /*메뉴효과 */
-  background-color: rgba(255, 255, 255, 0.3);  /* 헤더 색상 */
+  background-color: rgba(255, 255, 255, 0.8);  /* 헤더 색상 */
   width: 100%;
-  /* position: sticky; */
-  /* top: 0; */
 }
 #header > .indiv {
-  position:relative;
+  position: relative;
 }
+/* 
 #header > .indiv .logobox {
   position:absolute;
   top:65px;
@@ -39,17 +44,24 @@
   height:40px;
   z-index:2;
   overflow:hidden;
+} 
+*/
+#logo{
+	width: 180px;
+	margin: 10px auto 15px auto;
 }
 #header > .indiv .logobox {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding-top: 10px;
+  color: #ff6e6f;
+  text-align: center;
 }
-
 #header > .indiv #menu {
   display:table;
   width:100%;
-  padding-top:50px;
   text-align:center;
 }
 #header > .indiv #menu > li {
@@ -60,9 +72,14 @@
 #header > .indiv #menu > li > a {
   position:relative;
   font-size:20px;
-  line-height:70px;
+  line-height:30px;
   font-weight:800;
   color: #000000;
+  text-decoration: none;
+}
+#header > .indiv #menu > li > a:hover {
+  color: #87C4B7;
+  text-shadow: 1px 1px 1px rgb(255 255 255 / 20%);
 }
 #header > .indiv #menu > li:nth-child(1) > ul {width:230px;}
 #header > .indiv #menu > li > ul li + li {margin-top:10px;}
@@ -71,10 +88,9 @@
   font-size:15px; color:#333;
   font-weight:400;
 }
-
 #header > .indiv #gnb {
   position:absolute;
-  top:25px;
+  top: 20px;
   right:0;
   display:flex;
   z-index:201;
@@ -85,4 +101,15 @@
   color: #000000;
 }
 #header > .indiv #gnb > a + a {margin-left:40px;}
+
+.navScrolled {
+  position: fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  z-index: 1;
+  line-height: 70px;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+}
 /** header end **/

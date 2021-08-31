@@ -328,7 +328,7 @@
 	
 						$.ajax({
 							url : "/rent/paymentAf.do",
-							method : "POST",
+							type : "POST",
 							/* headers : {
 								"Content-Type" : "application/json"
 							}, */
@@ -336,6 +336,12 @@
 							dataType : 'json',
 							success : function(result){
 								if(result == 1) {
+									
+									Swal.fire({
+										icon : 'success',
+										text : '결제가 완료되었습니다.'
+									});
+									
 									// alert("DB저장성공");
 									location.href = "complete.do?merchant_Uid=" + rsp.merchant_uid; 
 								}else{
@@ -346,11 +352,6 @@
 								
 							}
 						})
-						
-						Swal.fire({
-							icon : 'success',
-							text : '결제가 완료되었습니다.'
-						});
 						
 						/* var msg = '결제가 완료되었습니다.';
 						msg += '고유ID : ' + rsp.imp_uid;

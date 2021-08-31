@@ -7,6 +7,9 @@
 	font-size: 2em;
 	font-weight: bold;
 }
+.parentmenu > a:hover{
+	text-decoration: none;
+}
 .childmenu{
 	margin: 15px 10px;
 	font-weight: bold;

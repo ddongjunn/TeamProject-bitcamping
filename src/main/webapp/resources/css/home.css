@@ -12,7 +12,7 @@
 #container .search-area { 
 	position: relative;
 	width: 100%;
-	height: auto; 
+	height: 600px;
 }
 #container .search-area img{
 	filter: brightness(60%);  
@@ -25,10 +25,29 @@
 	top: 0;
 	z-index: -1;
 }
-
+.bgimage{
+	position: fixed;
+	top: -300px;
+	margin: 0 auto;
+	filter: brightness(50%); 
+	z-index: -1;
+}
+.bgimage > img{
+	object-fit: cover;
+	display: block;
+	height: 1200px;
+	width: 100%;
+}
 
 /** search area **/
-#container .search-area .search-container { position: absolute;top: 50%;left: 50%;transform: translate( -50%, -50% );}
+#container .search-area .search-container { 
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate( -50%, -50% );
+	width: 400px;
+	text-align: center;
+}
 #container .search-area .search-contents {}
 #container .search-area .search-contents input[type="text"] {
   width: 100%;
@@ -45,40 +64,79 @@
 #container .search-area .search-contents .search-btn {
   position: absolute;
   margin-left: -10px;
-  margin-top:-1px;
+  margin-top:-4px;
   background-image: url('/resources/images/icon/icon-search.svg');
   background-repeat: no-repeat;
   background-position: center;
-  width: 52px;
-  height: 52px;
-  background-color: #D5EEBB;
+  width: 60px;
+  height: 60px;
+  background-color: #87C4B7;
   border:none;
   border-radius: 5px;
 }
 /** search area **/
 
+.contents-area{
+	background-color: white;
+	width: 100%;
+}
+/** campingtype data area **/
+.campsitetype{
+	width: 100%;
+	padding: 0 100px;
+	margin: 320px auto 0 auto;
+	height: 200px;
+	text-align: center;
+}
+.campsitetitle{
+	color: white;
+	font-size: 30px;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px rgb(0 0 0 / 20%);
+}
+.count{
+	color: #FBC853;
+	font-size: 40px;
+	font-weight: 900;
+}
+.campingchart{
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+}
+.chart {
+  position: relative;
+  display: inline-block;
+  margin: 20px 10px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+.chart canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+/** campingtype data area **/
 
-/** campsite data **/
-
-/** campsite data **/
 
 /** recommend area **/
-
 *:focus, *:active, *:visited{
   outline: none;
 }
 .recommendslide{
 	margin-bottom: 100px;
 }
-.recommendslide > a:link, a:visited{
-	text-decoration: none;
+.recommendslide  a:link, a:visited{
+	/* text-decoration: none; */
 	color: #F28729;
 }
 .slidetitle{
-	margin: 30px;
+	margin: 80px 0 30px 0;
 	font-size: 36px;
     font-weight: 700;
     display: block;
+    text-shadow: 1px 1px 1px rgb(0 0 0 / 20%);
 }
 .tarkikComandSlider {
   width: 1500px;
@@ -128,7 +186,7 @@
   width: 8px;
   height: 8px;
   margin-left: -2px;
-  background-color: #162C42;
+  background-color: #E07260;
 }
 
 .slick-prev {
@@ -158,19 +216,23 @@
   transition: box-shadow 2s;
   cursor: pointer;
   position: relative;
-  background-color: #162C42;
+  background-color: #D5E8C8;
   margin: 0 10px;
   padding: 30px;
+  border-radius: 5px;
   /* box-shadow: inset -141px -129px 200px rgba(0, 0, 0, 0.25); */
 }
-.comandSlider__item:hover {
-  box-shadow: inset 141px 129px 200px rgba(0, 0, 0, 0.25);
-}
-.comandSlider__item_name {
+/* .comandSlider__item:hover {
+  box-shadow: inset 141px 129px 200px rgba(255, 255, 255, 0.25);
+} */
+.comandSlider__item_name, 
+.comandSlider__item_name > a,
+.comandSlider__item_name > a:link,
+.comandSlider__item_name > a:visited {
   text-transform: uppercase;
   font-weight: 900;
   font-size: 20px;
-  color: #F28729;
+  color: #E07260;
   margin: 0;
   margin-bottom: 7px;
   overflow: hidden;
@@ -179,11 +241,11 @@
 }
 .comandSlider__item_status {
   margin: 0;
-  color: #BABBBB;
-  font-size: 12px;
+  color: #828282;
+  font-size: 14px;
   margin-bottom: 30px;
   width: 100%;
-  height: 12px;
+  height: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -196,14 +258,6 @@
   top: 34px;
   right: 30px;
 }
-/* .comandSlider__item_island {
-  width: 25px;
-  height: 20px;
-  position: absolute;
-  background-image: url(/resources/images/icon/beach.svg);
-  top: 34px;
-  right: 30px;
-} */
 .comandSlider__item_photo {
   max-width: 100%;
   height: 250px;
@@ -212,11 +266,11 @@
 }
 .comandSlider__item_contact {
   font-size: 14px;
-  color: #BABBBB;
+  color: #828282;
   margin: 2px;
 }
 .comandSlider__item_contact span {
-  color: #F28729;
+  color: #E07260;
   font-weight: 700;
   margin-right: 5px;
 }
@@ -226,6 +280,7 @@
 .community-container {
   display: flex;
   justify-content: space-evenly;
+  padding-bottom: 40px;
 }
 
 .community-contents{

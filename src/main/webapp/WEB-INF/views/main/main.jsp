@@ -8,28 +8,24 @@
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 
-	<!-- slick  -->
+	<!-- slick -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css">
 	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-
+	
+	<!-- easy-pie-chart -->
+	<script type="text/javascript" src="https://rendro.github.io/easy-pie-chart/javascripts/jquery.easy-pie-chart.js"></script>
 </head>
 <body>
+<div class="bgimage">
+	<img src='https://images.unsplash.com/photo-1592351763700-b9b35a6465ea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80' />
+</div>
 <!-- container start -->
 <div id="container">
 	<div class="search-area">
 		<div class="img-area">
-			<img src='/resources/images/camp-bg.png' />
+			<!-- <img src='/resources/images/camp-bg.png' /> -->
 		</div>
-		<!--        <div id="slideshow">
-                 <div class="slide-wrapper">
-                    <div class="slide"><img src='https://images.unsplash.com/photo-1464547323744-4edd0cd0c746?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80' /></div>
-                    <div class="slide"><img src='https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80' /></div>
-                    <div class="slide"><img src='https://images.unsplash.com/photo-1532339142463-fd0a8979791a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80' /></div>
-                    <div class="slide"><img src='https://images.unsplash.com/photo-1515444744559-7be63e1600de?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80' /></div>
-                    <div class="slide"><img src='https://images.unsplash.com/photo-1563299796-17596ed6b017?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80' /></div>
-                 </div>
-              </div> -->
 		<div class="search-container">
 			<div class="title f_wcolor">지역별 캠핑장 검색</div>
 			<div class="search-contents mt50">
@@ -37,13 +33,22 @@
 				<button class="search-btn shadow"></button>
 			</div>
 		</div>
+		
+		<!-- campingtype data start -->
+		<div class="campsitetype">
+			<div class="campsitetitle">전국 <span class="count" data-esing="swing">2647</span>개의 캠핑장 데이터를 한 곳에!</div>
+			<div class="campsitechart">
+				<div class="chart type1" data-percent="63">일반야영장 53%</div>
+				<div class="chart type2" data-percent="55">자동차야영장 55%</div>
+				<div class="chart type3" data-percent="70">카라반 70%</div>
+				<div class="chart type4" data-percent="42">글램핑 42%</div>		
+			</div>
+		</div>
+		<!-- campingtype data end -->
+		
 	</div>
 	<div class="contents-area mt50">
-
-		<!-- campsite data start -->
-
-		<!-- campsite data end -->
-
+	
 		<!-- recommend area start -->
 		<div class="recommendslide">
 			<div class="slidetitle" style="text-align: center;">추천 캠핑장</div>
@@ -204,6 +209,63 @@
 		$('.search-btn.shadow').click(function(){
 			const searchWord = $(".shadow").val();
 			location.href = "./csite/campinglist.do?searchWord=" + searchWord;
+		});
+		
+		/* 캠핑장 유형 숫자 이펙트 */
+		$(".count").each(function() {
+		  $(this)
+		    .prop("Counter", 0)
+		    .animate(
+		      {
+		        Counter: $(this).text()
+		      },
+		      {
+		        duration: 4000,
+		        easing: $(this).data("esing"),
+		        step: function(now) {
+		          $(this).text(Math.ceil(now));
+		        }
+		      }
+		    );
+		});
+		/* 캠핑장 유형 파이차트 */
+		$(function() {
+			$('.type1').easyPieChart({
+				scaleColor: "rgba(255, 255, 255, 0)",
+				lineWidth: 15,
+				lineCap: 'butt',
+				barColor: '#87C4B7',
+				trackColor:	"#ecf0f1",
+				size: 200,
+				animate: 1000
+			});
+			$('.type2').easyPieChart({
+				scaleColor: "rgba(255, 255, 255, 0)",
+				lineWidth: 15,
+				lineCap: 'butt',
+				barColor: '#E07260',
+				trackColor:	"#ecf0f1",
+				size: 200,
+				animate: 1000
+			});
+			$('.type3').easyPieChart({
+				scaleColor: "rgba(255, 255, 255, 0)",
+				lineWidth: 15,
+				lineCap: 'butt',
+				barColor: '#FBC853',
+				trackColor:	"#ecf0f1",
+				size: 200,
+				animate: 1000
+			});
+			$('.type4').easyPieChart({
+				scaleColor: "rgba(255, 255, 255, 0)",
+				lineWidth: 15,
+				lineCap: 'butt',
+				barColor: '#78E6D0',
+				trackColor:	"#ecf0f1",
+				size: 200,
+				animate: 1000
+			});
 		});
 	});
 

@@ -49,7 +49,7 @@ img {max-width: 100%; height: auto;}
 
 /* font-size common 정의 */
 .h-title {font-size: 48px; display: block;}
-.title {font-size: 36px; font-weight: 700; display: block;}
+.title {font-size: 36px; font-weight: 900; display: block; text-shadow: 1px 1px 1px rgb(0 0 0 / 20%);}
 .sub-title {font-size: 24px;}
 /* font-size common 정의 */
 
