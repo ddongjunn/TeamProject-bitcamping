@@ -25,4 +25,13 @@ public interface MypageDao {
 
     public List<CampingBbsDto> campingReviewList(CampingParam param);
     public int campingReviewCount (CampingParam param);
+
+    public List<ProductReviewDto> productReview(MypageParam param);
+    public int productReviewCount(MypageParam param);
+
+    public List<ProductQnaDto> productQna(MypageParam param);
+    public int productQnaCount(MypageParam param);
+
+    public List<CsQnaDto> csQna(MypageParam param);
+    public int csQnaCount(MypageParam param);
 }

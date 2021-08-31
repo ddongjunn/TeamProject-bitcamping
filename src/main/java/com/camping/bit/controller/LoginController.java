@@ -126,7 +126,7 @@ public class LoginController {
             session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
             session.setAttribute("access_Token", access_Token);
             session.setAttribute("login",dto);
-            return "main.tiles";
+            return "redirect:/";
         }
 
 

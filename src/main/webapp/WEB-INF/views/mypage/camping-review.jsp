@@ -22,15 +22,15 @@
 <div class="table-responsive">
     <div>
         <table class="table align-items-center">
-            <thead class="thead-light">
+            <thead class="">
             <tr>
-                <th>번호</th>
-                <th>캠핑장</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>조회수</th>
-                <th>좋아요</th>
-                <th>작성일</th>
+                <td>번호</td>
+                <td>캠핑장</td>
+                <td>제목</td>
+                <td>작성자</td>
+                <td>조회수</td>
+                <td>좋아요</td>
+                <td>작성일</td>
             </tr>
             </thead>
             <tbody class="list">
