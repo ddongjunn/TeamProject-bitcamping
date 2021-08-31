@@ -34,7 +34,7 @@
     }
 
     #map{
-    	margin : 30px 150px 30px 150px;
+    	margin : 30px 100px 30px 150px;
     	width: 900px;
     	height: 400px;
     }
@@ -44,6 +44,12 @@
     
     #searchBox{
     	margin : 0 150px 30px 300px;
+    }
+    
+    #intro{
+    	margin : 0 20px 0 0 ;
+    	font-size : 12pt;
+    	text-justify : inter-word;
     }
     
     

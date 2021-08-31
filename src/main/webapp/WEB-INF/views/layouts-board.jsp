@@ -17,16 +17,18 @@
 
         }
         #sidebar-left {
-            width: 15%;
-            height: auto;
-            min-height: 800px;
-            padding: 50px 15px;
-            float: left;
-            background-color: tomato;
+          width: 20%;
+		  height: 100%;
+		  min-height: 90%;
+		  margin: 10px 0;
+		  padding: 50px 15px;
+		  float: left;  
+		  border-right: 1px solid black;
+		  text-align: right;
         }
         #content {
-            width: 85%;
-            padding: 50px;
+            width: 80%;
+            padding: 20px 150px 20px 50px;
             float: left;
         }
         #footer {

@@ -62,7 +62,7 @@ String login_id = (String)request.getAttribute("login_id");
 	<ul>
 		<li style = "list-style : none;">
 			<div class = "image" style = "float : left ; margin-right : 10px" >
-				<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "400" height = "400">
+				<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "500" height = "400">
 			</div>
 			<div class = "camping_information" style = "float : left">
 				<div class = "camping_site name">

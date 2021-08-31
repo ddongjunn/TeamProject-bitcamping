@@ -18,7 +18,7 @@
 CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");
 %>
 
-<form name = "write_review_form" method="post" action="campingwritereviewAf.do" enctype = "multipart/form-data" autocomplete = "off">
+<form id = "writeform" name = "write_review_form" method="post" action="campingwritereviewAf.do" enctype = "multipart/form-data" autocomplete = "off">
 
 <div style="clear:both"></div>
 
@@ -27,7 +27,7 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 <input type="hidden" name = "nickname" value ="${login.nickname}">
 <input type = "hidden" name = "contentid" value = '<%=campinglist.getContentid() %>'>
 	<h2>${login.nickname}님의 소중한 리뷰</h2>
-	<h2><input name="title" type = "text" placeholder = "제목을 입력해주세요"></h2>
+	<h2><input name="title" id = "title" type = "text" placeholder = "제목을 입력해주세요" size = "51"></h2>
 </div>
 
 <div style="clear:both"></div>
@@ -35,8 +35,9 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 		<textarea id="summernote" name="content" wrap = "hard"></textarea>
 </div>
 
-<button type = "submit" value = "글쓰기" id = "campingwritereview" class = "btn btn-outline-success">글쓰기</button>
-
+<!-- <button type = "submit" value = "글쓰기" id = "campingwritereview" class = "btn btn-outline-success">글쓰기</button>
+ -->
+ <button type = "button" value = "writeReview" id = "campingwritereview" class = "btn btn-outline-success">글쓰기</button>
 </form>
 </body>
 
@@ -45,7 +46,8 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 		
 		/* summernote 설정 */
 		$('#summernote').summernote({
-			height: 800,
+			height: 600,
+			width : 850,
 			dialogsInBody: true,
 			lang: "ko-KR",
 			toolbar: [
@@ -71,8 +73,26 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 		               }
 		           }
 		      }
-		});
-	});
+		}); //summernote 끝나는 곳
+		
+		$("#campingwritereview").click(function(){
+			var title = $("#title").val();
+			var content = $("#summernote").val();
+			
+			if(title == ""){
+				alert("제목을 입력하지 않으셨네요!");
+				$("#title").focus();
+			}
+			if(content == ""){
+				alert("내용을 적어주시면 큰 도움이 될 거에요");
+				$("#summernote").focus();
+			}
+			if(title != "" && content != ""){
+			document.getElementById("writeform").submit();
+			}
+			
+		});//click function 끝나는 곳
+	});//document.ready 끝나는 곳
 	
 	/* summernote 파일 저장 */
 	function sendFile(file, el) {

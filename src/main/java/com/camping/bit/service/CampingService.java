@@ -133,4 +133,7 @@ public interface CampingService {
 	//캠핑장 도움이 됐어요 수 카운팅하기 
 	public int getCampingHelpcount(int reivew_seq);	
 	
+	//캠핑장 검색된 글의 수 카운팅 
+	public int getCampingSearchReviewCount(CampingParam param);
+	
 }

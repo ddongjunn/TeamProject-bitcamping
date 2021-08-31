@@ -71,6 +71,34 @@ public class MypageServieImpl implements  MypageService{
         return dao.campingReviewCount(param);
     }
 
+    @Override
+    public List<ProductReviewDto> productReview(MypageParam param) {
+        return dao.productReview(param);
+    }
 
+    @Override
+    public int productReviewCount(MypageParam param) {
+        return dao.productReviewCount(param);
+    }
+
+    @Override
+    public List<ProductQnaDto> productQna(MypageParam param) {
+        return dao.productQna(param);
+    }
+
+    @Override
+    public int productQnaCount(MypageParam param) {
+        return dao.productQnaCount(param);
+    }
+
+    @Override
+    public List<CsQnaDto> csQna(MypageParam param) {
+        return dao.csQna(param);
+    }
+
+    @Override
+    public int csQnaCount(MypageParam param) {
+        return dao.csQnaCount(param);
+    }
 
 }

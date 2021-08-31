@@ -5,14 +5,33 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="/resources/css/sidemenu.css" />
 </head>
 <body>
 
-<a href="/community/hello.do">가입인사</a><br>
-<a href="/community/free.do">자유게시판</a><br>
-<a href="/community/deal.do">중고거래</a><br>
-<a href="/community/find.do">캠퍼모집</a><br>
-<a href="/community/review.do">캠핑여행&후기</a><br>
-  
+
+<div class="sidemenu">
+	<div class="parentmenu">
+		<a href="/community/main.do">커뮤니티</a>
+	</div>
+	<hr>
+	<div class="childmenu">
+		<a href="/community/hello.do">> 가입인사</a>
+	</div>
+	<div class="childmenu">
+		<a href="/community/free.do">> 자유게시판</a>
+	</div>
+	<div class="childmenu">
+		<a href="/community/deal.do">> 중고거래</a>
+	</div>
+	<div class="childmenu">
+		<a href="/community/find.do">> 캠퍼모집</a>
+	</div>
+	<div class="childmenu">
+		<a href="/community/review.do">> 캠핑여행&후기</a>
+	</div>
+</div>
+
 </body>
 </html>

@@ -20,7 +20,7 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 
 %>
 
-<form name = "update_review_form" action="campingupdatereviewAf.do" method="post">
+<form id = "updateform" name = "update_review_form" action="campingupdatereviewAf.do" method="post">
 <c:set var = "campingbbs" value = '<%=campingbbs%>'></c:set>
 <input type= "hidden" name="review_seq" value="${campingbbs.review_seq}">
 <input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
@@ -28,7 +28,7 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <div style="clear:both"></div>
 <div id = "writer_info">
 	<h2>${login.nickname}님 무엇을 수정해볼까요?</h2>
-	<h2><input name="title" type = "text" placeholder = "제목을 입력해주세요" value = "${campingbbs.title}"></h2>
+	<h2><input name="title" id = "title" type = "text" placeholder = "제목을 입력해주세요" value = "${campingbbs.title}" size = "51"></h2>
 </div>
 
 <div style="clear:both"></div>
@@ -36,7 +36,7 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <div id="summernotebox">
 		<textarea id="summernote" name="content" wrap = "hard">${campingbbs.content}</textarea>
 </div>
-<button type = "submit" value = "수정하기" id = "campingupdatereview" class = "btn btn-outline-success btn-sm">수정하기</button>
+<button type = "button" value = "수정하기" id = "campingupdatereview" class = "btn btn-outline-success btn-sm">수정하기</button>
 
 </form>
 </body>
@@ -46,7 +46,8 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 		
 		/* summernote 설정 */
 		$('#summernote').summernote({
-			height: 800,
+			height: 600,
+			width : 850,
 			dialogsInBody: true,
 			lang: "ko-KR",
 			toolbar: [
@@ -73,7 +74,25 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 		           }
 		      }
 		});
-	});
+		
+		$("#campingupdatereview").click(function(){
+			var title = $("#title").val();
+			var content = $("#summernote").val();
+			
+			if(title == ""){
+				alert("제목을 입력하지 않으셨네요!");
+				$("#title").focus();
+			}
+			if(content == ""){
+				alert("수정할 내용을 적어주세요");
+				$("#summernote").focus();
+			}
+			if(title != "" && content != ""){
+			document.getElementById("updateform").submit();
+			}
+			
+		});//click function 끝나는 곳
+	});//document.ready 끝나는 곳
 	
 	/* summernote 파일 저장 */
 	function sendFile(file, el) {

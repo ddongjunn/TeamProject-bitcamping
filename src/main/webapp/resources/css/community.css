@@ -1,20 +1,14 @@
 .board{
     float: left;
     position: relative;
-    width: 950px;
+    width: 85%;
 }
 
 .communitybox {
 	 border: 1px solid #046263;
 	 padding: 40px;
-	 margin-top: 50px;
-	 margin-bottom: 50px;
+	 margin-bottom: 20px;
 	 text-align: center;
-}
-
-.maintitle {
-	position: relative;
-
 }
 
 .maintite:after{
@@ -28,14 +22,6 @@
 	padding-bottom: 26px;
 	font-size: 26px;
 }
-
-
-
-.hello {
-	width: 200px;
-    height: 130px;
-}
-
 
 .freebox_title {
 	position: relative;
@@ -69,8 +55,15 @@
     margin-bottom: 15px !important;
 }
 
+.bbs_total span {
+	padding-left: 20px;
+	font-weight: bold;
+}
 
-.searchbox{
-	background: yellow;
-    border-color: #f0f1f3;
+.bbs_total span > strong {
+	color: #87C4B7;
+}
+
+.bbs_total {
+	margin-bottom: 5px;
 }
