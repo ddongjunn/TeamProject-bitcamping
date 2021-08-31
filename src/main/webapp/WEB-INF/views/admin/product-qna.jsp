@@ -13,9 +13,9 @@
 <body>
 
 <div class="container-fluid">
-    <a href="/admin/qna.do" class="badge badge-pill badge-default">전체글</a>
-    <a href="/admin/qna.do?kind=wait" class="badge badge-pill badge-danger">답변대기중</a>
-    <a href="/admin/qna.do?kind=complete" class="badge badge-pill badge-success">답변완료</a>
+    <a href="/admin/product-qna.do" class="badge badge-pill badge-default">전체글</a>
+    <a href="/admin/product-qna.do?kind=wait" class="badge badge-pill badge-danger">답변대기중</a>
+    <a href="/admin/product-qna.do?kind=complete" class="badge badge-pill badge-success">답변완료</a>
 </div>
 <br>
 
@@ -23,21 +23,12 @@
     <div>
         <table class="table align-items-center">
 
-            <colgroup>
-                <col width="10%">
-                <col width="10%">
-                <col width="45%">
-                <col width="10%">
-                <col width="15%">
-                <col width="10%">
-            </colgroup>
-
             <thead>
             <tr>
-                <th>글번호</th> <th>답변상태</th> <th>제목</th> <th>작성자</th> <th>작성일</th> <th>조회수</th>
+                <th width="70px">글번호</th> <th width="120px">답변상태</th> <th width="400px" >문의내용</th>
+                <th>작성자</th> <th>작성일</th> <th></th>
             </tr>
             </thead>
-
 
             <tbody class="list">
             <c:if test="${empty qna}">
@@ -48,7 +39,7 @@
                 </tr>
             </c:if>
             <c:forEach items="${qna}" var="qna" varStatus="i">
-                <tr>
+                <tr id="tr${qna.qna_Seq}">
                     <td>${qna.qna_Seq}</td>
                     <td>
                         <c:choose>
@@ -60,28 +51,20 @@
                             </c:otherwise>
                         </c:choose>
                     </td>
-                    <td style="text-align: left;">
+                    <td style="max-width: 400px">
                         <c:choose>
                             <c:when test="${qna.secret eq 0}">
-                                <a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}">
-                                        ${qna.title}
-                                </a>
+                                    <span id="qnatitle${qna.qna_Seq}" onclick="showHideQna('${qna.qna_Seq}')" style=""> ${qna.title}</span>
                             </c:when>
                             <c:otherwise>
-
                                 <c:choose>
                                     <c:when test="${login.id eq qna.user_Id || login.auth eq 1}">
-                                        <a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}">
-                                                ${qna.title}
-                                        </a> 🔒
+                                        <span id="qnatitle${qna.qna_Seq}" onclick="showHideQna('${qna.qna_Seq}')">${qna.title}</span> 🔒
                                     </c:when>
                                     <c:otherwise>
-                                        <a href="javascript:noPermission();">
-                                                ${qna.title}
-                                        </a> 🔒
+                                        <span id="qnatitle'${qna.qna_Seq}'" onclick="showHideQna('${qna.qna_Seq}')">${qna.title}</span> 🔒
                                     </c:otherwise>
                                 </c:choose>
-
                             </c:otherwise>
                         </c:choose>
                     </td>
@@ -90,13 +73,38 @@
                         <fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
                         <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
                     </td>
-                    <td>${qna.readcount}</td>
+                    <c:if test="${qna.status == 0}">
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="writeqna('${qna.qna_Seq}')">답변</button>
+                        </td>
+                    </c:if>
+                    <c:if test="${qna.status == 1}">
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm" disabled)>답변완료</button>
+                        </td>
+                    </c:if>
                 </tr>
+
+                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td colspan="3">
+                        &nbsp;&nbsp;&nbsp;ㄴ ${qna.content}
+                        <c:if test="${qna.status == 1}">
+                            <br><br>
+                            <span class="badge badge-secondary">${login.nickname}</span> : ${qna.answercontent}
+                        </c:if>
+                    </td>
+                </tr>
+
             </c:forEach>
             </tbody>
         </table>
     </div>
 </div>
+
 
 
 <!-- pagination -->
@@ -136,7 +144,7 @@
         let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
         //alert(pageNum);
 
-        let pageSize = 15;
+        let pageSize = 10;
 
         let _totalPages = totalCount / pageSize;
         if (totalCount % pageSize > 0) {
@@ -155,7 +163,7 @@
             last: '<span sria-hidden="true">»</span>',
             initiateStartPageClick: false,		// onPageClick 자동 실행되지 않도록 한다
             onPageClick: function (event, page) {
-                location.href = "/admin/qna.do?kind=" + kind + "&search=" + $("#_search").val() + "&choice=" + $("#_choice").val() + "&pageNumber=" + (page - 1);
+                location.href = "/admin/product-qna.do?kind=" + kind + "&search=" + $("#_search").val() + "&choice=" + $("#_choice").val() + "&pageNumber=" + (page - 1);
             }
         });
 
@@ -201,11 +209,43 @@
                 return;
             }
 
-            location.href = "/admin/qna.do?kind=" + kind + "&search=" + $("#_search").val() + "&choice=" + $("#_choice").val();
+            location.href = "/admin/product-qna.do?kind=" + kind + "&search=" + $("#_search").val() + "&choice=" + $("#_choice").val();
 
         });
     });
 
+    function showHideQna(seq){
+
+        if($("#qnacontent"+seq).css("display") == "none"){
+            $("#qnacontent"+seq).show();
+        }else{
+            $("#qnacontent"+seq).hide();
+        }
+    }
+
+    function writeQnaAf(qna_Seq){
+
+        if($("#tr"+qna_Seq).css("display") == "none"){
+            $("#tr"+qna_Seq).show();
+        }else{
+            $("#tr"+qna_Seq).hide();
+            $('#qnacontent'+qna_Seq).hide();
+        }
+    }
+
+    function writeqna(qna_Seq){
+
+        let popupWidth = 480;
+        let popupHeight = 520;
+
+        let popupX = (window.screen.width / 2) - (popupWidth / 2);
+        // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+
+        let popupY= (window.screen.height / 2) - (popupHeight / 2);
+        // 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
+
+        window.open("/rent/writeQnaComment.do?qna_Seq=" + qna_Seq + "&user_Id=" + '${login.id}', " _blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
+    }
 </script>
 
 </body>

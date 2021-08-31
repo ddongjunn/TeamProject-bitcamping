@@ -279,5 +279,45 @@ public class RentController {
 
 		return "success";
 	}
+
+	@RequestMapping(value = "writeQnaComment.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String writeQnaComment(Model model, ProductQnaDto dto) {
+
+		model.addAttribute("qna_Seq", dto.getQna_Seq());
+		model.addAttribute("user_Id", dto.getUser_Id());
+
+		return "writeQnaComment.tiles";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "writeQnaCommentAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String writeQnaCommentAf(Model model, ProductQnaDto dto) {
+
+		service.updateProductQnaStatus(dto);
+		service.productQnaAnswer(dto);
+
+		return dto.getQna_Seq() + "";
+	}
+
+	@RequestMapping(value = "writeCsQna.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String writeCsQna(Model model, CsQnaDto dto) {
+
+		model.addAttribute("qna_Seq", dto.getQna_Seq());
+		model.addAttribute("user_Id", dto.getUser_Id());
+
+		return "writeCsQna-admin.tiles";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "writeCsQnaAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String writeCsQnaAf(Model model, CsQnaDto dto) {
+
+		System.out.println(dto);
+
+		service.updateCsQnaStatus(dto);
+		service.csQnaAnswer(dto);
+
+		return dto.getQna_Seq() + "";
+	}
 	
 }

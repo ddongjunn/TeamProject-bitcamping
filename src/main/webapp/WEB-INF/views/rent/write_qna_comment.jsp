@@ -16,21 +16,15 @@
 </head>
 <body>
 <form id="qnaCommentForm" action="/rent/writeQnaCommentAf.do" method="post" autocomplete="off">
-	<h3>답변 달기</h3>
-	<span>제목</span> 
+	<h2>상품 Q&A 답변</h2>
 	<div id="contentbox" style="width: 100%; margin: auto;">
-		<input type="text" id="title" name="title" placeholder="제목을 입력해 주세요" style="width: 100%">
+		<textarea id="content" rows="8" name="content" style="width: 100%"></textarea>
 	</div>
-	<div>문의 내용</div>
-	<div id="contentbox" style="width: 100%; margin: auto;">
-		<textarea id="content" rows="8" name="content" placeholder="문의 내용을 입력해 주세요" style="width: 100%"></textarea>
-	</div>
-	
-	<input type="hidden" name="qna_Seq" value="">
-	<input type="hidden" name="user_Id" value="${login.id}">
-	
+
+		<input type="hidden" name="qna_Seq" value="${qna_Seq}">
+		<input type="hidden" name="user_Id" value="${login.id}">
 	<div>
-		<input type="button" id="sendQnaComment" value="제출하기">
+		<input type="button" id="sendQnaComment" value="확인">
 	</div>
 </form>
 
@@ -75,9 +69,11 @@
 			$.ajax({
 				url : '<c:url value='/rent/writeQnaCommentAf.do' />',
 				data : params,
-				success : function(xh){	
-							opener.parent.location.reload();
-							window.close();
+				success : function(data){
+					opener.writeQnaAf(data);
+					window.close();
+				}  ,error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
         }
