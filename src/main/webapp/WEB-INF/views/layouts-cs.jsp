@@ -15,18 +15,18 @@
   width: 100%;
 }
 #lnb {
-  width: 25%;
+  width: 20%;
   height: 100%;
   min-height: 900px;
+  margin: 10px 0;
   padding: 50px 15px;
   float: left;  
   border-right: 1px solid black;
   text-align: right;
-  
 }
 #content {
-  width: 75%;
-  padding: 20px 100px 20px 20px;
+  width: 80%;
+  padding: 20px 150px 20px 20px;
   float: left;
   text-align: center;
 }
@@ -34,7 +34,6 @@
   clear: both;
   padding: 5px;
 }
-
 </style>
     
 <title>Insert title here</title>

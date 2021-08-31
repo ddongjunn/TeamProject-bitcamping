@@ -44,12 +44,10 @@
         <div class="indiv">
             <div class="logobox">
                 <a href="/main.do">
-                    <h1 id="logo">
-                        로고
-                    </h1>
+                	<img id="logo" src="resources/images/bitlogo.png" alt="로고">
                 </a>
             </div>
-            <ul id="menu">
+			<ul id="menu">
                 <li><a href="/csite/campinglist.do">캠핑장 검색</a></li>
                 <li><a href="/rent/list.do">캠핑장비 대여</a></li>
                 <li><a href="/community/main.do">캠핑커뮤니티</a></li>
@@ -71,7 +69,7 @@
         </div>
     </div>
     <!-- header end-->
-
+	<div></div>
     <div>
         <div id="login_modal" class="login_modal-overlay" style="z-index: 800;">
             <div class="login_modal-window">
@@ -178,6 +176,23 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function(){	
+
+	var navBar = $("#menu");
+	var hdrHeight = $(".logobox").height();
+
+	$(window).scroll(function() {
+	  if( $(this).scrollTop() > hdrHeight + 50) {
+	    navBar.addClass("navScrolled");
+	  } else {
+	    navBar.removeClass("navScrolled");
+	  }
+	});
+	
+});
+</script>
 
 <script type="text/javascript">
     //로그인 모달
