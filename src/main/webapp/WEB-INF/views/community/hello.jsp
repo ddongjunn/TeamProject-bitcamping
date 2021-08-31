@@ -10,11 +10,47 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- <style type="text/css"> -->
+<link rel="stylesheet" type="text/css" href="/resources/css/community.css" />
 </head>
 <body>
 
-<h1>가입인사게시판</h1>
+<main class="board">
+<div class="maintitle">
+<h2>가입인사게시판</h2>
+</div>
 
+
+<div class="communitybox">
+    <div class="freebox_top">
+    	<img id="hello" src="../resources/images/hello.png">
+        <div class="freebox_title">"안녕하세요 반갑습니다! 여러분들을 환영합니다"</div>
+    </div>
+    <div class="freetext">
+        <ul class="bu">
+            <li>새로운 사람들을 맞이해보세요.</li>
+            <li>먼저 인사를 건네보는건 어떨까요?</li>
+        </ul>
+    </div>
+</div>
+
+<!-- 글검색 -->
+<div id="searchbox">
+	<div id="search" align="center">
+		<select id="_choice" name="choice">
+			<option value="" selected="selected">선택</option>
+			<option value="title">제목</option>
+			<option value="content">내용</option>
+			<option value="nickname">닉네임</option>
+		</select>
+		
+		<input type="text" id="_search" name="search" placeholder="검색내용입력.">
+		<button type="button" id="btnSearch">검색</button>
+	</div>
+</div>
+<br>
+
+<div>&nbsp; 총 ${totalCount}건</div> 
 <!-- 글 작성 리스트 틀-->
 <div class="container">
 	<table class="table table-sm">
@@ -60,19 +96,6 @@
 </div>
 <br>
 
-<!-- 글검색 -->
-<div align="center">
-	<select id="_choice" name="choice">
-		<option value="" selected="selected">선택</option>
-		<option value="title">제목</option>
-		<option value="content">내용</option>
-		<option value="nickname">닉네임</option>
-	</select>
-	
-	<input type="text" id="_search" name="search" placeholder="검색내용입력.">
-	<button type="button" id="btnSearch">검색</button>
-</div>
-<br>
 
 <!-- 페이지네이션 -->
 <div class="container" style="text-align: center" >
@@ -87,6 +110,7 @@
 <div align="right">
 	<a href="/community/helloWrite.do">글쓰기</a> 
 </div>
+</main>
 
 <script type="text/javascript">
 

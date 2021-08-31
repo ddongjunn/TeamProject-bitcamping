@@ -1,0 +1,76 @@
+.board{
+    float: left;
+    position: relative;
+    width: 950px;
+}
+
+.communitybox {
+	 border: 1px solid #046263;
+	 padding: 40px;
+	 margin-top: 50px;
+	 margin-bottom: 50px;
+	 text-align: center;
+}
+
+.maintitle {
+	position: relative;
+
+}
+
+.maintite:after{
+	    content: "";
+        width: 60px;
+        border-bottom: 1px solid;
+        margin: 20px 0px;
+}
+
+.maintitle h2 {
+	padding-bottom: 26px;
+	font-size: 26px;
+}
+
+
+
+.hello {
+	width: 200px;
+    height: 130px;
+}
+
+
+.freebox_title {
+	position: relative;
+	font-size: 23px;
+	font-weight: bold;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.communitybox hr {
+	border-top: 1px dashed #bbb;
+	border-bottom: 1px dashed #fff;
+	padding-top: 15px;
+	padding-bottom: 15px;  
+}
+
+.em_orange {
+    display: inline;
+    color: #c05711;
+}
+
+.point {
+	
+    position: relative;
+    padding-left: 28px;
+    color: #c4426e;
+    font-size: 15px;
+    line-height: 25px;
+    letter-spacing: -0.03em;
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+}
+
+
+.searchbox{
+	background: yellow;
+    border-color: #f0f1f3;
+}
