@@ -295,7 +295,8 @@ nav {
   top: 0; */
   margin: auto;
   margin-top: 60px;
-  background: linear-gradient(to left, #c2e59c, #64b3f4);
+  background: #dbdbdb;
+  border: 1px solid black;
 }
 nav ul {
   padding: 20px;
@@ -305,18 +306,18 @@ nav ul {
 }
 nav ul li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 30px;
 }
 nav ul li a {
   padding: 10px 0;
-  color: #fff;
-  font-size: 1.0em;
+  color: #87C4B7;
+  font-size: 1.1em;
   text-decoration: none;
   font-weight: bold;
   transition: all 0.2s ease;
 }
 nav ul li a:hover {
-  color: #fff;
+  color: #87C4B7;
 }
 a.active {
   border-bottom: 2px solid #ecf0f1;

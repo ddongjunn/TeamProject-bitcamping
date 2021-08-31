@@ -10,12 +10,29 @@
   font-weight: 400;
   src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyMedium.woff') format('woff');
 }
-
 @font-face {
   font-family: 'LotteMartHappy';
   font-style: normal;
   font-weight: 700;
   src: url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartHappy/LotteMartHappyBold.woff') format('woff');
+}
+@font-face {
+    font-family: 'Cafe24Ssurround';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24Ssurround.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SBAggroB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TTTogether';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/TTTogetherA.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 *{
@@ -113,3 +130,18 @@
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 /** header end **/
+
+
+/* text effect */
+.stroke-shadow-orange{
+  color: #fff;
+  text-shadow: -2px 0 #E07260, 0 -2px #E07260, 2px 0 #E07260, 0 2px #E07260, 2px 2px #E07260, -2px -2px #E07260, -2px 2px #E07260, 2px -2px #E07260, 6px 6px #E07260;
+}
+.stroke-shadow-blue{
+  color: #fff;
+  text-shadow: -2px 0 #87C4B7, 0 -2px #87C4B7, 2px 0 #87C4B7, 0 2px #87C4B7, 2px 2px #87C4B7, -2px -2px #87C4B7, -2px 2px #87C4B7, 2px -2px #87C4B7, 6px 6px #87C4B7;
+}
+.stroke-shadow-gray{
+  color: #fff;
+  text-shadow: -2px 0 #B0B0B0, 0 -2px #B0B0B0, 2px 0 #B0B0B0, 0 2px #B0B0B0, 2px 2px #B0B0B0, -2px -2px #B0B0B0, -2px 2px #B0B0B0, 2px -2px #B0B0B0, 6px 6px #B0B0B0;
+}

@@ -10,7 +10,6 @@
 <meta charset="UTF-8">
 <style>
 #header {
-  padding: 5px;
   margin-bottom: 5px;
   width: 100%;
 }

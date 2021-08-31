@@ -21,9 +21,9 @@
 		<col width="10%">
 		<col width="15%">
 		<col width="40%">
-		<col width="10%">
-		<col width="15%">	
-		<col width="10%">	
+		<col width="15%">
+		<col width="12%">	
+		<col width="8%">	
 	</colgroup>
 	
 	<thead>
@@ -46,7 +46,7 @@
 						</c:otherwise>
 					</c:choose>				
 				</td>
-				<td style="text-align: left;">
+				<td class="textoverflow" style="text-align: left;">
 					<c:choose>
 						<c:when test="${qna.secret eq 0}">
 							<a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}">						

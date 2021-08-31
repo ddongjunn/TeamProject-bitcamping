@@ -51,25 +51,22 @@
 	
 		<!-- recommend area start -->
 		<div class="recommendslide">
-			<div class="slidetitle" style="text-align: center;">추천 캠핑장</div>
+			<div class="lefttitle">
+				<span class="stroke-shadow-orange" style="font-family: 'TTTogether' !important;">추천</span>
+				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;"> 캠핑장</span>
+			</div>
 			<div class="tarkikComandSlider">
-
-
 				<article class="comandSlider__item">
 					<header>
-
 						<p class="comandSlider__item_name"><a href="/csite/campingdetail.do?contentid=7980">스카이랜드리조트</a></p>
 						<p class="comandSlider__item_status">인천 강화군 삼산면 삼산남로 991 인천 강화군 삼산면 삼산남로 991</p>
-
 					</header>
 					<a href="/csite/campingdetail.do?contentid=7980">
 						<img class="comandSlider__item_photo" src="https://gocamping.or.kr/upload/camp/7980/thumb/thumb_720_3564AyNTpmiXHsFiDk3koAi2.jpg" alt="캠핑장 이미지" />
 					</a>
 					<div class="comandSlider__item_contact"><span>유형</span>일반야영장,카라반</div>
 					<div class="comandSlider__item_contact"><span>환경</span>섬,산,숲/민간</div>
-
 				</article>
-
 
 				<article class="comandSlider__item">
 					<header>
@@ -116,10 +113,12 @@
 
 		<!-- community recent start -->
 		<div class="commuity-area mt30">
-			<div class="title" style="text-align: center;">최신글</div>
-			<div class="community-container mt20">
+			<div class="lefttitle">
+				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;">최신글</span>
+			</div>
+			<div class="community-container mt10">
 				<div class="community-contents">
-					<div class="sub-title" style="display: block;overflow:hidden">
+					<div class="sub-title" style="display: block; overflow:hidden;">
 						<span class="fl">자유게시판</span>
 						<span class="fr">
                            <a href="/community/free.do">+</a>
