@@ -8,87 +8,70 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-.noticedetail{
-	width: 85%;
-	margin: auto;
-}
-.noticedetail > tr, td{
-	padding: 10px 10px;
-	border: 1px solid;
-}
-.container{
-	width: 85%;
-	margin-top: 15px;
-}
-.comment_table{
-	width: 100%;
-	margin: auto;
-}
-</style>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
 
-<table class="noticedetail">
-	<tbody>
-		<tr>
-			<td>
-				<span>${notice.title}</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span>${notice.nickname}</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<fmt:parseDate value="${notice.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span>조회수 ${notice.readcount}</span>
-			</td>
-		</tr>
-		<c:if test="${not empty notice.filename}">
+<div class="postarea">
+	<table class="tabledetail">
+		<tbody>
 			<tr>
-				<td>
-					<span>
-						💾 <a href="javascript:filedown('${notice.newfilename}', '${notice.notice_Seq}', '${notice.filename}')">${notice.filename}</a> 
-						(${notice.downcount}회 다운)
-					</span>
+				<td class="detailtitle">
+					<span>${notice.title}</span>
 				</td>
-			</tr>	
-		</c:if>
-		<tr>
-			<td>
-				<span id="text">${notice.content}</span>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<c:if test="${login.id eq notice.user_Id}">
-	<div id="buttons_wrap">
-		<button type="button" id="btnUpdate" onclick="location.href='/cs/noticeUpdate.do?notice_Seq=${notice.notice_Seq}'">수정</button>
-		<button type="button" id="btnDelete" onclick="confirm()">삭제</button>	
-	</div>
-</c:if>
+			</tr>
+			<tr>
+				<td class="detailinfo">
+					<span><i class="fas fa-user-circle fa-sm"></i> ${notice.nickname}</span>
+					<span>
+						<i class="far fa-calendar-alt fa-sm"></i>
+						 <fmt:parseDate value="${notice.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+					</span>
+					<span>조회수 ${notice.readcount}</span>
+					<hr>
+				</td>
+			</tr>
+			<c:if test="${not empty notice.filename}">
+				<tr>
+					<td>
+						<i class="fas fa-save fa-sm"></i>
+						<a href="javascript:filedown('${notice.newfilename}', '${notice.notice_Seq}', '${notice.filename}')">
+						<span class="detailfilename"> ${notice.filename}</span>
+						</a> 
+						(${notice.downcount}회 다운)
+						<hr>
+					</td>
+				</tr>	
+			</c:if>
+			<tr>
+				<td class="detailcontent">
+					<span id="text">${notice.content}</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<c:if test="${login.id eq notice.user_Id}">
+		<div class="buttons_wrap" id="buttons_wrap">
+			<button type="button" class="btnSimple" id="btnUpdate" onclick="location.href='/cs/noticeUpdate.do?notice_Seq=${notice.notice_Seq}'">수정</button>
+			<button type="button" class="btnSimple" id="btnDelete" onclick="confirm()">삭제</button>	
+		</div>
+	</c:if>
+</div>
 
 <!-- 댓글 영역 시작 -->
-<div class="container">
+<div class="commentarea">
     <form id="commentForm" name="commentForm" method="post">
         <div>
-            <div>
+            <div class="commentcountarea">
                 <span><strong>Comments</strong></span> <span id="cCnt"></span>
             </div>
             <div>
                 <table class="comment_table">                    
                     <tr>
                         <td>
-                            <textarea style="width: 100%" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
+                            <textarea style="width: 90%" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
                             <br>
                             <div style="margin: 5px; float: right;">
                                 <a href="#none" id="addComment">등록</a>
@@ -103,14 +86,16 @@
 </div>
 <div class="container">
     <form id="commentListForm" name="commentListForm" method="post">
-        <div id="commentList">
+        <div id="commentList" >
         </div>
     </form>
 </div>
 
-<div id="pagination-div">
+<div id="pagination-div" >
 
 </div> 
+
+
 
 
 <form name="file_Down" action="/cs/fileDownload.do" method="post">

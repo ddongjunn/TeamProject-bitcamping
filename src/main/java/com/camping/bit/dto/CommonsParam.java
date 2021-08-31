@@ -16,6 +16,8 @@ public class CommonsParam implements Serializable  {
 	private String choice;
 	private int pageNumber;
 	
+	private int sortMethod; // 상품 정렬방식
+	
 	private int start;
 	private int end;
 }

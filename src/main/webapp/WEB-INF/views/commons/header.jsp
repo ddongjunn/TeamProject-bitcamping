@@ -32,7 +32,7 @@
     <!-- page별 css -->
     <link rel="stylesheet" type="text/css" href="/resources/css/home.css"/>
     <link rel="stylesheet" type="text/css" href="/resources/css/board.css"/>
-
+    
     <meta charset="UTF-8">
     <title>Insert title here</title>
 </head>
@@ -44,7 +44,7 @@
         <div class="indiv">
             <div class="logobox">
                 <a href="/main.do">
-                	<img id="logo" src="resources/images/bitlogo.png" alt="로고">
+                	<img id="logo" src="/resources/images/bitlogo.png" alt="로고">
                 </a>
             </div>
 			<ul id="menu">

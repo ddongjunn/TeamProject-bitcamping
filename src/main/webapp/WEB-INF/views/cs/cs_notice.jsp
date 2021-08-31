@@ -37,7 +37,7 @@
 		<c:forEach items="${notice}" var="notice">
 			<tr>
 				<td>${notice.notice_Seq}</td>
-				<td style="text-align: left;">
+				<td class="textoverflow" style="text-align: left;">
 					<a href="/cs/noticeDetail.do?notice_Seq=${notice.notice_Seq}">
 						${notice.title}
 						<c:if test="${notice.commentcount ne 0}">

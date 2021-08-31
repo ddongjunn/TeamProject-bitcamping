@@ -41,6 +41,13 @@
 <body>
 
 <div class="container mydiv">
+	<div class="title">상품 목록</div>
+	<div class="">
+		총 <span style="color: #E07260; font-weight: bold;">${totalCount}</span>개의 상품이 있습니다
+		<!-- <span style="float: right; color: #E07260;"> <a href="#none">신상품</a> / <a>상품명</a> / <a>낮은가격</a> / <a>높은가격</a></span> -->
+	</div> 
+	
+	<hr>
     <div class="row">
     	<c:forEach items="${list}" var="list">
 	        <div class="col-md-4">       	
@@ -50,9 +57,9 @@
 	                <!-- <div class="bbb_deals_title">Today's Combo Offer</div> -->
 	                <div class="bbb_deals_slider_container">
 	                    <div class=" bbb_deals_item">
-	                        <div class="bbb_deals_image" style="width: 300px; height: 250px;">
+	                        <div class="bbb_deals_image">
 	                        	<a href="/rent/detail.do?product_Seq=${list.product_Seq}">
-	                        		<img src="/resources/upload/${list.thumbnail_Name}" alt="상품 이미지" style="height: 250px !important;">
+	                        		<img src="/resources/upload/${list.thumbnail_Name}" alt="상품 이미지">
 	                        	</a>
 	                        </div>
 	                        <div class="bbb_deals_content">
@@ -78,7 +85,7 @@
 
 										    </div>                                    	
 	                                    </div>
-	                                    <span>(${list.rate})</span>
+	                                    <span class="item_rate">리뷰 ${list.rate}점</span>
 	                                </div>
 	                                <div class="available_bar"><span style="width:17%"></span></div>
 	                            </div>
@@ -112,6 +119,8 @@
 	if(totalCount % pageSize > 0){
 		_totalPages++;
 	}
+	
+	/* let sortMethod = ${param.sortMethod}; */
 	
 	$("#pagination").twbsPagination({
 		startPage: nowPage,

@@ -15,17 +15,19 @@
 .tablelist tbody{
 	font-size: 14px;
 }
-.tablelist th, td{
+.tablelist > thead > tr > th,
+.tablelist > tbody > tr > td{ 
 	padding: 5px;
 	border-bottom: solid 1px gray;
 	border-collapse: collapse;
-	text-align: center;
 	height: 40px;
 	vertical-align: middle;
+	max-width: 500px;
+}
+.textoverflow{
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	max-width: 500px;
 }
 .boardtitle{
 	text-align: left;
@@ -44,14 +46,14 @@
 .pgcontainer{
 	margin: 15px;
 }
-#btnSearch, #btnWrite{
+#btnSearch, #btnWrite, .btnSimple{
 	padding: 7px;
 	border: 1px solid gray;
 	border-radius: 3px;
 	background-color: white;
 	font-size: 12px;
 }
-#btnSearch:hover, #btnWrite:hover{
+#btnSearch:hover, #btnWrite:hover, .btnSimple:hover{
 	padding: 7px;
 	border: 1px solid gray;
 	border-radius: 3px;
@@ -65,17 +67,57 @@
     border-color: #ff0080;
 }
 
+/* 페이지네이션 */
+.pagination{
+	justify-content: center;
+	margin: 15px;
+}
 
 /* 게시글 디테일 */
+.postarea{
+	border: 1px solid #DBDBDB;
+	border-radius: 5px;
+}
 .tabledetail{
-	border: hidden;
 	width: 90%;
 	margin: auto;
+	text-align: left;
+	padding: 10px;
 }
 .tabledetail td{
 	border: hidden;
 }
 .detailtitle{
-	font-size: 20px;
+	font-size: 30px;
 	font-weight: bold;
+	padding: 20px 0;
+}
+.detailinfo > span{
+	margin-right: 15px;
+}
+.detailfilename{
+	color: #75AE87;
+	text-decoration: underline;
+}
+.detailcontent{
+	height: 200px;
+	vertical-align: top;
+}
+.buttons_wrap{
+	padding-bottom : 15px;
+}
+/* 댓글 디테일 */
+.commentarea{
+	width: 100%;
+	margin-top: 20px;
+}
+.commentcountarea{
+	text-align: left;
+}
+.comment_table{
+	width: 100%;
+	text-align: left;
+}
+.commentwritearea{
+	text-align: center;
 }
