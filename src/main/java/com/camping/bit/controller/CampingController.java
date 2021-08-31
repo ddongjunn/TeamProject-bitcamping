@@ -130,6 +130,11 @@ public class CampingController{
 		int reviewPage = service.getCampingReviewCount(contentid);
 		model.addAttribute("ReviewPage", reviewPage);
 		
+		//검색된 글의 갯수
+		int searchReviewPage = service.getCampingSearchReviewCount(param);
+		model.addAttribute("searchReviewPage", searchReviewPage);
+		System.out.println(searchReviewPage);
+		
 		//현재 페이지
 		int pageNumber = param.getPageNumber();
 		model.addAttribute("pageNumber", pageNumber + 1);
@@ -288,12 +293,10 @@ public class CampingController{
 		CampingDetailDto detaildto = service.getCampingDetail(contentid);
 		CampingListDto listdto = service.getCampingListForDetail(contentid);
 		
-		
-		
+		model.addAttribute("campingdetailreview", campingbbs);
 		model.addAttribute("campingdetail", detaildto);
 		model.addAttribute("campinglistfordetail", listdto);
-		model.addAttribute("campingdetailreview", campingbbs);
-		
+	
 		return "campingdetailtop.tiles";
 	}
 
@@ -380,6 +383,8 @@ public class CampingController{
 		param.setStart(start);
 		param.setEnd(end);
 		param.setContentid(contentid);
+		
+		
 		
 		List<CampingBbsDto> searchList = service.campingSearchReview(param);
 		return searchList;
@@ -544,5 +549,13 @@ public class CampingController{
 			}
 			return result;
 		}	
+		
+	//캠핑장 리뷰 페이징용 
+	@RequestMapping(value = "getCampingSearchReviewCount.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public int getCampingSearchReviewCount(CampingParam param) throws Exception{
+		int result = service.getCampingSearchReviewCount(param);
+		return result;
+	}	
 
 }

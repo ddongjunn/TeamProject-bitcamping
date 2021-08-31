@@ -43,9 +43,9 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");
 CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("campingdetail");
 %>
-<input type = "hidden" value = "<%=campinglist.getContentid() %>">
+<input type = "hidden" value = "<%=campinglist.getContentid()%>">
 <div class = "image">
-<a href = "campingdetail.do?contentid=<%=campinglist.getContentid() %>">
+<a href = "campingdetail.do?contentid=<%=campinglist.getContentid()%>">
 <img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "200" height = "200">
 </a>
 </div>
@@ -57,7 +57,7 @@ CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("camping
 <br>
 
 <c:url value="<%=campinglist.getHomepage() %>" var="url" />
-<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
+<c:url value="<%=campinglist.getHomepage() %>" var="url1" />
 	<c:choose>
 	  	<c:when test="${url eq 'none'}">
 	       	홈페이지 준비중 / 
@@ -74,9 +74,10 @@ CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("camping
 	        <button type = button onclick = "location.href ='${url1}'" class = "btn btn-outline-success btn-sm" >예약하기</button>
 	    </c:otherwise>
 	</c:choose>
-<h3>평균 평점 : </h3>
-<span class = "readcount" style = "font-size : 15px">조회수 : <%=campingbbs.getReadcount()%></span>
-<span class = "likecount" style = "font-size : 15px">추천수 : <%=campingbbs.getLike_count()%></span>
+<!-- <h3>평균 평점 : </h3> -->
+<c:set var = "campinglist" value = '<%=campinglist%>'/>
+<span class = "readcount" style = "font-size : 15px">조회수 : ${campinglist.readcount}</span>
+<span class = "likecount" style = "font-size : 15px">추천수 : ${campinglist.likecount}</span>
 <div id = "thumbsup">
 <c:choose>
 	<%--첫번째 choose(로그인 했는지 안 했는지) --%>
