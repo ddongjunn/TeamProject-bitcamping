@@ -65,9 +65,6 @@ String sigunguNm = request.getParameter("sigunguNm");
 
 <div class = "deep-search">
 	<form id = "searchForm1" action ="campinglist.do" method = "get" class = "form-inline">
-		<div id = "mainpic">
-			<img src = "<%=request.getContextPath()%>/resources/images/campingsite/tent.png" style = "width : 100px; height : 100px" class = "form-group">
-		</div>
 		<div id = "address"> 
 			<input id = "sortingval" name = "sorting" type = "hidden" class = "sorting_select"/>
 			    <select name="addressRegion" id="addressRegion1"></select>&nbsp;

@@ -222,4 +222,9 @@ public class CampingServiceImpl implements CampingService {
 		return dao.getCampingHelpcount(reivew_seq);
 	}
 
+	@Override //캠핑장 리뷰 수 세기
+	public int getCampingSearchReviewCount(CampingParam param) {
+		return dao.getCampingSearchReviewCount(param);
+	}
+
 }

@@ -5,8 +5,7 @@
 
 <mapper namespace="com.camping.bit.dao.CampingDao">
 	<!-- 캠핑장 리스트 출력 -->
-	<select id="getCampingList" parameterType="CampingParam"
-		resultType="CampingListDto">
+	<select id="getCampingList" parameterType="CampingParam" resultType="CampingListDto">
 		SELECT * FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS
 		RNUM,
@@ -121,26 +120,22 @@
 	</select>
 
 	<!-- 캠핑장 상세화면 출력 -->
-	<select id="getCampingDetail" parameterType="java.lang.Integer"
-		resultType="CampingDetailDto">
+	<select id="getCampingDetail" parameterType="java.lang.Integer" resultType="CampingDetailDto">
 		SELECT * FROM CAMPING_DETAIL WHERE CONTENTID = #{contentid}
 	</select>
 
 	<!-- 캠핑장 상세화면용 리스트정보 끌어오기 -->
-	<select id="getCampingListForDetail"
-		parameterType="java.lang.Integer" resultType="CampingListDto">
+	<select id="getCampingListForDetail" parameterType="java.lang.Integer" resultType="CampingListDto">
 		SELECT * FROM CAMPING_LIST WHERE CONTENTID = #{contentid}
 	</select>
 
 	<!-- 캠핑장 총 갯수 구하기 -->
-	<select id="getCampingCount" parameterType="CampingParam"
-		resultType="java.lang.Integer">
+	<select id="getCampingCount" parameterType="CampingParam" resultType="java.lang.Integer">
 		SELECT NVL(COUNT(*),0) FROM CAMPING_LIST
 	</select>
 
 	<!-- 캠핑장 검색한 결과가 몇개인지 뿌려주는 함수 -->
-	<select id="getCampingSearchCount" parameterType="CampingParam"
-		resultType="java.lang.Integer">
+	<select id="getCampingSearchCount" parameterType="CampingParam" resultType="java.lang.Integer">
 		SELECT NVL(COUNT(*),0) FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM,
 		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, SBRSCL,
@@ -229,15 +224,13 @@
 			AND SIGUNGUNM = #{sigunguNm}
 		</if>
 		<if test="searchWord != null and searchWord !=''"><!-- 검색어 -->
-			AND (FACLTNM LIKE '%'||#{searchWord}||'%' OR ADDR1 LIKE
-			'%'||#{searchWord}||'%')
+			AND (FACLTNM LIKE '%'||#{searchWord}||'%' OR ADDR1 LIKE '%'||#{searchWord}||'%')
 		</if>
 		)
 	</select>
 
 	<!-- 캠핑장 클릭시 조회수 증가시키기 -->
-	<update id="getCampingReadcount"
-		parameterType="java.lang.Integer">
+	<update id="getCampingReadcount" parameterType="java.lang.Integer">
 		UPDATE CAMPING_LIST SET
 		READCOUNT=READCOUNT+1 WHERE CONTENTID = #{contentid}
 	</update>
@@ -263,8 +256,7 @@
 	</select>
 
 	<!-- 캠핑장 리뷰 뿌리기 -->
-	<select id="getcampingreview" parameterType="CampingParam"
-		resultType="CampingBbsDto">
+	<select id="getcampingreview" parameterType="CampingParam" resultType="CampingBbsDto">
 		SELECT * FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY REVIEW_SEQ DESC) AS RNUM,
 		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID,
@@ -272,21 +264,18 @@
 		FROM CAMPING_BBS
 		WHERE
 		1=1 AND CONTENTID = #{contentid} AND DEL = 0
-		ORDER BY WDATE DESC)
+		ORDER BY WDATE DESC, READCOUNT DESC)
 		WHERE RNUM BETWEEN ${start} AND ${end}
-		
 	</select>
 
 	<!-- 캠핑장 리뷰 갯수 구하기 -->
-	<select id="getCampingReviewCount"
-		parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getCampingReviewCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		SELECT NVL(COUNT(*),0)
 		FROM CAMPING_BBS WHERE CONTENTID = #{contentid} AND DEL = 0
 	</select>
 
 	<!-- 캠핑장 리뷰 상세화면 -->
-	<select id="campingdetailreview" parameterType="CampingBbsDto"
-		resultType="CampingBbsDto">
+	<select id="campingdetailreview" parameterType="CampingBbsDto" resultType="CampingBbsDto">
 		SELECT REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE,READCOUNT, USER_ID,
 		REVISIT, LIKE_COUNT, DEL, NICKNAME, COMMENTCOUNT FROM CAMPING_BBS WHERE REVIEW_SEQ = #{review_seq}
 		AND CONTENTID = #{contentid}
@@ -302,8 +291,7 @@
 	</insert>
 
 	<!-- 캠핑장 리뷰 조회수 증가 -->
-	<update id="getCampingReviewReadcount"
-		parameterType="java.lang.Integer">
+	<update id="getCampingReviewReadcount" parameterType="java.lang.Integer">
 		UPDATE CAMPING_BBS SET
 		READCOUNT=READCOUNT+1 WHERE REVIEW_SEQ = #{review_seq}
 	</update>
@@ -321,10 +309,9 @@
 	</update>
 
 	<!-- 캠핑장 리뷰 검색하기, 정렬하기 -->
-	<select id="campingSearchReview" parameterType="CampingParam"
-		resultType="CampingBbsDto">
+	<select id="campingSearchReview" parameterType="CampingParam" resultType="CampingBbsDto">
 		SELECT * FROM
-		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM,
+		(SELECT ROW_NUMBER()OVER(ORDER BY REVIEW_SEQ DESC) AS RNUM,
 		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT,
 		LIKE_COUNT, DEL, NICKNAME, COMMENTCOUNT
 		FROM CAMPING_BBS WHERE 1=1
@@ -346,16 +333,16 @@
 		<if test="reviewsorting!=null and reviewsorting != ''">
 			<choose>
 				<when test="reviewsorting=='create'">
-					WDATE DESC)
+					WDATE DESC, READCOUNT DESC)
 				</when>
 				<when test="reviewsorting=='read'">
-					READCOUNT DESC)
+					READCOUNT DESC, LIKE_COUNT DESC)
 				</when>
 				<when test="reviewsorting=='like'">
-					LIKE_COUNT DESC)
+					LIKE_COUNT DESC, READCOUNT DESC)
 				</when>
 				<otherwise>
-					WDATE DESC)
+					WDATE DESC, READCOUNT DESC)
 				</otherwise>
 			</choose>
 		</if>
@@ -366,15 +353,13 @@
 	</select>
 
 	<!-- 캠핑장 좋아요 긁어오기 -->
-	<select id="getCampingLike" parameterType="java.util.Map"
-		resultType="java.util.Map">
+	<select id="getCampingLike" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT * FROM CAMPING_LIKE WHERE CONTENTID = #{campingidx} AND USER_ID =
 		#{useridx} AND CONTENT_TYPE = 1
 	</select>
 
 	<!-- 캠핑장 좋아요 갯수 검사용 -->
-	<select id="getCampingLikeInfo"
-		parameterType="java.lang.Integer" resultType="map">
+	<select id="getCampingLikeInfo" parameterType="java.lang.Integer" resultType="map">
 		SELECT CONTENTID, LIKECOUNT FROM CAMPING_LIST WHERE 1=1 AND CONTENTID =
 		#{contentid}
 	</select>
@@ -392,29 +377,25 @@
 	</delete>
 
 	<!-- 캠핑장 좋아요수 갯수(likecount) -->
-	<select id="getCampingLikecount"
-		parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getCampingLikecount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select count(*) FROM
 		CAMPING_LIKE WHERE CONTENTID = #{contentid}
 	</select>
 
 	<!-- 캠핑장 좋아요 수 늘리기 -->
-	<update id="plusCampingLikecount"
-		parameterType="java.lang.Integer">
+	<update id="plusCampingLikecount" parameterType="java.lang.Integer">
 		UPDATE CAMPING_LIST SET LIKECOUNT = LIKECOUNT +1 WHERE CONTENTID =
 		#{contentid}
 	</update>
 
 	<!-- 캠핑장 좋아요 수 줄이기 -->
-	<update id="minusCampingLikecount"
-		parameterType="java.lang.Integer">
+	<update id="minusCampingLikecount" parameterType="java.lang.Integer">
 		UPDATE CAMPING_LIST SET LIKECOUNT = LIKECOUNT -1 WHERE CONTENTID =
 		#{contentid}
 	</update>
 
 	<!-- 캠핑장 댓글 뿌리기(처음) -->
-	<select id="getCampingReviewComment"
-		parameterType="CampingParam" resultType="CampingComment">
+	<select id="getCampingReviewComment" parameterType="CampingParam" resultType="CampingComment">
 		SELECT * FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY COMMENT_SEQ DESC) AS RNUM, USER_ID,
 		CONTENT, WDATE, COMMENT_SEQ, NICKNAME FROM CAMPING_BBS_COMMENT
@@ -424,8 +405,7 @@
 	</select>
 
 	<!-- 캠핑장 리뷰 댓글 갯수 세기 -->
-	<select id="getCampingReviewCommentCount"
-		parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	<select id="getCampingReviewCommentCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		SELECT NVL(COUNT(*),0) FROM CAMPING_BBS_COMMENT WHERE REVIEW_SEQ = #{review_seq}
 	</select>
 
@@ -458,8 +438,7 @@
 	</update>
 
 	<!-- 메인창에서 캠핑장 검색하기 -->
-	<select id="campingMainSearch" parameterType="CampingParam"
-		resultType="CampingListDto">
+	<select id="campingMainSearch" parameterType="CampingParam" resultType="CampingListDto">
 		SELECT * FROM
 		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC) AS RNUM,
 		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, SBRSCL,
@@ -498,6 +477,28 @@
 	<!-- 캠핑장 좋아요수 갯수(likecount) -->
 	<select id="getCampingHelpcount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		SELECT count(*) FROM CAMPING_LIKE WHERE REVIEW_SEQ = #{review_seq}
+	</select>
+	
+	<!-- 캠핑장 리뷰 갯수 세기 -->
+	<select id = "getCampingSearchReviewCount" parameterType = "CampingParam" resultType = "java.lang.Integer">
+		SELECT NVL(COUNT(*),0) FROM
+		(SELECT ROW_NUMBER()OVER(ORDER BY REVIEW_SEQ DESC) AS RNUM,
+		REVIEW_SEQ, CONTENTID, TITLE, CONTENT, WDATE, READCOUNT, USER_ID, REVISIT,
+		LIKE_COUNT, DEL, NICKNAME, COMMENTCOUNT
+		FROM CAMPING_BBS WHERE 1=1
+		<if
+			test="choice!=null and choice !='' and search !=null and search !=''">
+			<if test="choice=='title'">
+				AND title LIKE '%'||#{search}||'%'
+			</if>
+			<if test="choice=='content'">
+				AND content LIKE '%'||#{search}||'%'
+			</if>
+			<if test="choice=='writer'">
+				AND nickname = #{search}
+			</if>
+		</if>
+		AND CONTENTID = #{contentid} AND DEL = 0)
 	</select>
 
 </mapper>
