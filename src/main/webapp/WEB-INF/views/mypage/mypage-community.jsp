@@ -48,7 +48,7 @@
 
             <thead>
             <tr>
-                <th>번호</th><th>제목</th><th>조회수</th><th>작성일</th>
+                <td>번호</td><td>제목</td><td>조회수</td><td>작성일</td>
             </tr>
             </thead>
 

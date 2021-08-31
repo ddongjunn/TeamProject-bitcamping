@@ -7,7 +7,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- <style type="text/css"> -->
@@ -39,20 +38,21 @@
 </div>
 
 <!-- 글검색 -->
-<div align="center">
+<div id="searchbox" style="background-color: #f1f3f5; padding-top: 14px; padding-bottom: 14px;" align="center">
 	<select id="_choice" name="choice">
 		<option value="" selected="selected">선택</option>
 		<option value="title">제목</option>
 		<option value="content">내용</option>
-		<option value="nickname">닉네임</option>
-	</select>
-	
-	<input type="text" id="_search" name="search" placeholder="검색내용입력.">
+		<option value="nickname">작성자</option>
+	</select> 
+	<input type="text" id="_search" name="search" placeholder="검색내용입력">
 	<button type="button" id="btnSearch">검색</button>
 </div>
 <br>
 
-<div>&nbsp; 총 ${totalCount}건</div> 
+<div class="bbs_total">
+	<span>전체게시물<strong>${totalCount}</strong></span>
+</div> 
 <!-- 글 작성 리스트 틀-->
 <div class="container">
 	<table class="table table-sm">
@@ -65,13 +65,13 @@
 		</colgroup>
 	<thead>
 		<tr class="table-success">
-			<th>번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>조회수</th>
+			<td>번호</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>작성일</td>
+			<td>조회수</td>
 		</tr>
-					<c:if test="${empty findList}">
+			<c:if test="${empty findList}">
 				<td colspan="3">작성된 글이 없습니다</td>			
 			</c:if>
 			<c:forEach var="data" items="${findList}">

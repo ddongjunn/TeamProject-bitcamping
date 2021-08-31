@@ -15,3 +15,7 @@
     width : 100%;
     display: inline-block;
 }
+
+.lnb h3 {
+	padding-bottom: 5px;
+}

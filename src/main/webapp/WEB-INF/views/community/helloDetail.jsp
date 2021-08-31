@@ -20,115 +20,117 @@
 </style>
 </head>
 <body>
-
-<table border="1" style="width: 700px">
-	<colgroup>
-	   <col style="width:30%;" />
-	   <col style="width:70%;" />
-	</colgroup>
-	<thead>
-		<tr>
-		   <th>작성자</th>
-		   <td>
-		      ${data.nickname }
-		   </td>
-		</tr>
-		<tr>
-		   <th>작성날짜</th>
-		   <td>
-			 	<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
-		   </td>
-		</tr>
-		<tr>
-		   <th>조회수</th>
-		   <td>
-		      ${data.readcount }
-		   </td>
-		</tr>
-		<tr>
-		   <th>좋아요수</th>
-		   <td class="likeCount">
-		      ${likecount}
-		   </td>
-		</tr>
-		<tr>
-		   <th>제목</th>
-		   <td>
-		      ${data.title }
-		   </td>
-		</tr>
-		<tr>
-		   <th>내용</th>
-		   <td>
-		      ${data.content }
-		   </td>
-		</tr>
-	</thead>
-</table>
-
-<c:if test="${login.id eq data.user_id }">
-   <form name="updateFrm" action="/community/helloUpdate.do?bbstype=hello" method="POST">
-      <input type="hidden" name="community_seq" value="${data.community_seq}">
-      <input type="hidden" name="user_id" value='${login.id}'>
-	  <button type="button" onclick="del(${data.community_seq})">삭제</button>
-      <button type="button" onclick="update()">수정</button>
-   </form>
-</c:if>
-
-<c:choose>
-   <c:when test="${data.liked_yn == 1 }">
-      <span>
-         <a href="javascript:" class="likeBtn">
-            <img src="../resources/images/like.png" width="30" height="30">
-         </a>
-      </span>
-   </c:when>
-   <c:otherwise>
-      <span>
-         <a href="javascript:" class="likeBtn">
-            <img src="../resources/images/delete_like.png" width="30" height="30">
-         </a>   
-      </span>
-   </c:otherwise>
-</c:choose>
-<button type="button" onclick="location='/community/hello.do'">목록</button>
-
-<!-- 댓글 영역 시작 -->
-<div class="container">
-    <form id="commentForm" name="commentForm" method="post">
-        <div>
-            <div>
-                <span><strong>Comments</strong></span> <span id="cCnt"></span>
-            </div>
-            <div>
-                <table class="comment_table">                    
-                    <tr>
-                        <td>
-                            <textarea style="width: 100%" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
-                            <br>
-                            <div style="margin: 5px; float: right;">
-                                <a href="#none" id="addComment">등록</a>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <%-- <input type="hidden" id="b_code" name="b_code" value="${result.code }" /> --%>        
-    </form>
+<div class="detailboard" style="padding: 30px 60px 30px 40px;">
+	<div class="hellodetail">
+		<table border="1" style="width: 700px">
+			<colgroup>
+			   <col style="width:30%;" />
+			   <col style="width:70%;" />
+			</colgroup>
+			<thead>
+				<tr>
+				   <th>작성자</th>
+				   <td>
+				      ${data.nickname }
+				   </td>
+				</tr>
+				<tr>
+				   <th>작성날짜</th>
+				   <td>
+					 	<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
+				   </td>
+				</tr>
+				<tr>
+				   <th>조회수</th>
+				   <td>
+				      ${data.readcount }
+				   </td>
+				</tr>
+				<tr>
+				   <th>좋아요수</th>
+				   <td class="likeCount">
+				      ${likecount}
+				   </td>
+				</tr>
+				<tr>
+				   <th>제목</th>
+				   <td>
+				      ${data.title }
+				   </td>
+				</tr>
+				<tr>
+				   <th>내용</th>
+				   <td>
+				      ${data.content }
+				   </td>
+				</tr>
+			</thead>
+		</table>
+		
+		<c:if test="${login.id eq data.user_id }">
+		   <form name="updateFrm" action="/community/helloUpdate.do?bbstype=hello" method="POST">
+		      <input type="hidden" name="community_seq" value="${data.community_seq}">
+		      <input type="hidden" name="user_id" value='${login.id}'>
+			  <button type="button" onclick="del(${data.community_seq})">삭제</button>
+		      <button type="button" onclick="update()">수정</button>
+		   </form>
+		</c:if>
+		
+		<c:choose>
+		   <c:when test="${data.liked_yn == 1 }">
+		      <span>
+		         <a href="javascript:" class="likeBtn">
+		            <img src="../resources/images/like.png" width="30" height="30">
+		         </a>
+		      </span>
+		   </c:when>
+		   <c:otherwise>
+		      <span>
+		         <a href="javascript:" class="likeBtn">
+		            <img src="../resources/images/delete_like.png" width="30" height="30">
+		         </a>   
+		      </span>
+		   </c:otherwise>
+		</c:choose>
+		<button type="button" onclick="location='/community/hello.do'">목록</button>
+		
+		<!-- 댓글 영역 시작 -->
+		<div class="container">
+		    <form id="commentForm" name="commentForm" method="post">
+		        <div>
+		            <div>
+		                <span><strong>Comments</strong></span> <span id="cCnt"></span>
+		            </div>
+		            <div>
+		                <table class="comment_table">                    
+		                    <tr>
+		                        <td>
+		                            <textarea style="width: 100%" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
+		                            <br>
+		                            <div style="margin: 5px; float: right;">
+		                                <a href="#none" id="addComment">등록</a>
+		                            </div>
+		                        </td>
+		                    </tr>
+		                </table>
+		            </div>
+		        </div>
+		        <%-- <input type="hidden" id="b_code" name="b_code" value="${result.code }" /> --%>        
+		    </form>
+		</div>
+		<div class="container">
+		    <form id="commentListForm" name="commentListForm" method="post">
+		        <div id="commentList">
+		        </div>
+		    </form>
+		</div>
+		
+		<div id="pagination-div">
+		
+		</div> 
+	</div>
 </div>
-<div class="container">
-    <form id="commentListForm" name="commentListForm" method="post">
-        <div id="commentList">
-        </div>
-    </form>
-</div>
-
-<div id="pagination-div">
-
-</div> 
-
 
 <script type="text/javascript">
 

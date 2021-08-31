@@ -48,4 +48,5 @@
 
 .customer_content a{
 	color: #666 !important;
+	text-decoration: underline;
 }
