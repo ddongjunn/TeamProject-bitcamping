@@ -244,4 +244,81 @@ public class MypageController {
 		return "mypage-myOrder.tiles";	
 	}
 
+    @RequestMapping(value = "product-review.do", method = RequestMethod.GET)
+    public String productReview(HttpSession session ,Model model, MypageParam param){
+
+        MemberDto user = (MemberDto)session.getAttribute("login");
+        param.setId(user.getId());
+
+        int sn = param.getPageNumber();
+        int start = 1 + 10 * sn;
+        int end = (sn + 1) * 10;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        List<ProductReviewDto> review = service.productReview(param);
+        model.addAttribute("review", review);
+        System.out.println("review = " + review);
+
+       int totalCount = service.productReviewCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        model.addAttribute("pageNumber", param.getPageNumber() + 1);
+
+        return "mypage-product-review.tiles";
+    }
+
+    @RequestMapping(value = "product-qna.do", method = RequestMethod.GET)
+    public String productQna(HttpSession session, Model model, MypageParam param){
+
+        MemberDto user = (MemberDto)session.getAttribute("login");
+        param.setId(user.getId());
+
+        int sn = param.getPageNumber();
+        int start = 1 + 10 * sn;
+        int end = (sn + 1) * 10;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        List<ProductQnaDto> qna = service.productQna(param);
+        model.addAttribute("qna", qna);
+
+        int totalCount = service.productQnaCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        model.addAttribute("pageNumber", param.getPageNumber() + 1);
+
+        model.addAttribute("kind",param.getKind());
+
+        return "mypage-productQna.tiles";
+    }
+
+    @RequestMapping(value = "qna.do", method = RequestMethod.GET)
+    public String qnaList(HttpSession session, Model model, MypageParam param) {
+
+        MemberDto user = (MemberDto)session.getAttribute("login");
+        param.setId(user.getId());
+
+        int sn = param.getPageNumber();
+        int start = 1 + 10 * sn;
+        int end = (sn + 1) * 10;
+
+        param.setStart(start);
+        param.setEnd(end);
+
+        List<CsQnaDto> qna = service.csQna(param);
+        model.addAttribute("qna", qna);
+
+        int totalCount = service.csQnaCount(param);
+        model.addAttribute("totalCount", totalCount);
+
+        model.addAttribute("pageNumber", param.getPageNumber() + 1);
+
+        model.addAttribute("kind",param.getKind());
+
+        return "mypage-csQna.tiles";
+    }
+
 }

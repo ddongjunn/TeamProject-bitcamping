@@ -50,4 +50,6 @@ public class ProductReviewDto implements Serializable{
 
     // 답변 상태 
     private int status;
+
+    private String productname;
 }
