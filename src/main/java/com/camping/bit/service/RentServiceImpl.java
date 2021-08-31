@@ -142,4 +142,24 @@ public class RentServiceImpl implements RentService {
 
 		return dao.getProductCount(param);
 	}
+
+	@Override
+	public void updateProductQnaStatus(ProductQnaDto dto) {
+		dao.updateProductQnaStatus(dto);
+	}
+
+	@Override
+	public void productQnaAnswer(ProductQnaDto dto) {
+		dao.productQnaAnswer(dto);
+	}
+
+	@Override
+	public void updateCsQnaStatus(CsQnaDto dto) {
+		dao.updateCsQnaStatus(dto);
+	}
+
+	@Override
+	public void csQnaAnswer(CsQnaDto dto) {
+		dao.csQnaAnswer(dto);
+	}
 }

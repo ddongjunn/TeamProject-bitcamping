@@ -28,7 +28,7 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link active" href="javascript:void(0)" style="pointer-events: none;">
-                            <i class="ni ni-single-02 text-yellow"></i>
+                            <i class="ni ni-circle-08 text-primary"></i>
                             <span class="nav-link-text">회원관리</span>
                         </a>
                             <li class="nav-item" style="margin-left: 33px">
@@ -39,7 +39,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link active" href="javascript:void(0)" style="pointer-events: none;">
-                            <i class="ni ni-pin-3 text-primary"></i>
+                            <i class="ni ni-bullet-list-67 text-red"></i>
                             <span class="nav-link-text">커뮤니티관리</span>
                         </a>
                             <li class="nav-item" style="margin-left: 33px">
@@ -75,7 +75,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link active" href="javascript:void(0)" style="pointer-events: none;">
-                            <i class="ni ni-single-02"></i>
+                            <i class="ni ni-cart text-blue"></i>
                             <span class="nav-link-text">상품관리</span>
                         </a>
                             <li class="nav-item" style="margin-left: 33px">
@@ -101,7 +101,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link active" href="javascript:void(0)" style="pointer-events: none;">
-                            <i class="ni ni-bullet-list-67 text-default"></i>
+                            <i class="ni ni-user-run text-tomato"></i>
                             <span class="nav-link-text">고객센터관리</span>
                         </a>
                         <li class="nav-item" style="margin-left: 33px">

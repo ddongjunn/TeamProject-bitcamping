@@ -185,11 +185,6 @@
 		return new URLSearchParams(location.search).get(key);
 	}
 
-
-
-
-
-
 </script>
 
 </body>

@@ -18,10 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/*")
@@ -50,6 +48,7 @@ public class AdminController {
         regiPathCount.put("naverPer",naver );
         regiPathCount.put("kakaoPer",kakao );
         model.addAttribute("regiPath",regiPathCount);
+        model.addAttribute("todaySales",service.getTodaySales());
 
         //커뮤니티 최신글 받아오기
         List<CommunityDto> recentCommunity = service.recentCommunity();
@@ -85,6 +84,24 @@ public class AdminController {
         model.addAttribute("memberCount",service.memberCount());
         model.addAttribute("qnaCount",service.getQnaWaitTotalCount());
         model.addAttribute("communityCount",service.getCommunityTotalCount());
+
+        //일주일 날짜 계산
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+
+        String[] days7 = new String[7];
+        days7[0] = format.format(cal.getTime());
+
+        for( int i = 1; i <= 6; i++ ){
+            cal.add(Calendar.DAY_OF_MONTH, - 1);
+            days7[i] = format.format(cal.getTime());
+        }
+
+        model.addAttribute("days",days7);
+
+        //일주일 매출 얻기
+        Map<String,Object> sales = service.weeklySales();
+        model.addAttribute("sales",sales);
 
         return "adminmain.tiles";
     }
@@ -149,18 +166,16 @@ public class AdminController {
     public String qnaList(Model model, CsParam param) {
 
         int sn = param.getPageNumber();
-        int start = 1 + 15 * sn;
-        int end = (sn + 1) * 15;
+        int start = 1 + 10 * sn;
+        int end = (sn + 1) * 10;
 
         param.setStart(start);
         param.setEnd(end);
 
-        List<CsQnaDto> qna = csService.getQnaList(param);
+        List<CsQnaDto> qna = service.csQnaList(param);
         model.addAttribute("qna", qna);
 
-        System.out.println("qna=" + qna);
-
-        int totalCount = csService.getQnaCount(param);
+        int totalCount = service.csQnaListCount(param);
         model.addAttribute("totalCount", totalCount);
 
         model.addAttribute("pageNumber", param.getPageNumber() + 1);
@@ -338,18 +353,18 @@ public class AdminController {
     public String productQna(Model model, CsParam param){
 
         int sn = param.getPageNumber();
-        int start = 1 + 15 * sn;
-        int end = (sn + 1) * 15;
+        int start = 1 + 10 * sn;
+        int end = (sn + 1) * 10;
 
         param.setStart(start);
         param.setEnd(end);
 
-        List<CsQnaDto> qna = csService.getQnaList(param);
+        List<ProductQnaDto> qna = service.productQnaList(param);
         model.addAttribute("qna", qna);
 
         System.out.println("qna=" + qna);
 
-        int totalCount = csService.getQnaCount(param);
+        int totalCount = service.productQnaListCount(param);
         model.addAttribute("totalCount", totalCount);
 
         model.addAttribute("pageNumber", param.getPageNumber() + 1);

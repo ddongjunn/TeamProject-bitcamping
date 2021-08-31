@@ -54,4 +54,8 @@ public class CsQnaDto {
 
     // 삭제 
     private int del;
+
+    private String answertitle;
+    private String answercontent;
+    private String answerwdate;
 }
