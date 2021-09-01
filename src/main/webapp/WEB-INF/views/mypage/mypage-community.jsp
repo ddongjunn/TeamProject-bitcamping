@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
+
 <%--
   Created by IntelliJ IDEA.
   User: djlee
@@ -12,99 +12,114 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
     <title>Title</title>
 </head>
 <body>
-<c:choose>
-    <c:when test="${bbstype eq 'hello'}">
-        <h2>가입인사</h2>
-    </c:when>
-    <c:when test="${bbstype eq 'free'}">
-        <h2>자유게시판</h2>
-    </c:when>
-    <c:when test="${bbstype eq 'deal'}">
-        <h2>중고거래</h2>
-    </c:when>
-    <c:when test="${bbstype eq 'review'}">
-        <h2>캠핑&여행후기</h2>
-    </c:when>
-    <c:otherwise>
-        <h2>캠핑장리뷰</h2>
-    </c:otherwise>
-</c:choose>
-<div>
-    <c:choose>
-    <c:when test="${empty list}">
-        <h1>작성하신 글이 없습니다.</h1>
-    </c:when>
-    <c:otherwise>
-        <table border="1" style="width: 70%">
-            <colgroup>
-                <col style="width:10%;" />
-                <col style="width:auto;" />
-                <col style="width:15%;" />
-                <col style="width:20%;" />
-            </colgroup>
-
-            <thead>
-            <tr>
-                <td>번호</td><td>제목</td><td>조회수</td><td>작성일</td>
-            </tr>
-            </thead>
-
-            <tbody>
-                <c:forEach var="data" items="${list}">
-                    <c:if test="${data.del != '1'}">
-                        <tr>
-                            <td>${data.community_seq }</td>
-
-                            <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
-                            <c:if test="${bbstype eq 'free'}">
-                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'find'}">
-                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'deal'}">
-                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'review'}">
-                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-                            <c:if test="${bbstype eq 'hello'}">
-                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
-                            </c:if>
-
-                            <td>${data.readcount}</td>
-                            <td>
-                                <c:set var="date" value="${data.wdate}"/>
-                                    ${fn:substring(date,2,16)}
-                            </td>
-                        </tr>
-                    </c:if>
-                </c:forEach>
-            </tbody>
-        </table>
-    </c:otherwise>
-    </c:choose>
-</div>
-
-<div class="container"> <!-- style = "width : 100%; text-align : center" -->
-    <!--  <div style = "display : inline-block"> -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination"></ul>
-    </nav>
-</div>
-
-
-<div align="center">
-    <select id="_choice" name="choice">
-        <option value="" selected="selected">선택</option>
-        <option value="title">제목</option>
-        <option value="content">내용</option>
-    </select>
-    <input type="text" id="_search" name="search" placeholder="검색">
-    <button type="button" id="btnSearch">검색</button>
+<div class="mypage_board">
+	<c:choose>
+	    <c:when test="${bbstype eq 'hello'}">
+	        <h2 class="title">
+	        	가입인사
+	    	</h2>
+	    </c:when>
+	    <c:when test="${bbstype eq 'free'}">
+	        <h2 class="title">
+	        	자유게시판
+	    	</h2>
+	    </c:when>
+	    <c:when test="${bbstype eq 'deal'}">
+	        <h2 class="title">
+	        	중고거래
+	    	</h2>
+	    </c:when>
+	    <c:when test="${bbstype eq 'review'}">
+	        <h2 class="title">
+	        	캠핑&여행후기
+	    	</h2>
+	    </c:when>
+	    <c:otherwise>
+	        <h2 class="title">
+	        	캠퍼 모집
+	    	</h2>
+	    </c:otherwise>
+	</c:choose>
+	<div>
+	    <c:choose>
+	    <c:when test="${empty list}">
+	        <h1>작성하신 글이 없습니다.</h1>
+	    </c:when>
+	    <c:otherwise>
+	        <table class="table">
+	            <colgroup>
+	                <col style="width:10%;" />
+	                <col style="width:auto;" />
+	                <col style="width:15%;" />
+	                <col style="width:20%;" />
+	            </colgroup>
+	
+	            <thead>
+	            <tr class="table_top">
+	                <td>번호</td><td>제목</td><td>조회수</td><td>작성일</td>
+	            </tr>
+	            </thead>
+	
+	            <tbody>
+	                <c:forEach var="data" items="${list}">
+	                    <c:if test="${data.del != '1'}">
+	                        <tr>
+	                            <td>${data.community_seq }</td>
+	
+	                            <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
+	                            <c:if test="${bbstype eq 'free'}">
+	                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+	                            	<c:if test="${data.commentcount ne 0}">
+	                            		<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+	                        		</c:if>
+	                            </c:if>
+	                            <c:if test="${bbstype eq 'find'}">
+	                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+	                            </c:if>
+	                            <c:if test="${bbstype eq 'deal'}">
+	                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+	                            </c:if>
+	                            <c:if test="${bbstype eq 'review'}">
+	                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+	                            </c:if>
+	                            <c:if test="${bbstype eq 'hello'}">
+	                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a></td>
+	                            </c:if>
+	                            <td>${data.readcount}</td>
+	                            <td>
+									<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+									<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+	                            </td>
+	                        </tr>
+	                    </c:if>
+	                </c:forEach>
+	            </tbody>
+	        </table>
+	    </c:otherwise>
+	    </c:choose>
+	</div>
+	
+	<div class="container"> <!-- style = "width : 100%; text-align : center" -->
+	    <!--  <div style = "display : inline-block"> -->
+	    <nav aria-label="Page navigation">
+	        <ul class="pagination" id="pagination"></ul>
+	    </nav>
+	</div>
+	
+	
+	<div align="center">
+	    <select id="_choice" name="choice">
+	        <option value="" selected="selected">선택</option>
+	        <option value="title">제목</option>
+	        <option value="content">내용</option>
+	    </select>
+	    <input type="text" id="_search" name="search" placeholder="검색">
+	    <button type="button" id="btnSearch">검색</button>
+	</div>
 </div>
 
 <script type="text/javascript">

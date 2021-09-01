@@ -1,7 +1,8 @@
 .board{
-    float: left;
+    margin: left;
+    margin-top: 30px;
     position: relative;
-    width: 85%;
+    width: 76%;
 }
 
 .communitybox {
@@ -20,7 +21,9 @@
 
 .maintitle h2 {
 	padding-bottom: 26px;
-	font-size: 26px;
+	color: black;
+	font-size: 2em;
+    font-weight: bold;
 }
 
 .freebox_title {
@@ -66,4 +69,8 @@
 
 .bbs_total {
 	margin-bottom: 5px;
+}
+
+.table_top {
+	background-color: #75AE87;
 }

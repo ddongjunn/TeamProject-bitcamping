@@ -14,8 +14,89 @@
 .leftmenu .lnb > a{
     width : 100%;
     display: inline-block;
+    margin: 1px;
 }
 
 .lnb h3 {
 	padding-bottom: 5px;
+}
+.customer-name {
+	margin-bottom: 5px;
+}
+
+.mypage_board {
+	margin-top: 20px;
+	font-weight: bold;
+	
+}
+
+.table_top {
+	background-color: #75AE87;
+}
+
+.title {
+	padding-bottom: 20px;
+	color: black;
+	font-size: 2em;
+}
+
+.oldPassword > label, .newPassword > label, .newPassword2 > label {
+	display: block;
+	margin-top: 20px;
+    font-weight: bold;
+}
+
+.oldPassword > input, .newPassword > input, .newPassword2 > input {
+	width: 45%;
+    height: 40px;
+    border: 1px solid #e5e5e5;
+    padding: 9px 12px;
+    outline: none;
+    box-sizing: border-box;
+    
+}
+
+.send > input{
+	width: 45%;
+	height: 40px;
+	margin-top: 30px;
+	border: 1px solid #ceebe5;
+	background-color: #ceebe5;
+}
+
+.error_msg {
+	margin-top: 5px;
+	font-weight: bold;
+}
+
+.userid > label, .username > label, .nickname > label, .phone > label, .email > label {
+	display: block;
+	margin-top: 20px;
+    font-weight: bold;
+}
+
+.userid > input, .username > input, .nickname > input, .phone > input, .email > input {
+	width: 45%;
+    height: 40px;
+    border: 1px solid #e5e5e5;
+    padding: 9px 12px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.userid > input, .username > input {
+	color: #a5a5a5;
+}
+
+.reciveEmail, .recivePhone {
+	font-weight: bold;
+	margin: 10px 0px 5px 0px;
+}
+
+.withdrawal-radio > p{
+	margin-bottom: 15px;
+}
+
+h5 {
+	margin-bottom: 15px;
 }

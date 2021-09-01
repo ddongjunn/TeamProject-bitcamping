@@ -11,7 +11,9 @@
     <title>Title</title>
 </head>
 <body>
-<div class="customer-password">
+
+<div class="mypage_board">
+  <div class="customer-password">
     <h2 class="title">
         비밀번호 변경
     </h2>
@@ -37,8 +39,9 @@
         <div class="send">
             <input type="button" id="passwordBtn" value="변경하기">
         </div>
+  </div>
 </div>
-
+  
 <script type="text/javascript">
 $(document).ready(function () {
     let errormsg = document.querySelectorAll('.error_msg');

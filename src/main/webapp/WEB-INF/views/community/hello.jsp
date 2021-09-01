@@ -22,7 +22,7 @@
 
 <div class="communitybox">
     <div class="freebox_top">
-    	<img id="hello" src="../resources/images/hello.png" >
+    	<img id="hello" src="../resources/images/hello.png" width="550px" >
         <div class="freebox_title">"안녕하세요 반갑습니다! 여러분들을 환영합니다"</div>
     </div>
     <div class="freetext">
@@ -47,7 +47,7 @@
 <br>
 
 <div class="bbs_total">
-	<span>전체게시물<strong>${totalCount}</strong></span>
+	<span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
 <div class="container">
@@ -56,11 +56,11 @@
 				<col style="width: 10%;" />
 				<col style="width: auto;" />
 				<col style="width: 15%;" />
+				<col style="width: 20%;" />
 				<col style="width: 10%;" />
-				<col style="width: 15%;" />
 			</colgroup>
 	<thead>
-		<tr class="table-success">
+		<tr class="table_top">
 			<td>번호</td>
 			<td>제목</td>
 			<td>작성자</td>
