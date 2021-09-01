@@ -7,65 +7,68 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
 <title>Insert title here</title>
 </head>
 <body>
-
-<div>
-	주문내역
-</div>
-<c:forEach items="${order}" var="order">
+<div class="mypage_board">
 	<div>
-		<span>
-			<fmt:parseDate value="${order.order_Date}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-			<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
-		</span>
-		<div style="border: 1px solid; margin: 5px;">
-			<a href="/rent/detail.do?product_Seq=${order.product_Seq}"><span>${order.product_Name}</span></a>
-			<div style="display: flex;">			
-				<hr>
-				<div style="flex: 1; flex-basis: 20%;">
-					<img src="/resources/upload/${order.thumbnail_Name}" style="height: 150px;" alt="상품 썸네일 이미지">
-				</div>
-				<div style="flex: 1; flex-basis: 60%;">
-					<table>
-						<tr>
-							<td>주문번호</td> <td>${order.merchant_Uid}</td>
-						</tr>
-						<tr>
-							<td>결제금액</td> <td><fmt:formatNumber value="${order.total_Price}" type="number"/>원</td>
-						</tr>
-						<tr>
-							<td>주문상태</td> 
-							<td>
-								<c:choose>
-									<c:when test="${order.order_Status eq 1}">결제완료</c:when>
-									<c:when test="${order.order_Status eq 2}">배송중</c:when>
-									<c:when test="${order.order_Status eq 3}">배송완료</c:when>
-									<c:when test="${order.order_Status eq 4}">반납완료</c:when>
-								</c:choose>
-							</td>
-						</tr>
-					</table>	
-				</div>
-				<div style="flex: 1; flex-basis: 20%;">
-					<c:if test="${order.review_Status eq 0}">
-						<button onclick="writereview(${order.order_Seq})">리뷰 작성</button><br>
-					</c:if>
-						<button onclick="writeqna(${order.product_Seq})">상품 문의</button>
+		<h2 class="title">
+	        주문내역
+	    </h2>
+	</div>
+	<c:forEach items="${order}" var="order">
+		<div>
+			<span>
+				<fmt:parseDate value="${order.order_Date}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
+			</span>
+			<div style="border: 1px solid; margin: 5px;">
+				<a href="/rent/detail.do?product_Seq=${order.product_Seq}"><span>${order.product_Name}</span></a>
+				<div style="display: flex;">			
+					<hr>
+					<div style="flex: 1; flex-basis: 20%;">
+						<img src="/resources/upload/${order.thumbnail_Name}" style="height: 150px;" alt="상품 썸네일 이미지">
+					</div>
+					<div style="flex: 1; flex-basis: 60%;">
+						<table>
+							<tr>
+								<td>주문번호</td> <td>${order.merchant_Uid}</td>
+							</tr>
+							<tr>
+								<td>결제금액</td> <td><fmt:formatNumber value="${order.total_Price}" type="number"/>원</td>
+							</tr>
+							<tr>
+								<td>주문상태</td> 
+								<td>
+									<c:choose>
+										<c:when test="${order.order_Status eq 1}">결제완료</c:when>
+										<c:when test="${order.order_Status eq 2}">배송중</c:when>
+										<c:when test="${order.order_Status eq 3}">배송완료</c:when>
+										<c:when test="${order.order_Status eq 4}">반납완료</c:when>
+									</c:choose>
+								</td>
+							</tr>
+						</table>	
+					</div>
+					<div style="flex: 1; flex-basis: 20%;">
+						<c:if test="${order.review_Status eq 0}">
+							<button onclick="writereview(${order.order_Seq})">리뷰 작성</button><br>
+						</c:if>
+							<button onclick="writeqna(${order.product_Seq})">상품 문의</button>
+					</div>
 				</div>
 			</div>
 		</div>
+	</c:forEach>
+	
+	<!-- pagination -->
+	<div class="container">
+	    <nav aria-label="Page navigation">
+	        <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
+	    </nav>
 	</div>
-</c:forEach>
-
-<!-- pagination -->
-<div class="container">
-    <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
-    </nav>
 </div>
-
 <script type="text/javascript">
 	/* 리뷰작성 popup open */
 	function writereview(order_Seq){

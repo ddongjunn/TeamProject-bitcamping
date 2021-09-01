@@ -7,92 +7,96 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
     <title>Insert title here</title>
 
 </head>
 <body>
-
-<div class="container-fluid">
-    <a href="/account/qna.do" class="badge badge-pill badge-default">전체글</a>
-    <a href="/account/qna.do?kind=wait" class="badge badge-pill badge-danger">답변대기중</a>
-    <a href="/account/qna.do?kind=complete" class="badge badge-pill badge-success">답변완료</a>
+<div class="mypage_board">
+	    <h2 class="title">
+	        Q&A
+	    </h2>
+	<div class="container-fluid">
+	    <a href="/account/qna.do" class="badge badge-pill badge-default">전체글</a>
+	    <a href="/account/qna.do?kind=wait" class="badge badge-pill badge-danger">답변대기중</a>
+	    <a href="/account/qna.do?kind=complete" class="badge badge-pill badge-success">답변완료</a>
+	</div>
+	<br>
+	
+	<div class="table-responsive">
+	    <div>
+	        <table class="table align-items-center">
+	
+	            <thead>
+	            <tr class="table_top">
+	                <td width="90px">글번호</td> <td width="120px">답변상태</td> <td width="400px" >문의내용</td>
+	                <td>작성일</td>
+	            </tr>
+	            </thead>
+	
+	            <tbody class="list">
+	            <c:if test="${empty qna}">
+	                <tr>
+	                    <td colspan="6" style="text-align: center">
+	                        작성된 게시글이 없습니다.
+	                    </td>
+	                </tr>
+	            </c:if>
+	            <c:forEach items="${qna}" var="qna" varStatus="i">
+	                <tr id="tr${qna.qna_Seq}">
+	                    <td>${qna.qna_Seq}</td>
+	                    <td>
+	                        <c:choose>
+	                            <c:when test="${qna.status eq 0}">
+	                                <span class="badge badge-pill badge-danger">답변대기중</span>
+	                            </c:when>
+	                            <c:otherwise>
+	                                <span class="badge badge-pill badge-success">답변완료</span>
+	                            </c:otherwise>
+	                        </c:choose>
+	                    </td>
+	                    <td style="max-width: 400px">
+	                        <c:choose>
+	                            <c:when test="${qna.secret eq 0}">
+	                                <span id="qnatitle${qna.qna_Seq}" onclick="showHideQna('${qna.qna_Seq}')" style=""> ${qna.title}</span>
+	                            </c:when>
+	                            <c:otherwise>
+	                                <span id="qnatitle'${qna.qna_Seq}'" onclick="showHideQna('${qna.qna_Seq}')">${qna.title}</span> 🔒
+	                            </c:otherwise>
+	                        </c:choose>
+	                    </td>
+	                    <td>
+	                        <fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                        <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
+	                    </td>
+	                </tr>
+	
+	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
+	                    <td></td>
+	                    <td>&nbsp;&nbsp;</td>
+	                    <td colspan="">
+	                        &nbsp;&nbsp;&nbsp; ${qna.content}
+	                        <c:if test="${qna.status == 1}">
+	                            <hr>
+	                            <span class="badge badge-secondary" style="align-content: flex-start">관리자</span> ${qna.answercontent}
+	                        </c:if>
+	                    </td>
+	                </tr>
+	
+	            </c:forEach>
+	            </tbody>
+	        </table>
+	    </div>
+	</div>
+	
+	
+	<!-- pagination -->
+	<div class="container">
+	    <nav aria-label="Page navigation">
+	        <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
+	    </nav>
+	</div>
 </div>
-<br>
-
-<div class="table-responsive">
-    <div>
-        <table class="table align-items-center">
-
-            <thead>
-            <tr>
-                <td width="90px">글번호</td> <td width="120px">답변상태</td> <td width="400px" >문의내용</td>
-                <td>작성일</td>
-            </tr>
-            </thead>
-
-            <tbody class="list">
-            <c:if test="${empty qna}">
-                <tr>
-                    <td colspan="6" style="text-align: center">
-                        작성된 게시글이 없습니다.
-                    </td>
-                </tr>
-            </c:if>
-            <c:forEach items="${qna}" var="qna" varStatus="i">
-                <tr id="tr${qna.qna_Seq}">
-                    <td>${qna.qna_Seq}</td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${qna.status eq 0}">
-                                <span class="badge badge-pill badge-danger">답변대기중</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span class="badge badge-pill badge-success">답변완료</span>
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td style="max-width: 400px">
-                        <c:choose>
-                            <c:when test="${qna.secret eq 0}">
-                                <span id="qnatitle${qna.qna_Seq}" onclick="showHideQna('${qna.qna_Seq}')" style=""> ${qna.title}</span>
-                            </c:when>
-                            <c:otherwise>
-                                <span id="qnatitle'${qna.qna_Seq}'" onclick="showHideQna('${qna.qna_Seq}')">${qna.title}</span> 🔒
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
-                    <td>
-                        <fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-                        <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
-                    </td>
-                </tr>
-
-                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
-                    <td></td>
-                    <td>&nbsp;&nbsp;</td>
-                    <td colspan="">
-                        &nbsp;&nbsp;&nbsp; ${qna.content}
-                        <c:if test="${qna.status == 1}">
-                            <hr>
-                            <span class="badge badge-secondary" style="align-content: flex-start">관리자</span> ${qna.answercontent}
-                        </c:if>
-                    </td>
-                </tr>
-
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-<!-- pagination -->
-<div class="container">
-    <nav aria-label="Page navigation">
-        <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
-    </nav>
-</div>
-
 <script type="text/javascript">
 
     $(document).ready(function () {

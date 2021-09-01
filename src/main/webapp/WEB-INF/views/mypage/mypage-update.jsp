@@ -9,11 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
     <title>회원정보 수정</title>
 </head>
 <body>
 
-<div class="">
+<div class="mypage_board">
     <h2 class="title">
         회원정보 수정
     </h2>
