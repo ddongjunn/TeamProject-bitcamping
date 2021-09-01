@@ -11,6 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.camping.bit.dto.CampingListDto;
+import com.camping.bit.dto.CampingParam;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.service.AdminService;
@@ -52,6 +54,7 @@ public class MainController {
         communityMap.put("review",reviewList);
 
         model.addAttribute("recentCommunity",communityMap);
+   
 
 		return "main.tiles";
 	}

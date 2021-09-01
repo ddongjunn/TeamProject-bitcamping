@@ -252,7 +252,7 @@ public class CampingController{
 				model.addAttribute("helpcheck",helpcheckMap.get("LIKE_AUTO_SEQ"));
 				//System.out.println("확인 : " + likecheckMap.get("LIKE_AUTO_SEQ"));
 			} //지금 로그인한 사용자가 좋아요를 이미 눌렀다면
-			model.addAttribute("likecount", resultMap.get("likecount"));
+			model.addAttribute("helpcount", resultMap.get("likecount"));
 			model.addAttribute("reviewidx", reviewidx);
 			model.addAttribute("useridx", useridx);
 			model.addAttribute("campingidx", campingidx1);
@@ -263,7 +263,7 @@ public class CampingController{
 				model.addAttribute("useridx", "");
 				model.addAttribute("likecheck", 0);
 				//System.out.println("로그인상태가 아님");
-				model.addAttribute("likecount", resultMap.get("likecount"));
+				model.addAttribute("helpcount", resultMap.get("likecount"));
 				model.addAttribute("reviewidx", reviewidx);
 				model.addAttribute("campingidx", campingidx1);
 			}
@@ -557,5 +557,7 @@ public class CampingController{
 		int result = service.getCampingSearchReviewCount(param);
 		return result;
 	}	
+	
+	
 
 }

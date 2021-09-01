@@ -37,7 +37,7 @@ public class CampingListDto implements Serializable{
 	private String resvecl;
 	private String sbrscl;
 	private String eqpmnlendcl;
-	private String exprnprogramat;
+	private String exprnprogrm;
 	private String animalcmgcl;
 	private String firstimageurl;
 	private Date createdtime;

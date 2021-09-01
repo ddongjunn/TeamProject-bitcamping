@@ -105,8 +105,8 @@ String login_id = (String)request.getAttribute("login_id");
 					    </c:when>
 					    <c:otherwise>
 					    <c:choose>
-							<c:when test="${fn:contains(url, 'http')}">
-					       		 <button type = button onclick = "location.href ='${url1}'" class = "btn btn-outline-success btn-sm">예약하기</button>
+							<c:when test="${fn:contains(url1, 'http')}">
+					       		 <button type = button onclick = "location.href ='${url1}'" class = "btn btn-outline-success btn-sm" target = "_blank">예약하기</button>
 							</c:when>
 							<c:otherwise>	
 								<button type = button onclick = "location.href ='http://${url1}'" class = "btn btn-outline-success btn-sm" target = "_blank">예약하기</button>			    
