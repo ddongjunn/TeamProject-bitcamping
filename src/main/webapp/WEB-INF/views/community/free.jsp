@@ -53,20 +53,20 @@
 <br>
 
 <div class="bbs_total">
-	<span>전체게시물<strong>${totalCount}</strong></span>
+	<span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
 <div class="container">
 	<table class="table table-sm">
 		<colgroup>
-			<col style="width:5%;" />
-			<col style="width:auto;" />
-			<col style="width:15%;" />
-			<col style="width:10%;" />
-			<col style="width:15%;" />
+			<col style="width: 10%;" />
+			<col style="width: auto;" />
+			<col style="width: 15%;" />
+			<col style="width: 20%;" />
+			<col style="width: 10%;" />
 		</colgroup>
 	<thead>
-		<tr class="table-success"> 
+		<tr class="table_top"> 
 			<td>번호</td>
 			<td>제목</td>
 			<td>작성자</td>

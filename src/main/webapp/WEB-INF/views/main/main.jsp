@@ -33,7 +33,8 @@
 				<button class="search-btn shadow"></button>
 			</div>
 		</div>
-		
+
+
 		<!-- campingtype data start -->
 		<div class="campsitetype">
 			<div class="campsitetitle">전국 <span class="count" data-esing="swing">2647</span>개의 캠핑장 데이터를 한 곳에!</div>
@@ -45,6 +46,7 @@
 			</div>
 		</div>
 		<!-- campingtype data end -->
+
 		
 	</div>
 	<div class="contents-area mt50">
@@ -56,6 +58,7 @@
 				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;"> 캠핑장</span>
 			</div>
 			
+
 			<div class="tarkikComandSlider">
 				<c:forEach items = "${campinglist}" var = "camping">
 					<article class="comandSlider__item">
@@ -71,6 +74,7 @@
 					</article>
 				</c:forEach>
 			</div>
+
 			
 		</div>
 		<!-- recommend area end -->
@@ -168,7 +172,6 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-
 		$('.search-btn.shadow').click(function(){
 			const searchWord = $(".shadow").val();
 			location.href = "./csite/campinglist.do?searchWord=" + searchWord;

@@ -7,108 +7,105 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
     <title>Insert title here</title>
 </head>
 <body>
-
-<h1>중고거래 게시판</h1>
-
-<div class="container-fluid">
-    <a href="/account/community-deal.do" class="badge badge-pill badge-default">전체글</a>
-    <a href="/account/community-deal.do?kind=sell"
-       class="badge badge-pill badge-danger">팝니다</a> <a
-        href="/account/community-deal.do?kind=buy"
-        class="badge badge-pill badge-success">삽니다</a>
+<div class="mypage_board">
+	<h2 class="title">
+	   	중고거래
+	</h2>
+	
+	<div class="container-fluid">
+	    <a href="/account/community-deal.do" class="badge badge-pill badge-default">전체글</a>
+	    <a href="/account/community-deal.do?kind=sell"
+	       class="badge badge-pill badge-danger">팝니다</a> <a
+	        href="/account/community-deal.do?kind=buy"
+	        class="badge badge-pill badge-success">삽니다</a>
+	</div>
+	<br>
+	
+	<!-- 글 작성 리스트 틀-->
+	<div align="center">
+	    <table class="table">
+	        <colgroup>
+	            <col style="width: 10%;" />
+	            <col style="width: auto;" />
+	            <col style="width: 15%;" />
+	            <col style="width: 10%;" />
+	            <col style="width: 15%;" />
+	        </colgroup>
+	        <thead>
+	        <tr class="table_top">
+	            <td>번호</td>
+	            <td>제목</td>
+	            <td>조회수</td>
+	            <td>작성일</td>
+	        </tr>
+	        <c:if test="${empty dealList}">
+	            <td colspan="3">작성된 글이 없습니다</td>
+	        </c:if>
+	        <c:forEach var="data" items="${dealList}">
+	            <tr>
+	                <td>${data.community_seq }</td>
+	                <td>
+	                    <a href="/community/dealDetail.do?community_seq=${data.community_seq }">
+		                    <c:choose>
+			                        <c:when test="${data.bbstype eq 'buy'}">
+			                            <span style="font-size: 13px; color: red;">[삽니다]</span>
+			                        </c:when>
+			                        <c:when test="${data.bbstype eq 'sell'}">
+			                            <span style="font-size: 13px; color: orange;">[팝니다]</span>
+			                        </c:when>
+			                        <c:otherwise>
+			                            <span style="font-size: 13px; color: blue;">[거래완료]</span>
+			                        </c:otherwise>
+		                    </c:choose>
+	                        ${data.title}
+	                        <c:if test="${data.commentcount ne 0}">
+	                            <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+	                        </c:if>
+	                    </a>
+	                </td>
+	                <td>${data.readcount }</td>
+	                <td>
+	                    <fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+	                    <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+	                </td>
+	            </tr>
+	        </c:forEach>
+	        </thead>
+	    </table>
+	</div>
+	<br>
+	
+	<!-- 글검색 -->
+	<div align="center">
+	    <select id="_choice" name="choice">
+	        <option value="" selected="selected">선택</option>
+	        <option value="title">제목</option>
+	        <option value="content">내용</option>
+	    </select>
+	    <input type="text" id="_search" name="search" placeholder="검색내용입력">
+	    <button type="button" id="btnSearch">검색</button>
+	</div>
+	<br>
+	
+	<!-- 페이지네이션 -->
+	<div class="container" style="text-align: center">
+	    <div style="display: inline-block">
+	        <nav aria-label="Page navigation">
+	            <ul class="pagination" id="pagination"></ul>
+	        </nav>
+	    </div>
+	</div>
+	
+	<!-- 글쓰기 버튼 -->
+	<div align="right">
+	    <a href="/community/dealWrite.do">글쓰기</a>
+	</div>
 </div>
-<br>
-
-<!-- 글 작성 리스트 틀-->
-<div align="center">
-    <table>
-        <colgroup>
-            <col style="width: 5%;" />
-            <col style="width: 15%;" />
-            <col style="width: auto;" />
-            <col style="width: 15%;" />
-            <col style="width: 10%;" />
-            <col style="width: 15%;" />
-        </colgroup>
-        <thead>
-        <tr>
-            <td>번호</td>
-            <td>상태</td>
-            <td>제목</td>
-            <td>조회수</td>
-            <td>작성일</td>
-        </tr>
-        <c:if test="${empty dealList}">
-            <td colspan="3">작성된 글이 없습니다</td>
-        </c:if>
-        <c:forEach var="data" items="${dealList}">
-            <tr>
-                <td>${data.community_seq }</td>
-                <td>
-                    <c:choose>
-                        <c:when test="${data.bbstype eq 'buy'}">
-                            <span style="font-size: 13px; color: red;">[삽니다]</span>
-                        </c:when>
-                        <c:when test="${data.bbstype eq 'sell'}">
-                            <span style="font-size: 13px; color: orange;">[팝니다]</span>
-                        </c:when>
-                        <c:otherwise>
-                            <span style="font-size: 13px; color: blue;">[거래완료]</span>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-                <td>
-                    <a href="/community/dealDetail.do?community_seq=${data.community_seq }">
-                            ${data.title}
-                        <c:if test="${data.commentcount ne 0}">
-                            <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
-                        </c:if>
-                    </a>
-                </td>
-                <td>${data.readcount }</td>
-                <td>
-                    <fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-                    <fmt:formatDate value="${formatedDate}" pattern="yyyy.MM.dd HH:mm"/>
-                </td>
-            </tr>
-        </c:forEach>
-        </thead>
-    </table>
-</div>
-<br>
-
-<!-- 글검색 -->
-<div align="center">
-    <select id="_choice" name="choice">
-        <option value="" selected="selected">선택</option>
-        <option value="title">제목</option>
-        <option value="content">내용</option>
-    </select>
-    <input type="text" id="_search" name="search" placeholder="검색내용입력">
-    <button type="button" id="btnSearch">검색</button>
-</div>
-<br>
-
-<!-- 페이지네이션 -->
-<div class="container" style="text-align: center">
-    <div style="display: inline-block">
-        <nav aria-label="Page navigation">
-            <ul class="pagination" id="pagination"></ul>
-        </nav>
-    </div>
-</div>
-
-<!-- 글쓰기 버튼 -->
-<div align="right">
-    <a href="/community/dealWrite.do">글쓰기</a>
-</div>
-
 <script type="text/javascript">
     $(document).ready(function () {
 

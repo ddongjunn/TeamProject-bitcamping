@@ -43,6 +43,7 @@ REFERENCES MEMBER (id);-->
 <body>
 <% 
 CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailreview");
+CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");
 %>
 <input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
 <input type="hidden" name="user_id" value="${login.id}">
@@ -50,8 +51,8 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <div style="clear:both"></div>
 
 <div id = "review">
-<h2><%=campingbbs.getNickname() %>님의 소중한 리뷰</h2>
-<h3>제목 : <%=campingbbs.getTitle() %></h3>
+<h2><%=campinglist.getFacltnm()%>에 대한 <%=campingbbs.getNickname() %>님의 소중한 리뷰</h2>
+<h1>제목 : <%=campingbbs.getTitle() %></h1>
 <c:set var="writtendate" value="<%=campingbbs.getWdate()%>" />
 
 <h3 class = "date">작성일 : <fmt:formatDate value="${writtendate}" type="both"/></h3>
@@ -59,11 +60,37 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <h3>내용 : <%=campingbbs.getContent() %></h3>
 
 <c:set var = "id" value = '<%=campingbbs.getUser_id()%>'/>
-<c:if test="${login.id eq id}">
+<c:choose>
+<c:when test="${login.id eq id}">
 	<button type = "button" id = "updateBtn" class = "btn btn-outline-success btn-sm" >리뷰 수정하기</button>
 	<button type = "button" id = 'deleteBtn' class = "btn btn-outline-success btn-sm" >리뷰 삭제하기</button>
-</c:if>
+</c:when>
+<c:otherwise>
+<div id = "thumbsup">
+<c:choose>
+	<%--첫번째 choose(로그인 했는지 안 했는지) --%>
+	<c:when test="${not empty useridx}">
+		<c:choose>
+			<c:when test = "${helpcheck eq '0' or empty helpcheck}"><%--현재 로그인 한 사용자가 하트를 누르지 않았을때 like.user_id!=login.id --%>
+				<span><button type = "button" id = "recommend" class = "btn btn-outline-success btn-sm" >도움이 됐어요</button></span>
+			</c:when>
+			<c:otherwise><%--likecheck가 1이면 엄지가 나옴 --%>
+				<span><img src = "<%=request.getContextPath()%>/resources/images/campingsite/positive-vote.png" width = "30" height = "30"></span>
+			</c:otherwise>
+		</c:choose><%--두번째 choose 끝 --%>
+	</c:when>
+	<%--로그인 상태가 아닐 때 --%>
+	<c:otherwise>
+		<span><button type = "button" class = "btn btn-outline-success btn-sm" >도움이 됐어요</button>로그인 후 사용이 가능합니다</span>
+	</c:otherwise>
+</c:choose><%--첫번째 choose 끝 --%>
 </div>
+</c:otherwise>
+</c:choose>
+</div>
+
+
+
 <div id = "commentlist">
 <div id = "writer">
 	<c:choose>
@@ -208,6 +235,38 @@ $(document).ready(function(){
 				pagemove(page);
 			}
 		}); //페이지네이션 끝 
+		
+		
+		$("#recommend").click(function(){
+			console.log('추천 클릭됨');
+
+				const review_seq = "${reviewidx}";
+				const user_id = "${useridx}";
+				const likecount = "${likecount}";
+				const contentid = "${campingidx}";
+				var paramData = {"review_seq" : review_seq, "user_id" : user_id, "contentid" : contentid}
+				console.log(paramData);
+				$.ajax({
+				url : '/csite/plusCampingHelp.do',
+				type : 'get',
+				data : paramData,
+				dataType : 'text',
+				success : function(result){
+					//alert(result);
+					if(result !=-1){
+						//alert("성공");
+						$(".review").append('이 리뷰에 ' + result + '명이 도움을 받았어요');
+					}
+				}, 
+				error:function(request,status,error){
+				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						}
+				});//ajax 끝나는 곳
+				$("#thumbsup").html("<img src = '<%=request.getContextPath()%>/resources/images/campingsite/positive-vote.png' width = '30' height = '30'>")
+				
+			});//click function 끝나는곳
+		
+		
 	}); //document.ready 끝나는곳
 
 	function commentDelete(comment_seq){	
@@ -264,7 +323,7 @@ $(document).ready(function(){
 			if(result == "success"){
 				//alert("수정 성공");
 				let str = `<td>${'${updateContent}'}</td>`;
-				str += `<td><a href = 'javascript:commentUpdate(${'${comment_seq}'}, &quot;${'${content}'}&quot;);'>수정</a><a href = 'javascript:commentDelete(${'${comment_seq}'});'>삭제</a></td>`;
+				str += `<td><a href = 'javascript:commentUpdate(${'${comment_seq}'}, \'${'${updateContent}'}\');'>수정</a><a href = 'javascript:commentDelete(${'${comment_seq}'});'>삭제</a></td>`;
 				$('#commentUpdate' + comment_seq).html("");
 				$('#commentUpdate' + comment_seq).html(str);
 			}

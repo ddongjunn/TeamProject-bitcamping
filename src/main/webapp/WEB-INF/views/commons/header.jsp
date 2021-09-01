@@ -198,18 +198,21 @@ $(document).ready(function(){
     //로그인 모달
     const modal = document.getElementById("login_modal");
 
-    function modalOn() {
-
+    $(document).ready(function () {
         let div = $('#login_modal');
         div.css("position", "fixed");
         div.css("top", Math.max(0, (($(window).height() - div.outerHeight()) / 2) + $(window).scrollTop()) + "px");
         div.css("left", Math.max(0, (($(window).width() - div.outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+    });
+
+    function modalOn() {
+
         /*$('#login_modal').fadeIn(500);*/
 
         modal.style.display = "flex"
         modalOff_findId();
         modalOff_findPw();
-        $('html, body').css({'overflow': 'hidden', 'height': '100%'}); // 모달팝업 중 html,body의 scroll을 hidden시킴
+        $('html, body').css({/*'overflow': 'hidden',*/ 'height': '100%'}); // 모달팝업 중 html,body의 scroll을 hidden시킴
     }
 
     function isModalOn() {

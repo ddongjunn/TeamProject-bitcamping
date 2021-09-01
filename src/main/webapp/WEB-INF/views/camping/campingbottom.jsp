@@ -29,6 +29,12 @@ ALTER TABLE CAMPING_BBS_COMMENT ADD NICKNAME VARCHAR2(20) DEFAULT '0' NOT NULL;
 <body>
 
 <%
+response.setHeader("Cache-Control","no-store");  
+response.setHeader("Pragma","no-cache");  
+response.setDateHeader("Expires",0);  
+if (request.getProtocol().equals("HTTP/1.1"))
+        response.setHeader("Cache-Control", "no-cache");
+
 CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("campingdetail");
 CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");
 @SuppressWarnings("unchecked")
@@ -36,6 +42,7 @@ List<CampingImageDto> campingimage = (List<CampingImageDto>)request.getAttribute
 String campingintro = (String)request.getAttribute("campingintro");
 %>
 
+<c:set value = "<%=campinglist.getDonm()%>" var = "donm"/>
 
 <div id ="section">
 	<span><button type = "button" id = "introBtn" class="btn btn-outline-success">캠핑장 소개</button></span>
@@ -43,7 +50,19 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<span><button type = "button" id = "reviewBtn" class="btn btn-outline-success">캠핑장 후기</button></span>
 </div>
 
-	<div id = "contents">
+
+<div id = "contents">
+	<c:set value="<%=campinglist.getFacltnm()%>" var="facltnm" />
+	
+	<c:choose>
+	<c:when test = "${empty login}">
+	<font size = "6pt">검색하신 캠핑장에 대해 알아볼까요?</font> 
+	</c:when>
+	<c:otherwise>
+	<font size = "6pt">${login.nickname}님이 검색하신 캠핑장에 대해 알아볼까요?</font> 
+	</c:otherwise>
+	</c:choose>
+	
 		<div id = "intro" class = "layout">
 			<ul class = "layout_5">
 				<li class = "intro">
@@ -60,6 +79,46 @@ String campingintro = (String)request.getAttribute("campingintro");
 	</div>
 	
 	<br><br>
+	
+	 <div id = "sbrscl"> 
+		<c:set value = "<%=campinglist.getSbrscl() %>" var = "service"/>
+		<c:if test="${fn:contains(service, '전기')}">
+			<img src ="<%=request.getContextPath()%>/resources/images/campingsite/plug.png" width = "60" style = "display : inline-block;">전기
+		</c:if>
+		<c:if test="${fn:contains(service, '무선인터넷')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/wi-fi.png" width = "60">무선인터넷</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '장작판매')}">
+			<img src ="<%=request.getContextPath()%>/resources/images/campingsite/firewood.png" width = "60"style = "display : inline-block;">장작판매
+		</c:if>
+		<c:if test="${fn:contains(service, '온수')}">
+			<img src ="<%=request.getContextPath()%>/resources/images/campingsite/hot-water.png" width = "60" style = "display : inline-block;">온수
+		</c:if>
+		<c:if test="${fn:contains(service, '마트.편의점')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/shopping-cart.png" width = "60">마트.편의점</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '트렘폴린')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/trampoline.png" width = "60">트렘폴린</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '물놀이장')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/water-park.png" width = "60">물놀이장</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '놀이터')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/slider.png" width = "60">놀이터</span>
+		</c:if>
+		<c:if test="${fn:contains(service, '산책로')}">
+			<img src ="<%=request.getContextPath()%>/resources/images/campingsite/river-trail.png" width = "60">산책로
+		</c:if>
+		<c:if test="${fn:contains(service, '운동시설')}">
+			<img src ="<%=request.getContextPath()%>/resources/images/campingsite/gym.png" width = "60" style = "display : inline-block;">운동시설
+		</c:if>
+		<c:if test="${fn:contains(service, '운동장')}">
+			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/playground.png" width = "60">운동장</span>
+		</c:if>
+	</div>
+	
+	<br><br>
+	
 	<table>
 	<tr>
 <!-- 	<div id = "mainFacility"> -->
@@ -70,19 +129,19 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<c:set value="<%=campingdetail.getIndvdlcaravsiteco() %>" var="indiv"/>
 		
 				<c:if test ="${gnrl!=0}">
-					<div>일반야영장 : ${gnrl}</div>
+					<div style = "font-size : 12pt; display : inline">[일반야영장 : ${gnrl}면]</div>
 				</c:if>
 				<c:if test="${auto!=0}">
-					<div>자동차야영장사이트 : ${auto}</div>
+					<div style = "font-size : 12pt; display : inline">[자동차야영장사이트 : ${auto}면]</div>
 				</c:if>
 				<c:if test="${glamp!=0}">
-					<div>글램핑시설 : ${glamp}</div>
+					<div style = "font-size : 12pt; display : inline">[글램핑시설 : ${glamp}면]</div>
 				</c:if>
 				<c:if test="${carav!=0}">
-					<div>카라반 : ${carav}</div>
+					<div style = "font-size : 12pt; display : inline">[카라반 : ${carav}면]</div>
 				</c:if>
 				<c:if test="${indiv!=0}">
-					<div>개인카라반 : ${indiv}</div>
+					<div style = "font-size : 12pt; display : inline">[개인카라반 : ${indiv}면]</div>
 				</c:if>
 	
 		<c:set value="<%=campinglist.getSitebottomcl1() %>" var="bottom1" />
@@ -92,27 +151,26 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<c:set value="<%=campinglist.getSitebottomcl5() %>" var="bottom5" />
 		
 		<c:set value = "0" var = "sum"/>
-		(총 <c:out value = "${sum + bottom1  + bottom2 + bottom3 + bottom4 + bottom5 }"/>면)
-<!-- 	</div> -->
+<%-- 		(총 <c:out value = "${sum + bottom1  + bottom2 + bottom3 + bottom4 + bottom5 }"/>면)
+ --%><!-- 	</div> -->
 	</tr>
 	<br>
 	<tr>
 <!-- 	<div id = "siteBottom"> -->
-		바닥 형태 :
 				<c:if test="${bottom1!=0}">
-					<div>잔디 : ${bottom1}면</div>
+					<div style = "font-size : 12pt; display : inline">[잔디 : ${bottom1}면]</div>
 				</c:if>
 				<c:if test="${bottom2!=0}">
-					<div>파쇄석 : ${bottom2}면</div>
+					<div style = "font-size : 12pt; display : inline">[파쇄석 : ${bottom2}면]</div>
 				</c:if>
 				<c:if test="${bottom3!=0}">
-					<div>자갈 : ${bottom3}면</div>
+					<div style = "font-size : 12pt; display : inline">[자갈 : ${bottom3}면]</div>
 				</c:if>
 				<c:if test="${bottom4!=0}">
-					<div>맨흙 : ${bottom4}면</div>
+					<div style = "font-size : 12pt; display : inline">[맨흙 : ${bottom4}면]</div>
 				</c:if>
 				<c:if test="${bottom5!=0}">
-					<div>툴팁 : ${bottom5}면</div>
+					<div style = "font-size : 12pt; display : inline">[툴팁 : ${bottom5}면]</div>
 				</c:if>
 				</tr>
 <!-- 	</div> -->	
@@ -125,11 +183,13 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<c:set value="<%=campingdetail.getSitemg2width()%>" var="width2" />
 		<c:set value="<%=campingdetail.getSitemg2vrticl()%>" var="vertical2" />
 		<c:set value="<%=campingdetail.getSitemg2co()%>" var="count2" />
-		사이즈 크기 
+		<c:set value="<%=campingdetail.getSitedstnc() %>" var = "sitedistance"/>
+		
+	
 		<c:if test="${width1 !=0}">
-		${width1}
+		${width1}*
 		</c:if>
-		*
+		
 		<c:if test="${vertical1 !=0}">
 		${vertical1}
 		</c:if>
@@ -137,112 +197,115 @@ String campingintro = (String)request.getAttribute("campingintro");
 		${count1}개 //
 		</c:if>
 		<c:if test="${width2 !=0}">
-		${width2}
+		${width2}*
 		</c:if>
-		*
+		
 		<c:if test="${vertical2 !=0}">
 		${vertical2}
 		</c:if>
 		<c:if test="${count2 !=0}">
 		${count2}개
 		</c:if>
-		<div>사이트 간격 : <%=campingdetail.getSitedstnc() %>M</div>
+
+		<div>
+		<c:if test = "${sitedistance != 0 }">
+		${sitedistance}
+		</c:if>
+		</div>
 	<!-- </div> -->
 	</tr>
 	<br>
-	<tr>
-		<!-- <div id = "sbrscl"> -->
-		<c:set value = "<%=campinglist.getSbrscl() %>" var = "service"/>
-		<c:if test="${fn:contains(service, '전기')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/plug.png" width = "40">전기</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '무선인터넷')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/wi-fi.png" width = "40">무선인터넷</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '장작판매')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/firewood.png" width = "40">장작판매</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '온수')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/hot-water.png" width = "40">온수</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '마트.편의점')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/shopping-cart.png" width = "40">마트.편의점</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '트렘폴린')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/trampoline.png" width = "40">트렘폴린</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '물놀이장')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/water-park.png" width = "40">물놀이장</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '놀이터')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/slider.png" width = "40">놀이터</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '산책로')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/river-trail.png" width = "40">산책로</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '운동시설')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/gym.png" width = "40">운동시설</span>
-		</c:if>
-		<c:if test="${fn:contains(service, '운동장')}">
-			<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/playground.png" width = "40">운동장</span>
-		</c:if>
-	<!-- </div> -->
-	</tr>
-	<br>
-	<tr>
-	<!-- <div id = "equip"> -->
-	<c:set value="<%=campinglist.getEqpmnlendcl()%>" var="equip" />
-	<c:if test="${equip !='none' }">
-		대여 가능한 장비 : ${equip}
-	</c:if>
-	<!-- </div> -->
-	</tr>
-	<br>
-	<tr>
-<!-- 	<div id = "trler"> -->
-		<c:set value="<%=campingdetail.getTrleracmpnyat()%>" var="trler" />
-	<c:choose>
-		<c:when test="${trler == 'Y' }">
-		개인 트레일러 동반 가능
-		</c:when>
-		<c:otherwise>
-		개인 트레일러 동반 불가
-		</c:otherwise>
-	</c:choose>
-<!-- 	</div> -->
-</tr>
-<br>
-	<tr>
-	<!-- <div id = "program"> -->
-		<c:set value="<%=campingdetail.getExprnprogrm()%>" var="program" />
-		<c:choose>
-		<c:when test="${program != 'none' }">
-		진행 프로그램 : ${program}
-		</c:when>
-		<c:otherwise>
-		프로그램 진행 불가
-		</c:otherwise>
-	</c:choose>
-<!-- 	</div> -->
-</tr>
-<br>
-<tr>
-	<!-- <div id = "animal"> -->
-		<c:set value="<%=campinglist.getAnimalcmgcl()%>" var="animal" />
-		<c:choose>
-		<c:when test="${animal == '가능' }">
-			반려동물 동반 캠핑 가능
-		</c:when>
-		<c:when test="${animal == '가능(소형견)' }">
-			반려동물 동반 캠핑 가능(소형견 기준)
-		</c:when>
-		<c:otherwise>
-			반려동물 동반 캠핑 불가
-		</c:otherwise>
-		</c:choose>
-<!-- 	</div> -->
-</tr>
-	</table>
+	
+</table>
+
+<br><br>
+<c:set value="<%=campinglist.getResvecl()%>" var="reservation" />
+<c:set value="<%=campinglist.getExprnprogrm()%>" var="program" />
+<c:set value="<%=campinglist.getAnimalcmgcl()%>" var="animal" />
+<c:set value="<%=campinglist.getEqpmnlendcl()%>" var = "equip"/>
+<c:url value="<%=campinglist.getHomepage() %>" var="url" />
+<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
+
+	<div class="row">
+	<div class="col" style = "width : 10px">
+		<div class="card" style="width: 14rem;">
+			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/social.png" height = "130px" alt="Card image cap">
+			<div class="card-block">
+				<h4 class="card-title" style = "text-align : center; color : #87C4B7">체험프로그램 진행</h4>
+				<c:choose>
+					<c:when test="${program != 'none'}">
+						<p class="card-text">${program}</p>
+					</c:when>
+					<c:otherwise>
+						<p class = "card-text"  style = "text-align : center">프로그램을 진행하지 않아요</p>
+							<a href="javascript:campingexperience()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col" style = "width : 10px">
+		<div class="card" style="width: 14rem;">
+			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/dog.png" height = "130px" alt="Card image cap">
+			<div class="card-block">
+				<h4 class="card-title"  style = "text-align : center; color : #87C4B7">반려동물 동반</h4>
+				<c:choose>
+					<c:when test="${animal == '가능' }">
+						<p class="card-text"  style = "text-align : center">어떤 강아지라도 환영해요</p>
+					</c:when>
+					<c:when test="${animal == '가능(소형견)' }">
+						<p class="card-text"  style = "text-align : center">규정상 소형견만 동반할 수 있어요</p>
+					</c:when>
+					<c:otherwise>
+						<p class = "card-text"  style = "text-align : center">아쉽지만 반려동물 동반이 어려워요</p>
+							<a href="javascript:campingpet()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col" style = "width : 10px">
+		<div class="card" style="width: 14rem;">
+			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/settings.png" height = "130px" alt="Card image cap">
+			<div class="card-block">
+				<h4 class="card-title"  style = "text-align : center; color : #87C4B7">캠핑 장비 대여</h4>
+				<c:choose>
+					<c:when test="${equip !='none' }">
+						<p class="card-text">${equip}</p>
+					</c:when>
+					<c:otherwise>
+						<p class = "card-text"  style = "text-align : center">장비 대여가 불가해요</p>
+							<a href="javascript:campingequip()" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
+					</c:otherwise>
+				</c:choose>
+				</div>
+			</div>
+		</div>
+	
+	<div class="col" style = "width : 10px">
+		<div class="card" style="width: 14rem;">
+			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/reserved.png" alt="Card image cap">
+			<div class="card-block">
+				<h4 class="card-title"  style = "text-align : center; color : #87C4B7">온라인 예약</h4>
+				<c:choose>
+					<c:when test="${fn:contains(reservation, '온라인')}">
+						<p class="card-text" style = "text-align : center">온라인으로 예약이 가능해요</p>
+							<a href="javascript:campingreservenow()" class="add-to-cart btn btn-primary">지금 예약하기</a>
+					</c:when>
+					<c:when test="${fn:contains(reservation,'전화')}">
+						<p class = "card-text"  style = "text-align : center">전화 예약이 가능해요</p>
+					</c:when>
+					<c:otherwise>
+						<p class = "card-text"  style = "text-align : center">현장 예약만 가능해요</p>
+							<a href="javascript:campingreserveboth()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>
+	</div>
+	</div>
 </div> <!-- contents div 끝나는 곳  -->
  
 <div id="map"></div>
@@ -264,7 +327,7 @@ String campingintro = (String)request.getAttribute("campingintro");
  			<li><img src = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" onClick="window.open(this.src)"></li>
  		</c:forEach>
  	</ul>
-  </div>
+</div>
 
 <div id = "review">
 <!-- 캠핑장 검색창 -->
@@ -319,10 +382,9 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<input type = "text" id = "search" name = "searchWord" placeholder = "검색어를 입력해주세요" onkeypress="if( event.keyCode == 13 ){searchData();}"/>	   	
 </div>
 	<a href = "javascript:campingsearchlist(this)"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "50"></a>
+</div>	
 </div>
 
-	
-</div>
 
 
  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=105020d5be336948ef903114d3711ff8"></script>
@@ -387,7 +449,7 @@ $(document).ready(function(){
 	setTimeout(() => {
 		$('.bx-viewport').css("height", "600px");
 		document.getElementsByClassName('bx-viewport')[0].height = '600px';
-	}, 3000);
+		}, 2000);
 	
 	$('select').niceSelect();
 
@@ -726,6 +788,31 @@ function campingsearchlist(){
 			}); //ajax searchReviewCount 끝나는 곳
 			
 	};//searchBtn function 끝나는 곳
+	
+
+	function campingexperience(){
+		location.href = "campinglist.do?exprnProgrm=exok&searchDo=${donm}";
+	}
+	
+	function campingpet(){
+		location.href = "campinglist.do?animalCmgCl=가능&searchDo=${donm}";
+	}
+	
+	function campingequip(){
+		location.href = "campinglist.do?eqpmnLendCl=eqok&searchDo=${donm}";
+	}
+
+	function campingreserveboth(){
+		location.href = "campinglist.do?resveCl=온라인&resveCl=전화&searchDo=${donm}";
+	}
+	
+	function campingreservenow(){
+		if(${url1 != 'none'}){
+			location.href = "${url1}";
+		}else{
+			location.href = "${url}";
+		}
+	}
 </script>
 </body>
 </html>

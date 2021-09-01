@@ -4,6 +4,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,11 +46,11 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("campingdetail");
 %>
 <input type = "hidden" value = "<%=campinglist.getContentid()%>">
-<div class = "image">
+<%-- <div class = "image">
 <a href = "campingdetail.do?contentid=<%=campinglist.getContentid()%>">
-<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "200" height = "200">
+<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "500" height = "500">
 </a>
-</div>
+</div> 
 
 <div class = "introduction">
 <h2><%=campinglist.getFacltnm() %></h2>
@@ -57,7 +59,7 @@ CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("camping
 <br>
 
 <c:url value="<%=campinglist.getHomepage() %>" var="url" />
-<c:url value="<%=campinglist.getHomepage() %>" var="url1" />
+<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
 	<c:choose>
 	  	<c:when test="${url eq 'none'}">
 	       	홈페이지 준비중 / 
@@ -75,60 +77,33 @@ CampingDetailDto campingdetail = (CampingDetailDto)request.getAttribute("camping
 	    </c:otherwise>
 	</c:choose>
 <!-- <h3>평균 평점 : </h3> -->
+<div>
 <c:set var = "campinglist" value = '<%=campinglist%>'/>
-<span class = "readcount" style = "font-size : 15px">조회수 : ${campinglist.readcount}</span>
-<span class = "likecount" style = "font-size : 15px">추천수 : ${campinglist.likecount}</span>
+<%-- <span class = "readcount" style = "font-size : 15px">조회수 : ${campinglist.readcount}</span>
+
+ </div>
+ 
+ <div class = "camping_list">
+	<ul>
+		<li style = "list-style : none;">
+			<div class = "camping_information" style = "float : left">
+				<div class = "camping_site name">
+					<h2 class = "camping_site_name">	
+							<%=campinglist.getFacltnm()%>
+					</h2>
+				</div>
+		
 <div id = "thumbsup">
 <c:choose>
 	<%--첫번째 choose(로그인 했는지 안 했는지) --%>
-	<c:when test="${not empty useridx}">
-		<c:choose>
-			<c:when test = "${helpcheck eq '0' or empty helpcheck}"><%--현재 로그인 한 사용자가 하트를 누르지 않았을때 like.user_id!=login.id --%>
-				<span><button type = "button" id = "recommend" class = "btn btn-outline-success btn-sm" >도움이 됐어요</button></span>
-			</c:when>
-			<c:otherwise><%--likecheck가 1이면 엄지가 나옴 --%>
-				<span><img src = "<%=request.getContextPath()%>/resources/images/campingsite/positive-vote.png" width = "30" height = "30"></span>
-			</c:otherwise>
-		</c:choose><%--두번째 choose 끝 --%>
-	</c:when>
-	<%--로그인 상태가 아닐 때 --%>
-	<c:otherwise>
-		<span><button type = "button" class = "btn btn-outline-success btn-sm" >도움이 됐어요</button>로그인 후 사용이 가능합니다</span>
-	</c:otherwise>
-</c:choose><%--첫번째 choose 끝 --%>
-</div>
-</div>
+
+
+
 
 <script type="text/javascript">
 $(document).ready(function(){
 
-$("#recommend").click(function(){
-	console.log('추천 클릭됨');
 
-		const review_seq = "${reviewidx}";
-		const user_id = "${useridx}";
-		const likecount = "${likecount}";
-		const contentid = "${campingidx}";
-		var paramData = {"review_seq" : review_seq, "user_id" : user_id, "contentid" : contentid}
-		console.log(paramData);
-		$.ajax({
-		url : '/csite/plusCampingHelp.do',
-		type : 'get',
-		data : paramData,
-		dataType : 'text',
-		success : function(result){
-			if(result !=-1){
-				//alert("성공");
-				$(".likecount").html('추천수 : ' + result);
-			}
-		}, 
-		error:function(request,status,error){
-		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-		});//ajax 끝나는 곳
-		$("#thumbsup").html("<img src = '<%=request.getContextPath()%>/resources/images/campingsite/positive-vote.png' width = '30' height = '30'>")
-		
-	});//click function 끝나는곳
 }); //document ready 끝나는 곳
 
 </script>

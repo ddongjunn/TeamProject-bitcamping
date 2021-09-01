@@ -30,7 +30,7 @@
     }
     
     #photos{
-   		margin : 30px 150px 0 150px;
+   		margin : 30px 150px 200px;
     }
 
     #map{
@@ -445,3 +445,36 @@ ul.bxslider {
 .rows{
 	margin : 0 0 100px 300px;
 }
+
+/*카드형식*/
+
+.show-cart li {
+  display: flex;
+}
+.card {
+  margin-bottom: 20px;
+}
+.card-img-top {
+  width: 150px;
+  height: 150px;
+  align-self: center;
+}
+
+.add-to-cart {
+	background-color : #FAEAA9;
+	border : 0; 
+	outline : 0;
+	align-self : center;
+	display : block;
+}
+.add-to-cart:hover{
+	background-color : #78E6D0;
+}
+
+
+#sbrscl{
+	border : 1px solid; 
+	padding : 10px; 
+	background-color :#FAEAA9;
+}
+

@@ -11,6 +11,7 @@
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/sidemenu.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     <title>마이페이지</title>
 </head>
 <body>
@@ -18,10 +19,12 @@
 <div class="sidemenu">
 	<div class="leftmenu">
 	    <div class="customer-name">
-	        <span class="ns-profile icon-user"></span>
-	        <span>
-	        ${login.nickname}
-	        </span>
+		        <span style="align-items: center;">
+		        	<i class="fas fa-user"></i>
+		        </span>
+		        <span style="margin-bottom: 10px">
+		        	${login.nickname}
+		        </span>
 	    </div>
 	
 	    <div class="lnb">

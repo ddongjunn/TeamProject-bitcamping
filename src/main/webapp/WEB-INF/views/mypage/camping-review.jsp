@@ -12,78 +12,80 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
     <title>Title</title>
 </head>
 <body>
-<div class="container-fluid" >
-    <h2>캠핑장리뷰</h2>
+<div class="mypage_board">
+	    <h2 class="title">
+	        캠핑장 리뷰
+	    </h2>
+	
+	<div class="table-responsive">
+	    <div>
+	        <table class="table align-items-center">
+	            <thead class="">
+	            <tr class="table_top">
+	                <td>번호</td>
+	                <td>캠핑장</td>
+	                <td>제목</td>
+	                <td>작성자</td>
+	                <td>조회수</td>
+	                <td>좋아요</td>
+	                <td>작성일</td>
+	            </tr>
+	            </thead>
+	            <tbody class="list">
+	            <c:if test="${empty list}">
+	                <tr>
+	                    <td colspan="5" style="text-align: center">
+	                        작성된 게시글이 없습니다.
+	                    </td>
+	                </tr>
+	            </c:if>
+	            <c:forEach var="data" items="${list}">
+	                <tr>
+	                    <td>${data.review_seq}</td>
+	                    <td>${data.campingName}</td>
+	                    <td>
+	                        <a href='${pageContext.request.contextPath}/csite/campingdetailreview.do?review_seq=${data.review_seq}&contentid=${data.contentid}'>
+	                                ${data.title}
+	                        </a>
+	                        <span style="font-size: 13px; color: tomato;">[${data.commentCount}]</span>
+	                    </td>
+	
+	                    <td>${data.nickname}</td>
+	                    <td>${data.readcount}</td>
+	                    <td>${data.like_count}</td>
+	                    <td>
+	                        <fmt:formatDate value="${data.wdate}" pattern="yyyy/MM/dd"/>
+	                    </td>
+	                </tr>
+	            </c:forEach>
+	            </tbody>
+	        </table>
+	    </div>
+	</div>
+	
+	<div class="container"> <!-- style = "width : 100%; text-align : center" -->
+	    <!--  <div style = "display : inline-block"> -->
+	    <nav aria-label="Page navigation">
+	        <ul class="pagination justify-content-center" id="pagination"></ul>
+	    </nav>
+	</div>
+	
+	
+	<div class="row" style="justify-content: space-between; width: 350px; margin: auto">
+	    <select id="_choice" name="choice" class="form-control form-control-sm" style="width: 90px">
+	        <option value="" selected="selected">선택</option>
+	        <option value="title">제목</option>
+	        <option value="content">내용</option>
+	        <option value="name">캠핑장</option>
+	    </select>
+	    <input type="text" id="_search" name="search" placeholder="검색" class="form-control form-control-sm" style="width: 200px">
+	    <button type="button" id="btnSearch" class="btn btn-outline-primary btn-sm">검색</button>
+	</div>
 </div>
-
-<div class="table-responsive">
-    <div>
-        <table class="table align-items-center">
-            <thead class="">
-            <tr>
-                <td>번호</td>
-                <td>캠핑장</td>
-                <td>제목</td>
-                <td>작성자</td>
-                <td>조회수</td>
-                <td>좋아요</td>
-                <td>작성일</td>
-            </tr>
-            </thead>
-            <tbody class="list">
-            <c:if test="${empty list}">
-                <tr>
-                    <td colspan="5" style="text-align: center">
-                        작성된 게시글이 없습니다.
-                    </td>
-                </tr>
-            </c:if>
-            <c:forEach var="data" items="${list}">
-                <tr>
-                    <td>${data.review_seq}</td>
-                    <td>${data.campingName}</td>
-                    <td>
-                        <a href='${pageContext.request.contextPath}/csite/campingdetailreview.do?review_seq=${data.review_seq}&contentid=${data.contentid}'>
-                                ${data.title}
-                        </a>
-                        <span style="font-size: 13px; color: tomato;">[${data.commentCount}]</span>
-                    </td>
-
-                    <td>${data.nickname}</td>
-                    <td>${data.readcount}</td>
-                    <td>${data.like_count}</td>
-                    <td>
-                        <fmt:formatDate value="${data.wdate}" pattern="yyyy.MM.dd HH:mm"/>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="container"> <!-- style = "width : 100%; text-align : center" -->
-    <!--  <div style = "display : inline-block"> -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center" id="pagination"></ul>
-    </nav>
-</div>
-
-
-<div class="row" style="justify-content: space-between; width: 350px; margin: auto">
-    <select id="_choice" name="choice" class="form-control form-control-sm" style="width: 90px">
-        <option value="" selected="selected">선택</option>
-        <option value="title">제목</option>
-        <option value="content">내용</option>
-        <option value="name">캠핑장</option>
-    </select>
-    <input type="text" id="_search" name="search" placeholder="검색" class="form-control form-control-sm" style="width: 200px">
-    <button type="button" id="btnSearch" class="btn btn-outline-primary btn-sm">검색</button>
-</div>
-
 <script type="text/javascript">
 
     $(document).ready(function () {

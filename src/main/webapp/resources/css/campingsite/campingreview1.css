@@ -72,3 +72,10 @@
     background-color: #2c6639 !Important;
     border: solid 1px #2c6639;
 }
+
+
+
+/*리뷰 디테일 화면 */
+.camping_list{
+	margin : 30px 200px 30px 250px;
+}
