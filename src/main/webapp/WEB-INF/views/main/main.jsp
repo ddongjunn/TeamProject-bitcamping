@@ -34,17 +34,7 @@
 			</div>
 		</div>
 		
-		<!-- campingtype data start -->
-		<div class="campsitetype">
-			<div class="campsitetitle">전국 <span class="count" data-esing="swing">2647</span>개의 캠핑장 데이터를 한 곳에!</div>
-			<div class="campsitechart">
-				<div class="chart type1" data-percent="63">일반야영장 53%</div>
-				<div class="chart type2" data-percent="55">자동차야영장 55%</div>
-				<div class="chart type3" data-percent="70">카라반 70%</div>
-				<div class="chart type4" data-percent="42">글램핑 42%</div>		
-			</div>
-		</div>
-		<!-- campingtype data end -->
+	
 		
 	</div>
 	<div class="contents-area mt50">
@@ -55,59 +45,8 @@
 				<span class="stroke-shadow-orange" style="font-family: 'TTTogether' !important;">추천</span>
 				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;"> 캠핑장</span>
 			</div>
-			<div class="tarkikComandSlider">
-				<article class="comandSlider__item">
-					<header>
-						<p class="comandSlider__item_name"><a href="/csite/campingdetail.do?contentid=7980">스카이랜드리조트</a></p>
-						<p class="comandSlider__item_status">인천 강화군 삼산면 삼산남로 991 인천 강화군 삼산면 삼산남로 991</p>
-					</header>
-					<a href="/csite/campingdetail.do?contentid=7980">
-						<img class="comandSlider__item_photo" src="https://gocamping.or.kr/upload/camp/7980/thumb/thumb_720_3564AyNTpmiXHsFiDk3koAi2.jpg" alt="캠핑장 이미지" />
-					</a>
-					<div class="comandSlider__item_contact"><span>유형</span>일반야영장,카라반</div>
-					<div class="comandSlider__item_contact"><span>환경</span>섬,산,숲/민간</div>
-				</article>
-
-				<article class="comandSlider__item">
-					<header>
-						<p class="comandSlider__item_name">세울터 오토캠핑장</p>
-						<p class="comandSlider__item_status">충남 홍성군 서부면 홍남서로362번길 46</p>
-					</header>
-					<img class="comandSlider__item_photo" src="https://gocamping.or.kr/upload/camp/7893/thumb/thumb_720_5377tlCs2wCiHMDbKbZUkdui.png" alt="캠핑장 이미지" />
-					<div class="comandSlider__item_contact"><span>유형</span>자동차야영장</div>
-					<div class="comandSlider__item_contact"><span>환경</span>산</div>
-				</article>
-
-				<article class="comandSlider__item">
-					<header>
-						<p class="comandSlider__item_name">아레나글램핑</p>
-						<p class="comandSlider__item_status">인천 강화군 삼산면 삼산남로 991</p>
-					</header>
-					<img class="comandSlider__item_photo" src="https://gocamping.or.kr/upload/camp/7980/thumb/thumb_720_3564AyNTpmiXHsFiDk3koAi2.jpg" alt="캠핑장 이미지" />
-					<div class="comandSlider__item_contact"><span>유형</span>일반야영장,글램핑</div>
-					<div class="comandSlider__item_contact"><span>환경</span>none</div>
-				</article>
-
-				<article class="comandSlider__item">
-					<header>
-						<p class="comandSlider__item_name">올리브 그린 펜션 글램핑</p>
-						<p class="comandSlider__item_status">강원도 영월군 수주면 무릉법흥로 852-24</p>
-					</header>
-					<img class="comandSlider__item_photo" src="https://gocamping.or.kr/upload/camp/2339/thumb/thumb_720_35708D9ARZn3xAHP9qixRUXj.jpg" alt="캠핑장 이미지" />
-					<div class="comandSlider__item_contact"><span>유형</span>글램핑</div>
-					<div class="comandSlider__item_contact"><span>환경</span>계곡</div>
-				</article>
-
-				<article class="comandSlider__item">
-					<header>
-						<p class="comandSlider__item_name">쥴리어스지점 휴토피아</p>
-						<p class="comandSlider__item_status">강원도 홍천군 서면 어유포리</p>
-					</header>
-					<img class="comandSlider__item_photo" src="https://gocamping.or.kr/upload/camp/16/thumb/thumb_720_7281ozQmm7ppv6bLdBn7I6Xv.jpg" alt="캠핑장 이미지" />
-					<div class="comandSlider__item_contact"><span>유형</span>글램핑</div>
-					<div class="comandSlider__item_contact"><span>환경</span>숲</div>
-				</article>
-			</div>
+			
+			
 		</div>
 		<!-- recommend area end -->
 
@@ -204,7 +143,6 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-
 		$('.search-btn.shadow').click(function(){
 			const searchWord = $(".shadow").val();
 			location.href = "./csite/campinglist.do?searchWord=" + searchWord;

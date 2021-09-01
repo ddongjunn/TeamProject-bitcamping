@@ -542,6 +542,5 @@
                ) G
         FROM DUAL
     </select>
-
-
+    
   </mapper>
