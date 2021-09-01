@@ -12,6 +12,15 @@
 </head>
 <body>
 
+<div class="postpath">
+	<span>
+		<a href="/cs/main.do"><i class="fas fa-home fa-sm"></i></a> > 
+		<a href="/cs/csMain.do">고객센터</a> > 
+		<a href="/cs/notice.do">공지사항</a> > 
+		<a href="/cs/noticeDetail.do?notice_Seq=${notice.notice_Seq}" style="color: #75AE87;">${notice.notice_Seq}</a>
+	</span>
+</div>
+
 <div class="postarea">
 	<table class="tabledetail">
 		<tbody>
@@ -37,7 +46,7 @@
 					<td>
 						<i class="fas fa-save fa-sm"></i>
 						<a href="javascript:filedown('${notice.newfilename}', '${notice.notice_Seq}', '${notice.filename}')">
-						<span class="detailfilename"> ${notice.filename}</span>
+							<span class="detailfilename"> ${notice.filename}</span>
 						</a> 
 						(${notice.downcount}회 다운)
 						<hr>
@@ -51,15 +60,14 @@
 			</tr>
 		</tbody>
 	</table>
-	
-	<c:if test="${login.id eq notice.user_Id}">
-		<div class="buttons_wrap" id="buttons_wrap">
-			<button type="button" class="btnSimple" id="btnUpdate" onclick="location.href='/cs/noticeUpdate.do?notice_Seq=${notice.notice_Seq}'">수정</button>
-			<button type="button" class="btnSimple" id="btnDelete" onclick="confirm()">삭제</button>	
-		</div>
-	</c:if>
 </div>
-
+	
+<c:if test="${login.id eq notice.user_Id}">
+	<div class="buttons_wrap" id="buttons_wrap">
+		<button type="button" class="btnSimple" id="btnUpdate" onclick="location.href='/cs/noticeUpdate.do?notice_Seq=${notice.notice_Seq}'">수정</button>
+		<button type="button" class="btnSimple" id="btnDelete" onclick="confirm()">삭제</button>	
+	</div>
+</c:if>
 <!-- 댓글 영역 시작 -->
 <div class="commentarea">
     <form id="commentForm" name="commentForm" method="post">
@@ -70,8 +78,8 @@
             <div>
                 <table class="comment_table">                    
                     <tr>
-                        <td>
-                            <textarea style="width: 90%" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
+                        <td class="commentwritearea">
+                            <textarea class="commenttextarea" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
                             <br>
                             <div style="margin: 5px; float: right;">
                                 <a href="#none" id="addComment">등록</a>
@@ -84,9 +92,9 @@
         <%-- <input type="hidden" id="b_code" name="b_code" value="${result.code }" /> --%>        
     </form>
 </div>
-<div class="container">
+<div class="commentlistarea">
     <form id="commentListForm" name="commentListForm" method="post">
-        <div id="commentList" >
+        <div class="commentlist" id="commentList" >
         </div>
     </form>
 </div>
@@ -293,46 +301,50 @@
                         
                         /* 댓글 내용 div */
                         if(data.comment[i].depth == 0){
-                        	html += "<h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
-                            html += "<h6>" + wdate + "</h6>";
+                        	html += "<span style='color: #75AE87; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                        	html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>답글</a></span>";
+                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
                            	html += "<div id='cmt"+data.comment[i].comment_Seq+"'>";
-	                        html += "<div>"+data.comment[i].content+"</div>";
+	                        html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
                         
                         /* 대댓글 내용 div */
                         }else{
-                        	html += "<div style='float: left;'>ㄴ</div>";
-                        	html += "<div id='cmt"+data.comment[i].comment_Seq+"' style='margin-left: 15px;'><h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
-                            html += "<h6>"+wdate+"</h6>";
-                            html += "<div>"+data.comment[i].content+"</div>";
+                        	html += "<div style='float: left; color: #DBDBDB; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></div>";
+                        	html += "<span style='color: tomato; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>"+wdate+"</span>";
+                        	html += "<div id='cmt"+data.comment[i].comment_Seq+"' style='margin-left: 15px;'>";
+                            html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
                         }
                         
-                        /* 수정, 삭제, 답글 div */
-                        html += "<div><h5>";                        
+                        /* 수정, 삭제 버튼 div */
+                        html += "<div style='text-align: right;'";                        
                         if('${login.id}' === data.comment[i].user_Id){         	
 	                        html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data.comment[i].comment_Seq+");'>수정</a></span>";
 	                        html += "<span style='margin: 5px;'><a href='javascript:commentDelete("+data.comment[i].comment_Seq+");'>삭제</a></span>";
                         }                        
-                        html += "<span style='margin: 5px; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>답글</a></span>";
-                        html += "</h5></div>";
-                        html += "</div>"; // 댓글 내용 div 여기서 끝
-                        
-                        /* 대댓글 입력창 div */
-                        html += "<div id='answerbox"+data.comment[i].comment_Seq+"' style='display: none;'>";
-                        html += "<h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
-                        html += "<textarea style='width: 100%' rows='3' cols='30' id='answer"+data.comment[i].comment_Seq+"' placeholder='댓글을 입력하세요'></textarea>";
-                        html += "<div style='float: right;'><h5>";
-                        html += "<span style='margin: 5px;'><a href='javascript:commentAnswer("+data.comment[i].comment_Seq+");'>등록</a></span>";
-                        html += "<span style='margin: 5px;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>취소</a></span>";
-                        html += "</h5></div>";
                         html += "</div>";
+                        html += "<hr style='margin-bottom: 0'>";
+                        html += "</div>"; // 댓글 내용 div 여기서 끝
                         
                         /* 댓글 수정창 div */
                         html += "<div id='updatebox"+data.comment[i].comment_Seq+"' style='display: none;'>";
-                        html += "<textarea style='width: 100%' rows='3' cols='30' id='update"+data.comment[i].comment_Seq+"' placeholder='댓글을 입력하세요'>"+data.comment[i].content+"</textarea>";
-                        html += "<div style='float: right;'><h5>";
+                        html += "<textarea class='commenttextarea' style='margin: 5px' rows='3' cols='30' id='update"+data.comment[i].comment_Seq+"' placeholder='댓글을 입력하세요'>"+data.comment[i].content+"</textarea>";
+                        html += "<div style='float: right; margin: 5px;'>";
                         html += "<span style='margin: 5px;'><a href='javascript:commentUpdate("+data.comment[i].comment_Seq+");'>등록</a></span>";
                         html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data.comment[i].comment_Seq+");'>취소</a></span>";
-                        html += "</h5></div>";
+                        html += "</div>";
+                        html += "</div>";
+                        
+                        /* 대댓글 입력창 div */
+                        html += "<div class='commentanswerarea' id='answerbox"+data.comment[i].comment_Seq+"' style='display: none;'>";
+                        html += "<span style='float: left; color: #DBDBDB; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></span>"
+                        html += "<span style='color: tomato; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                        html += "<textarea class='commenttextarea' style='margin: 5px' rows='3' cols='30' id='answer"+data.comment[i].comment_Seq+"' placeholder='댓글을 입력하세요'></textarea>";
+                        html += "<div style='float: right; margin: 5px;'>";
+                        html += "<span style='margin: 5px;'><a href='javascript:commentAnswer("+data.comment[i].comment_Seq+");'>등록</a></span>";
+                        html += "<span style='margin: 5px;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>취소</a></span>";
+                        html += "</div>";
+                        html += "<hr style='margin: 30px 0 0 0;'>";
                         html += "</div>";
                         
                         html += "</td></tr>";

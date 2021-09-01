@@ -1,3 +1,28 @@
+@charset "UTF-8";
+
+/* faq */
+.faq{
+	margin: 20px auto 0;
+    padding: 30px;
+    border: 1px solid #e5e5e5;	
+}
+.faqintro{
+	width: 100%;
+	text-align: left;
+}
+.faqtitle{
+	color: #111;
+	font-weight: bold;
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+.faqdisc{
+	font-size: 15px;
+	color: gray;
+	font-weight: bold;
+}
+
+/* contact us */
 .customer {
 	max-width: 1330px;
     margin: 20px auto 0;

@@ -12,9 +12,7 @@
 <meta charset="UTF-8">
     <style>
         #header {
-            padding: 5px;
             margin-bottom: 5px;
-
         }
         #sidebar-left {
           width: 20%;
@@ -33,8 +31,6 @@
         }
         #footer {
             clear: both;
-            padding: 5px;
-            background-color: lightblue;
         }
     </style>
 

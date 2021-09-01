@@ -10,59 +10,43 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/summernote-lite.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
-
-<style type="text/css">
-.noticeWrite{
-	width: 85%;
-}
-.noticeWrite td{
-	padding: 10px 0px;
-	border-bottom: 1px solid gray;
-}
-.title{
-	width: 100%;
-	font-size: 18px;
-}
-.file{
-	width: 100%
-}
-.submitbox{
-	width: 85%;
-	margin: 10px;
-	text-align: right;
-}
-</style>
 </head>
 <body>
 
-<form id="noticeUpdateForm" action="/cs/noticeUpdateAf.do" method="post" enctype="multipart/form-data" >
-<table class="noticeWrite">
-	<tbody>
-		<tr>
-			<td>
-				<input type="text" class="title" name="title" value="${notice.title}" placeholder="제목을 입력해 주세요" required />
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<input type="file" class="file" name="attachedfile" />
-			</td>
-		</tr>	
-		<tr>
-			<td>
-				<textarea id="summernote" name="content" required>${notice.content}</textarea>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<div class="submitbox">
-	<input type="submit" value="수정">
+<div class="boardtitle">
+	<span>글 수정</span>
+</div>
+<div class="writearea">
+	<form id="noticeUpdateForm" action="/cs/noticeUpdateAf.do" method="post" enctype="multipart/form-data" >
+		<table class="writetable">
+			<tbody>
+				<tr>
+					<td>
+						<input type="text" class="writetitle" name="title" value="${notice.title}" placeholder="제목을 입력해 주세요" required />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="file" class="writefile" name="attachedfile" />
+					</td>
+				</tr>	
+				<tr>
+					<td>
+						<textarea class="summernoteleft" id="summernote" name="content" required>${notice.content}</textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	<div class="submitbox">
+		<input type="submit" class="btnSimple" value="수정">
+	</div>
+	
+	<input type="hidden" name="user_Id" value="${login.id}">
+	<input type="hidden" name="notice_Seq" value="${notice.notice_Seq}">
+	
+	</form>
 </div>
 
-<input type="hidden" name="user_Id" value="${login.id}">
-<input type="hidden" name="notice_Seq" value="${notice.notice_Seq}">
-
-</form>
 
 <script type="text/javascript">
 
@@ -78,6 +62,7 @@
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
 			    ['fontname', ['fontname']],
 			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],

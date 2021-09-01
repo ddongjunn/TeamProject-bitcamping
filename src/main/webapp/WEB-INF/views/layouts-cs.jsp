@@ -10,28 +10,24 @@
 <meta charset="UTF-8">
 <style>
 #header {
-  margin-bottom: 5px;
   width: 100%;
 }
 #lnb {
   width: 20%;
   height: 100%;
-  min-height: 900px;
-  margin: 10px 0;
   padding: 50px 15px;
-  float: left;  
-  border-right: 1px solid black;
-  text-align: right;
+  float: left;
+  border-right: 1px solid black; 
 }
 #content {
   width: 80%;
   padding: 20px 150px 20px 20px;
   float: left;
-  text-align: center;
+  /* text-align: center; */
 }
 #footer {
   clear: both;
-  padding: 5px;
+  width: 100%;
 }
 </style>
     

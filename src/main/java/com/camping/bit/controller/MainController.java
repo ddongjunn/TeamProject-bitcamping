@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.camping.bit.dto.CampingListDto;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
 import com.camping.bit.service.AdminService;
@@ -24,6 +25,10 @@ public class MainController {
 
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
 	public String main(Model model) {
+		
+		// 추천캠핑장
+		List<CampingListDto>list = adminservice.recommendCampingSite();
+		model.addAttribute("campinglist",list);
 		
         //커뮤니티 최신글 받아오기
         List<CommunityDto> recentCommunity = adminservice.recentCommunity();
