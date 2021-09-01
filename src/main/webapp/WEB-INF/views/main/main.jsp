@@ -33,8 +33,20 @@
 				<button class="search-btn shadow"></button>
 			</div>
 		</div>
-		
-	
+
+
+		<!-- campingtype data start -->
+		<div class="campsitetype">
+			<div class="campsitetitle">전국 <span class="count" data-esing="swing">2647</span>개의 캠핑장 데이터를 한 곳에!</div>
+			<div class="campsitechart">
+				<div class="chart type1" data-percent="64">일반야영장 64%</div>
+				<div class="chart type2" data-percent="35">자동차야영장 35%</div>
+				<div class="chart type3" data-percent="12">카라반 12%</div>
+				<div class="chart type4" data-percent="15">글램핑 15%</div>
+			</div>
+		</div>
+		<!-- campingtype data end -->
+
 		
 	</div>
 	<div class="contents-area mt50">
@@ -46,6 +58,23 @@
 				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;"> 캠핑장</span>
 			</div>
 			
+
+			<div class="tarkikComandSlider">
+				<c:forEach items = "${campinglist}" var = "camping">
+					<article class="comandSlider__item">
+						<header>
+							<p class="comandSlider__item_name"><a href="/csite/campingdetail.do?contentid=${camping.contentid}">${camping.facltnm}</a></p>
+							<p class="comandSlider__item_status">${camping.addr1}</p>
+						</header>
+						<a href="/csite/campingdetail.do?contentid=${camping.contentid}">
+							<img class="comandSlider__item_photo" src="${camping.firstimageurl}" alt="캠핑장 이미지" />
+						</a>
+						<div class="comandSlider__item_contact"><span>유형</span>${camping.induty}</div>
+						<div class="comandSlider__item_contact"><span>환경</span>${camping.lctcl}/${camping.facltdivnm}</div>
+					</article>
+				</c:forEach>
+			</div>
+
 			
 		</div>
 		<!-- recommend area end -->

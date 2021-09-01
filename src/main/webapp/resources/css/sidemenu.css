@@ -2,6 +2,10 @@
 
 .sidemenu{
 	padding-left: 80px;
+	height: 100%;
+	min-height: 400px;
+	margin: 10px 0;
+	text-align: right;
 }
 .parentmenu{
 	font-size: 2em;
@@ -15,6 +19,6 @@
 	font-weight: bold;
 }
 .childmenu > a:hover{
-	color: #ff0080 !important;
+	color: #75AE87;
 	text-decoration: none;
 }

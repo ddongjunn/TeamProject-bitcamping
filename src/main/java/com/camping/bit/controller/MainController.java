@@ -27,6 +27,10 @@ public class MainController {
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
 	public String main(Model model) {
 		
+		// 추천캠핑장
+		List<CampingListDto>list = adminservice.recommendCampingSite();
+		model.addAttribute("campinglist",list);
+		
         //커뮤니티 최신글 받아오기
         List<CommunityDto> recentCommunity = adminservice.recentCommunity();
         List<CommunityDto> dealList = new ArrayList<CommunityDto>();

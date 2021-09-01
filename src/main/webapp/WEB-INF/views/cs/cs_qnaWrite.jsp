@@ -13,65 +13,49 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
 
-<style type="text/css">
-	.noticeWrite{
-		width: 85%;
-	}
-	.noticeWrite td{
-		padding: 10px 0px;
-		border-bottom: 1px solid gray;
-	}
-	.title{
-		width: 100%;
-		font-size: 18px;
-	}
-	.file{
-		width: 100%
-	}
-	.submitbox{
-		width: 85%;
-		margin: 10px;
-		text-align: right;
-	}
-</style>
 </head>
 <body>
 
-
-<form id="qnaWriteForm" action="/cs/qnaWriteAf.do" method="post">
-<table class="qnaWrite">
-	<tbody>
-		<tr>
-			<td>
-				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요" required>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<label for="secret">
-					<input type="checkbox" name="secret" id="secret" value="1"> 비밀글 설정
-				</label>
-			<%-- <c:if test="${login.auth eq 3}">
-					<label for="notice">
-						<input type="checkbox" name="notice" id="notice" value="1"> 공지글 설정
-					</label>
-				</c:if> --%>
-			</td>
-		</tr>	
-		<tr>
-			<td>
-				<textarea id="summernote" name="content" required></textarea>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<div class="submitbox">
-	<input type="submit" value="등록">
+<div class="boardtitle">
+	<span>글쓰기</span>
 </div>
-
-<input type="hidden" name="user_Id" value="${login.id}">
-
-</form>
+<div class="writearea">
+	<form id="qnaWriteForm" action="/cs/qnaWriteAf.do" method="post">
+		<table class="writetable">
+			<tbody>
+				<tr>
+					<td>
+						<input type="text" class="writetitle" name="title" placeholder="제목을 입력해 주세요" required>
+					</td>
+				</tr>
+				<tr>
+					<td class="writesecret">
+						<label for="secret">
+							<input type="checkbox" name="secret" id="secret" value="1"> 비밀글 설정
+						</label>
+					<%-- <c:if test="${login.auth eq 3}">
+							<label for="notice">
+								<input type="checkbox" name="notice" id="notice" value="1"> 공지글 설정
+							</label>
+						</c:if> --%>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+						<textarea id="summernote" class="summernoteleft" name="content" required></textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div class="submitbox">
+			<input type="submit" class="btnSimple" value="등록">
+		</div>
+		
+		<input type="hidden" name="user_Id" value="${login.id}">
+	
+	</form>
+</div>
 
 <script type="text/javascript">
 
@@ -87,6 +71,7 @@
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
 			    ['fontname', ['fontname']],
 			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],

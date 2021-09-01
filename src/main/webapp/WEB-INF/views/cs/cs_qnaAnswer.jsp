@@ -13,105 +13,82 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
 
-<style type="text/css">
-.qnaWrite{
-	width: 85%;
-}
-.qnaWrite td{
-	padding: 10px 0px;
-	border-bottom: 1px solid gray;
-}
-.title{
-	width: 100%;
-	font-size: 18px;
-}
-.submitbox{
-	width: 85%;
-	margin: 10px;
-	text-align: right;
-}
-.qnadetail{
-	width: 85%;
-}
-.qnadetail > tr, td{
-	padding: 10px 0px;
-	border: 1px solid;
-}
-</style>
 </head>
 <body>
 
-<h4>Question</h4>
-<table class="qnadetail">
-	<tbody>
-		<tr>
-			<td>
-				<span>${qna.title}</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span>${qna.nickname}</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span>조회수 ${qna.readcount}</span>
-			</td>
-		</tr>
-		<tr>
-			<td>
-			 	<fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<span>${qna.content}</span>
-			</td>
-		</tr>
-	</tbody>
-</table>
-
-<h4>ㄴAnswer</h4>
-<form id="qnaWriteForm" action="/cs/qnaAnswerAf.do" method="post">
-<table class="qnaWrite">
-	<tbody>
-		<tr>
-			<td>
-				<input type="text" class="title" name="title" placeholder="제목을 입력해 주세요" value="RE: ${qna.title}"required>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<c:choose>
-					<c:when test="${qna.secret eq 1}">
-						<label for="secret">
-							<input type="checkbox" name="secret" id="secret" value="1" checked disabled> 비밀글 설정 (원글과 동일하게 설정됩니다)
-						</label>
-					</c:when>
-					<c:otherwise>
-						<label for="secret">
-							<input type="checkbox" name="secret" id="secret" value="0" disabled> 비밀글 설정 (원글과 동일하게 설정됩니다)
-						</label>
-					</c:otherwise>
-				</c:choose>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<textarea id="summernote" name="content" required></textarea>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<div class="submitbox">
-	<input type="submit" value="등록">
+<div class="detailtitle">Question</div>
+<div class="postarea">
+	<table class="tabledetail">
+		<tbody>
+			<tr>
+				<td class="detailtitle">
+					<span>${qna.title}</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="detailinfo">
+					<span><i class="fas fa-user-circle fa-sm"></i> ${qna.nickname}</span>
+					<span>
+						<i class="far fa-calendar-alt fa-sm"></i>
+						 <fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
+					</span>
+					<span>조회수 ${qna.readcount}</span>
+					<hr>
+				</td>
+			</tr>
+			<tr>
+				<td class="detailcontent">
+					<span>${qna.content}</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="detailtitle">Answer</div>
+<div class="writearea">	
+	<form id="qnaWriteForm" action="/cs/qnaAnswerAf.do" method="post">
+		<table class="writetable">
+			<tbody>
+				<tr>
+					<td>
+						<input type="text" class="writetitle" name="title" placeholder="제목을 입력해 주세요" maxlength="110" value="RE: ${qna.title}"required>
+					</td>
+				</tr>
+				<tr>
+					<td class="writesecret">
+						<c:choose>
+							<c:when test="${qna.secret eq 1}">
+								<label for="secret">
+									<input type="checkbox" name="secret" id="secret" value="1" checked disabled> 비밀글 설정 (원글과 동일하게 설정됩니다)
+								</label>
+							</c:when>
+							<c:otherwise>
+								<label for="secret">
+									<input type="checkbox" name="secret" id="secret" value="0" disabled> 비밀글 설정 (원글과 동일하게 설정됩니다)
+								</label>
+							</c:otherwise>
+						</c:choose>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<textarea id="summernote" class="summernoteleft" name="content" required></textarea>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div class="submitbox">
+			<input type="submit" class="btnSimple" value="등록">
+		</div>
+		
+		<input type="hidden" name="user_Id" value="${login.id}">
+		<input type="hidden" name="ref" value="${qna.ref}">
+		
+	</form>
 </div>
 
-<input type="hidden" name="user_Id" value="${login.id}">
-<input type="hidden" name="ref" value="${qna.ref}">
-</form>
 
 <script type="text/javascript">
 
@@ -127,6 +104,7 @@
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
 			    ['fontname', ['fontname']],
 			    ['color', ['color']],
+			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],

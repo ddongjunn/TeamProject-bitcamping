@@ -39,7 +39,9 @@ public interface AdminService {
 
     public List<CsQnaDto> csQnaList(CsParam param);
     public int csQnaListCount(CsParam param);
-    
+
+    public List<CampingListDto> recommendCampingSite();
+
 
 
 }

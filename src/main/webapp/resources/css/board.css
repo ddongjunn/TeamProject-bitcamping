@@ -4,11 +4,12 @@
 .tablelist{
 	width: 90%;
 	margin: auto;
+	text-align: center;
 	/* border-radius: 10px; */
 }
 .tablelist thead{
 	/* font-weight: bold !important; */
-	background-color: #ff0080;
+	background-color: #75AE87;
 	color: white;
 	border-top-left-radius: 10px;
 }
@@ -57,14 +58,14 @@
 	padding: 7px;
 	border: 1px solid gray;
 	border-radius: 3px;
-	background-color: #ff0080;
+	background-color: #75AE87;
 	color: white;
 }
 .page-item.active .page-link {
     z-index: 3;
     color: #fff;
-    background-color: #ff0080;
-    border-color: #ff0080;
+    background-color: #75AE87;
+    border-color: #75AE87;
 }
 
 /* 페이지네이션 */
@@ -73,13 +74,28 @@
 	margin: 15px;
 }
 
+
 /* 게시글 디테일 */
+.postpath{
+	border: 1px solid #DBDBDB;
+	border-radius: 5px;	
+	text-align: left;
+	font-size: 14px;
+	margin-bottom: 15px;
+	padding: 10px; 
+	vertical-align: middle;
+	font-weight: bold;
+}
+/* .postpath > a{
+	color: #75AE87;
+} */
 .postarea{
 	border: 1px solid #DBDBDB;
 	border-radius: 5px;
+	padding: 20px 10px;
 }
 .tabledetail{
-	width: 90%;
+	width: 95%;	
 	margin: auto;
 	text-align: left;
 	padding: 10px;
@@ -88,6 +104,7 @@
 	border: hidden;
 }
 .detailtitle{
+	text-align: left;
 	font-size: 30px;
 	font-weight: bold;
 	padding: 20px 0;
@@ -102,14 +119,25 @@
 .detailcontent{
 	height: 200px;
 	vertical-align: top;
+	padding: 10px 0;
 }
 .buttons_wrap{
-	padding-bottom : 15px;
+	width: 100%;
+	margin: 15px auto;
+	text-align: right;
+}
+.update_buttons_wrap{
+	margin: 15px 0;
+	padding-right: 15px;
+	text-align: right;
 }
 /* 댓글 디테일 */
 .commentarea{
 	width: 100%;
 	margin-top: 20px;
+	border: 1px solid #DBDBDB;
+	border-radius: 5px 5px 0 0;	
+	padding: 15px 15px 0 15px;
 }
 .commentcountarea{
 	text-align: left;
@@ -118,6 +146,63 @@
 	width: 100%;
 	text-align: left;
 }
+#cCnt{
+	font-weight: bold;
+	color: #75AE87;
+}
 .commentwritearea{
 	text-align: center;
+}
+.commenttextarea{
+	resize: none;
+	border: 1px solid #DBDBDB;
+	padding: 10px;
+	width: 100%; 
+	margin: auto;
+}
+.commentlistarea{
+	width: 100%;
+	border: 1px solid #DBDBDB;
+	border-radius: 0 0 5px 5px;	
+	padding: 15px;
+}
+.comment_table > tbody > tr > td{
+	padding: 15px;
+}
+.commentanswerarea{
+	padding: 15px;
+}
+
+
+
+/* 글 쓰기, 수정 화면 */
+.writearea{
+	width: 90%;
+	margin: auto;
+}
+.writetable{
+	width: 100%;
+	margin: auto;
+}
+.writetable > tbody > tr > td{
+	padding: 10px 0px;
+	border-bottom: 1px solid gray;
+}
+.writetitle{
+	width: 100%;
+	font-size: 18px;
+}
+.writefile{
+	width: 100%;
+}
+.writesecret{
+	width: 100%;
+}
+.summernoteleft{
+	text-align: left;
+}
+.submitbox{
+	text-align: right;
+	width: 100%;
+	margin: 10px auto;
 }

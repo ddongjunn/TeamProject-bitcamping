@@ -376,6 +376,18 @@ public class CsController {
 		return "redirect:/cs/qna.do";
 	}
 	
+	@RequestMapping(value = "qnaAnswerUpdate.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String qnaAnswerUpdate(int qna_Seq, Model model) {
+		
+		CsQnaDto qna = service.getQnaDetail(qna_Seq);
+		model.addAttribute("qna", qna);
+		
+		CsQnaDto answer = service.getAnswerDetail(qna_Seq);
+		model.addAttribute("answer", answer);
+		
+		return "qnaAnswerUpdate.tiles";
+	}
+	
 	@RequestMapping(value = "qnaDelete.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String qnaDelete(int qna_Seq) {
 		

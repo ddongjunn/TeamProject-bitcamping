@@ -124,5 +124,8 @@ public class AdminServiceImpl implements AdminService{
         return dao.weeklySales();
     }
 
-
+    @Override
+    public List<CampingListDto> recommendCampingSite() {
+    	return dao.recommendCampingSite();
+    }
 }

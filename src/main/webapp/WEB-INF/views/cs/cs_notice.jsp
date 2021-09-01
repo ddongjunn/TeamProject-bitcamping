@@ -41,7 +41,7 @@
 					<a href="/cs/noticeDetail.do?notice_Seq=${notice.notice_Seq}">
 						${notice.title}
 						<c:if test="${notice.commentcount ne 0}">
-							<span style="font-size: 13px; color: tomato;">[${notice.commentcount}]</span>
+							<span style="font-size: 13px; color: #75AE87;">[${notice.commentcount}]</span>
 						</c:if>
 					</a>
 				</td>
