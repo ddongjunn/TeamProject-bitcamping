@@ -56,4 +56,17 @@ public class MainController {
 		return "main.tiles";
 	}
 
+    @RequestMapping(value = "agreement.do", method = RequestMethod.GET)
+    public String agreement(){
+
+	    return "agreement.tiles";
+    }
+
+    @RequestMapping(value = "personalInfo.do", method = RequestMethod.GET)
+    public String personalInfo(){
+
+        return "personalInfo.tiles";
+    }
+
+
 }

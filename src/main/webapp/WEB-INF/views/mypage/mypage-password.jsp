@@ -18,7 +18,7 @@
 
         <div class="oldPassword">
             <label for="oldPassword">기존 비밀번호</label> <br>
-            <input type="password" id="oldPassword" placeholder="기존 비밀번호">
+            <input type="password" id="oldPassword" placeholder="기존 비밀번호" autocomplete="false">
             <span class="error_msg"></span>
         </div>
 

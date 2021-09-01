@@ -12,6 +12,10 @@
 </head>
 <body>
 
+<div class="container-fluid" >
+    <h2>상품 Q&A</h2>
+</div>
+
 <div class="container-fluid">
     <a href="/admin/product-qna.do" class="badge badge-pill badge-default">전체글</a>
     <a href="/admin/product-qna.do?kind=wait" class="badge badge-pill badge-danger">답변대기중</a>
