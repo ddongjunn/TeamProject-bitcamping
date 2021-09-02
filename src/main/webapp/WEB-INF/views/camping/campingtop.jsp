@@ -91,10 +91,10 @@ String login_id = (String)request.getAttribute("login_id");
 						<img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
 							<c:choose>
 							<c:when test="${fn:contains(url, 'http')}">
-								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='${url}'" >홈페이지</button>
+								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button>
 								</c:when>
 							<c:otherwise>
-								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
 							</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -106,10 +106,10 @@ String login_id = (String)request.getAttribute("login_id");
 					    <c:otherwise>
 					    <c:choose>
 							<c:when test="${fn:contains(url1, 'http')}">
-					       		 <button type = button onclick = "location.href ='${url1}'" class = "btn btn-outline-success btn-sm" target = "_blank">예약하기</button>
+					       		 <button type = button onclick = "location.href ='${url1}'" class = "btn btn-light btn-sm" target = "_blank">예약하기</button>
 							</c:when>
 							<c:otherwise>	
-								<button type = button onclick = "location.href ='http://${url1}'" class = "btn btn-outline-success btn-sm" target = "_blank">예약하기</button>			    
+								<button type = button onclick = "location.href ='http://${url1}'" class = "btn btn-light btn-sm" target = "_blank">예약하기</button>			    
 					    	</c:otherwise>
 					    </c:choose>
 					    </c:otherwise>

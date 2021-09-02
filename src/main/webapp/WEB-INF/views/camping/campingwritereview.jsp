@@ -35,9 +35,9 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 		<textarea id="summernote" name="content" wrap = "hard"></textarea>
 </div>
 
-<!-- <button type = "submit" value = "글쓰기" id = "campingwritereview" class = "btn btn-outline-success">글쓰기</button>
- -->
- <button type = "button" value = "writeReview" id = "campingwritereview" class = "btn btn-outline-success">글쓰기</button>
+<div class = "writebutton">
+ <button type = "button" value = "writeReview" id = "campingwritereview" class = "btn btn-light">글쓰기</button>
+ </div>
 </form>
 </body>
 

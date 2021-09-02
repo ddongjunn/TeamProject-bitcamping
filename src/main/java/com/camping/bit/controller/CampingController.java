@@ -133,7 +133,7 @@ public class CampingController{
 		//검색된 글의 갯수
 		int searchReviewPage = service.getCampingSearchReviewCount(param);
 		model.addAttribute("searchReviewPage", searchReviewPage);
-		System.out.println(searchReviewPage);
+		//System.out.println(searchReviewPage);
 		
 		//현재 페이지
 		int pageNumber = param.getPageNumber();
@@ -478,12 +478,12 @@ public class CampingController{
 	//캠핑장 리뷰에 댓글 달기 
 	@RequestMapping(value = "campingWriteComment.do", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String getCampingWriteComment(CampingCommentDto cbs) throws Exception{
-		String result;
+	public int getCampingWriteComment(CampingCommentDto cbs) throws Exception{
+		int result = 0;
 		if(service.campingWriteComment(cbs)) {
-			result = "success";
+			result = cbs.getComment_seq();
 		}else {
-			result = "failed";
+			result = -1;
 		}
 		return result;
 	}	
@@ -491,12 +491,12 @@ public class CampingController{
 	//캠핑장 리뷰에 댓글 삭제하기
 	@RequestMapping(value = "campingDeleteComment.do", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
-	public String getCampingDeleteComment(CampingCommentDto cbs) throws Exception{
-		String result = "";
+	public int getCampingDeleteComment(CampingCommentDto cbs) throws Exception{
+		int result = 0;
 		if(service.campingDeleteComment(cbs)) {
-			result = "success";
+			result = cbs.getComment_seq();
 		}else {
-			result = "failed";
+			result = -1;
 		}
 		return result;
 	}	
@@ -558,6 +558,21 @@ public class CampingController{
 		return result;
 	}	
 	
+	//캠핑장 리뷰에 달린 댓글 페이징용 
+	@RequestMapping(value = "plusCampingReviewCommentCount.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public int plusCampingReviewCommentCount(int review_seq) throws Exception{
+		int result = service.getCampingReviewCommentCount(review_seq);
+		return result+1;
+	}
+	
+	//캠핑장 리뷰에서 댓글 삭제하면 1개 줄어들게 하기
+	@RequestMapping(value = "minusCampingReviewCommentCount.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public int minusCampingReviewCommentCount(int review_seq) throws Exception{
+		int result = service.getCampingReviewCommentCount(review_seq);
+		return result-1;
+	}
 	
 
 }
