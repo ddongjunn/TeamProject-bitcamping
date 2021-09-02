@@ -80,7 +80,7 @@
 				</tr>
 				<tr>
 					<td class="detailinfo">
-						<span><i class="fas fa-user-circle fa-sm"></i> ${answer.nickname}</span>
+						<span><i class="fas fa-user-circle fa-sm"></i> <span class="badge badge-pill badge-success">관리자</span> </span>
 					<span>
 						<i class="far fa-calendar-alt fa-sm"></i>
 						 <fmt:parseDate value="${answer.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>

@@ -13,13 +13,13 @@
     <title>Title</title>
 </head>
 
-<body>
+<body style="background-image: url('/resources/images/regi_background.jpg')">
 <div id="modal_regi" class="modal-overlay">
     <div class="modal-window">
         <%--<div class="close-area"><a href="#">X</a></div>--%>
-        <div class="title">
-            <h2>비트캠핑</h2>
-        </div>
+        <%--<div class="title">
+            <h4 style="font-weight: 600; color: #046263"><b>비트캠핑</b></h4>
+        </div>--%>
         <div class="content">
             <div class="wrap">
                 <div class="logo"></div>
@@ -115,7 +115,7 @@
 <form id="regiFrm" method="post" action="/regi/addMember.do">
     <div class="wrapper">
         <div class="login">
-            <h2>비트캠핑</h2>
+            <%--<h2>비트캠핑</h2>--%>
 
             <div class="login_id">
                 <h4>아이디</h4>
@@ -134,22 +134,22 @@
             </div>
             <div class="login_id">
                 <h4>닉네임</h4>
-                <input type="text" name="nickname" id="nickname" placeholder="한글, 영문만 사용 가능합니다. (특수기호, 공백 사용 불가)" maxlength="20" value="">
+                <input type="text" name="nickname" id="nickname" placeholder="한글, 영문만 사용 가능합니다." maxlength="20" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_id">
                 <h4>이름</h4>
-                <input type="text" name="username" id="username" placeholder="한글, 영문만 사용 가능합니다. (특수기호, 공백 사용 불가)" maxlength="20" value="">
+                <input type="text" name="username" id="username" placeholder="한글, 영문만 사용 가능합니다." maxlength="20" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_id">
                 <h4>이메일</h4>
-                <input type="email" name="email" id="useremail" placeholder="@까지 정확하게 입력해주세요. (수신 가능 이메일)" maxlength="50" value="" >
+                <input type="email" name="email" id="useremail" placeholder="@까지 정확하게 입력해주세요." maxlength="50" value="" >
                 <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
             </div>
             <div class="login_id">
                 <h4>휴대전화</h4>
-                <input type="text" id="mobile" class="int" maxlength="13" name="phone" placeholder="'-' 제외 숫자만 입력해주세요.'" value="" >
+                <input type="text" id="mobile" class="int" maxlength="13" name="phone" placeholder="'-' 제외 숫자만 입력해주세요." value="" >
                 <span class="error_next_box"></span>
             </div>
             <div class="submit">
@@ -214,7 +214,7 @@
         var idPattern = /^[a-zA-Z0-9]{4,12}$/;
 
         if($('#userid').val() === "") {
-            error[1].innerHTML = "필수 정보입니다. 아이디";
+            error[1].innerHTML = "필수 정보입니다.";
             error[1].style.color = "#ff0000";
             error[1].style.display = "block";
             idStatus = false;
@@ -252,7 +252,8 @@
     function checkPw() {
         var pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
         if($('#userpwd').val() === "") {
-            error[2].innerHTML = "필수 정보입니다. 비밀번호";
+            error[2].innerHTML = "필수 정보입니다." +
+                "";
             error[2].style.display = "block";
             return false;
         } else if(!pwPattern.test($('#userpwd').val())) {
@@ -270,7 +271,7 @@
 
     function comparePw() {
         if($('#userpwd2').val() === "") {
-            error[3].innerHTML = "필수 정보입니다. 비밀번호확인";
+            error[3].innerHTML = "필수 정보입니다.";
             error[3].style.color = "#ff0000";
             error[3].style.display = "block";
             return false;
@@ -293,7 +294,7 @@
     function nameCheck() {
         let namePattern = /^[가-힣a-zA-Z]+$/;
         if ($('#username').val() === "") {
-            error[5].innerHTML = "필수 정보입니다. 이름체크";
+            error[5].innerHTML = "필수 정보입니다.";
             error[5].style.display = "block";
             return false;
         } else if (!namePattern.test($('#username').val()) || $('#username').val().indexOf(" ") > -1) {
@@ -311,7 +312,7 @@
         let nicknamePattern =  RegExp(/^[가-힣a-zA-Z0-9]{2,10}$/);
 
         if ($('#nickname').val() === "") {
-            error[4].innerHTML = "필수 정보입니다. 닉네임";
+            error[4].innerHTML = "필수 정보입니다.";
             error[4].style.color = "#ff0000";
             error[4].style.display = "block";
             nicknameStatus = false;
@@ -351,7 +352,7 @@
         var isPhoneNum = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
 
         if ($('#mobile').val() === "") {
-            error[7].innerHTML = "필수 정보입니다. 핸드폰";
+            error[7].innerHTML = "필수 정보입니다.";
             error[7].style.color = "#ff0000";
             error[7].style.display = "block";
             return false;
@@ -370,7 +371,7 @@
         var emailPattern = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/i;
 
         if ($('#useremail').val() === "") {
-            error[6].innerHTML = "필수 정보입니다. 이메일 ";
+            error[6].innerHTML = "필수 정보입니다.";
             error[6].style.color = "#ff0000";
             error[6].style.display = "block";
             emailStatus = false;

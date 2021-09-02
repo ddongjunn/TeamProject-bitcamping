@@ -53,10 +53,10 @@
 	                    <a href="/community/dealDetail.do?community_seq=${data.community_seq }">
 		                    <c:choose>
 			                        <c:when test="${data.bbstype eq 'buy'}">
-			                            <span style="font-size: 13px; color: red;">[삽니다]</span>
+			                            <span style="font-size: 13px; color: #589345;">[삽니다]</span>
 			                        </c:when>
 			                        <c:when test="${data.bbstype eq 'sell'}">
-			                            <span style="font-size: 13px; color: orange;">[팝니다]</span>
+			                            <span style="font-size: 13px; color: #dc3546;">[팝니다]</span>
 			                        </c:when>
 			                        <c:otherwise>
 			                            <span style="font-size: 13px; color: blue;">[거래완료]</span>

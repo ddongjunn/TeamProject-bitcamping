@@ -128,4 +128,14 @@ public class AdminServiceImpl implements AdminService{
     public List<CampingListDto> recommendCampingSite() {
     	return dao.recommendCampingSite();
     }
+
+    @Override
+    public CommunityDto getCommunityDetail(int community_seq) {
+        return dao.getCommunityDetail(community_seq);
+    }
+
+    @Override
+    public String getCommunityType(int community_seq) {
+        return dao.getCommunityType(community_seq);
+    }
 }
