@@ -8,129 +8,114 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style type="text/css">
-.container{
-	width: 85%;
-	margin-top: 15px;
-}
-.comment_table{
-	width: 100%;
-	margin: auto;
-}
-</style>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
-<div class="detailboard" style="padding: 30px 60px 30px 40px;">
-	<div class="hellodetail">
-		<table border="1" style="width: 700px">
-			<colgroup>
-			   <col style="width:30%;" />
-			   <col style="width:70%;" />
-			</colgroup>
-			<thead>
-				<tr>
-				   <th>작성자</th>
-				   <td>
-				      ${data.nickname }
-				   </td>
-				</tr>
-				<tr>
-				   <th>작성날짜</th>
-				   <td>
-					 	<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
-				   </td>
-				</tr>
-				<tr>
-				   <th>조회수</th>
-				   <td>
-				      ${data.readcount }
-				   </td>
-				</tr>
-				<tr>
-				   <th>좋아요수</th>
-				   <td class="likeCount">
-				      ${likecount}
-				   </td>
-				</tr>
-				<tr>
-				   <th>제목</th>
-				   <td>
-				      ${data.title }
-				   </td>
-				</tr>
-				<tr>
-				   <th>내용</th>
-				   <td>
-				      ${data.content }
-				   </td>
-				</tr>
-			</thead>
-		</table>
-		
-		<c:if test="${login.id eq data.user_id }">
-		   <form name="updateFrm" action="/community/helloUpdate.do?bbstype=hello" method="POST">
-		      <input type="hidden" name="community_seq" value="${data.community_seq}">
-		      <input type="hidden" name="user_id" value='${login.id}'>
-			  <button type="button" onclick="del(${data.community_seq})">삭제</button>
-		      <button type="button" onclick="update()">수정</button>
-		   </form>
-		</c:if>
-		
-		<c:choose>
-		   <c:when test="${data.liked_yn == 1 }">
-		      <span>
-		         <a href="javascript:" class="likeBtn">
-		            <img src="../resources/images/like.png" width="30" height="30">
-		         </a>
-		      </span>
-		   </c:when>
-		   <c:otherwise>
-		      <span>
-		         <a href="javascript:" class="likeBtn">
-		            <img src="../resources/images/delete_like.png" width="30" height="30">
-		         </a>   
-		      </span>
-		   </c:otherwise>
-		</c:choose>
-		<button type="button" onclick="location='/community/hello.do'">목록</button>
-		
-		<!-- 댓글 영역 시작 -->
-		<div class="container">
-		    <form id="commentForm" name="commentForm" method="post">
-		        <div>
-		            <div>
-		                <span><strong>Comments</strong></span> <span id="cCnt"></span>
-		            </div>
-		            <div>
-		                <table class="comment_table">                    
-		                    <tr>
-		                        <td>
-		                            <textarea style="width: 100%" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
-		                            <br>
-		                            <div style="margin: 5px; float: right;">
-		                                <a href="#none" id="addComment">등록</a>
-		                            </div>
-		                        </td>
-		                    </tr>
-		                </table>
-		            </div>
-		        </div>
-		        <%-- <input type="hidden" id="b_code" name="b_code" value="${result.code }" /> --%>        
-		    </form>
-		</div>
-		<div class="container">
-		    <form id="commentListForm" name="commentListForm" method="post">
-		        <div id="commentList">
-		        </div>
-		    </form>
-		</div>
-		
-		<div id="pagination-div">
-		
-		</div> 
-	</div>
+
+<div class="postpath">
+	<span>
+		<a href="/main.do"><i class="fas fa-home fa-sm"></i></a> > 
+		<a href="/community/main.do">커뮤니티</a> > 
+		<a href="/community/hello.do">가입인사</a> > 
+		<a href="/community/helloDetail.do?community_seq=${data.community_seq}" style="color: #75AE87;">${data.community_seq}</a>
+	</span>
 </div>
+
+<div class="postarea">
+	<table class="tabledetail">
+		<tbody>
+			<tr>
+				<td class="detailtitle">
+					<span>${data.title }</span>
+				</td>
+			</tr>
+			<tr>
+				<td class="detailinfo">
+					<span><i class="fas fa-user-circle fa-sm"></i> ${data.nickname }</span>
+					<span>
+						<i class="far fa-calendar-alt fa-sm"></i>
+						 <fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+					</span>
+					<span>조회수 ${data.readcount }</span> 
+					<span>좋아요 ${likecount}</span> 
+					<hr>
+				</td>
+			</tr>
+			<tr>
+				<td class="detailcontent">
+					<span id="text">${data.content }</span>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="buttons_wrap" id="buttons_wrap">
+	<c:if test="${login.id eq data.user_id }">
+	   <form style="display: inline" name="updateFrm" action="/community/helloUpdate.do?bbstype=hello" method="POST">
+	      <input type="hidden" name="community_seq" value="${data.community_seq}">
+	      <input type="hidden" name="user_id" value='${login.id}'>
+		  <button type="button" class="btnSimple" onclick="del(${data.community_seq})">삭제</button>
+	      <button type="button" class="btnSimple" onclick="update()">수정</button>
+	   </form>
+	</c:if>
+	<button type="button" class="btnSimple" onclick="location='/community/hello.do'">목록</button>
+</div>
+
+<!-- 좋아요 -->
+<c:choose>
+   <c:when test="${data.liked_yn == 1 }">
+      <span>
+         <a href="javascript:" class="likeBtn">
+            <img src="../resources/images/like.png" width="30" height="30">
+         </a>
+      </span>
+   </c:when>
+   <c:otherwise>
+      <span>
+         <a href="javascript:" class="likeBtn">
+            <img src="../resources/images/delete_like.png" width="30" height="30">
+         </a>   
+      </span>
+   </c:otherwise>
+</c:choose>
+
+<!-- 댓글 영역 시작 -->
+<div class="commentarea">
+    <form id="commentForm" name="commentForm" method="post">
+        <div>
+            <div class="commentcountarea">
+                <span><strong>Comments</strong></span> <span id="cCnt"></span>
+            </div>
+            <div>
+                <table class="comment_table">                    
+                    <tr>
+                        <td class="commentwritearea">
+                            <textarea class="commenttextarea" rows="3" cols="30" id="comment" name="comment" placeholder="댓글을 입력하세요"></textarea>
+                            <br>
+                            <div style="margin: 5px; float: right;">
+                                <a href="#none" id="addComment">등록</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <%-- <input type="hidden" id="b_code" name="b_code" value="${result.code }" /> --%>        
+    </form>
+</div>
+
+<div class="commentlistarea">
+    <form id="commentListForm" name="commentListForm" method="post">
+        <div class="commentlist" id="commentList" >
+        </div>
+    </form>
+</div>
+
+<div id="pagination-div">
+
+</div> 
 
 <script type="text/javascript">
 
@@ -317,8 +302,6 @@ function update(){
                 }
             	let pageSize = 10;
             	let _totalPages = totalCount / pageSize;
-            	
-         
  
             	if(totalCount % pageSize > 0){
             		_totalPages++;  
@@ -354,48 +337,53 @@ function update(){
                         
                         /* 댓글 내용 div */
                         if(data.comment[i].depth == 0){
-                        	html += "<h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
-                            html += "<h6>" + wdate + "</h6>";
+                        	html += "<span style='color: #75AE87; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                        	html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_seq+");'>답글</a></span>";
+                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
                            	html += "<div id='cmt"+data.comment[i].comment_seq+"'>";
-	                        html += "<div>"+data.comment[i].content+"</div>";
+	                        html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
                         
                         /* 대댓글 내용 div */
                         }else{
-                        	html += "<div style='float: left;'>ㄴ</div>";
-                        	html += "<div id='cmt"+data.comment[i].comment_seq+"' style='margin-left: 15px;'><h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
-                            html += "<h6>"+wdate+"</h6>";
-                            html += "<div>"+data.comment[i].content+"</div>";
+                        	html += "<div style='float: left; color: #DBDBDB; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></div>";
+                        	html += "<span style='color: tomato; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>"+wdate+"</span>";
+                        	html += "<div id='cmt"+data.comment[i].comment_seq+"' style='margin-left: 15px;'>";
+                            html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
                         }
-                        
-                        /* 수정, 삭제, 답글 div */
-                        html += "<div><h5>";                        
+
+                        /* 수정, 삭제 버튼 div */
+                        html += "<div style='text-align: right;'";                        
                         if('${login.id}' === data.comment[i].user_id){         	
 	                        html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data.comment[i].comment_seq+");'>수정</a></span>";
 	                        html += "<span style='margin: 5px;'><a href='javascript:commentDelete("+data.comment[i].comment_seq+");'>삭제</a></span>";
                         }                        
-                        html += "<span style='margin: 5px; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_seq+");'>답글</a></span>";
-                        html += "</h5></div>";
-                        html += "</div>"; // 댓글 내용 div 여기서 끝
-                        
-                        /* 대댓글 입력창 div */
-                        html += "<div id='answerbox"+data.comment[i].comment_seq+"' style='display: none;'>";
-                        html += "<h5><span style='color: tomato'>"+data.comment[i].nickname+"</span></h5>";
-                        html += "<textarea style='width: 100%' rows='3' cols='30' id='answer"+data.comment[i].comment_seq+"' placeholder='댓글을 입력하세요'></textarea>";
-                        html += "<div style='float: right;'><h5>";
-                        html += "<span style='margin: 5px;'><a href='javascript:commentAnswer("+data.comment[i].comment_seq+");'>등록</a></span>";
-                        html += "<span style='margin: 5px;'><a href='javascript:showAnswer("+data.comment[i].comment_seq+");'>취소</a></span>";
-                        html += "</h5></div>";
                         html += "</div>";
-                        
+                        html += "<hr style='margin-bottom: 0'>";
+                        html += "</div>"; // 댓글 내용 div 여기서 끝
+
                         /* 댓글 수정창 div */
                         html += "<div id='updatebox"+data.comment[i].comment_seq+"' style='display: none;'>";
-                        html += "<textarea style='width: 100%' rows='3' cols='30' id='update"+data.comment[i].comment_seq+"' placeholder='댓글을 입력하세요'>"+data.comment[i].content+"</textarea>";
-                        html += "<div style='float: right;'><h5>";
+                        html += "<textarea class='commenttextarea' style='margin: 5px' rows='3' cols='30' id='update"+data.comment[i].comment_seq+"' placeholder='댓글을 입력하세요'>"+data.comment[i].content+"</textarea>";
+                        html += "<div style='float: right; margin: 5px;'>";
                         html += "<span style='margin: 5px;'><a href='javascript:commentUpdate("+data.comment[i].comment_seq+");'>등록</a></span>";
                         html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data.comment[i].comment_seq+");'>취소</a></span>";
-                        html += "</h5></div>";
+                        html += "</div>";
                         html += "</div>";
                         
+                        
+                        /* 대댓글 입력창 div */
+                        html += "<div class='commentanswerarea' id='answerbox"+data.comment[i].comment_seq+"' style='display: none;'>";
+                        html += "<span style='float: left; color: #DBDBDB; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></span>"
+                        html += "<span style='color: tomato; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                        html += "<textarea class='commenttextarea' style='margin: 5px' rows='3' cols='30' id='answer"+data.comment[i].comment_seq+"' placeholder='댓글을 입력하세요'></textarea>";
+                        html += "<div style='float: right; margin: 5px;'>";
+                        html += "<span style='margin: 5px;'><a href='javascript:commentAnswer("+data.comment[i].comment_seq+");'>등록</a></span>";
+                        html += "<span style='margin: 5px;'><a href='javascript:showAnswer("+data.comment[i].comment_seq+");'>취소</a></span>";
+                        html += "</div>";
+                        html += "<hr style='margin: 30px 0 0 0;'>";
+                        html += "</div>";
+                                                
                         html += "</td></tr>";
                         html += "</table>";
                         html += "</div>";
