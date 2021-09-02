@@ -6,7 +6,7 @@
 }
 
 .communitybox {
-	 border: 1px solid #046263;
+	 border: 3px solid #75AE87;
 	 padding: 40px;
 	 margin-bottom: 20px;
 	 text-align: center;
@@ -47,7 +47,6 @@
 }
 
 .point {
-	
     position: relative;
     padding-left: 28px;
     color: #c4426e;
@@ -59,7 +58,6 @@
 }
 
 .bbs_total span {
-	padding-left: 20px;
 	font-weight: bold;
 }
 
@@ -73,4 +71,17 @@
 
 .table_top {
 	background-color: #75AE87;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+}
+
+.bbstable{
+	text-align: center;
+	font-weight: bold;
+}
+
+.list > td {
+	margin-top: 30px; 
+	margin-bottom: 30px;
 }

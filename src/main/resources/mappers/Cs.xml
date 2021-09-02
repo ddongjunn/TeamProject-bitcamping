@@ -85,7 +85,7 @@
 		INSERT INTO NOTICE_COMMENT
 		VALUES(NOTICE_COMMENT_SEQ.NEXTVAL, #{notice_Seq}, #{user_Id}, #{content}, 
 			(SELECT REF FROM NOTICE_COMMENT WHERE COMMENT_SEQ = #{comment_Seq}), 
-			(SELECT MAX(STEP) FROM NOTICE_COMMENT WHERE REF = #{ref}) + 1,
+			(SELECT MAX(STEP) FROM NOTICE_COMMENT WHERE REF = (SELECT REF FROM NOTICE_COMMENT WHERE COMMENT_SEQ = #{comment_Seq})) + 1,
 			(SELECT DEPTH FROM NOTICE_COMMENT WHERE COMMENT_SEQ = #{comment_Seq}) + 1, SYSDATE, 0)
 	</insert>
 	
@@ -108,7 +108,7 @@
 		FROM (SELECT ROW_NUMBER()OVER(ORDER BY REF ASC, STEP ASC, DEPTH ASC) AS RNUM, COMMENT_SEQ, NOTICE_SEQ, 
 			USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, CONTENT, REF, STEP, DEPTH, WDATE, DEL
 			FROM NOTICE_COMMENT
-			WHERE DEL = 0
+			WHERE 1 = 1
 				AND NOTICE_SEQ = #{notice_Seq})
 		WHERE RNUM BETWEEN #{start} AND #{end}
 		ORDER BY REF ASC, STEP ASC, DEPTH ASC 
@@ -225,6 +225,18 @@
 		UPDATE QNA
 		SET STATUS = 1
 		WHERE REF = #{ref}
+			AND STEP = 0
+	</update>
+	
+	<delete id="qnaAnswerDelete" parameterType="java.lang.Integer">
+		DELETE FROM QNA
+		WHERE QNA_SEQ = #{qna_Seq}
+	</delete>
+		
+	<update id="answerStatusWait" parameterType="java.lang.Integer">
+		UPDATE QNA
+		SET STATUS = 0
+		WHERE REF = (SELECT REF FROM QNA WHERE QNA_SEQ = #{qna_Seq})
 			AND STEP = 0
 	</update>
 	

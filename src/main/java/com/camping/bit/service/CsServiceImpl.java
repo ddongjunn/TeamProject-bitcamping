@@ -163,4 +163,16 @@ public class CsServiceImpl implements CsService{
 
 		dao.qnaDelete(qna_Seq);
 	}
+
+	@Override
+	public void qnaAnswerDelete(int qna_Seq) {
+		
+		dao.qnaAnswerDelete(qna_Seq);
+	}
+
+	@Override
+	public int answerStatusWait(int qna_Seq) {
+		
+		return dao.answerStatusWait(qna_Seq);
+	}
 }

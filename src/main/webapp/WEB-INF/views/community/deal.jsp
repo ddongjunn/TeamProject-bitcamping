@@ -16,7 +16,7 @@
 
 <main class="board">
 <div class="maintitle">
-	<h2>중고거래게시판</h2>
+	<h2>중고거래</h2>
 </div>
 
 <div class="communitybox">
@@ -62,8 +62,7 @@
 	<span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
-<div class="container">
-	<table class="table table-sm">
+	<table class="table bbstable">
 		<colgroup>
 			<col style="width: 10%;" />
 			<col style="width: auto;" />
@@ -73,7 +72,7 @@
 		</colgroup>
 		<thead>
 			<tr class="table_top">
-				<td>번호</td>
+				<td>글번호</td>
 				<td>제목</td>
 				<td>작성자</td>
 				<td>작성일</td>
@@ -85,25 +84,25 @@
 			<c:forEach var="data" items="${dealList}">
 				<tr>
 					<td>${data.community_seq }</td>
-					<td>
+					<td style="text-align: left">
 						<a href="/community/dealDetail.do?community_seq=${data.community_seq }">
-								<c:choose>
-									<c:when test="${data.bbstype eq 'buy'}">
-										<span style="font-size: 13px; color: red;">[삽니다]</span>
-									</c:when>
-									<c:when test="${data.bbstype eq 'sell'}">
-										<span style="font-size: 13px; color: orange;">[팝니다]</span>
-									</c:when>
-									<c:otherwise>
-										<span style="font-size: 13px; color: blue;">[거래완료]</span>
-									</c:otherwise>
-								</c:choose>
-								${data.title} 
-								<c:if test="${data.commentcount ne 0}">
-									<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
-								</c:if>
-						</a>
-					</td>
+	                        <c:choose>
+	                             <c:when test="${data.bbstype eq 'buy'}">
+                                     <span style="font-size: 13px; color: #589345;">[삽니다]</span>
+                                 </c:when>
+                                 <c:when test="${data.bbstype eq 'sell'}">
+                                     <span style="font-size: 13px; color: #dc3546;">[팝니다]</span>
+                                 </c:when>
+                                 <c:otherwise>
+                                     <span style="font-size: 13px; color: blue;">[거래완료]</span>
+                                 </c:otherwise>
+	                        </c:choose>
+	                        ${data.title} 
+	                        <c:if test="${data.commentcount ne 0}">
+	                           <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+	                        </c:if>
+	                   </a>
+	                </td>
 					<td>${data.nickname }</td>
 					<td>
 						<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -114,7 +113,6 @@
 			</c:forEach>
 		</thead>
 	</table>
-</div>
 <br>
 
 

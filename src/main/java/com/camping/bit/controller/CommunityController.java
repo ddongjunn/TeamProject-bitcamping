@@ -46,7 +46,7 @@ public class CommunityController {
    @RequestMapping(value = "main.do", method = RequestMethod.GET)
    public String mainboard() {
    
-      return "redirect:/community/hello.do";
+      return "community.tiles";
    
    }
    

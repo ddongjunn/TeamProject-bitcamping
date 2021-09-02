@@ -42,7 +42,6 @@
 	margin : 30px 200px 30px 250px;
 }
 
-
 /*페이지네이션*/
 .pagination > li > a
 {
@@ -63,17 +62,35 @@
 .pagination > .active > a
 {
     color: white;
-    background-color: #2c6639 !Important;
+    background-color: #87C4B7 !Important;
     border: solid 1px #2c6639 !Important;
 }
 
 .pagination > .active > a:hover
 {
-    background-color: #2c6639 !Important;
+    background-color: #87C4B7 !Important;
     border: solid 1px #2c6639;
 }
 
 
+/*버튼*/
+
+.btn-light{
+	color : #FBC853;
+	border-color : #FBC853;
+}
+.btn-light:hover{
+	color : #E07260;
+	border-color : #FBC853;
+}
+
+.updatebutton{
+	margin : 0 300px 50px 30px;
+}
+
+.writebutton{
+	margin : 0 300px 50px 30px;
+}
 
 /*리뷰 디테일 화면 */
 .camping_list{

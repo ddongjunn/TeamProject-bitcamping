@@ -21,7 +21,21 @@
 	color: gray;
 	font-weight: bold;
 }
-
+.faqmenuarea{
+	display: flex;
+	justify-content: space-around;
+}
+.faqmenutitle{
+	margin-bottom: 10px;
+	font-weight: bold;
+	font-size: 17px;
+}
+.faqmenulist > p{
+	width: 100%;
+	margin: 5px;
+	font-size: 14px;
+	font-weight: bold;
+}
 /* contact us */
 .customer {
 	max-width: 1330px;

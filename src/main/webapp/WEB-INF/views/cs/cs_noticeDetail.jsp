@@ -14,7 +14,7 @@
 
 <div class="postpath">
 	<span>
-		<a href="/cs/main.do"><i class="fas fa-home fa-sm"></i></a> > 
+		<a href="/main.do"><span style="font-size: 18px;"><i class="fas fa-home fa-sm"></i></span></a> > 
 		<a href="/cs/csMain.do">고객센터</a> > 
 		<a href="/cs/notice.do">공지사항</a> > 
 		<a href="/cs/noticeDetail.do?notice_Seq=${notice.notice_Seq}" style="color: #75AE87;">${notice.notice_Seq}</a>
@@ -261,6 +261,10 @@
          
               	/* 댓글 페이징 */
             	let totalCount = data.totalCount;
+            	if(totalCount === 0){
+            		totalCount = 1;
+            	}
+            	
             	let nowPage = pageNumber;
             	let pageSize = 10;
             	let _totalPages = totalCount / pageSize;
@@ -301,24 +305,39 @@
                         
                         /* 댓글 내용 div */
                         if(data.comment[i].depth == 0){
-                        	html += "<span style='color: #75AE87; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
-                        	html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>답글</a></span>";
-                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
-                           	html += "<div id='cmt"+data.comment[i].comment_Seq+"'>";
-	                        html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
-                        
+                        	if(data.comment[i].del == 0){
+	                        	html += "<span style='color: black; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+	                        	html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>답글</a></span>";
+	                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
+	                           	html += "<div id='cmt"+data.comment[i].comment_Seq+"'>";
+		                        html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
+                        	}else{
+		                    	html += "<span style='color: black; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+	                        	html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>답글</a></span>";
+	                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
+	                           	html += "<div id='cmt"+data.comment[i].comment_Seq+"'>";
+		                        html += "<div style='margin: 10px 0; color: #ABABAB;'>삭제된 댓글입니다</div>";
+		                    }
                         /* 대댓글 내용 div */
                         }else{
-                        	html += "<div style='float: left; color: #DBDBDB; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></div>";
-                        	html += "<span style='color: tomato; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
-                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>"+wdate+"</span>";
-                        	html += "<div id='cmt"+data.comment[i].comment_Seq+"' style='margin-left: 15px;'>";
-                            html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
+                        	if(data.comment[i].del == 0){
+                        		html += "<div style='float: left; color: #75AE87; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></div>";
+                            	html += "<span style='color: black; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                                html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>"+wdate+"</span>";
+                            	html += "<div id='cmt"+data.comment[i].comment_Seq+"' style='margin-left: 15px;'>";
+                                html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
+                        	}else{
+                        		html += "<div style='float: left; color: #75AE87; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></div>";
+                            	html += "<span style='color: black; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                                html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>"+wdate+"</span>";
+                            	html += "<div id='cmt"+data.comment[i].comment_Seq+"' style='margin-left: 15px;'>";
+                                html += "<div style='margin: 10px 0; color: #ABABAB;'>삭제된 댓글입니다</div>";
+		                    }                        	
                         }
                         
                         /* 수정, 삭제 버튼 div */
                         html += "<div style='text-align: right;'";                        
-                        if('${login.id}' === data.comment[i].user_Id){         	
+                        if('${login.id}' === data.comment[i].user_Id && data.comment[i].del == 0){         	
 	                        html += "<span style='margin: 5px;'><a href='javascript:showUpdate("+data.comment[i].comment_Seq+");'>수정</a></span>";
 	                        html += "<span style='margin: 5px;'><a href='javascript:commentDelete("+data.comment[i].comment_Seq+");'>삭제</a></span>";
                         }                        
@@ -337,8 +356,8 @@
                         
                         /* 대댓글 입력창 div */
                         html += "<div class='commentanswerarea' id='answerbox"+data.comment[i].comment_Seq+"' style='display: none;'>";
-                        html += "<span style='float: left; color: #DBDBDB; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></span>"
-                        html += "<span style='color: tomato; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                        html += "<span style='float: left; color: #75AE87; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></span>"
+                        html += "<span style='color: black; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
                         html += "<textarea class='commenttextarea' style='margin: 5px' rows='3' cols='30' id='answer"+data.comment[i].comment_Seq+"' placeholder='댓글을 입력하세요'></textarea>";
                         html += "<div style='float: right; margin: 5px;'>";
                         html += "<span style='margin: 5px;'><a href='javascript:commentAnswer("+data.comment[i].comment_Seq+");'>등록</a></span>";

@@ -46,7 +46,8 @@
   height: 180px;
   padding:0 6.8%;
   /* transition:all 0.3s; */ /*메뉴효과 */
-  background-color: rgba(255, 255, 255, 0.8);  /* 헤더 색상 */
+  background-color: rgba(212, 223, 227, 1);  /* 헤더 색상 */
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
 #header > .indiv {
@@ -66,6 +67,14 @@
 #logo{
 	width: 180px;
 	margin: 10px auto 15px auto;
+}
+.sidelogo{
+	display: none;
+	width: 120px;
+	position: fixed;
+	top: 11px;
+	left: 13%;
+	z-index: 100;
 }
 #header > .indiv .logobox {
   display: flex;
@@ -88,7 +97,7 @@
 }
 #header > .indiv #menu > li > a {
   position:relative;
-  font-size:20px;
+  font-size:15px;
   line-height:30px;
   font-weight:800;
   color: #000000;
@@ -126,7 +135,7 @@
   width: 100%;
   z-index: 1;
   line-height: 70px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(212, 223, 227, 1);
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 /** header end **/

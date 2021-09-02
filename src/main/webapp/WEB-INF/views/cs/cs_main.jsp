@@ -18,30 +18,33 @@
 		<hr>
 	</div>
 
-	<div class="faqmenu">
+	<div class="faqmenuarea">
 		<div class="faqmenu">
-			<div>
-				<p class="faqmenutitle">나의 정보 조회</p>
-				<p>주문 내역 조회</p>
-				<p>반품 신청</p>
+			<p class="faqmenutitle">나의 정보 조회</p>
+			<span class="faqmenulist">
 				<p>아이디 찾기</p>
 				<p>패스워드 찾기</p>
-			</div>
-			<div>
-				<p class="faqmenutitle">주문/배송/반품 안내</p>
+				<p>회원정보 변경 및 탈퇴 안내</p>
+			</span>
+		</div>
+		<div class="faqmenu">
+			<p class="faqmenutitle">주문/배송/반품 안내</p>
+			<span class="faqmenulist">
+				<p>주문 내역 조회</p>
+				<p>반품 신청</p>
 				<p>주문 결제 안내</p>
 				<p>취소/반품 안내</p>
-				<p></p>
-			</div>
-			<div>
-				<p class="faqmenutitle">기타문의</p>
+			</span>
+		</div>
+		<div class="faqmenu">
+			<p class="faqmenutitle">기타문의</p>
+			<span class="faqmenulist">
 				<p>고객센터 이용 안내</p>
 				<p>pc문제/오류 안내</p>
 				<p>현금영수증 및 전자 영수증안내</p>
-				<p>회원정보 변경 및 탈퇴 안내</p>
-			</div>
-		</div>	
-	</div>
+			</span>
+		</div>
+	</div>	
 
 </div>
 

@@ -16,7 +16,7 @@
 
 <main class="board">
 <div class="maintitle">
-	<h2>캠핑여행&후기게시판</h2>
+	<h2>캠핑여행&후기</h2>
 </div>
 
 <div class="communitybox">
@@ -53,8 +53,7 @@
 	<span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
-<div class="container">
-	<table class="table table-sm">
+	<table class="table bbstable">
 		<colgroup>
 			<col style="width: 10%;" />
 			<col style="width: auto;" />
@@ -64,7 +63,7 @@
 		</colgroup>
 	<thead>
 		<tr class="table_top">
-			<td>번호</td>
+			<td>글번호</td>
 			<td>제목</td>
 			<td>작성자</td>
 			<td>작성일</td>
@@ -76,7 +75,7 @@
 			<c:forEach var="data" items="${reviewList}">
 				<tr>
 					<td>${data.community_seq }</td>
-					<td>
+					<td style="text-align: left">
 						<a href="/community/reviewDetail.do?community_seq=${data.community_seq }">
 							${data.title}
 							<c:if test="${data.commentcount ne 0}">
@@ -94,7 +93,6 @@
 			</c:forEach>
 	</thead>
 	</table>
-</div>
 <br>
 
 

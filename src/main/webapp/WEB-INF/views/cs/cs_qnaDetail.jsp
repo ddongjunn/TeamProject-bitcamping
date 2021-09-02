@@ -14,14 +14,14 @@
 
 <div class="postpath">
 	<span>
-		<a href="/cs/main.do"><i class="fas fa-home fa-sm"></i></a> > 
+		<a href="/main.do"><i class="fas fa-home fa-sm"></i></a> > 
 		<a href="/cs/csMain.do">고객센터</a> > 
 		<a href="/cs/notice.do">Q & A</a> > 
 		<a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}" style="color: #75AE87;">${qna.qna_Seq}</a>
 	</span>
 </div>
 
-<div class="detailtitle">Question</div>
+<div class="detailboardtitle">문의 내용</div>
 <div class="postarea">
 	<table class="tabledetail">
 		<tbody>
@@ -69,7 +69,7 @@
 </div>
 
 <c:if test="${qna.status eq 1}">
-	<div class="detailtitle">Answer</div>
+	<div class="detailboardtitle">답변 내용</div>
 		<div class="postarea">
 			<table class="tabledetail">
 			<tbody>
@@ -101,7 +101,7 @@
 <div class="update_buttons_wrap">
 	<c:if test="${login.id eq answer.user_Id}">
 		<button type="button" class="btnSimple" id="btnUpdate" onclick="location.href='/cs/qnaAnswerUpdate.do?qna_Seq=${answer.qna_Seq}'">수정</button>
-		<button type="button" class="btnSimple" id="btnDelete" onclick="confirmAnwser()">삭제</button>	
+		<button type="button" class="btnSimple" id="btnDelete" onclick="confirmAnswer()">삭제</button>	
 	</c:if>
 </div>
 
@@ -148,7 +148,7 @@
 			  /* Read more about isConfirmed, isDenied below */
 			  if (result.isConfirmed) {
 			    /* Swal.fire('삭제되었습니다', '', 'success'); */
-			    location.href="/cs/qnaDelete.do?qna_Seq=${answer.qna_Seq}";
+			    location.href="/cs/qnaAnswerDelete.do?qna_Seq=${answer.qna_Seq}";
 			  } else if (result.isDenied) {
 			    return;
 			  }

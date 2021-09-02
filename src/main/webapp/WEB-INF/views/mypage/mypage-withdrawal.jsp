@@ -31,7 +31,7 @@
 	        <br>
 	
 	        <div class="withdrawal-textarea">
-	            <h5>탈퇴하시려는 사유를 입력해주세요.</h5>
+	            <h5 style="margin-bottom: 5px;">탈퇴하시려는 사유를 입력해주세요.</h5>
 	            <textarea name="reason2" wrap="hard" rows="10" cols="70" maxlength="2000" placeholder="비트캠핑 운영진에게 하시고 싶은 말씀이 있으면 남겨주세요. &#13;&#10;2,000자까지 입력할 수 있습니다."></textarea>
 	            <span class="error_msg"></span>
 	        </div>

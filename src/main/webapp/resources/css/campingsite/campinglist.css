@@ -62,11 +62,7 @@ td{
 }
 
 .deep-search{
-	margin : 10px 200px 50px 100px;
-}
-
-.camping_site.name{
-	color : #3cc74b !Important;
+	margin : 10px 200px 0 420px;
 }
 
 .camping_search_list{
@@ -76,6 +72,23 @@ td{
 .search_sorting{
 	margin : 0 100px 0 100px;
 }
+
+h2{
+    	color : black;
+    }
+a, a:link, a:visited{
+	color : #FBC853;
+}
+
+.btn-light{
+	color : #FBC853;
+	border-color : #FBC853;
+}
+.btn-light:hover{
+	color : #E07260;
+	border-color : #FBC853;
+}
+
 /*페이지네이션*/
 .pagination > li > a
 {
@@ -90,19 +103,19 @@ td{
 {
     color: #5a5a5a;
     background-color: #eee;
-    border-color: #ddd;
+    /*border-color: #ddd;*/
 }
 
 .pagination > .active > a
 {
     color: white;
-    background-color: #2c6639 !Important;
+    background-color: #87C4B7 !Important;
     border: solid 1px #2c6639 !Important;
 }
 
 .pagination > .active > a:hover
 {
-    background-color: #2c6639 !Important;
+    background-color: #87C4B7 !Important;
     border: solid 1px #2c6639;
 }
 
@@ -248,10 +261,6 @@ td{
 
 .no-csspointerevents .nice-select.open .list {
   display: block; }
-  
-  button{
-  border : none;
-  }
   
   /*캠핑장 아무 결과도 안 나올때 이미지*/
   .nosearchpic{

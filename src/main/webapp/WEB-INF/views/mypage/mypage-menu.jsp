@@ -22,7 +22,7 @@
 		        <span style="align-items: center;">
 		        	<i class="fas fa-user"></i>
 		        </span>
-		        <span style="margin-bottom: 10px">
+		        <span style="margin-bottom: 10px; font-weight: bold;">
 		        	${login.nickname}
 		        </span>
 	    </div>
