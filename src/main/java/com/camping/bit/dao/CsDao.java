@@ -56,4 +56,8 @@ public interface CsDao {
 
 	public ProductQnaDto getQna(int qna_seq);
 
+	public void qnaAnswerDelete(int qna_Seq);
+
+	public int answerStatusWait(int qna_Seq);
+
 }

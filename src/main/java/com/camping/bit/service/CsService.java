@@ -58,4 +58,8 @@ public interface CsService {
 
 	public void qnaDelete(int qna_Seq);
 
+	public void qnaAnswerDelete(int qna_Seq);
+
+	public int answerStatusWait(int qna_Seq);
+
 }
