@@ -43,10 +43,10 @@
 	height: 100%;
 }
 #ground > #header {
-  height: 180px;
+  height: 230px;
   padding:0 6.8%;
   /* transition:all 0.3s; */ /*메뉴효과 */
-  background-color: rgba(212, 223, 227, 1);  /* 헤더 색상 */
+  background-color: rgba(255, 255, 255, 1);  /* 헤더 색상 */
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
@@ -80,10 +80,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
   padding-top: 10px;
   color: #ff6e6f;
   text-align: center;
+  margin: 0 0 30px;
 }
 #header > .indiv #menu {
   display:table;

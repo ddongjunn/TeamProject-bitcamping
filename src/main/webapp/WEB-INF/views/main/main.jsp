@@ -17,27 +17,28 @@
 	<script type="text/javascript" src="https://rendro.github.io/easy-pie-chart/javascripts/jquery.easy-pie-chart.js"></script>
 </head>
 <body>
-<div class="bgimage">
-	<img src='https://images.unsplash.com/photo-1592351763700-b9b35a6465ea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80' />
-</div>
+<%--<div class="bgimage">
+	<img src='/resources/images/main_background.jpg' />
+</div>--%>
 <!-- container start -->
 <div id="container">
 	<div class="search-area">
 		<div class="img-area">
 			<!-- <img src='/resources/images/camp-bg.png' /> -->
 		</div>
-		<div class="search-container">
+		<%--<div class="search-container">
 			<div class="title f_wcolor">지역별 캠핑장 검색</div>
 			<div class="search-contents mt50">
 				<input type="text" placeholder="지역을 입력하세요" class="shadow"/>
 				<button class="search-btn shadow"></button>
 			</div>
-		</div>
+		</div>--%>
 
 
 		<!-- campingtype data start -->
-		<div class="campsitetype">
-			<div class="campsitetitle">전국 <span class="count" data-esing="swing">2647</span>개의 캠핑장 데이터를 한 곳에!</div>
+		<div class="campsitetype" style="">
+			<div class="campsitetitle">전국 <span class="count" data-esing="swing">2647</span>개의
+				<p class="mt10">캠핑장 데이터를 한 곳에!</p> </div>
 			<div class="campsitechart">
 				<div class="chart type1" data-percent="64">일반야영장 64%</div>
 				<div class="chart type2" data-percent="35">자동차야영장 35%</div>
@@ -47,10 +48,48 @@
 		</div>
 		<!-- campingtype data end -->
 
-		
 	</div>
-	<div class="contents-area mt50">
-	
+
+	<div class="row" style="width: 100%; height: 130px;">
+		<div class=".col-xs12 .col-md-8" style="background-color: #1FB154 ; width: 70%; display: table-cell; vertical-align: middle">
+			<div style="text-align: center; position: relative; top:40px;justify-content: center ">
+				<div style="position: relative; top:-1px">
+					<div style="font-size: 30px; font-weight: bold; color: white; padding-right: 15px; display: inline; position: relative; top: 6px">어디로 떠날까?</div>
+					<div style="display: inline">
+						<input class="search__input" type="text" placeholder="지역을 입력하세요">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class=".col-xs6 .col-md-4" style="background-color:  #FFA600 ; width: 30%; display: table-cell; vertical-align: middle" >
+			<div style="text-align: center; position: relative; top:18px ">
+				<div style="margin-top: 3px"><span style="font-size: 15px; color: #FFFFFF">비트캠핑 고객센터</span></div>
+				<div class="mt10"><span style="font-size: 30px; color: #FFFFFF; font-weight: bold">1577 . 8282</span></div>
+				<div class="mt10"><span style="font-size: 15px; color: #FFFFFF">상담시간 : AM 9시 ~ PM 6시 까지</span></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row" style="margin-top:50px; width: 100%">
+		<div class="" style="float: left; width: 30%; border: 1px solid #E07260; margin-left: 30px">
+
+
+		</div>
+		<div class="col-md-8" style="float: left; width: 70%">
+			<div class="item_box">
+				<div id="tab">
+					<ul>
+						<li><img src="/resources/images/testimg.jpg" width="400" height="100"></li>
+						<li><img src="/resources/images/testimg.jpg" width="400" height="100"></li>
+						<li><img src="/resources/images/testimg.jpg" width="400" height="100"></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="contents-area mt150">
 		<!-- recommend area start -->
 		<div class="recommendslide">
 			<div class="lefttitle">
@@ -74,8 +113,6 @@
 					</article>
 				</c:forEach>
 			</div>
-
-			
 		</div>
 		<!-- recommend area end -->
 
@@ -200,7 +237,7 @@
 				scaleColor: "rgba(255, 255, 255, 0)",
 				lineWidth: 15,
 				lineCap: 'butt',
-				barColor: '#87C4B7',
+				barColor: '#ff7761',
 				trackColor:	"#ecf0f1",
 				size: 200,
 				animate: 1000
@@ -209,7 +246,7 @@
 				scaleColor: "rgba(255, 255, 255, 0)",
 				lineWidth: 15,
 				lineCap: 'butt',
-				barColor: '#E07260',
+				barColor: '#fdc23e',
 				trackColor:	"#ecf0f1",
 				size: 200,
 				animate: 1000
@@ -218,7 +255,7 @@
 				scaleColor: "rgba(255, 255, 255, 0)",
 				lineWidth: 15,
 				lineCap: 'butt',
-				barColor: '#FBC853',
+				barColor: '#f9a11b',
 				trackColor:	"#ecf0f1",
 				size: 200,
 				animate: 1000
@@ -227,7 +264,7 @@
 				scaleColor: "rgba(255, 255, 255, 0)",
 				lineWidth: 15,
 				lineCap: 'butt',
-				barColor: '#78E6D0',
+				barColor: '#274555',
 				trackColor:	"#ecf0f1",
 				size: 200,
 				animate: 1000
