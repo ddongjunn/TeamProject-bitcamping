@@ -42,6 +42,8 @@ public interface AdminService {
 
     public List<CampingListDto> recommendCampingSite();
 
+    public CommunityDto getCommunityDetail(int community_seq);
 
+    public String getCommunityType(int community_seq);
 
 }

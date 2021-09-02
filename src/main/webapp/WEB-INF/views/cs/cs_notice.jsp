@@ -48,7 +48,14 @@
 				<td>
 					<c:if test="${not empty notice.filename}"> 💾 </c:if>
 				</td>
-				<td>${notice.nickname}</td>
+				<c:choose>
+					<c:when test="${notice.nickname ne '관리자'}">
+						<td> ${notice.nickname} </td>
+					</c:when>
+					<c:otherwise>
+						<td><span class="badge-md badge-pill badge-success">관리자</span></td>
+					</c:otherwise>
+				</c:choose>
 				<td>
  					<fmt:parseDate value="${notice.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
 					<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>

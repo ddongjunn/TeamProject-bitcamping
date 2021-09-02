@@ -71,7 +71,14 @@
 						</c:otherwise>
 					</c:choose>			
 				</td>
-				<td>${qna.nickname}</td>
+				<c:choose>
+					<c:when test="${qna.nickname ne '관리자'}">
+						<td> ${qna.nickname} </td>
+					</c:when>
+					<c:otherwise>
+						<td> <span class="badge-md badge-pill badge-success">관리자</span> </td>
+					</c:otherwise>
+				</c:choose>
 				<td>
  					<fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
 					<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>

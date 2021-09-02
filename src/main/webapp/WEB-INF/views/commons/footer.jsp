@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <!DOCTYPE html>
@@ -17,7 +18,7 @@
             background: #FFFFFF;
         }
 
-        .col-xs-6 col-sm-3 > span, i {
+        .col-xs-6 col-sm-3 > span, .col-xs-6 col-sm-3 > i {
             margin-bottom: 3px;
             color: #FFFFFF;
         }
@@ -94,9 +95,18 @@
         <div class="col"></div>
         <div class="col">
           <span class="footer_content">
-            <p style="color: white"> <a href="">위치안내</a></p>
-            <p style="color: white"><a onclick="modalOn()">로그인</a></p>
-            <p style="color: white"><a href="/regi/normal.do">회원가입</a></p>
+            <span><p> <a href="" style="color: white; font-size: 13px">위치안내</a></p></span>
+              <c:if test="${empty login}">
+                  <p><span style="color: white"><a onclick="modalOn()" style="color: white; font-size: 13px">로그인</a></span></p>
+                  <p style="color: white"><a href="/regi/normal.do" style="color: white; font-size: 13px">회원가입</a></p>
+              </c:if>
+              <c:if test="${login.auth == 0}">
+                  <p style="color: white"><a href="/account/main.do" style="color: white; font-size: 13px">마이페이지</a></p>
+                  <p style="color: white"><a href="/login/logout.do" style="color: white; font-size: 13px">로그아웃</a></p>
+              </c:if>
+              <c:if test="${login.auth == 1}">
+                  <p style="color: white"><a href="/admin/main.do" style="color: white; font-size: 13px">관리자페이지</a></p>
+              </c:if>
           </span>
         </div>
         <div class="col">
@@ -141,7 +151,7 @@
             <span>고객센터 전화문의 <a href="tel:010-3258-0508" style="color: white"><i>080-022-0182</i></a></span>
             <br>
             <span class="driver">FAX <i>02-622-3214</i> |</span>
-            <span class="driver">E-mail <a href="mailto:ddongjunn@gmail.com"><i>service@bitcamping.co.kr</i></a></span>
+            <span class="driver">E-mail <a href="mailto:ddongjunn@gmail.com" style="color: white;"><i>service@bitcamping.co.kr</i></a></span>
           </span>
         </div>
         <!-- 필요한 뷰포트에만 clearfix 를 추가하세요 -->

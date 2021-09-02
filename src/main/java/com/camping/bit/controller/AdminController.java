@@ -3,8 +3,11 @@ package com.camping.bit.controller;
 import com.camping.bit.commons.FileUploadUtil;
 import com.camping.bit.dto.*;
 import com.camping.bit.service.AdminService;
+import com.camping.bit.service.CommunityService;
 import com.camping.bit.service.CsService;
 import com.camping.bit.service.RentService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,12 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -33,6 +38,9 @@ public class AdminController {
 
     @Autowired
     RentService rentService;
+
+    @Autowired
+    CommunityService communityService;
 
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String main(Model model) {
@@ -410,6 +418,130 @@ public class AdminController {
         System.out.println(order);
 
         return "admin-orderdetail.tiles";
+    }
+
+    @RequestMapping(value = "community-detail.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String communityDetail(Model model, int community_seq) {
+
+        CommunityDto dto = service.getCommunityDetail(community_seq);
+        model.addAttribute("community",dto);
+
+        return "admin-communityDetail.tiles";
+    }
+
+    @RequestMapping(value = "community-delete.do", method = RequestMethod.GET)
+    public String boardDelete(HttpServletRequest request, CommunityDto dto) {
+
+        String type = service.getCommunityType(dto.getCommunity_seq());
+
+        communityService.boardDelete(dto);
+
+        if(type.equals("deal") || type.equals("buy") || type.equals("soldout") || type.equals("sell")){
+            return "redirect:community-deal.do";
+        }else{
+            return "redirect:community.do?bbstype=" + type;
+        }
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "community-writeComment.do", method = RequestMethod.POST)
+    public int writeComment(HttpSession session, CommunityCommentDto comment) {
+
+        MemberDto dto = (MemberDto) session.getAttribute("login");
+        comment.setUser_id(dto.getId());
+
+        int result = 0;
+
+        try {
+            result = communityService.writeComment(comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = -1;
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value="community-commentList.do", produces="application/json; charset=utf-8")
+    public HashMap<String, Object> commentList(HttpSession session, CommunityCommentParam param){
+
+        int currentPage = param.getPageNumber();
+
+        int start = 1 + currentPage * 10;
+        param.setStart(start);
+
+        int end = (currentPage + 1) * 10;
+        param.setEnd(end);
+
+        System.out.println(param);
+
+        HashMap<String, Object> result = new HashMap<>();
+
+        List<CommunityCommentDto> comment = communityService.getCommentList(param);
+        result.put("comment", comment);
+
+        int totalCount = communityService.getCommentCount(param);
+        result.put("totalCount", totalCount);
+
+        result.put("param", param);
+
+        // JSON으로 담아도 되지만 편한 방법인 GSON으로 사용
+        // yyyy-MM-dd hh:mm:ss
+        // Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
+
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "community-answerComment.do", method = RequestMethod.POST)
+    public int answerComment(HttpSession session, CommunityCommentDto comment) {
+
+        MemberDto dto = (MemberDto) session.getAttribute("login");
+        comment.setUser_id(dto.getId());
+
+        int result = 0;
+
+        try {
+            result = communityService.answerComment(comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = -1;
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "community-updateComment.do", method = RequestMethod.POST)
+    public int updateComment(HttpSession session, CommunityCommentDto comment) {
+
+        MemberDto dto = (MemberDto) session.getAttribute("login");
+        comment.setUser_id(dto.getId());
+
+        int result = 0;
+
+        try {
+            result = communityService.updateComment(comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = -1;
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "community-deleteComment.do", method = RequestMethod.POST)
+    public int deleteComment(int comment_seq) {
+
+        int result = 0;
+
+        try {
+            result = communityService.deleteComment(comment_seq);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result = -1;
+        }
+        return result;
     }
 
 }

@@ -137,6 +137,10 @@
       <put-attribute name="body" value="/WEB-INF/views/admin/orderDetail.jsp" />
    </definition>
 
+   <definition name="admin-communityDetail.tiles" extends="adminmain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/admin/community-detail.jsp" />
+   </definition>
+
    <!-- 효경 -->
    <definition name = "campinglist.tiles" extends = "main.tiles">
       <put-attribute name="main" value = "/WEB-INF/views/camping/campinglist.jsp"/>

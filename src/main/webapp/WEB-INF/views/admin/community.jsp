@@ -62,22 +62,7 @@
                         <tr>
                             <td>${data.community_seq }</td>
 
-                            <!-- bbstype에 따라서 if문으로 걸러줘야함 -->
-                            <c:if test="${bbstype eq 'free'}">
-                                <td><a href="/community/freeDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'find'}">
-                                <td><a href="/community/findDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'deal'}">
-                                <td><a href="/community/dealDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'review'}">
-                                <td><a href="/community/reviewDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
-                            <c:if test="${bbstype eq 'hello'}">
-                                <td><a href="/community/helloDetail.do?community_seq=${data.community_seq}">${data.title}</a>
-                            </c:if>
+                                <td><a href="/admin/community-detail.do?community_seq=${data.community_seq}">${data.title}</a>
 
                             <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
                             </td>

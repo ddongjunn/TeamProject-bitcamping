@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
     <title>Title</title>
 </head>
+
 <body>
 <div class="mypage_board">
 	<c:choose>

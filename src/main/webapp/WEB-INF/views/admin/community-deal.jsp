@@ -57,7 +57,7 @@
                     </c:choose>
                 </td>
                 <td>
-                    <a href="/community/dealDetail.do?community_seq=${data.community_seq }">
+                    <a href="/admin/community-detail.do?community_seq=${data.community_seq }">
                             ${data.title}
                         <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
                     </a>
