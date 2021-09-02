@@ -12,7 +12,7 @@
 <body>
 
 <div class="boardtitle">
-	<span>QnA</span>
+	<span>Q & A</span>
 </div>
 
 <table class="tablelist">

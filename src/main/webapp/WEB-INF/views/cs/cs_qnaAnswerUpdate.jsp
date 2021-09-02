@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<div class="detailtitle">Question</div>
+<div class="detailboardtitle">문의 내용</div>
 <div class="postarea">
 	<table class="tabledetail">
 		<tbody>
@@ -45,7 +45,7 @@
 		</tbody>
 	</table>
 </div>
-<div class="detailtitle">Answer</div>
+<div class="detailboardtitle">답변 내용</div>
 <div class="writearea">	
 	<form id="qnaWriteForm" action="/cs/qnaUpdateAf.do" method="post">
 		<input type="hidden" name="qna_Seq" value="${answer.qna_Seq}">

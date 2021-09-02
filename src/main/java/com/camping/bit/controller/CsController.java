@@ -196,6 +196,8 @@ public class CsController {
 	@RequestMapping(value = "answerComment.do", method = RequestMethod.POST)
 	public int answerComment(CsNoticeCommentDto comment) {
 		
+		System.out.println("answerComment dto : " + comment);
+		
 		int result = 0;
 		
 	    try {
@@ -298,7 +300,6 @@ public class CsController {
 		
 		int totalCount = service.getQnaCount(param);
 		model.addAttribute("totalCount", totalCount);
-		System.out.println("qnaList()" + totalCount);
 		
 		model.addAttribute("pageNumber", param.getPageNumber() + 1);		
 		model.addAttribute("search", param.getSearch());
@@ -393,6 +394,15 @@ public class CsController {
 		
 		service.qnaDelete(qna_Seq);
 		
+		return "redirect:/cs/qna.do";
+	}
+	
+	@RequestMapping(value = "qnaAnswerDelete.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String qnaAnswerDelete(int qna_Seq) {
+		
+		service.answerStatusWait(qna_Seq);
+		service.qnaAnswerDelete(qna_Seq);
+
 		return "redirect:/cs/qna.do";
 	}
 }

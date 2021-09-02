@@ -11,39 +11,14 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/rentList.css" />
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-<style type="text/css">
-.star {
-  position: relative;
-  display: inline-block;
-  font-size: 20px;
-}
-
-.star-under {
-  color: #ddd;
-}
-
-.star-over {
-  color: #f80;
-  overflow: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: none;
-}
-
-.star-visible {
-  display: inline-block;
-}
-</style>
-
 </head>
 <body>
 
 <div class="container mydiv">
 	<div class="title">상품 목록</div>
-	<div class="">
-		총 <span style="color: #E07260; font-weight: bold;">${totalCount}</span>개의 상품이 있습니다
-		<!-- <span style="float: right; color: #E07260;"> <a href="#none">신상품</a> / <a>상품명</a> / <a>낮은가격</a> / <a>높은가격</a></span> -->
+	<div class="total-item">
+		총 <span style="color: tomato; font-weight: bold;">${totalCount}</span>개의 상품이 있습니다
+		<span class="sort-item"> <a href="#none">신상품</a> / <a>상품명</a> / <a>낮은가격</a> / <a>높은가격</a></span>
 	</div> 
 	
 	<hr>
@@ -55,39 +30,68 @@
 	                <!-- <div class="ribbon ribbon-top-right"><span><small class="cross">x </small>4</span></div> -->
 	                <!-- <div class="bbb_deals_title">Today's Combo Offer</div> -->
 	                <div class="bbb_deals_slider_container">
-	                    <div class=" bbb_deals_item">
+	                
+	                	<!-- 상품 영역 시작 -->
+	                    <div class="bbb_deals_item">
+	                    	
+	                    	<!-- 상품 이미지 -->
 	                        <div class="bbb_deals_image">
 	                        	<a href="/rent/detail.do?product_Seq=${list.product_Seq}">
 	                        		<img src="/resources/upload/${list.thumbnail_Name}" alt="상품 이미지">
 	                        	</a>
 	                        </div>
+	                        
+	                        <!-- 텍스트 영역 -->
 	                        <div class="bbb_deals_content">
+	                        	<!-- 상품명 -->
 	                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
-	                                <div class="bbb_deals_item_name" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;"><a href="/rent/detail.do?product_Seq=${list.product_Seq}">${list.product_Name}</a></div>
+	                                <div class="bbb_deals_item_name" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+	                                	<a href="/rent/detail.do?product_Seq=${list.product_Seq}">
+	                                		<span class="item-name">${list.product_Name}</span>
+	                                	</a>
+	                                </div>
 	                            </div>
+	                            <!-- 상품 설명 -->
 	                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
-	                                <div class="bbb_deals_item_category" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">${list.product_Desc}</div>
+	                                <div class="bbb_deals_item_category">
+	                                	${list.product_Desc}
+	                                </div>
 	                            </div>
+	                            
 	                            <br>
+	                            
 	                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
 	                                <div class="bbb_deals_item_price_a ml-auto">2박 3일 기준</div>
 	                            </div>
+	                            <!-- 상품 가격 -->
 	                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
-	                                <div class="bbb_deals_item_price ml-auto"><fmt:formatNumber value="${list.product_Price}" type="number"/>원</div>
+	                                <div class="bbb_deals_item_price ml-auto">
+	                              	  <span class="tomato f_bold"><fmt:formatNumber value="${list.product_Price}" type="number"/></span> 원
+	                                </div>
 	                            </div>
-	
+								
+								<!-- 상품 재고, 평점 -->
 	                            <div class="available">
 	                                <div class="available_line d-flex flex-row justify-content-start">
-	                                    <div class="available_title">상품 재고 <span>${list.product_Stock}</span>개</div>
-	                                    <div class="sold_stars ml-auto"> 
+	                                	<c:if test="${list.product_Stock ne 0}">
+	                                    	<div class="available_title">재고 <span class="tomato">${list.product_Stock}</span>개</div>
+	                                    </c:if>
+	                                    <c:if test="${list.product_Stock eq 0}">
+	                                    	<div class="available_title"><span class="tomato">일시품절</span></div>
+	                                    </c:if>
+										<div class="sold_stars ml-auto"> 
 	                                    	<div id="rating${list.product_Seq}">
 
 										    </div>                                    	
 	                                    </div>
-	                                    <span class="item_rate">리뷰 ${list.rate}점</span>
+	                                    <span class="item-rate">리뷰 ${list.rate}점</span>
 	                                </div>
-	                                <div class="available_bar"><span style="width:17%"></span></div>
+	                                
+	                                <div class="available_bar">
+	                                	<span style="width:17%"></span>
+	                                </div>
 	                            </div>
+	                            
 	                        </div>
 	                    </div>
 	                </div>

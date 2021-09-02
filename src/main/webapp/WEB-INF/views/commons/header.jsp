@@ -41,10 +41,11 @@
 <div id="ground">
     <!-- header start -->
     <div id="header">
+   		<a href="/main.do"><img class="sidelogo" src="/resources/images/sidelogo.png" alt="로고"></a>
         <div class="indiv">
             <div class="logobox">
                 <a href="/main.do">
-                	<img id="logo" src="/resources/images/bitlogo.png" alt="로고">
+                	<img id="logo" src="/resources/images/newlogo.png" alt="로고">
                 </a>
             </div>
 			<ul id="menu">
@@ -186,8 +187,10 @@ $(document).ready(function(){
 	$(window).scroll(function() {
 	  if( $(this).scrollTop() > hdrHeight + 50) {
 	    navBar.addClass("navScrolled");
+	    $(".sidelogo").show();
 	  } else {
 	    navBar.removeClass("navScrolled");
+	    $(".sidelogo").hide();
 	  }
 	});
 	
