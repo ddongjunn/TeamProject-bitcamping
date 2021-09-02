@@ -16,18 +16,18 @@
 
 <main class="board">
 <div class="maintitle">
-<h2>가입인사게시판</h2>
+<h2>가입인사</h2>
 </div>
 
 
 <div class="communitybox">
     <div class="freebox_top">
     	<img id="hello" src="../resources/images/hello.png" width="550px" >
-        <div class="freebox_title">"안녕하세요 반갑습니다! 여러분들을 환영합니다"</div>
+        <div class="freebox_title" style="margin-bottom: 3px">"안녕하세요 반갑습니다! 여러분들을 환영합니다"</div>
     </div>
     <div class="freetext">
         <ul class="bu">
-            <li>새로운 사람들을 맞이해보세요.</li>
+            <li style="margin-bottom: 3px">새로운 사람들을 맞이해보세요.</li>
             <li>먼저 인사를 건네보는건 어떨까요?</li>
         </ul>
     </div>
@@ -50,8 +50,7 @@
 	<span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
-<div class="container">
-	<table class="table table-sm">
+	<table class="table bbstable">
 			<colgroup>
 				<col style="width: 10%;" />
 				<col style="width: auto;" />
@@ -59,21 +58,25 @@
 				<col style="width: 20%;" />
 				<col style="width: 10%;" />
 			</colgroup>
-	<thead>
-		<tr class="table_top">
-			<td>번호</td>
-			<td>제목</td>
-			<td>작성자</td>
-			<td>작성일</td>
-			<td>조회수</td>
-		</tr>
+		<thead>
+			<tr class="table_top">
+				<td>글번호</td>
+				<td>제목</td>
+				<td>작성자</td>
+				<td>작성일</td>
+				<td>조회수</td>
+			</tr>
+		</thead>
+		<tbody>
 			<c:if test="${empty helloList}">
-				<td colspan="3">작성된 글이 없습니다</td>			
+				<tr>
+					<td colspan="3">작성된 글이 없습니다</td>
+				</tr>		
 			</c:if>
 			<c:forEach var="data" items="${helloList}">
 				<tr>
 					<td>${data.community_seq }</td>
-					<td>
+					<td style="text-align: left">
 						<a href="/community/helloDetail.do?community_seq=${data.community_seq }">
 							${data.title}
 							<c:if test="${data.commentcount ne 0}">
@@ -89,9 +92,8 @@
 					<td>${data.readcount }</td>
 				</tr>
 			</c:forEach>
-	</thead>
+		</tbody>
 	</table>
-</div>
 <br>
 
 
