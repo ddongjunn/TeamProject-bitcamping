@@ -36,8 +36,9 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <div id="summernotebox">
 		<textarea id="summernote" name="content" wrap = "hard">${campingbbs.content}</textarea>
 </div>
-<button type = "button" value = "수정하기" id = "campingupdatereview" class = "btn btn-outline-success btn-sm">수정하기</button>
-
+<div class = "updatebutton">
+<button type = "button" value = "수정하기" id = "campingupdatereview" class = "btn btn-light">수정하기</button>
+</div>
 </form>
 </body>
 

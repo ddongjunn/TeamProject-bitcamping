@@ -18,9 +18,9 @@ ALTER TABLE CAMPING_BBS ADD COMMENTCOUNT NUMBER(8) DEFAULT '0' NOT NULL;
 
 ALTER TABLE CAMPING_BBS_COMMENT ADD NICKNAME VARCHAR2(20) DEFAULT '0' NOT NULL;
  -->
-<!-- bootstrap 추가 -->
+<!-- bootstrap 추가 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
 <!-- bxslider -->
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
@@ -45,9 +45,9 @@ String campingintro = (String)request.getAttribute("campingintro");
 <c:set value = "<%=campinglist.getDonm()%>" var = "donm"/>
 
 <div id ="section">
-	<span><button type = "button" id = "introBtn" class="btn btn-outline-success">캠핑장 소개</button></span>
-	<span><button type = "button" id = "mapBtn" class="btn btn-outline-success">오시는 길</button></span>
-	<span><button type = "button" id = "reviewBtn" class="btn btn-outline-success">캠핑장 후기</button></span>
+	<span><button type = "button" id = "introBtn" class="btn btn-light">캠핑장 소개</button></span>
+	<span><button type = "button" id = "mapBtn" class="btn btn-light">오시는 길</button></span>
+	<span><button type = "button" id = "reviewBtn" class="btn btn-light">캠핑장 후기</button></span>
 </div>
 
 
@@ -62,7 +62,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<font size = "6pt">${login.nickname}님이 검색하신 캠핑장에 대해 알아볼까요?</font> 
 	</c:otherwise>
 	</c:choose>
-	
+	<br>
 		<div id = "intro" class = "layout">
 			<ul class = "layout_5">
 				<li class = "intro">
@@ -118,6 +118,22 @@ String campingintro = (String)request.getAttribute("campingintro");
 	</div>
 	
 	<br><br>
+	
+	<table border = "1">
+	<tr>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+	</tr>
+	</table>
+	
 	
 	<table>
 	<tr>
@@ -220,6 +236,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 
 <br><br>
 <c:set value="<%=campinglist.getResvecl()%>" var="reservation" />
+<c:set value="<%=campingdetail.getResveurl()%>" var = "resveurl"/>
 <c:set value="<%=campinglist.getExprnprogrm()%>" var="program" />
 <c:set value="<%=campinglist.getAnimalcmgcl()%>" var="animal" />
 <c:set value="<%=campinglist.getEqpmnlendcl()%>" var = "equip"/>
@@ -231,13 +248,13 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<div class="card" style="width: 14rem;">
 			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/social.png" height = "130px" alt="Card image cap">
 			<div class="card-block">
-				<h4 class="card-title" style = "text-align : center; color : #87C4B7">체험프로그램 진행</h4>
+				<br><h4 class="card-title" style = "text-align : center; color : #87C4B7">체험프로그램 진행</h4>
 				<c:choose>
 					<c:when test="${program != 'none'}">
-						<p class="card-text">${program}</p>
+						<p class="card-text">${program}</p><br>
 					</c:when>
 					<c:otherwise>
-						<p class = "card-text"  style = "text-align : center">프로그램을 진행하지 않아요</p>
+						<p class = "card-text"  style = "text-align : center">프로그램을 진행하지 않아요</p><br>
 							<a href="javascript:campingexperience()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 					</c:otherwise>
 				</c:choose>
@@ -249,16 +266,16 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<div class="card" style="width: 14rem;">
 			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/dog.png" height = "130px" alt="Card image cap">
 			<div class="card-block">
-				<h4 class="card-title"  style = "text-align : center; color : #87C4B7">반려동물 동반</h4>
+				<br><h4 class="card-title"  style = "text-align : center; color : #87C4B7">반려동물 동반</h4>
 				<c:choose>
 					<c:when test="${animal == '가능' }">
-						<p class="card-text"  style = "text-align : center">어떤 강아지라도 환영해요</p>
+						<p class="card-text"  style = "text-align : center">어떤 강아지라도 환영해요</p><br>
 					</c:when>
 					<c:when test="${animal == '가능(소형견)' }">
-						<p class="card-text"  style = "text-align : center">규정상 소형견만 동반할 수 있어요</p>
+						<p class="card-text"  style = "text-align : center">규정상 소형견만 동반할 수 있어요</p><br>
 					</c:when>
 					<c:otherwise>
-						<p class = "card-text"  style = "text-align : center">아쉽지만 반려동물 동반이 어려워요</p>
+						<p class = "card-text"  style = "text-align : center">아쉽지만 반려동물 동반이 어려워요</p><br>
 							<a href="javascript:campingpet()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 					</c:otherwise>
 				</c:choose>
@@ -270,13 +287,13 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<div class="card" style="width: 14rem;">
 			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/settings.png" height = "130px" alt="Card image cap">
 			<div class="card-block">
-				<h4 class="card-title"  style = "text-align : center; color : #87C4B7">캠핑 장비 대여</h4>
+				<br><h4 class="card-title"  style = "text-align : center; color : #87C4B7">캠핑 장비 대여</h4>
 				<c:choose>
 					<c:when test="${equip !='none' }">
-						<p class="card-text">${equip}</p>
+						<p class="card-text">${equip}</p><br>
 					</c:when>
 					<c:otherwise>
-						<p class = "card-text"  style = "text-align : center">장비 대여가 불가해요</p>
+						<p class = "card-text"  style = "text-align : center">장비 대여가 불가해요</p><br>
 							<a href="javascript:campingequip()" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 					</c:otherwise>
 				</c:choose>
@@ -288,17 +305,17 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<div class="card" style="width: 14rem;">
 			<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/reserved.png" alt="Card image cap">
 			<div class="card-block">
-				<h4 class="card-title"  style = "text-align : center; color : #87C4B7">온라인 예약</h4>
+				<br><h4 class="card-title"  style = "text-align : center; color : #87C4B7">온라인 예약</h4>
 				<c:choose>
 					<c:when test="${fn:contains(reservation, '온라인')}">
-						<p class="card-text" style = "text-align : center">온라인으로 예약이 가능해요</p>
+						<p class="card-text" style = "text-align : center">온라인으로 예약이 가능해요</p><br>
 							<a href="javascript:campingreservenow()" class="add-to-cart btn btn-primary">지금 예약하기</a>
 					</c:when>
 					<c:when test="${fn:contains(reservation,'전화')}">
-						<p class = "card-text"  style = "text-align : center">전화 예약이 가능해요</p>
+						<p class = "card-text"  style = "text-align : center">전화 예약이 가능해요</p><br>
 					</c:when>
 					<c:otherwise>
-						<p class = "card-text"  style = "text-align : center">현장 예약만 가능해요</p>
+						<p class = "card-text"  style = "text-align : center">현장 예약만 가능해요</p><br>
 							<a href="javascript:campingreserveboth()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 					</c:otherwise>
 				</c:choose>
@@ -341,13 +358,13 @@ String campingintro = (String)request.getAttribute("campingintro");
 		<option value = "like">추천순</option>
 	</select>
 </div>
-		<button type = "button" class="btn btn-outline-success" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>">리뷰 작성하기</button>
+		<button type = "button" class="btn btn-lignt btn-sm" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>">리뷰 작성하기</button>
 
 <table class="table table-hover">
     <thead>
         <tr>
             <td>글번호</td>
-            <td>제목</td>
+            <td width = "450px">제목</td>
             <td>작성자</td>
             <td>조회수</td>
             <td>추천수</td>
@@ -358,8 +375,7 @@ String campingintro = (String)request.getAttribute("campingintro");
     <!-- ajax로 불러와서 뿌려주는 공간 -->
     </tbody>	
 </table>
-<!-- <button id = "addBtn" class="btn btn-outline-success" onClick = "moreList()">더 많은 리뷰 보기(more)</button>
- -->
+
 <div class="container" style = "width : 100%; text-align : center">
     <div style = "display : inline-block">
 	    <nav aria-label="Page navigation">
@@ -378,10 +394,9 @@ String campingintro = (String)request.getAttribute("campingintro");
 	</select>
 </div>
 <div class = "col_second" style = "display : inline-block">
-
 	<input type = "text" id = "search" name = "searchWord" placeholder = "검색어를 입력해주세요" onkeypress="if( event.keyCode == 13 ){searchData();}"/>	   	
 </div>
-	<a href = "javascript:campingsearchlist(this)"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "50"></a>
+	<a href = "javascript:campingsearchlist(this)"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "40"></a>
 </div>	
 </div>
 
@@ -510,7 +525,7 @@ $("#mapBtn").click(function(){
 					}
 					parsedResponse.forEach( (item, idx) => {
 						
-						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
+						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : "";
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
@@ -652,6 +667,11 @@ $("#mapBtn").click(function(){
 					pagemove(page);
 				}
 			}); //페이지네이션 끝 
+			
+		
+			
+			
+			
 }); //document.ready 끝나는 곳
 
 
@@ -727,7 +747,7 @@ function campingsearchlist(){
 					    $("#reviewlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
-						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
+						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : "";
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
@@ -792,27 +812,38 @@ function campingsearchlist(){
 
 	function campingexperience(){
 		location.href = "campinglist.do?exprnProgrm=exok&searchDo=${donm}";
-	}
+	};
 	
 	function campingpet(){
 		location.href = "campinglist.do?animalCmgCl=가능&searchDo=${donm}";
-	}
+	};
 	
 	function campingequip(){
 		location.href = "campinglist.do?eqpmnLendCl=eqok&searchDo=${donm}";
-	}
+	};
 
 	function campingreserveboth(){
 		location.href = "campinglist.do?resveCl=온라인&resveCl=전화&searchDo=${donm}";
-	}
+	};
 	
 	function campingreservenow(){
-		if(${url1 != 'none'}){
-			location.href = "${url1}";
-		}else{
-			location.href = "${url}";
+		var resveurl = "<c:out value= '${url1}'/>";
+		var homeurl = "<c:out value = '${url}'/>";
+		
+		if(resveurl != 'none'){
+			if(resveurl.indexOf("http")>-1){
+				location.href = resveurl;
+			}else{
+				location.href = "http://" + resveurl;
+			}	
+		}else{ //예약 홈페이지가 존재하지 않을 때 
+			if(homeurl.indexOf("http")>-1){
+				location.href = homeurl;
+			}else{
+				location.href = "http://" + homeurl;
+			}
 		}
-	}
+	};
 </script>
 </body>
 </html>

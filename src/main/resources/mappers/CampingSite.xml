@@ -421,9 +421,12 @@
 
 	<!-- 캠핑장 리뷰 댓글 달기 -->
 	<insert id="campingWriteComment" parameterType="CampingComment">
+		 <selectKey keyProperty="comment_seq" resultType="int" order="BEFORE">
+		 select CAMPING_BBS_COMMENT_SEQ.NEXTVAL FROM dual
+		 </selectKey>
 		INSERT INTO CAMPING_BBS_COMMENT(COMMENT_SEQ, REVIEW_SEQ, USER_ID, CONTENT,
 		WDATE, REF, STEP, DEPTH, NICKNAME)
-		VALUES(CAMPING_BBS_COMMENT_SEQ.NEXTVAL, #{review_seq}, #{user_id},
+		VALUES(#{comment_seq}, #{review_seq}, #{user_id},
 		#{content}, SYSDATE, 0, 0, 0, #{nickname})
 	</insert>
 

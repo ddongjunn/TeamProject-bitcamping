@@ -83,7 +83,7 @@ String sigunguNm = request.getParameter("sigunguNm");
 </div>
 
 <div class="option-content" >
-  <button class="category" id="que-1"><span id="que-1-toggle">+</span><span><img src = "<%=request.getContextPath()%>/resources/images/campingsite/campinglist2.PNG" style = "width : 100px;"></span></button>
+  <button class="category" id="que-1"><span id="que-1-toggle">+</span><span>자세하게 검색하기</span></button>
   <div class="detailSearch" id="ans-1">
 <!-- 여기서부터 상세검색!!!!!!!!!!!!!!!!!!!!!!!! -->
 <form id = "searchForm2" action = "campinglist.do"method = "get">
@@ -284,8 +284,8 @@ String sigunguNm = request.getParameter("sigunguNm");
 	</td>
 </tr>
 </table>
-	<button type = "button" class = "btn btn-outline-success" id = "resetBtn">초기화</button>
-	<button type="submit" class="btn btn-outline-success" id = "specifiedBtn"><i class="btn_search">검색하기</i></button>
+	<button type = "button" class = "btn btn-light" id = "resetBtn">초기화</button>
+	<button type="submit" class="btn btn-light" id = "specifiedBtn">검색하기</button>
 </div>
 	
 		</form>
@@ -294,19 +294,6 @@ String sigunguNm = request.getParameter("sigunguNm");
 
 <!-- 캠핑장 정렬 -->
 <div class = "search_sorting">
-<!-- 	<table>
-		<tr>
-			<td style = "padding-left:5px">
-				<select id = "sorting" title = "정렬" class="sorting_select">
-					<option value = "image" selected = "selected">--정렬--</option>
-					<option value = "create">최신등록순</option>
-					<option value = "update">업데이트순</option>
-					<option value = "read">조회순</option>
-					<option value = "like">추천순</option>
-				</select>
-			</td>
-		</tr>
-	</table> -->
 	<select id = "sorting" title = "정렬" class="sorting_select">
 		<option value = "image" selected = "selected">--정렬--</option>
 		<option value = "create">최신등록순</option>
@@ -376,9 +363,9 @@ String sigunguNm = request.getParameter("sigunguNm");
 						<img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
 							<c:choose>
 							<c:when test="${fn:contains(url, 'http')}">
-								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='${url}'" >홈페이지</button></c:when>
+								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button></c:when>
 							<c:otherwise>
-								<button type = button  class="btn btn-outline-success btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
 							</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -541,11 +528,11 @@ if($('#pagination').data("twbs-pagination")){
 			var pa = window.location.search.split("&pageNumber");
 			if (window.location.href.indexOf("?") > -1 && window.location.href.indexOf("&")>-1) {
 				location.href = "campinglist.do"+ pa[0] + "&pageNumber=" + (page - 1);
-			}else if(window.location.href.indexOf("?")>-1){
-				var sa = window.location.search.split("do");
+			}else if(window.location.href.indexOf("?PageNumber")>-1){
+				var sa = window.location.search.split("?PageNumber");
 				location.href = "campinglist.do" + sa[0] + "&pageNumber=" + (page - 1);
 			}else{
-				location.href = "campinglist.do?" + "pageNumber=" + (page - 1);
+				location.href = "campinglist.do?pageNumber=" + (page - 1);
 			}
 			//alert(window.location.search);;
 		}
