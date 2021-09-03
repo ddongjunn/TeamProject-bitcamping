@@ -1,89 +1,134 @@
 @charset "UTF-8";
-
-    .wrap {position: absolute;left: 0;bottom: 40px;width: 286px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
-    .wrap * {padding: 0;margin: 0;}
-    .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
-    .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-    .info .title {padding: 5px 0 0 10px;height: 30px;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
-    .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-    .info .close:hover {cursor: pointer;} 
-    .info .body {position: relative;overflow: hidden;}
-    .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
-    .desc .address {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-    .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-    .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 50px;border: 1px solid #ddd;color: #888;overflow: hidden;}
-    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-    .info .link {color: #5085BB;}
-    
-    .camping_list{
-    	margin : 50px 150px 0 150px;
-    	font-size : 10pt;
-    }
-    
-    #section{
-    	margin : 30px 150px 0 150px;
-    	color : black;
-    }
-    
-    #contents{
-    	margin : 30px 150px 0 150px;
-    	font-size : 10pt;
-    }
-    
-    #photos{
-   		margin : 30px 150px 200px;
-    }
-
-    #map{
-    	margin : 30px 100px 30px 150px;
-    	width: 900px;
-    	height: 400px;
-    }
-    
-    #mapintro{
-   		margin : 30px 100px 30px 150px;
-    }
-    .option-content{
-    	margin : 30px 150px 0 150px;
-    }
-    
-    #searchBox{
-    	margin : 0 150px 30px 300px;
-    }
-    
-    #intro{
-    	margin : 0 20px 0 0 ;
-    	font-size : 12pt;
-    	text-justify : inter-word;
-    	line-height : 150%;
-    }
-    
-    h2{
-    	color : #FBC853;
-    }
-    
-    .btn-light{
+/*카카오 지도*/
+   .wrap {position: absolute;left: 0;bottom: 40px;width: 286px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+   .wrap * {padding: 0;margin: 0;}
+   .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+   .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+   .info .title {padding: 5px 0 0 10px;height: 30px;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+   .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+   .info .close:hover {cursor: pointer;} 
+   .info .body {position: relative;overflow: hidden;}
+   .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+   .desc .address {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+   .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+   .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 50px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+   .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+   .info .link {color: #5085BB;}
+   
+/*위에 사진이랑 정보부분 움직이는 div*/    
+h2{
 	color : #FBC853;
-	border-color : #FBC853;
-	}
-	.btn-light:hover{
-	color : #E07260;
-	border-color : #FBC853;
-	}
-	
-	.table-hover{
+}
+.camping_top_information{
+	margin : 5% 12% 0 12%;
+	font-size : 10pt;
+	line-height : 190%;
+}
+.mainimage{
+	float : left;
+	margin-right : 2%;
+}
+.camping_information{
+	float : left;
+}
+
+/*여기서부터 아래부분 캠핑장 소개&오시는 길&캠핑장 후기*/
+#section{
+	margin : 2% 12% 0 12%;
+}
+/*캠핑장 정보를 담은 곳*/
+#contents{
+	margin : 2% 12% 0 12%;
+	font-size : 10pt;
+}
+/*사진들*/
+#photos{
+	margin : 2% 12% 0 12%;
+}
+
+.smallpic{
+   width : 200px;
+   height : 150px;
+}
+/*지도 위치*/
+#mapintro{
+	margin : 2% 12% 0 12%;
+}
+
+#map{
+	margin : 2% 12% 0 12%;
+	width: 950px;
+	height: 400px;
+}
+
+/*캠핑장 소개글*/
+#intro{
+	font-size : 12pt;
+	text-justify : inter-word;
+	line-height : 150%;
+}
+/*아이콘이랑 같이 서비스 뭔지 알려주는 곳*/
+#sbrscl{
+	border : 1px solid; 
+	padding : 1%; 
+	background-color :#FAEAA9;
+	border-radius : 10px;
+}
+
+.campingservice{
+	display : inline-block; 
 	text-align : center;
-	}
-    
-    .smallpic{
-    width : 200px;
-    height : 150px;
-    }
-    
-    .camping_information{
-    line-height : 150%;
-    }
-    
+	padding : 0.7%;
+}
+/*카드형식*/
+
+.show-cart li {
+  display: flex;
+}
+.card {
+  margin-bottom: 20px;
+}
+.card-img-top {
+  width: 150px;
+  height: 150px;
+  align-self: center;
+}
+
+.add-to-cart {
+	background-color : #FAEAA9;
+	border : 0; 
+	outline : 0;
+	align-self : center;
+	display : block;
+}
+.add-to-cart:hover{
+	background-color : #78E6D0;
+}
+
+/*버튼들*/
+.btn-light{
+color : #FBC853;
+border-color : #FBC853;
+}
+.btn-light:hover{
+color : #E07260;
+border-color : #FBC853;
+}
+   
+/*리뷰*/
+#review{
+	margin : 30px 150px 0 150px;
+}
+/*리뷰 테이블*/
+.table-hover{
+text-align : center;
+}
+ /*리뷰 검색하는 곳*/
+#searchBox{
+	margin : 0 150px 30px 300px;
+}      
+   
+
 /*슬라이더*/
     
 /** VARIABLES
@@ -267,13 +312,6 @@ ul.bxslider {
 }
 
 
-/*네비바*/
-
-/*리뷰*/
-#review{
-	margin : 30px 150px 0 150px;
-}
-
 /*페이지네이션*/
 .pagination > li > a
 {
@@ -304,6 +342,10 @@ ul.bxslider {
     border: solid 1px #2c6639;
 }
 
+.container{
+	width : 100%;
+	text-align : center;
+}
 
 /*nice select*/
 
@@ -449,13 +491,13 @@ ul.bxslider {
   
   
 /*검색어 넣는 부분*/
-.search {
+/* .search {
     position: relative;
     text-align: center;
     width: 400px;
     margin: 10px 200px 50px 100px;
     
-}
+} */
 #search {
     width: 100%;
     border-radius: 20px;
@@ -465,47 +507,18 @@ ul.bxslider {
     display: inline;
     max-width: 400px;
 }
-.fa-search {
+/* .fa-search {
     position: absolute;
     left: 15px;
     top: 20px;
     margin: 0;
-}
+} */
  
 /*리뷰 검색창*/
 .rows{
 	margin : 0 0 100px 300px;
 }
 
-/*카드형식*/
-
-.show-cart li {
-  display: flex;
-}
-.card {
-  margin-bottom: 20px;
-}
-.card-img-top {
-  width: 150px;
-  height: 150px;
-  align-self: center;
-}
-
-.add-to-cart {
-	background-color : #FAEAA9;
-	border : 0; 
-	outline : 0;
-	align-self : center;
-	display : block;
-}
-.add-to-cart:hover{
-	background-color : #78E6D0;
-}
 
 
-#sbrscl{
-	border : 1px solid; 
-	padding : 10px; 
-	background-color :#FAEAA9;
-	border-radius : 10px;
-}
+

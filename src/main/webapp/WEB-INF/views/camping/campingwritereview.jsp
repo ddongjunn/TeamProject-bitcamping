@@ -29,7 +29,7 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 <div id = "writer_info">
 	<h2>${login.nickname}님의 소중한 리뷰</h2>
 	<br>
-	<h2><input name="title" id = "title" type = "text" placeholder = "제목을 입력해주세요" size = "51"></h2>
+	<h2><input name="title" id = "title" type = "text" placeholder = "제목을 입력해주세요" size = "43"></h2>
 </div>
 
 <div style="clear:both"></div>
@@ -48,7 +48,7 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 		
 		/* summernote 설정 */
 		$('#summernote').summernote({
-			height: 600,
+			height: 450,
 			width : 850,
 			dialogsInBody: true,
 			lang: "ko-KR",

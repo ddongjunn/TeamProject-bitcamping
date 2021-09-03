@@ -53,19 +53,18 @@ CampingLikeDto campinglike = (CampingLikeDto)request.getAttribute("campinglike")
 String login_id = (String)request.getAttribute("login_id");
 
 %>
-<!-- <a href = "campinglist.do">목록으로 돌아가기</a>  -->
 <input type = "hidden" name = "login_id" value = "${login.id}">
-<input type = "hidden" value = "${login_id}"/>
-<!--<input type="hidden" name="user_id" value="login.id"> -->
+<input type = "hidden" name = "campingidx" value = "${campingidx}"/>
+<input type = "hidden" name = "useridx" value = "${useridx}"/>
 
-<div class = "camping_list">
+<div class = "camping_top_information">
 	<ul>
 		<li style = "list-style : none;">
-			<div class = "image" style = "float : left ; margin-right : 10px" >
+			<div class = "mainimage" >
 				<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "500" height = "400">
 			</div>
 			<br>
-			<div class = "camping_information" style = "float : left">
+			<div class = "camping_information">
 				<div class = "camping_site name">
 					<h2 class = "camping_site_name">	
 							<%=campinglist.getFacltnm()%>
@@ -119,9 +118,6 @@ String login_id = (String)request.getAttribute("login_id");
 					    </c:choose>
 					    </c:otherwise>
 					</c:choose>
-
-<input type = "hidden" name = "campingidx" value = "${campingidx}"/>
-<input type = "hidden" name = "useridx" value = "${useridx}"/>
 <br>
 <div id = "like_heart">
 <c:choose>
@@ -141,7 +137,6 @@ String login_id = (String)request.getAttribute("login_id");
 				</svg></a></span>
 			</c:otherwise>
 		</c:choose><%--두번째 choose 끝 --%>
-		<div id = "likecount" style = "margin-left : 5px;"> ${likecount}</div>
 	</c:when>
 	<%--로그인 상태가 아닐 때 빈 하트 나옴 --%>
 	<c:otherwise>
@@ -151,11 +146,8 @@ String login_id = (String)request.getAttribute("login_id");
 		</svg></a>&nbsp;로그인 후 사용 가능합니다!</span>
 	</c:otherwise>
 </c:choose><%--첫번째 choose 끝 --%>
-
 </div> <!-- likedheart 끝나는 곳 --> 
-
-
-			</div><!-- campinginformation 오른쪽 부분 div 끝나는 곳 -->
+			</div><!-- camping_information 오른쪽 부분 div 끝나는 곳 -->
 			<div style="clear:both"></div>
 		</li>
 	</ul>
@@ -165,10 +157,6 @@ String login_id = (String)request.getAttribute("login_id");
 $(document).ready(function(){
 
  	$(".heart-click").click(function(){
-		 /* const contentid = new URLSearchParams(location.search).get('contentid');
-		 const user_id = '${login.id}';
-		 var paramData = {"contentid" : contentid, "user_id" : user_id}
-		 console.log(paramData); */
 		 const contentid = "${campingidx}";
 		 const user_id = "${useridx}";
 		 const likecount = "${likecount}";

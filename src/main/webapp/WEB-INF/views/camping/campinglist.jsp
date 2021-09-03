@@ -61,7 +61,6 @@ String sigunguNm = request.getParameter("sigunguNm");
 <link href="/resources/css/campingsite/campinglist.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
-<!-- <a href = "campingmap.do">지도로 가기</a> -->
 <br>
 
 <div class = "deep-search">
@@ -283,14 +282,14 @@ String sigunguNm = request.getParameter("sigunguNm");
 		</td>
 	</tr>
 	</table>
+	<br>
 		<button type = "button" class = "btn btn-light" id = "resetBtn">초기화</button>
 		<button type="submit" class="btn btn-light" id = "specifiedBtn">검색하기</button>
 		</div>
 		</form>
 	</div><!-- 상세검색 아래 펼쳐지는 부분 끝나는 곳 -->
-</div><!-- 자세하게 검색하기 끝나는 곳 -->
-
-<!-- 캠핑장 정렬 -->
+	
+	<!-- 캠핑장 정렬 -->
 <div class = "search_sorting">
 	<select id = "sorting" title = "정렬" class="sorting_select">
 		<option value = "image" selected = "selected">--정렬--</option>
@@ -304,6 +303,9 @@ String sigunguNm = request.getParameter("sigunguNm");
 		${campingSearchPage}개의 캠핑장이 기다리고 있습니다
 	</div>
 </div>
+	
+</div><!-- 자세하게 검색하기 끝나는 곳 -->
+
 
 <br>
 <!-- 리스트 시작 -->
@@ -313,12 +315,12 @@ String sigunguNm = request.getParameter("sigunguNm");
 			<div class = "camping_search_list">
 			<ul>
 				<li style = "list-style : none;">
-					<div class = "image" style = "float : left ; margin-right : 10px" >
+					<div class = "mainimage">
 						<a href = "campingdetail.do?contentid=${camping.contentid}">	
 						<img src = "${camping.firstimageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "300" height = "200">
 						</a>
 					</div>
-					<div class = "camping_information" style = "float : left">
+					<div class = "camping_information">
 						<div class = "camping_site name">
 							<h2>
 								<a href = "campingdetail.do?contentid=${camping.contentid}">${camping.facltnm}</a>
@@ -326,8 +328,10 @@ String sigunguNm = request.getParameter("sigunguNm");
 								<span class = "likecount" style = "font-size : 15px">추천수 : ${camping.likecount}</span>
 							</h2>
 						</div>
+						
 						<c:choose>
-							<c:when test = "${fn:length(camping.addr1)>40}">
+							<c:when test = "${fn:length(camping.addr1)>35}">
+								<c:set var = "TextValue" value = "${camping.addr1}"/>
 								<c:set var = "string1" value = "${fn:substring(TextValue, 0,30)}"/>
 								<h3>${string1}...</h3>
 							</c:when>
@@ -337,8 +341,9 @@ String sigunguNm = request.getParameter("sigunguNm");
 						</c:choose>
 						<c:if test="${camping.lineintro!='none'}">
 							<c:choose>
-								<c:when test = "${fn:length(camping.lineintro)>40}">
-									<c:set var = "string1" value = "${fn:substring(TextValue, 0,30)}"/>
+								<c:when test = "${fn:length(camping.lineintro)>35}">
+									<c:set var = "TextValue1" value = "${camping.lineintro}"/>
+									<c:set var = "string1" value = "${fn:substring(TextValue1, 0,30)}"/>
 									<h5>${string1}...</h5>
 								</c:when>
 								<c:otherwise>
@@ -415,7 +420,7 @@ String sigunguNm = request.getParameter("sigunguNm");
 </c:otherwise>
 </c:choose>
 
-<div class="container" style = "width : 100%; text-align : center">
+<div class="container">
     <div style = "display : inline-block">
 	    <nav aria-label="Page navigation">
 	        <ul class="pagination" id="pagination"></ul>

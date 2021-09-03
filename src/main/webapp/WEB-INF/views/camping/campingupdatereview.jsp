@@ -28,7 +28,8 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 <div style="clear:both"></div>
 <div id = "writer_info">
 	<h2>${login.nickname}님 무엇을 수정해볼까요?</h2>
-	<h2><input name="title" id = "title" type = "text" placeholder = "제목을 입력해주세요" value = "${campingbbs.title}" size = "51"></h2>
+	<br>
+	<h2><input name="title" id = "title" type = "text" placeholder = "제목을 입력해주세요" value = "${campingbbs.title}" size = "43"></h2>
 </div>
 
 <div style="clear:both"></div>

@@ -1,54 +1,68 @@
 @charset "UTF-8";
-
+/*누구누구님의 소중한 리뷰 어쩌고랑 제목*/
 #writer_info{
 	text-align : center;
-	margin : 10px 200px 10px 250px;
+	margin : 3% 20% 3% 20%;
 }
-
+/*섬머노트 박스 크기*/
 #summernotebox{
 	text-align : left;
-	margin : 30px 200px 30px 250px;
-	width : 800px;
-}
-
-.image, .introduction {
-	margin : 30px 200px 30px 250px;
-	float : left;
-}
-
-#campingwritereview{
-	margin : 30px 200px 30px 600px;
-}
-
-#campingupdatereview{
-	margin : 30px 200px 30px 600px;
+	margin : 3% 20% 3% 17%;
 }
 
 /*리뷰 디테일 화면 */
-
 #review{
-	margin : 30px 200px 30px 250px;
-	border : 1px solid black;
+	margin : 3% 20% 3% 20%;
+	border : 1px solid #64bd20;
 	border-radius : 10px;
-	padding : 20px 20px 20px 20px;
+	padding : 2% 2% 2% 2%;
 }
-
+/*리뷰 수정삭제 부분*/
 .reviewmanage{
-	margin : 30px 200px 30px 250px;
+	margin : 3% 20% 3% 20%;
 }
-
-#comments{
-	margin : 30px 200px 30px 250px;
-}
-
+/*실제 리뷰가 테이블로 뿌려지는 부분*/
 #commentlist{
-	margin : 30px 200px 30px 250px;
+	margin : 3% 18% 3% 20%;
 }
 
-#commentlisting{
-	margin : 30px 200px 30px 250px;
+.nickname{
+	width : 150%;
+	height : 70%; 
+	font-weight : bold;
+	padding-bottom : 3%;
 }
 
+/* .camping_list{
+	margin : 30px 200px 30px 250px;
+} */
+
+/*버튼*/
+
+.btn-light{
+	color : #FBC853;
+	border-color : #FBC853;
+}
+.btn-light:hover{
+	color : #E07260;
+	border-color : #FBC853;
+}
+
+.updatebutton{
+	margin : 0 30% 5% 47.5%;
+}
+
+.writebutton{
+	margin : 0 30% 5% 47.5%;
+}
+/*댓글 작성하는 버튼*/
+#writeCommentBtn{
+	margin : 0 0 0 92%;
+}
+/*댓글 수정한 내용 보내는 버튼*/
+#sendUpdateBtn{
+	margin : 0 0 0 92%;
+}
 /*페이지네이션*/
 .pagination > li > a
 {
@@ -79,27 +93,7 @@
     border: solid 1px #2c6639;
 }
 
-
-/*버튼*/
-
-.btn-light{
-	color : #FBC853;
-	border-color : #FBC853;
-}
-.btn-light:hover{
-	color : #E07260;
-	border-color : #FBC853;
-}
-
-.updatebutton{
-	margin : 0 300px 50px 30px;
-}
-
-.writebutton{
-	margin : 0 300px 50px 30px;
-}
-
-/*리뷰 디테일 화면 */
-.camping_list{
-	margin : 30px 200px 30px 250px;
+.container{
+	width : 100%; 
+	text-align : center;
 }
