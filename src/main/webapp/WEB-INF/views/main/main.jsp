@@ -70,25 +70,6 @@
 		</div>
 	</div>
 
-	<div class="row" style="margin-top:50px; width: 100%">
-		<div class="" style="float: left; width: 30%; border: 1px solid #E07260; margin-left: 30px">
-
-
-		</div>
-		<div class="col-md-8" style="float: left; width: 70%">
-			<div class="item_box">
-				<div id="tab">
-					<ul>
-						<li><img src="/resources/images/testimg.jpg" width="400" height="100"></li>
-						<li><img src="/resources/images/testimg.jpg" width="400" height="100"></li>
-						<li><img src="/resources/images/testimg.jpg" width="400" height="100"></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
 	<div class="contents-area mt150">
 		<!-- recommend area start -->
 		<div class="recommendslide">
@@ -116,8 +97,47 @@
 		</div>
 		<!-- recommend area end -->
 
+		<div class="mt50" style="margin: 0 60px 50px 60px; height: 400px;">
+			<div style="float: left; border-top: 1px solid #999999; border-bottom: 1px solid #999999; width: 20%; margin-right: 30px; position: relative; height: 100%;">
+				<div class="" style="float: left; margin-right: 30px;">
+					<div class="mt20">
+						<div>
+							<h2>추천장비</h2>
+						</div>
+						<div style="height: 200px">
+							<p>test2</p>
+							<div>
+								test3
+							</div>
+						</div>
+					</div>
+				</div>
+				<div style="position: absolute; bottom: 10px; right: 10px;"><p>더보기</p></div>
+			</div>
+			<div style="float: left; width: 75%; height: 100%;">
+				<div class="item_box">
+					<div id="tab" >
+						<ul class="content_ul">
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- community recent start -->
-		<div class="commuity-area mt30">
+		<div class="commuity-area mt50" style="clear: both;">
 			<div class="lefttitle">
 				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;">최신글</span>
 			</div>
@@ -202,6 +222,7 @@
 			</div>
 		</div>
 		<!-- community recent end -->
+
 	</div>
 </div>
 <!-- container end -->

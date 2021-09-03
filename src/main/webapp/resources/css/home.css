@@ -421,7 +421,8 @@
 }
 
 .item_box{
-  max-width:960px; width:100%; height:300px; border:1px solid #ccc; margin:0 auto;
+  border:1px solid #ccc;;
+
 }
 
 #tab ul{
@@ -433,4 +434,43 @@
 #tab ul li{
   display:inline-block;
   background: #ccc;
+}
+
+/*
+!* 스크롤바 설정*!
+.content_ul::-webkit-scrollbar{
+  width: 6px;
+}
+
+!* 스크롤바 막대 설정*!
+.content_ul::-webkit-scrollbar-thumb{
+  border: 4px solid transparent;
+  background-color: #1FB154 ;
+  border-radius: 5px;
+}
+
+!* 스크롤바 뒷 배경 설정*!
+.content_ul::-webkit-scrollbar-track{
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 5px white;
+}*/
+
+.content_ul{
+  width: 100%;
+}
+
+.content_ul::-webkit-scrollbar {
+  height: 10px;
+  width: 1000px;
+}
+.content_ul::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+.content_ul::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: #1FB154 ;
+}
+.content_ul::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
 }
