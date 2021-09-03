@@ -30,18 +30,16 @@
 		<div class="faqmenu">
 			<p class="faqmenutitle">주문/배송/반품 안내</p>
 			<span class="faqmenulist">
-				<p>주문 내역 조회</p>
-				<p>반품 신청</p>
-				<p>주문 결제 안내</p>
-				<p>취소/반품 안내</p>
+				<p> <a href="/account/myOrder.do"> 주문 내역 조회</a></p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=3"> 주문 방법 및 결제 </a></p>
 			</span>
 		</div>
 		<div class="faqmenu">
 			<p class="faqmenutitle">기타문의</p>
 			<span class="faqmenulist">
-				<p>고객센터 이용 안내</p>
-				<p>pc문제/오류 안내</p>
-				<p>현금영수증 및 전자 영수증안내</p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=4"> 고객센터 이용 안내 </a></p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=5"> pc문제해결/오류 안내 </a></p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=6">현금영수증 및 전자 영수증안내</a></p>
 			</span>
 		</div>
 	</div>	

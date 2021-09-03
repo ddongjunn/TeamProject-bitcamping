@@ -62,7 +62,7 @@
 	</tbody>
 </table>
 <div class="submitbox">
-		<input type="button" name="upload" value="등록하기">
+		<input type="button" name="upload" class="btnSimple" value="등록">
 </div>
 
 <input type="hidden" name="user_id" value="${login.id}">
