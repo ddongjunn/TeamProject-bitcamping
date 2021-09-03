@@ -8,11 +8,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/cs.css" />
 </head>
 <body>
 
 <div class="boardtitle">
-	<span>Q & A</span>
+	<span style="font-size: 28px">Q & A</span>
 </div>
 
 <table class="tablelist">
@@ -104,7 +105,6 @@
 <div class="searchbox" style="margin: 5px auto 10px auto">
 	<table style="margin: auto;">
 	<tr>
-		<td>검색</td>
 		<td style="padding-left: 5px">
 			<select id="_choice" name="choice">
 				<option value="" selected="selected">선택</option>
@@ -114,7 +114,7 @@
 			</select>	
 		</td>
 		<td style="padding-left: 5px">
-			<input type="text" id="_search" name="search">
+			<input type="text" id="_search" name="search" placeholder="검색내용입력">
 		</td>
 		<td style="padding-left: 5px">
 				<button type="button" id="btnSearch">검색</button>

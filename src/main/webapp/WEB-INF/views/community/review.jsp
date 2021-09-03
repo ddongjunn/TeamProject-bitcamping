@@ -22,15 +22,15 @@
 
 <div class="communitybox">
     <div class="freebox_top">
-    	<img src="../resources/images/communityreview.png" height="65px" width="75px">
+    	<img src="../resources/images/communityreview.png" height="65px" width="90px">
         <div class="freebox_title">캠핑 여행&후기 게시판은 여러분들의 소중한 추억을 게시하는 공간입니다.</div>
     </div>
     <hr id="dotline">
     <div class="freetext">
         <ul class="bu">
-            <li><i class="fas fa-chevron-right"> </i> 불건전성, 상업성 광고, 유언비어, 저속한 표현, 특정인 또는 단체에 대한 비방(명예훼손), 정치적 목적이나 성향, 반복적 게시물, 저작권 침해, 기타 불법
+            <li style="margin-bottom: 5px">불건전성, 상업성 광고, 유언비어, 저속한 표현, 특정인 또는 단체에 대한 비방(명예훼손), 정치적 목적이나 성향, 반복적 게시물, 저작권 침해, 기타 불법
                 정보 등의 <span class="em_orange">유해게시물은 관리자에 의해 통보없이 삭제</span>될 수 있습니다.</li>
-            <li><i class="fas fa-chevron-right"> </i> 주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
+            <li>주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
                 <p class="point"><img src="../resources/images/point.png" height="30px" width="30px">타인의 저작물(신문기사, 사진, 동영상 등)을 관리자의 허락 없이 무단으로 복제하여 올리는 것은 저작권 침해에 해당합니다.</p>
             </li>
         </ul>
@@ -51,7 +51,7 @@
 <br>
 
 <div class="bbs_total">
-	<span>전체게시물<strong> ${totalCount}</strong></span>
+	<i class="fas fa-layer-group"></i><span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
 	<table class="table bbstable">
@@ -80,7 +80,7 @@
 						<a href="/community/reviewDetail.do?community_seq=${data.community_seq }">
 							${data.title}
 							<c:if test="${data.commentcount ne 0}">
-								<span style="font-size: 13px; color: #75AE87;">[${data.commentcount}]</span>
+								<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
 							</c:if>
 						</a>
 					</td>

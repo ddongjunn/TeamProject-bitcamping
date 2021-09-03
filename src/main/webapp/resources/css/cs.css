@@ -2,9 +2,11 @@
 
 /* faq */
 .faq{
-	margin: 20px auto 0;
+	margin-left: 20px;
+	margin-bottom: 30px;	
     padding: 30px;
-    border: 1px solid #e5e5e5;	
+    border: 1px solid #e5e5e5;
+    width: 90%	
 }
 .faqintro{
 	width: 100%;
@@ -27,19 +29,20 @@
 }
 .faqmenutitle{
 	margin-bottom: 10px;
+	margin-left: 5px;
 	font-weight: bold;
-	font-size: 17px;
+	font-size: 14px;
 }
 .faqmenulist > p{
 	width: 100%;
 	margin: 5px;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 }
 /* contact us */
 .customer {
-	max-width: 1330px;
-    margin: 20px auto 0;
+	width: 90%;	
+    margin-left: 20px;
     padding: 30px;
     border: 1px solid #e5e5e5;
     background-color: #fff;
@@ -70,22 +73,33 @@
 .customer_content img {
 	display: block;
 	margin: auto;
-	height: 65px; 
+	height: 45px; 
 }
 
 .content_title{
 	font-weight: bold;
 	margin: 30px;
-    font-size: 20px;
+    font-size: 14px;
     color: #111;
     height: 100px;
 } 
 
 .customer_content p {
 	color: #666 !important;
+	font-size: 13px;
 }
 
 .customer_content a{
 	color: #666 !important;
 	text-decoration: underline;
+	font-size: 13px;
+}
+
+.tablelist {
+	font-weight: bold;
+}
+
+.boardtitle {
+	padding: 20px 0px 20px 50px;
+	font-size: 32px;
 }

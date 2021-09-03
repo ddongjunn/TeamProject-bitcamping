@@ -37,7 +37,7 @@
 						 <fmt:parseDate value="${notice.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
 						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
 					</span>
-					<span>조회수 ${notice.readcount}</span>
+					<span><i class="far fa-eye"></i> ${notice.readcount}</span>
 					<hr>
 				</td>
 			</tr>

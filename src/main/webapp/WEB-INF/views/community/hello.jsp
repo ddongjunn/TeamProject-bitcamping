@@ -28,7 +28,7 @@
     </div>
     <div class="freetext">
         <ul class="bu">
-            <li style="margin-bottom: 3px">새로운 사람들을 맞이해보세요.</li>
+            <li style="margin-bottom: 5px">새로운 사람들을 맞이해보세요.</li>
             <li>먼저 인사를 건네보는건 어떨까요?</li>
         </ul>
     </div>
@@ -48,7 +48,7 @@
 <br>
 
 <div class="bbs_total">
-	<span>전체게시물<strong> ${totalCount}</strong></span>
+	<i class="fas fa-layer-group"></i><span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
 	<table class="table bbstable">
@@ -81,7 +81,7 @@
 						<a href="/community/helloDetail.do?community_seq=${data.community_seq }">
 							${data.title}
 							<c:if test="${data.commentcount ne 0}">
-								<span style="font-size: 13px; color: #75AE87;">[${data.commentcount}]</span>
+								<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
 							</c:if>
 						</a>
 					</td>
