@@ -20,13 +20,14 @@
 	    </h2>
 	<div class="table-responsive">
 	    <div>
-	        <table class="table align-items-center">
+	        <table class="table">
 	            <thead>
-	            <tr class="table_top">
-	                <td>상품명</td>
-	                <td>리뷰제목</td>
-	                <td>작성일</td>
-	                <td>별점</td>
+	            <tr class="table_top" style="text-align: left">
+	                <th>상품명</th>
+	                <th>리뷰제목</th>
+	                <th>작성일</th>
+	                <th>별점</th>
+					<th></th>
 	            </tr>
 	            </thead>
 	            <tbody class="list">
@@ -56,16 +57,26 @@
 	                            ⭐
 	                        </c:forEach>
 	                    </td>
+						<td>
+							<button type="button" class="btn btn-primary btn-sm" onclick="updateReview(${review.review_Seq})">수정</button>
+							<button type="button" class="btn btn-primary btn-sm">삭제</button>
+						</td>
 	                </tr>
 	
 	                <tr id="reviewcontent${review.review_Seq}" class="qnacontent" style="display:none;">
 	                    <td></td>
 	                    <td colspan="1">
-	                        &nbsp; &nbsp; &nbsp;ㄴ ${review.content}
+	                        &nbsp; &nbsp; &nbsp;ㄴ ${review.content}<br>
+							<c:if test="${review.image eq null}">
+
+							</c:if>
+							<c:if test="${review.image ne null}">
+								<img src = "/resources/upload/${review.image}" alt = "상품평 이미지" height = "250px">
+							</c:if>
 	                    </td>
 	                    <td></td>
 	                    <td></td>
-	
+						<td></td>
 	                </tr>
 	            </c:forEach>
 	            </tbody>
@@ -131,6 +142,20 @@
             $("#reviewcontent"+seq).hide();
         }
     }
+
+	function updateReview(review_Seq){
+
+		let popupWidth = 480;
+		let popupHeight = 520;
+
+		let popupX = (window.screen.width / 2) - (popupWidth / 2);
+		// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+
+		let popupY= (window.screen.height / 2) - (popupHeight / 2);
+		// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
+
+		window.open("/account/update-review.do?review_Seq=" + review_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
+	}
 
 
 </script>

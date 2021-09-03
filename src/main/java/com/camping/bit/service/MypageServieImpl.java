@@ -101,4 +101,14 @@ public class MypageServieImpl implements  MypageService{
         return dao.csQnaCount(param);
     }
 
+    @Override
+    public ProductReviewDto getProductReview(int review_Seq) {
+        return dao.getProductReview(review_Seq);
+    }
+
+    @Override
+    public void updateProductReview(ProductReviewDto dto) {
+        dao.updateProductReview(dto);
+    }
+
 }

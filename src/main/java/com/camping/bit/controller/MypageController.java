@@ -1,9 +1,11 @@
 package com.camping.bit.controller;
 
+import com.camping.bit.commons.FileUploadUtil;
 import com.camping.bit.dto.*;
 import com.camping.bit.service.AdminService;
 import com.camping.bit.service.MemberService;
 import com.camping.bit.service.MypageService;
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -336,6 +342,50 @@ public class MypageController {
         System.out.println(order);
 
         return "mypage-myOrder-detail.tiles";
+    }
+
+    @RequestMapping(value = "update-review.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String updateReview(Model model, int review_Seq) {
+
+        ProductReviewDto dto = service.getProductReview(review_Seq);
+        System.out.println("업데이트 전 : " + dto);
+        model.addAttribute("review",dto);
+
+        return "updateReview.tiles";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update-reviewAf.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String updateReviewAf(ProductReviewDto review, @RequestParam(value = "reviewImage", required = false) MultipartFile reviewImage, HttpServletRequest req) {
+
+        System.out.println("updateReview : " + review);
+        System.out.println("reviewImage : " + reviewImage);
+        if(reviewImage != null) {
+
+            String fileUpload = req.getServletContext().getRealPath("/resources/upload");
+
+            System.out.println("리뷰 사진 업로드 경로 : " + fileUpload);
+
+            String newFileName = FileUploadUtil.getNewFileName(reviewImage.getOriginalFilename());
+
+            System.out.println("변환 파일명 : " + newFileName);
+
+            review.setImage(newFileName);
+
+            File file = new File(fileUpload + "/" + newFileName);
+
+            try {
+                FileUtils.writeByteArrayToFile(file, reviewImage.getBytes());
+                service.updateProductReview(review);
+            }catch(IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            service.updateProductReview(review);
+        }
+
+
+        return "true";
     }
 
 }

@@ -327,4 +327,13 @@
         </if>
     </select>
 
+    <select id="getProductReview" parameterType="int" resultType="ProductReviewDto">
+        SELECT * FROM PRODUCT_REVIEW WHERE REVIEW_SEQ = #{review_Seq}
+    </select>
+
+    <update id="updateProductReview" parameterType="ProductReviewDto">
+        UPDATE PRODUCT_REVIEW SET TITLE = #{title}, CONTENT = #{content}, IMAGE = #{image , jdbcType=VARCHAR}, RATE = #{rate} WHERE REVIEW_SEQ = #{review_Seq}
+
+    </update>
+
 </mapper>
