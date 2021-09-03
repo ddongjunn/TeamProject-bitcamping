@@ -37,8 +37,9 @@
 						 <fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
 						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
 					</span>
-					<span>조회수 ${data.readcount }</span> 
-					<span>좋아요 ${likecount}</span> 
+					<span><i class="far fa-eye"></i> ${data.readcount }</span> 
+					<i class="fas fa-heart"></i>
+					<span class="likeCount"> ${likecount}</span> 
 					<hr>
 				</td>
 			</tr>

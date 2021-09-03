@@ -28,8 +28,8 @@
     <hr id="dotline">
     <div class="freetext">
         <ul class="bu">
-            <li><i class="fas fa-chevron-right"> </i> 캠핑 중고 거래와 관련이 없는 글과 같은 삭제 사유에 해당하는 글은 무통보 삭제 처리됩니다.</li> 
-            <li><i class="fas fa-chevron-right"> </i> 주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
+            <li style="margin-bottom: 5px">캠핑 중고 거래와 관련이 없는 글과 같은 삭제 사유에 해당하는 글은 무통보 삭제 처리됩니다.</li> 
+            <li>주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
                 <p class="point"><img src="../resources/images/point.png" height="30px" width="30px">비트캠핑은 회원들 간 거래가 가능한 공간만을 제공할 뿐, 개인 상호간 거래에 대해 일절 책임지지 않으니 유의하시기 바랍니다.</p>
             </li>
         </ul>
@@ -60,7 +60,7 @@
 
 
 <div class="bbs_total">
-	<span>전체게시물<strong> ${totalCount}</strong></span>
+	<i class="fas fa-layer-group"></i><span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
 	<table class="table bbstable">
@@ -100,7 +100,7 @@
 	                        </c:choose>
 	                        ${data.title} 
 	                        <c:if test="${data.commentcount ne 0}">
-	                           <span style="font-size: 13px; color: #75AE87;">[${data.commentcount}]</span>
+	                           <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
 	                        </c:if>
 	                   </a>
 	                </td>

@@ -23,7 +23,7 @@
 .maintitle h2 {
 	padding-bottom: 26px;
 	color: black;
-	font-size: 2em;
+	font-size: 28px;
     font-weight: bold;
 }
 
@@ -60,6 +60,7 @@
 
 .bbs_total span {
 	font-weight: bold;
+	font-size: 15px;
 }
 
 .bbs_total span > strong {
@@ -86,3 +87,4 @@
 	margin-top: 30px; 
 	margin-bottom: 30px;
 }
+
