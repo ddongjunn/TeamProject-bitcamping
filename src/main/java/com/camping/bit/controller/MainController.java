@@ -13,16 +13,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.camping.bit.dto.CampingListDto;
 import com.camping.bit.dto.CampingParam;
+import com.camping.bit.dto.CommonsParam;
 import com.camping.bit.dto.CommunityDto;
 import com.camping.bit.dto.MemberDto;
+import com.camping.bit.dto.ProductDetailDto;
 import com.camping.bit.service.AdminService;
 import com.camping.bit.service.MemberService;
+import com.camping.bit.service.RentService;
 
 @Controller
 public class MainController {
 	
     @Autowired
     AdminService adminservice;
+    
+    @Autowired
+    RentService rentService;
 
 	@RequestMapping(value = "main.do", method = RequestMethod.GET)
 	public String main(Model model) {
@@ -58,7 +64,13 @@ public class MainController {
         communityMap.put("review",reviewList);
 
         model.addAttribute("recentCommunity",communityMap);
-   
+        
+        // 상품목록 받아오기
+        CommonsParam param = new CommonsParam();
+        param.setStart(1);
+        param.setEnd(7);
+    	List<ProductDetailDto> item = rentService.getProductList(param);		
+    	model.addAttribute("item", item);
 
 		return "main.tiles";
 	}

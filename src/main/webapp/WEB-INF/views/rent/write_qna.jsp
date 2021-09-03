@@ -78,7 +78,7 @@
 				url : '<c:url value='/rent/writeQnaAf.do' />',
 				data : params,
 				success : function(data){
-					opener.writeqna();
+					opener.writeQnaAf();
 					window.close();
 				}
 			});

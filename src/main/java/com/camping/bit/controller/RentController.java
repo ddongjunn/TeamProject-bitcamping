@@ -234,6 +234,8 @@ public class RentController {
 		
 		// if(!reviewImage.isEmpty() || reviewImage != null) 이경우 nullpointException 발생
 		
+		System.out.println(reviewImage.isEmpty());
+		
 		if(reviewImage != null) {
 		
 			String fileUpload = req.getServletContext().getRealPath("/resources/upload");

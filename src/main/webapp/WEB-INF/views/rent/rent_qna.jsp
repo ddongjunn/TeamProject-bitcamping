@@ -60,7 +60,7 @@
 
 			header += '<div class="qna-count">'
             header += '문의 <span class="c_point">' + data.totalCount +'</span>개'
-            header += '<span class="qna-write"><a href="javascript:writeqna();" >문의하기</a></span>'
+            header += '<span class="qna-write"><a href="javascript:writeQna();" >문의하기</a></span>'
             header += '</div>'
             $('#_qnaHeader').html(header);
 			
@@ -170,8 +170,9 @@
       })
    }
 
-   function writeQna() {
-      qnaAjax();
+   function writeQnaAf() {
+	 	   
+	   qnaAjax();
    }
 
    function showHideQna(seq){
@@ -200,20 +201,31 @@
    }
 
    /* 리뷰작성 popup open */
-   function writeqna(){
-
-      var product_Seq = ${item.product_Seq}; // 이부분 나중에 order_Seq 넣어주기
-      var popupWidth = 480;
-      var popupHeight = 520;
-
-      var popupX = (window.screen.width / 2) - (popupWidth / 2);
-      // 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
-
-      var popupY= (window.screen.height / 2) - (popupHeight / 2);
-      // 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
-
-      window.open("/rent/writeQna.do?product_Seq=" + product_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
-   }
+   function writeQna(){
+   
+		if(${login == null}) {
+			
+	   		Swal.fire({
+	   			  icon: 'warning',
+	   			  title: '로그인 후 이용해 주세요',	   			  
+	   		});
+	   		return;
+	   		
+		}else{	
+			
+			var product_Seq = ${item.product_Seq}; // 이부분 나중에 order_Seq 넣어주기
+			var popupWidth = 480;
+			var popupHeight = 520;
+			
+			var popupX = (window.screen.width / 2) - (popupWidth / 2);
+			// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+			
+			var popupY= (window.screen.height / 2) - (popupHeight / 2);
+			// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
+			
+			window.open("/rent/writeQna.do?product_Seq=" + product_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
+		}
+	}
 
    function searchParam(key) {
       return new URLSearchParams(location.search).get(key);

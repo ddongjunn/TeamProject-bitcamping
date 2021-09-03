@@ -38,6 +38,9 @@
 *{
   font-family: S-CoreDream-3Light !important;
 }
+.note-editable{
+	font-family: '맑은 고딕' !important;
+}
 /** header start **/
 #ground{
 	height: 100%;
@@ -70,10 +73,10 @@
 }
 .sidelogo{
 	display: none;
-	width: 120px;
+	width: 90px;
 	position: fixed;
-	top: 11px;
-	left: 13%;
+	top: 1vh;
+	left: 8vw;
 	z-index: 100;
 }
 #header > .indiv .logobox {
@@ -97,7 +100,7 @@
 }
 #header > .indiv #menu > li > a {
   position:relative;
-  font-size:15px;
+  font-size:18px;
   line-height:30px;
   font-weight:800;
   color: #353535;
@@ -124,8 +127,9 @@
 }
 #header > .indiv #gnb > a {
   display:inline-block;
-  font-size:15px;
-  color: #000000;
+  font-size: 14px;
+  font-weight: bold;
+  color: #353535;
 }
 #header > .indiv #gnb > a + a {margin-left:40px;}
 
@@ -136,22 +140,7 @@
   width: 100%;
   z-index: 1;
   line-height: 70px;
-  background-color: rgba(212, 223, 227, 1);
+  background-color: rgba(255, 255, 255, 1);
   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
 }
 /** header end **/
-
-
-/* text effect */
-.stroke-shadow-orange{
-  color: #fff;
-  text-shadow: -2px 0 #E07260, 0 -2px #E07260, 2px 0 #E07260, 0 2px #E07260, 2px 2px #E07260, -2px -2px #E07260, -2px 2px #E07260, 2px -2px #E07260, 6px 6px #E07260;
-}
-.stroke-shadow-blue{
-  color: #fff;
-  text-shadow: -2px 0 #87C4B7, 0 -2px #87C4B7, 2px 0 #87C4B7, 0 2px #87C4B7, 2px 2px #87C4B7, -2px -2px #87C4B7, -2px 2px #87C4B7, 2px -2px #87C4B7, 6px 6px #87C4B7;
-}
-.stroke-shadow-gray{
-  color: #fff;
-  text-shadow: -2px 0 #B0B0B0, 0 -2px #B0B0B0, 2px 0 #B0B0B0, 0 2px #B0B0B0, 2px 2px #B0B0B0, -2px -2px #B0B0B0, -2px 2px #B0B0B0, 2px -2px #B0B0B0, 6px 6px #B0B0B0;
-}

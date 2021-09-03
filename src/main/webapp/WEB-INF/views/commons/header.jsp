@@ -41,7 +41,7 @@
 <div id="ground">
     <!-- header start -->
     <div id="header">
-   		<a href="/main.do"><img class="sidelogo" src="/resources/images/sidelogo.png" alt="로고"></a>
+    	<a href="/main.do"><img class="sidelogo" src="/resources/images/newlogo.png" alt="로고"></a>
         <div class="indiv">
             <div class="logobox">
                 <a href="/main.do">
@@ -49,7 +49,7 @@
                 </a>
             </div>
 			<ul id="menu">
-				        <li><a href="#none">ABOUT US</a></li>
+				<li><a href="#none">ABOUT US</a></li>
                 <li><a href="/csite/campinglist.do">캠핑장 검색</a></li>
                 <li><a href="/rent/list.do">캠핑장비 대여</a></li>
                 <li><a href="/community/main.do">캠핑커뮤니티</a></li>
@@ -78,7 +78,9 @@
                 <div class="login_modal_close-area"><span id="close" style="cursor: pointer">X</span></div>
                 <div class="login_modal_title">
                     <div class="modal_login">
-                        <h2>비트캠핑</h2>
+                        <div class="modal_logo">
+                        	<img src="/resources/images/newlogo.png">
+                        </div>
                         <div class="modal_login_sns">
                             <form style="display: inline" action="/login/naver.do" method="post">
                                 <button class='btn-social-login' style='background:#1FC700'><i

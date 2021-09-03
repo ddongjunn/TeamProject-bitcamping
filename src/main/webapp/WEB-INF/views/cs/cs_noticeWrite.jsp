@@ -11,6 +11,12 @@
 <script src="${pageContext.request.contextPath}/resources/js/summernote/lang/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/summernote/summernote-lite.css">
 
+
+<style>
+.note-editable{
+	font-family: initial !important;
+}
+</style>
 </head>
 <body>
 
