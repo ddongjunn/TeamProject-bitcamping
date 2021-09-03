@@ -54,7 +54,7 @@
 	background-color: white;
 	font-size: 12px;
 }
-#btnSearch:hover, 
+#btnSearch:hover,
 #btnWrite:hover, 
 .btnSimple:hover{
 	padding: 7px;
@@ -63,19 +63,27 @@
 	background-color: #75AE87;
 	color: white;
 }
-.page-item.active .page-link {
-    z-index: 3;
-    color: #fff;
-    background-color: #75AE87;
-    border-color: #75AE87;
-}
+
 
 /* 페이지네이션 */
 .pagination{
 	justify-content: center;
 	margin: 15px;
 }
-
+.page-item.active .page-link {
+    color: #fff;
+    background-color: #75AE87;
+    border-color: #75AE87;
+}
+.pagination>.active>a, 
+.pagination>.active>a:focus, 
+.pagination>.active>a:hover, 
+.pagination>.active>span, 
+.pagination>.active>span:focus, 
+.pagination>.active>span:hover {
+	background-color: #75AE87;
+    border-color: #75AE87;
+}
 
 /* 게시글 디테일 */
 .postpath{

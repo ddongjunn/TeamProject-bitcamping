@@ -173,15 +173,22 @@ h1 { font-size: 1.5em; margin: 10px; }
 			
 		} else {
 			
-	 		var params = $("#reviewForm").serialize();
+	 		// var params = $("#reviewForm").serialize();
+	 		
+	 		var form = $('#reviewForm')[0]; 
+	 		var formData = new FormData(form);
 	 		
 			$.ajax({
 				url : '<c:url value='/rent/writeReviewAf.do' />',
-				data : params,
+				type: 'POST',
+				data : formData,
 				success : function(xh){	
 							opener.parent.location.reload();
 							window.close();
-				}
+				}, 
+				cache: false, 
+				contentType: false, 
+				processData: false
 			});
         }
 	});

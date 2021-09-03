@@ -70,12 +70,12 @@
 		</div>
 	</div>
 
-	<div class="contents-area mt150">
+	<div class="contents-area">
 		<!-- recommend area start -->
 		<div class="recommendslide">
-			<div class="lefttitle">
-				<span class="stroke-shadow-orange" style="font-family: 'TTTogether' !important;">추천</span>
-				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;"> 캠핑장</span>
+			<div class="recomentslide-title">
+				<p>추천 캠핑장</p>
+				<p class="subtitle">한번쯤은 꼭 가볼만한 캠핑장!</p>
 			</div>
 			
 
@@ -97,41 +97,33 @@
 		</div>
 		<!-- recommend area end -->
 
-		<div class="mt50" style="margin: 0 60px 50px 60px; height: 400px;">
-			<div style="float: left; border-top: 1px solid #999999; border-bottom: 1px solid #999999; width: 20%; margin-right: 30px; position: relative; height: 100%;">
-				<div class="" style="float: left; margin-right: 30px;">
-					<div class="mt20">
-						<div>
-							<h2>추천장비</h2>
-						</div>
-						<div style="height: 200px">
-							<p>test2</p>
-							<div>
-								test3
-							</div>
-						</div>
-					</div>
+		<div class="product-area">
+		
+			<div class="product-title-box">
+				<div class="product-title">
+					추천상품
+					<p class="product-subtitle">비트캠핑과 함께 즐거운 캠핑을 준비하세요 <i class="fas fa-laugh"></i></p>
 				</div>
-				<div style="position: absolute; bottom: 10px; right: 10px;"><p>더보기</p></div>
+				<div class="product-more">
+					<a href="/rent/list.do">
+						더 많은 상품 보러가기
+						<span class="product-more-icon"><i class="fas fa-chevron-circle-right"></i></span>
+					</a>
+				</div>
 			</div>
-			<div style="float: left; width: 75%; height: 100%;">
+			
+			<div class="product-img-box">
 				<div class="item_box">
-					<div id="tab" >
-						<ul class="content_ul">
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-							<li><img src="/resources/images/testimg.jpg" width="400" height="80"></li>
-						</ul>
-					</div>
+					<ul class="content_ul">
+						<c:forEach items="${item}" var="item">
+						<li>
+							<a href="/rent/detail.do?product_Seq=${item.product_Seq}">
+								<img src="/resources/upload/${item.thumbnail_Name}">
+							</a>
+							<div class="product-list-name">${item.product_Name}</div>
+						</li>
+						</c:forEach>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -295,6 +287,7 @@
 
 	/* recommend slider */
 	$('.tarkikComandSlider').slick({
+		infinite: true,
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		autoplay: true,
