@@ -1,6 +1,7 @@
 package com.camping.bit.controller;
 
 import com.camping.bit.dto.*;
+import com.camping.bit.service.AdminService;
 import com.camping.bit.service.MemberService;
 import com.camping.bit.service.MypageService;
 import org.apache.ibatis.jdbc.Null;
@@ -29,6 +30,9 @@ public class MypageController {
 
     @Autowired
     MemberService memberService;
+    
+    @Autowired
+    AdminService adminService;
 
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
     public String main() {
@@ -319,6 +323,19 @@ public class MypageController {
         model.addAttribute("kind",param.getKind());
 
         return "mypage-csQna.tiles";
+    }
+    
+    @RequestMapping(value = "order-detail.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String orderDetail(Model model, String merchant_Uid) {
+
+        System.out.println(merchant_Uid);
+
+        ProductOrderDto order = adminService.getOrderInfo(merchant_Uid);
+        model.addAttribute("order", order);
+
+        System.out.println(order);
+
+        return "mypage-myOrder-detail.tiles";
     }
 
 }

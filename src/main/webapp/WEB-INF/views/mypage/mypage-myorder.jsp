@@ -7,39 +7,55 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
 <title>Insert title here</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypageRent.css">
 </head>
 <body>
 <div class="mypage_board">
 	<div>
-		<h2 class="title">
-	        주문내역
-	    </h2>
+		<div class="myorder-title">
+	        내 주문내역
+	    </div>
 	</div>
 	<c:forEach items="${order}" var="order">
-		<div>
-			<span>
+		<div class="myorder-box">
+			<div class="myorder-date">
+				<span class="myorder-date-icon"><i class="fas fa-shopping-cart"></i></span>
 				<fmt:parseDate value="${order.order_Date}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
 				<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
-			</span>
-			<div style="border: 1px solid; margin: 5px;">
-				<a href="/rent/detail.do?product_Seq=${order.product_Seq}"><span>${order.product_Name}</span></a>
-				<div style="display: flex;">			
+			</div>
+			<div class="myorder-case">
+				<div class="myorder-item">
+					<a href="/rent/detail.do?product_Seq=${order.product_Seq}">
+						${order.product_Name}
+					</a>
+				</div>
+				<div class="myorder-detail">			
 					<hr>
-					<div style="flex: 1; flex-basis: 20%;">
-						<img src="/resources/upload/${order.thumbnail_Name}" style="height: 150px;" alt="상품 썸네일 이미지">
+					<div class="myorder-img">
+						<img src="/resources/upload/${order.thumbnail_Name}" alt="상품 썸네일 이미지">
 					</div>
-					<div style="flex: 1; flex-basis: 60%;">
-						<table>
+					<div class="myorder-info">
+						<table class="myorder-info-table">
 							<tr>
-								<td>주문번호</td> <td>${order.merchant_Uid}</td>
+								<th>주문번호</th> 
+								<td>
+									<a href="/account/order-detail.do?merchant_Uid=${order.merchant_Uid}">
+										${order.merchant_Uid}
+									</a>
+								</td>
 							</tr>
 							<tr>
-								<td>결제금액</td> <td><fmt:formatNumber value="${order.total_Price}" type="number"/>원</td>
+								<th>결제금액</th> <td><fmt:formatNumber value="${order.total_Price}" type="number"/>원</td>
 							</tr>
 							<tr>
-								<td>주문상태</td> 
+								<th>대여기간</th> 
+								<td>
+									${order.rent_Sdate} ~ ${order.rent_Edate}
+								</td>
+							</tr>
+							<tr>
+								<th>주문상태</th> 
 								<td>
 									<c:choose>
 										<c:when test="${order.order_Status eq 1}">결제완료</c:when>
@@ -51,11 +67,11 @@
 							</tr>
 						</table>	
 					</div>
-					<div style="flex: 1; flex-basis: 20%;">
+					<div class="myorder-btn">
 						<c:if test="${order.review_Status eq 0}">
-							<button onclick="writereview(${order.order_Seq})">리뷰 작성</button><br>
+							<button class="myorder-review-btn" onclick="writereview(${order.order_Seq})">리뷰 작성</button><br>
 						</c:if>
-							<button onclick="writeqna(${order.product_Seq})">상품 문의</button>
+							<button class="myorder-qna-btn" onclick="writeqna(${order.product_Seq})">상품 문의</button>
 					</div>
 				</div>
 			</div>

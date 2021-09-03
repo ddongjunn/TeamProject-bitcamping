@@ -8,26 +8,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="/resources/css/rentComplete.css" />
+
 </head>
 <body>
 
-<div style="min-height: 600px;">
-	<table border="1" style="margin: 100px auto; height: 400px;">
+<div class="cmplt-box">
+
+	<div class="cmplt-title">
+		<p class="cmplt-check"><i class="fas fa-check"></i></p>
+		<p>주문이 완료되었습니다! 감사합니다</p>
+	</div>
+	
+	<div class="cmplt-subtitle">
+		결제정보
+	</div>
+	
+	<table class="cmplt-table">
 		<colgroup>
-			<col width="200px">
-			<col width="400px">
+			<col width="30%">
+			<col width="70%">
 		</colgroup>
 		
-		<tr>
-			<td colspan="2" style="text-align: center"><h1>주문이 완료되었습니다! 감사합니다</h1></td>
-		</tr>
 		<tr>
 			<th>주문번호</th> <td>${order.merchant_Uid}</td>
 		</tr>
 		<tr>
 			<th>상품명</th> 
 			<td>
-				${item.product_Name} &nbsp;/&nbsp; 옵션 : (${rent.rent_Name})
+				${item.product_Name} &nbsp;/&nbsp; 옵션 : ${rent.rent_Name}
 				<c:if test="${order.option1_Seq ne 0}">
 					+ ${opt1.option_Name}
 				</c:if>
@@ -36,7 +46,7 @@
 				</c:if>
 			</td>
 		</tr>
-			<tr>
+		<tr>
 			<th>상품대여기간</th> 
 			<td>
 				${order.rent_Sdate} ~ ${order.rent_Edate}
@@ -69,6 +79,17 @@
 			<fmt:formatNumber value="${order.total_Price}" type="number"/>원		
 			</td>
 		</tr>
+	</table>
+	
+	<div class="cmplt-subtitle" style="margin-top: 40px;">
+		주문정보
+	</div>
+	
+	<table class="cmplt-table">
+		<colgroup>
+			<col width="30%">
+			<col width="70%">
+		</colgroup>
 		<tr>
 			<th>배송지 정보</th>
 			<td>
@@ -78,12 +99,13 @@
 			</td>
 		</tr>
 		<tr>
-			<th>배송메세지</th>
+			<th>배송 메세지</th>
 			<td>${order.memo}</td>
 		</tr>
 	</table>
-	<div style="width: 300px; margin: auto;">
-		<button type="button" onclick="">목록</button>
+	
+	<div class="cmplt-btn-box">
+		<button type="button" class="cmplt-btn" onclick="location.href='/account/myOrder.do'">주문내역 확인하기</button>
 	</div>
 </div>
 </body>

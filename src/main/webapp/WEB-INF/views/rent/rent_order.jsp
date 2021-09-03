@@ -25,7 +25,7 @@
 <body>
 	<main class="page payment-page">
 		<section class="payment-form dark">
-			<div class="container" style="width: 900px;">
+			<div class="container" style="width: 85%; background-color: f6f6f6; padding: 0; border-radius: 5px; border: 1px solid #dbdbdb; margin: 40px auto auto">
 				<div class="block-heading">
 					<h2>결제하기</h2>
 					<!-- <p>결제화면입니다</p> -->

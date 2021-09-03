@@ -85,6 +85,10 @@
    <definition name="mypage-csQna.tiles" extends="mypagemain.tiles">
       <put-attribute name="body" value="/WEB-INF/views/mypage/mypage-csQna.jsp" />
    </definition>
+   
+   <definition name="mypage-myOrder-detail.tiles" extends="mypagemain.tiles">
+      <put-attribute name="body" value="/WEB-INF/views/mypage/mypage-myorder-detail.jsp" />
+   </definition>
 
    <!-- 관리자 페이지 -->
    <definition name="adminmain.tiles" template="/WEB-INF/views/layouts-admin.jsp">

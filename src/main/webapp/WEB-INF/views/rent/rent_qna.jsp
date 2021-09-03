@@ -6,30 +6,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <meta charset="UTF-8">
-   <title>Insert title here</title>
-
-   <style type="text/css">
-
-      .qnatitle:hover {
-         text-decoration: underline;
-      }
-
-   </style>
-
+<meta charset="UTF-8">
+<title>Insert title here</title>
 </head>
 <body>
 
-<nav id="qna">
+<nav id="qna" class="menu-nav">
    <ul>
       <li><a href="#">상품 선택</a></li>
       <li><a href="#content">상품 상세</a></li>
       <li><a href="#review">상품 리뷰</a></li>
-      <li><a href="#qna">Q&A</a></li>
+      <li><a href="#qna" class="nav-selected">Q&A</a></li>
    </ul>
 </nav>
 
-<div id="qnacontent" style="height: auto; margin: auto; width: 80%; background-color: gray;">
+<div id="qnacontent" class="qna-area">
 
    <div id="_qnaHeader">
    </div>
@@ -39,7 +30,7 @@
 
 </div>
 
-<nav aria-label="Page navigation">
+<nav aria-label="Page navigation" class="pagination-nav">
    <ul class="pagination justify-content-center" id="pagination2"></ul>
 </nav>
 
@@ -67,51 +58,70 @@
          success : function (data) {
 
 
-
-            header += '<span>문의' + data.totalCount +'개</span>'
-            header += '<span style="float:right;"><a href="javascript:writeqna();">문의하기</a></span>'
+			header += '<div class="qna-count">'
+            header += '문의 <span class="c_point">' + data.totalCount +'</span>개'
+            header += '<span class="qna-write"><a href="javascript:writeqna();" >문의하기</a></span>'
+            header += '</div>'
             $('#_qnaHeader').html(header);
-
-            $.each(data.qna, function (index, item) {
-               content += '<div class="qnarow" style="display: flex; background-color: #F7BBBB; ">' // start <div=qnarow>
-               content += '<div id="statusbox" class="status" style="flex: 1 1 15%; padding: 10px; ">'
-               content +=   item.status === 0 ? '답변대기중' : '답변완료'
-               content += '</div>'
-
-               content += item.secret === 0  ?
-                     '<div id="qnatitle" onclick="showHideQna(' + item.qna_Seq + ')" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >'
-                     :
-                     '<div id="qnatitle" onclick="noPermission(\'' + item.user_Id + '\', ' + item.qna_Seq + ')" class="qnatitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;">'  + '🔒'
-               content += item.title
-               content +=   '</div>'
-
-               content += '<div class="info" style="flex: 1 1 25%; padding: 10px;" >'
-               content += '<span>작성자 : ' + item.nickname + '</span> <br>'
-               content += '<span>작성일 : ' + item.wdate.substr(0,10) + '</span>'
-               content += '</div>'
-
-               content += '</div>' // end <div=qnarow>
-
-               content += '<div id="qnacontent' + item.qna_Seq + '" class="qnacontent" style="height: auto; padding: 10px; display: none;" >'
-               content += '<div style="background-color: #CDE8FD;">'
-               content += item.content
-               content += '</div id="qna_answer">'
-               if(item.status === 1){
-                  content += '<div class="qnarow" style="display: flex; background-color: #ffd600; ">'
-
-                  content += '<div class="qna_answer" style="flex: 1 1 25%; padding: 10px 0 0 20px;">' //답변내용
-                  content += item.answercontent
-                  content += '</div>'
-
-                  content += '<div style="background-color: #8CC63F;" >'
-                  content += '<span>작성자 : ' + '관리자' + '</span> <br>'
-                  content += '<span>작성일 : ' + item.answerwdate.substr(0,10) + '</span>'
-                  content += '</div>'
-
-                  content += '</div>'
-               }
-               content += '</div>'
-            });
+			
+			if(data.totalCount === 0){
+				
+				content += '<div class="qna-row">'
+				content += '<div class="list-empty">작성된 문의글이 없습니다</div>'
+				content += '</div>'
+				
+			} else {
+				
+	            $.each(data.qna, function (index, item) {
+	               content += '<div class="qna-row">' // start <div=qna-row>
+	               content += '<div id="statusbox" class="qna-status"">'
+	               content +=   item.status === 0 ? '답변대기중' : '답변완료'
+	               content += '</div>'
+	
+	               content += item.secret === 0  ?
+	                     '<div id="qnatitle" onclick="showHideQna(' + item.qna_Seq + ')" class="qna-title">'
+	                     :
+	                     '<div id="qnatitle" onclick="noPermission(\'' + item.user_Id + '\', ' + item.qna_Seq + ')" class="qna-title">'  + '🔒'
+	               content += item.title
+	               content += '</div>'
+	
+	               content += '<div class="qna-info">'
+	               content += '<div class="inner-info"><i class="fas fa-user-circle fa-sm"></i> ' + item.nickname + '<br>'
+	               content += '<i class="far fa-calendar-alt fa-sm"></i> ' + item.wdate.substr(0,10) + '</div>'
+	               content += '</div>'
+	
+	               content += '</div>' // end <div=qna-row>
+	
+	               content += '<div id="qnacontent' + item.qna_Seq + '" class="qna-content-box">'
+	               content += '<div class="qna-content">'
+	               content += item.content
+	               content += '</div>'
+	               
+	               content += '<div id="qna_answer">'
+	               if(item.status === 1){
+	                  content += '<div class="qna-answer-row">'
+	                  
+	                  content += '<div class="qna-answer-icon">'
+	                  content += ''
+	                  content += '</div>'
+	
+	                  content += '<div class="qna-answer">' //답변내용
+	                  content += '<span style="color: #75AE87; margin-right: 10px;"><i class="fas fa-arrow-right fa-sm"></i></span>' + item.answercontent
+	                  content += '</div>'
+	
+	                  content += '<div class="qna-answer-info">'
+	                  content += '<div class="inner-info"><i class="fas fa-user-circle fa-sm"></i> ' + '<span class="badge badge-pill badge-success">관리자</span>' + '<br>'
+	                  content += '<i class="far fa-calendar-alt fa-sm"></i> ' + item.answerwdate.substr(0,10) + '</div>'
+	                  content += '</div>'
+	
+	                  content += '</div>'
+	               }
+	               content += '</div>' // end <div=qna_answer>
+	               
+	               content += '</div>' // end <div=qna-content>
+	            });
+            
+			}
 
             $('#_qnaContent').html(content);
 

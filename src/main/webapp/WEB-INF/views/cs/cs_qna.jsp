@@ -59,7 +59,7 @@
 								<c:when test="${login.id eq qna.user_Id || login.auth eq 1}">
 									<a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}">							
 										${qna.title}
-									</a> 🔒 
+									</a> 🔒
 								</c:when>
 								<c:otherwise>
 									<a href="javascript:noPermission();">						
