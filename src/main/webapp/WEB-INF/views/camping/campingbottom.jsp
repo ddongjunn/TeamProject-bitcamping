@@ -40,13 +40,13 @@ String campingintro = (String)request.getAttribute("campingintro");
 <c:set value = "<%=campinglist.getDonm()%>" var = "donm"/>
 
 <div id ="section">
-	<span><button type = "button" id = "introBtn" class="btn btn-light">캠핑장 소개</button></span>
-	<span><button type = "button" id = "mapBtn" class="btn btn-light">오시는 길</button></span>
-	<span><button type = "button" id = "reviewBtn" class="btn btn-light">캠핑장 후기</button></span>
+		<span><button type = "button" id = "introBtn" class="btn btn-light">캠핑장 소개</button></span>
+		<span><button type = "button" id = "mapBtn" class="btn btn-light">오시는 길</button></span>
+		<span><button type = "button" id = "reviewBtn" class="btn btn-light">캠핑장 후기</button></span>
 </div>
 
-
 <div id = "contents">
+	
 	<c:set value="<%=campinglist.getFacltnm()%>" var="facltnm" />
 	<div>
 		<c:choose>
@@ -79,57 +79,57 @@ String campingintro = (String)request.getAttribute("campingintro");
 	 <div id = "sbrscl"> 
 		<c:set value = "<%=campinglist.getSbrscl() %>" var = "service"/>
 			<c:if test="${fn:contains(service, '전기')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/plug.png" width = "60" style = "display : inline-block;"><h4>전기</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '무선인터넷')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/wi-fi.png" width = "60"><h4>무선인터넷</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '장작판매')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/firewood.png" width = "60"style = "display : inline-block;"><h4>장작판매</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '온수')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/hot-water.png" width = "60" style = "display : inline-block;"><h4>온수</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '마트.편의점')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/shopping-cart.png" width = "60"><h4>마트/편의점</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '트렘폴린')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/trampoline.png" width = "60"><h4>트렘폴린</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '물놀이장')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/water-park.png" width = "60"><h4>물놀이장</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '놀이터')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/slider.png" width = "60"><h4>놀이터</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '산책로')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/river-trail.png" width = "60"><h4>산책로</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '운동시설')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/gym.png" width = "60"><h4>운동시설</h4>
 				</div>
 			</c:if>
 			<c:if test="${fn:contains(service, '운동장')}">
-				<div style = "display : inline-block; text-align : center">
+				<div class = "campingservice">
 					<img src ="<%=request.getContextPath()%>/resources/images/campingsite/playground.png" width = "60"><h4>운동장</h4>
 				</div>
 			</c:if>
@@ -159,7 +159,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 	
 	<table class = "table table">
 		<tr align = "center" style = "font-weight : bold">
-			<td rowspan = "2" style = "vertical-align: middle; font-weight : bold" >주요시설</td>
+			<td rowspan = "2" style = "vertical-align: middle;" >주요시설</td>
 			<td>일반야영장</td>
 			<td>자동차야영장</td>
 			<td>글램핑</td>
@@ -333,7 +333,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 			<div class="card" style="width: 14rem;">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/social.png" height = "130px" alt="Card image cap">
 				<div class="card-block">
-					<br><h4 class="card-title" style = "text-align : center; color : #87C4B7">체험프로그램 진행</h4>
+					<br><h4 class="card-title" style = "text-align : center; color : #87C4B7;">체험프로그램 진행</h4>
 					<c:choose>
 						<c:when test="${program != 'none'}">
 							<p class="card-text" style = "text-align : center">${program}</p><br>
@@ -418,7 +418,7 @@ String campingintro = (String)request.getAttribute("campingintro");
  
 <br>
 
-<div id = "photos" class = "photos">
+<div id = "photos">
 	<table>
 		<tr class = "smallphotos">
 			<c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i" end = "14">
@@ -469,7 +469,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 	    </tbody>	
 	</table>
 
-	<div class="container" style = "width : 100%; text-align : center">
+	<div class="container">
 	    <div style = "display : inline-block">
 		    <nav aria-label="Page navigation">
 		        <ul class="pagination" id="pagination"></ul>
