@@ -48,7 +48,7 @@
 			</div>
 			<hr class="hr">
 			<div class="variant">
-				<h4>대여 기간</h4>
+				<h4><strong>대여 기간</strong></h4>
 				<select id="rent_Seq" name="rent_Seq" onchange="totalcount()" style="width: 60%;">
 					<c:forEach items="${rent}" var="rent">
 						<c:if test="${rent.rent_Price eq 0}">
@@ -59,7 +59,7 @@
 						</c:if>
 					</c:forEach>
 				</select>
-				<h4>대여 일자</h4>
+				<h4><strong>대여 일자</strong></h4>
 				<input id="rent_Sdate" name="rent_Sdate" type="text" placeholder="시작 날짜 선택" autocomplete="off" readonly required> ~ <input id="rent_Edate" name="rent_Edate" type="text" placeholder="반납일 자동 지정" autocomplete="off" readonly required>
 				<span style="font-size: 12px">
 					<!-- <br>대여시작일은 배송 기간을 고려하여 일주일 뒤부터 지정 가능합니다 -->
@@ -69,7 +69,7 @@
 			<c:if test="${item.include_Light eq 1 or item.include_Grill eq 1}">
 				<hr class="hr">
 				<div class="variant">
-					<h4>추가 옵션 선택</h4>
+					<h4><strong>추가 옵션 선택</strong></h4>
 					<c:if test="${item.include_Light eq 1}">
 						<h3>조명 추가</h3>
 						<select id="option1_Seq" name="option1_Seq" style="width: 60%;">
@@ -113,16 +113,24 @@
 	</section>
 </form>
 
-<nav id="content">
+<div class="ad-area">
+
+	<div class="ad-main">
+		<img src="/resources/images/ad01.jpg">
+	</div>
+
+</div>
+
+<nav id="content" class="menu-nav">
 	<ul>
 		<li><a href="#">상품 선택</a></li>
-		<li><a href="#content">상품 상세</a></li>
+		<li><a href="#content" class="nav-selected">상품 상세</a></li>
 		<li><a href="#review">상품 리뷰</a></li>
 		<li><a href="#qna">Q&A</a></li>
 	</ul>
 </nav>
 
-<div style="height: auto; width: 80%; background-color: #dddddd; margin:auto; padding: 20px;">
+<div class="item-detail">
 	${item.content}
 </div>
 
@@ -133,13 +141,15 @@ $("#buybutton").click(function(){
 	if(${login eq null}){
 		Swal.fire({
 			icon : 'warning',
-			text : '로그인 후 이용해주세요'
+			text : '로그인 후 이용해주세요',
+			width: '32rem'
 		});
 		return;
 	}else if($("#rent_Sdate").val() == ""){
 		Swal.fire({
 			icon : 'warning',
 			text : '대여일을 입력해주세요',
+			width: '32rem',
 			didClose: () => {
 				$("#rent_Sdate").focus();
 			}

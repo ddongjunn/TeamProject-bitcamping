@@ -17,12 +17,12 @@
 <div class="container mydiv">
 	<div class="title">상품 목록</div>
 	<div class="total-item">
-		총 <span style="color: tomato; font-weight: bold;">${totalCount}</span>개의 상품이 있습니다
+		총 <span class="c_point f_bold">${totalCount}</span>개의 상품이 있습니다
 		<span class="sort-item"> <a href="#none">신상품</a> / <a>상품명</a> / <a>낮은가격</a> / <a>높은가격</a></span>
 	</div> 
 	
 	<hr>
-    <div class="row">
+    <div class="item-row">
     	<c:forEach items="${list}" var="list">
 	        <div class="col-md-4">       	
 	            <!-- bbb_deals -->
@@ -45,16 +45,20 @@
 	                        <div class="bbb_deals_content">
 	                        	<!-- 상품명 -->
 	                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
-	                                <div class="bbb_deals_item_name" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
-	                                	<a href="/rent/detail.do?product_Seq=${list.product_Seq}">
-	                                		<span class="item-name">${list.product_Name}</span>
-	                                	</a>
+	                                <div class="bbb_deals_item_name"><!-- style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;" -->
+	                                	<span class="item-name">
+	                                		<a href="/rent/detail.do?product_Seq=${list.product_Seq}">
+	                                			${list.product_Name}
+	                                		</a>
+	                                	</span>	                                	
 	                                </div>
 	                            </div>
 	                            <!-- 상품 설명 -->
 	                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
 	                                <div class="bbb_deals_item_category">
-	                                	${list.product_Desc}
+	                                	<span class="item-desc">
+	                                		${list.product_Desc}
+	                                	</span>
 	                                </div>
 	                            </div>
 	                            
@@ -66,7 +70,8 @@
 	                            <!-- 상품 가격 -->
 	                            <div class="bbb_deals_info_line d-flex flex-row justify-content-start">
 	                                <div class="bbb_deals_item_price ml-auto">
-	                              	  <span class="tomato f_bold"><fmt:formatNumber value="${list.product_Price}" type="number"/></span> 원
+	                              	  <span class="c_tomato f_bold"><fmt:formatNumber value="${list.product_Price}" type="number"/></span>
+	                              	  <span class="item-won"> 원</span>
 	                                </div>
 	                            </div>
 								
@@ -74,10 +79,10 @@
 	                            <div class="available">
 	                                <div class="available_line d-flex flex-row justify-content-start">
 	                                	<c:if test="${list.product_Stock ne 0}">
-	                                    	<div class="available_title">재고 <span class="tomato">${list.product_Stock}</span>개</div>
+	                                    	<div class="available_title">재고 <span class="c_point">${list.product_Stock}</span>개</div>
 	                                    </c:if>
 	                                    <c:if test="${list.product_Stock eq 0}">
-	                                    	<div class="available_title"><span class="tomato">일시품절</span></div>
+	                                    	<div class="available_title"><span class="c_point">일시품절</span></div>
 	                                    </c:if>
 										<div class="sold_stars ml-auto"> 
 	                                    	<div id="rating${list.product_Seq}">
@@ -102,7 +107,7 @@
 </div>
 
 <!-- pagination -->
-<div class="container">
+<div class="container" style="margin: -50px auto 60px auto;">
     <nav aria-label="Page navigation">
         <ul class="pagination" id="pagination" style="justify-content: center;"></ul>
     </nav>

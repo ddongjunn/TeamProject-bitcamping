@@ -1,0 +1,137 @@
+@charset "UTF-8";
+
+/* pagination coloring */
+.pagination>li>a, 
+.pagination>li>span,
+.pagination>li>a:focus, 
+.pagination>li>a:hover, 
+.pagination>li>span:focus, 
+.pagination>li>span:hover {
+    color: #75AE87;
+} 
+
+.myorder-title {
+	font-size: 2em;
+	font-weight: bold;
+	margin-bottom: 40px;
+}
+
+.myorder-date {
+	font-size: 16px;
+	color: #353535;
+	opacity: 0.8;
+	padding-left: 5px;
+}
+.myorder-date-icon {
+	font-size: 14px;
+}
+
+.myorder-case {
+	border: 1px solid #dbdbdb;
+	border-radius: 5px;
+	margin: 10px auto 40px;
+	padding: 20px;
+}
+
+.myorder-item {
+	font-size: 18px;
+	color: #353535;
+	width: 100%;
+	border-bottom: 1px solid #353535;
+	margin-bottom: 15px;
+	padding-bottom: 10px;
+}
+
+.myorder-detail {
+	display: flex;
+	justify-content: center;
+}
+
+.myorder-img {
+	flex: 1; 
+	flex-basis: 20%;
+	text-align: center;
+	width: 150px;
+}
+
+.myorder-img > img {
+	height: 150px;
+	width: 150px;
+}
+
+.myorder-info {
+	flex: 1; 
+	flex-basis: 60%;
+	display: flex;
+}
+
+.myorder-info-table {
+	margin: auto 0;
+	font-size: 16px;
+}
+
+.myorder-info-table > tbody > tr > th {
+	text-align: right;
+	padding-right: 15px;
+	color: gray;
+}
+
+.myorder-info-table > tbody > tr > th,
+.myorder-info-table > tbody > tr > td {
+	height: 30px;
+	vertical-align: middle;
+}
+
+.myorder-btn {
+	flex: 1; 
+	flex-basis: 20%;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.myorder-review-btn,
+.myorder-qna-btn {
+	width: 150px;
+	height: 35px;
+	font-weight: bold;
+	font-size: 13px;
+	border-radius: 3px;
+}
+
+.myorder-review-btn {
+	border: 1px solid #1FB154;
+	background-color: #1FB154;
+	color: white;
+}
+.myorder-review-btn:hover {
+	border: 1px solid #1FB154;
+	background-color: white;
+	color: #1FB154;
+}
+
+.myorder-qna-btn {
+	border: 1px solid #1FB154;
+	background-color: white;
+	color: #1FB154;
+}
+.myorder-qna-btn:hover {
+	border: 1px solid #1FB154;
+	background-color: #1FB154;
+	color: white;
+}
+
+.btn-outline-primary {
+	color: #1FB154;
+	border-color: #1FB154;
+}
+.btn-outline-primary:hover {
+	color: white;
+	background-color: #1FB154;
+}
+
+
+
+
+

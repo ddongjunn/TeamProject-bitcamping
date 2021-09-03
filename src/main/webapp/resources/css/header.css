@@ -100,12 +100,13 @@
   font-size:15px;
   line-height:30px;
   font-weight:800;
-  color: #000000;
+  color: #353535;
   text-decoration: none;
 }
 #header > .indiv #menu > li > a:hover {
-  color: #87C4B7;
+  color: #353535;
   text-shadow: 1px 1px 1px rgb(255 255 255 / 20%);
+  border-bottom: 4px #1FB154 solid;
 }
 #header > .indiv #menu > li:nth-child(1) > ul {width:230px;}
 #header > .indiv #menu > li > ul li + li {margin-top:10px;}

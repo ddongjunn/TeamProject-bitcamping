@@ -6,25 +6,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>리뷰 쓰기</title>
-
-	<style type="text/css">
-
-		.reviewtitle:hover {
-			text-decoration: underline;
-		}
-
-	</style>
-
+<meta charset="UTF-8">
+<title>리뷰 쓰기</title>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
 
-<nav id="review">
+<nav id="review" class="menu-nav">
 	<ul>
 		<li><a href="#">상품 선택</a></li>
 		<li><a href="#content">상품 상세</a></li>
-		<li><a href="#review">상품 리뷰</a></li>
+		<li><a href="#review" class="nav-selected">상품 리뷰</a></li>
 		<li><a href="#qna">Q&A</a></li>
 	</ul>
 </nav>
@@ -32,46 +24,55 @@
 <script type="text/x-handlebars-template" id="review-template">
 
 	<div>
-		<div id="reviewbox" style="height: auto; margin: auto; width: 80%; padding: 20px; background-color: tomato;">
-			<span>리뷰{{totalCount}}개</span>
-			{{#each reviewList}}
-			<div class="reviewrow" style="display: flex; background-color: #F7BBBB; ">
-				<div id="ratebox" class="rate" style="flex: 1 1 15%; padding: 10px; ">
-					{{rating rate}}
+		<div id="review-box" class="review-area">
+			<div class="review-count">리뷰 <span class="c_point">{{totalCount}}</span>개</div>
+			
+			{{#ifCond totalCount 0}}
+				<div class="review-row">
+					<div class="list-empty">작성된 리뷰가 없습니다</div>
 				</div>
-				<div id="reviewtitle" onclick="showHideReview({{review_Seq}})" class="reviewtitle" style="flex: 1 1 65%; overflow: hidden; padding: 10px;" >
-					{{title}}
-				</div>
-				<div class="info" style="flex: 1 1 25%; padding: 10px;" >
-					<span>작성자 : {{nickname}}</span><br>
-					<span>작성일 : {{dating wdate}}
-				</div>
-			</div>
-			<hr>
-			<div id="reviewcontent{{review_Seq}}" class="reviewcontent" style="height: auto; padding: 10px; display: none;" >
-				<div style="background-color: #CDE8FD;">
-					<div>
-						{{content}}
+
+			{{else}}
+
+				{{#each reviewList}}
+					<div class="review-row">
+						<div id="ratebox" class="review-rate">
+							{{rating rate}}
+						</div>
+						<div id="reviewtitle" class="review-title" onclick="showHideReview({{review_Seq}})">
+							{{title}}
+						</div>
+						<div class="review-info">
+							<div class="inner-info">
+								<i class="fas fa-user-circle fa-sm"></i> {{nickname}}<br>
+								<i class="far fa-calendar-alt fa-sm"></i> {{dating wdate}}
+							</div>
+						</div>
 					</div>
-					<div id="">
-						{{imaging image}}
+					<div id="reviewcontent{{review_Seq}}" class="review-content-box">
+						<div class="review-content">
+							{{content}}
+						</div>
+						<div class="review-image">
+							{{imaging image}}
+						</div>
 					</div>
-				</div>
-				<hr>
-			</div>
-			{{/each}}
-			<!--  <div style = "display : inline-block"> -->
+				{{/each}}
+
+			{{/ifCond}}
+
 		</div>
-		<nav aria-label="Page navigation">
+
+		<nav aria-label="Page navigation" class="pagination-nav">
 			<ul class="pagination justify-content-center" id="pagination"></ul>
 		</nav>
 	</div>
 </script>
 
-
-
 <div id="review-content"></div>
+
 <div id="pageMarkerSpace"></div>
+
 <script type="text/javascript">
 
 	$(document).ready(function () {
@@ -150,16 +151,17 @@
 		}
 
 		Handlebars.registerHelper('rating', function (rate) {
-			return "⭐".repeat(rate);
+			let stars = "<i class='fas fa-star'></i>".repeat(rate) + "<i class='far fa-star'></i>".repeat(5-rate);
+			return new Handlebars.SafeString(stars);
 		});
 
 		Handlebars.registerHelper('dating', function (wdate) {
 			return wdate.substr(0,10);
 		});
 
-		Handlebars.registerHelper('imaging', function (image) {
+/* 		Handlebars.registerHelper('imaging', function (image) {
 			return wdate.substr(0,10);
-		});
+		}); */
 
 		Handlebars.registerHelper('imaging', function (image) {
 			if(image != null) {
@@ -167,6 +169,13 @@
 				return new Handlebars.SafeString(result)
 			}
 			return;
+		});
+		
+		Handlebars.registerHelper('ifCond', function(v1, v2, options) {
+			  if(v1 === v2) {
+			    return options.fn(this);
+			  }
+			  return options.inverse(this);
 		});
 
 	});

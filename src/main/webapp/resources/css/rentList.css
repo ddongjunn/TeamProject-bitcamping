@@ -2,62 +2,63 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200&display=swap');
 
+
+/* 레이아웃 설정 */
+.item-row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
 /* 공통 사항 */
-.tomato{
+.c_point{
+	color: #1FB154;
+}
+.c_tomato{
 	color: tomato;
 }
 .f_bold{
 	font-weight: bold;
 }
 
-/* html,
-body {
-    height: 100%
-}
-
-body {
-    display: grid;
-    background: #fff;
-    font-family: 'S-CoreDream-3Light', 'Manrope', sans-serif !important
-} */
-
-/*.login_modal-window{
-	position: fixed !important;
-	top: 450px !important;
-	left: 50% !important;
-}
-.login_modal-overlay{
-	z-index: 799 !important;
-	width: 100vw !important;
-	height: 100vh !important;
-}*/
-
+/* 상품 리스트 */
 .total-item{
 	margin: 10px 0;
 }
 .sort-item{
 	float: right; 
+	font-weight: bold;
 }
 .sort-item > a,
 .sort-item > a:visited{
-	color: tomato;
+	color: #353535;
 	text-decoration: none;
 }
 .sort-item > a:hover{
-	color: tomato;
+	color: #1FB154;
 	text-decoration: underline;
 }
-.item-name{
+.item-name > a,
+.item-name > a:visited {
+	line-height: 20px;
 	font-weight: bold;
+	font-size: 18px;
+	color: #353535;
 }
-/* .item-desc{
-	text-overflow: ellipsis; 
-	white-space: nowrap; 
-	overflow: hidden;
-	width: 100%;
-} */
+.item-name > a:hover {
+    color: #1FB154;
+}
+.item-won{
+	font-size: 18px;
+}
+.item-desc{
+	font-size: 14px;
+}
 
-/* 상품 리스트 뿌려주는 부분 */
+/* 기존 css 설정 */
 .mydiv {
     margin-top: 50px;
     margin-bottom: 50px
@@ -154,10 +155,10 @@ body {
 .bbb_deals {
     width: 100%;
     margin-right: 7%;
-    padding-top: 34px; /* 카드 상단에 div 추가시 이부분 조절 */
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-bottom: 34px;
+/*  padding-top: 15px; 카드 상단에 div 추가시 이부분 조절
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 24px; */
     box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     margin-top: 0px
@@ -167,9 +168,6 @@ body {
     position: absolute;
     top: 10px;
     left: 22px;
-    font-size: 18px;
-    font-weight: 500;
-    color: #000000
 }
 
 .bbb_deals_slider_container {
@@ -177,22 +175,30 @@ body {
 }
 
 .bbb_deals_item {
-    width: 100% !important
+    width: 100%;
 }
 
 .bbb_deals_image {
     /* width: 100% */
-    height: 250px !important;
+    height: 350px !important;
+    margin: auto;
+    width: 100%;
 }
 
 .bbb_deals_image img {
-    width: 300px;
-    height: 250px;
+    /* width: 300px; */
+    height: 350px;
     object-fit: cover;
+    margin: auto;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
 }
 
 .bbb_deals_content {
-    margin-top: 33px
+    padding-top: 25px; 
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
 }
 .bbb_deals_item_category {
     margin: 10px 0;
@@ -201,7 +207,7 @@ body {
     overflow: hidden;
 }
 .bbb_deals_item_category a {
-    font-size: 14px;
+    font-size: 9px;
     font-weight: 400;
     color: rgba(0, 0, 0, 0.5);
 }
@@ -218,7 +224,7 @@ body {
 }
 
 .bbb_deals_item_name {
-    font-size: 24px;
+    font-size: 13px;
     font-weight: 400;
     color: #000000
 }
@@ -275,3 +281,13 @@ body {
         font-size: 20px
     }
 }
+
+/* 페이지네이션 */
+.pagination>li>a, 
+.pagination>li>span,
+.pagination>li>a:focus, 
+.pagination>li>a:hover, 
+.pagination>li>span:focus, 
+.pagination>li>span:hover {
+    color: #75AE87;
+} 
