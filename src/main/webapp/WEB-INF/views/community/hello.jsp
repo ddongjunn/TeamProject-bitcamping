@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <!-- <style type="text/css"> -->
 <link rel="stylesheet" type="text/css" href="/resources/css/community.css" />
+
 </head>
 <body>
 
@@ -80,7 +81,7 @@
 						<a href="/community/helloDetail.do?community_seq=${data.community_seq }">
 							${data.title}
 							<c:if test="${data.commentcount ne 0}">
-								<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+								<span style="font-size: 13px; color: #75AE87;">[${data.commentcount}]</span>
 							</c:if>
 						</a>
 					</td>
@@ -107,9 +108,10 @@
 </div>
 
 <!-- 글쓰기 버튼 -->
-<div align="right">
-	<a href="/community/helloWrite.do">글쓰기</a> 
+<div class="buttonbox">
+	<button id="btnWrite" onclick="location.href='/community/helloWrite.do'">글쓰기</button>
 </div>
+
 </main>
 
 <script type="text/javascript">
