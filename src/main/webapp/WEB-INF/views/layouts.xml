@@ -90,6 +90,10 @@
       <put-attribute name="body" value="/WEB-INF/views/mypage/mypage-myorder-detail.jsp" />
    </definition>
 
+   <definition name="updateReview.tiles" template="/WEB-INF/views/mypage/update_review.jsp">
+   </definition>
+
+
    <!-- 관리자 페이지 -->
    <definition name="adminmain.tiles" template="/WEB-INF/views/layouts-admin.jsp">
       <put-attribute name="header" value="/WEB-INF/views/admin/header.jsp" />

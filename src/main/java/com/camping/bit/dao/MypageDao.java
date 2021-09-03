@@ -34,4 +34,7 @@ public interface MypageDao {
 
     public List<CsQnaDto> csQna(MypageParam param);
     public int csQnaCount(MypageParam param);
+
+    public ProductReviewDto getProductReview(int review_Seq);
+    public void updateProductReview(ProductReviewDto dto);
 }
