@@ -2,9 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<!-- bootstrap 추가 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <!--DB에 컬럼 추가 
 ALTER TABLE CAMPING_LIST ADD READCOUNT NUMBER(8) DEFAULT '0' NOT NULL; 
 ALTER TABLE CAMPING_LIST ADD LIKECOUNT NUMBER(8) DEFAULT '0' NOT NULL;
@@ -56,6 +54,9 @@ String sigunguNm = request.getParameter("sigunguNm");
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- bootstrap 추가 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
 <link href="/resources/css/campingsite/campinglist.css" rel="stylesheet" type = "text/css">
 </head>
@@ -73,10 +74,9 @@ String sigunguNm = request.getParameter("sigunguNm");
 		</div>
 		<br>
 	   	<div id = "searchkeyword" >
-	    	<i class="fas fa-search"></i>
+<!-- 	    	<i class="fas fa-search"></i> -->
 	    	<input type = "text" id = "search" name = "searchWord" placeholder = "캠핑장을 검색해볼까요?" onkeypress="if( event.keyCode == 13 ){searchData();}">
 	   	</div>
-	   <!--  <div id = "suggest"></div> -->
 		<br>
 		    <a href = "#" onClick = "document.getElementById('searchForm1').submit();"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "50"></a>
 	</form>
@@ -85,212 +85,210 @@ String sigunguNm = request.getParameter("sigunguNm");
 <div class="option-content" >
   <button class="category" id="que-1"><span id="que-1-toggle">+</span><span>자세하게 검색하기</span></button>
   <div class="detailSearch" id="ans-1">
-<!-- 여기서부터 상세검색!!!!!!!!!!!!!!!!!!!!!!!! -->
-<form id = "searchForm2" action = "campinglist.do"method = "get">
-<div id = "total" >
-<table>
-<tr colspan= "2">
-	<th>지역별</th>
-	<td>
-		<div class="cities">
-			<input type="checkbox" name="searchDo" id="서울시" class="check01" value="서울시" title="1"/>
-					<label for="c_do01">서울시</label>
-			<input type="checkbox" name="searchDo" id="부산시" class="check01" value="부산시" title="2"/>
-					 <label for="c_do02">부산시</label>
-			<input type="checkbox" name="searchDo" id="대구시" class="check01" value="대구시" title="3"/>
-					 <label for="c_do03">대구시</label>
-			<input type="checkbox" name="searchDo" id="인천시" class="check01" value="인천시" title="4"/>
-					 <label for="c_do04">인천시</label>
-			<input type="checkbox" name="searchDo" id="광주시" class="check01" value="광주시" title="5"/>
-					 <label for="c_do05">광주시</label>
-			<input type="checkbox" name="searchDo" id="대전시" class="check01" value="대전시" title="6"/>
-					<label for="c_do06">대전시</label>
-			<input type="checkbox" name="searchDo" id="울산시" class="check01" value="울산시" title="7"/>
-					 <label for="c_do07">울산시</label>
-			<input type="checkbox" name="searchDo" id="세종시" class="check01" value="세종시" title="8"/>
-					 <label for="c_do08">세종시</label>
-		</div>
-	
-	
-		<div class = "check_w">
-			<input type="checkbox" name="searchDo" id="경기도" class="check01" value="경기도" title="9"/>
-					<label for="c_do09">경기도</label>
-			<input type="checkbox" name="searchDo" id="강원도" class="check01" value="강원도" title="10"/>
-					 <label for="c_do010">강원도</label>
-			<input type="checkbox" name="searchDo" id="충청북도" class="check01" value="충청북도" title="11"/>
-					 <label for="c_do011">충청북도</label>
-			<input type="checkbox" name="searchDo" id="충청남도" class="check01" value="충청남도" title="12"/>
-					 <label for="c_do012">충청남도</label>
-			<input type="checkbox" name="searchDo" id="전라북도" class="check01" value="전라북도" title="13"/>
-					 <label for="c_do013">전라북도</label>
-			<input type="checkbox" name="searchDo" id="전라남도" class="check01" value="전라남도" title="14"/>
-					 <label for="c_do014">전라남도</label>
-			<input type="checkbox" name="searchDo" id="경상북도" class="check01" value="경상북도" title="15"/>
-					 <label for="c_do015">경상북도</label>
-			<input type="checkbox" name="searchDo" id="경상남도" class="check01" value="경상남도" title="16"/>
-					 <label for="c_do016">경상남도</label>
-			<input type="checkbox" name="searchDo" id="제주도" class="check01" value="제주도" title="17"/>
-					<label for="c_do017"> 제주도</label>
-		</div>
-	</td>
-</tr>
-<tr>
-	<th>운영 주체</th>
-	<td>
-		<div class="check_w">
-			<input type="checkbox" name="searchCl" id="지자체" class="check01" value="지자체" title="18"/>
-					 <label for="c_cl01">지자체</label>
-			<input type="checkbox" name="searchCl" id="국립공원" class="check01" value="국립공원" title="19"/>
-					 <label for="c_cl02">국립공원</label>
-			<input type="checkbox" name="searchCl" id="자연휴양림" class="check01" value="자연휴양림" title="20"/>
-					 <label for="c_cl03">자연휴양림</label>
-			<input type="checkbox" name="searchCl" id="국민여가" class="check01" value="국민여가" title="21"/>
-					 <label for="c_cl04">국민여가</label>
-			<input type="checkbox" name="searchCl" id="민간" class="check01" value="민간" title="22"/>
-					 <label for="c_cl05">민간</label>
-		</div>
-	</td>
-</tr>
-<tr>
-	<th>주변 환경</th>
-	<td>
-		<div class="check_w">
-			<input type="checkbox" name="lctCl" id="해변" class="check01" value="해변" title="23"/>
-					 <label for="c_lct_cl01">해변</label>
-			<input type="checkbox" name="lctCl" id="섬" class="check01" value="섬" title="24"/>
-					 <label for="c_lct_cl02">섬</label>
-			<input type="checkbox" name="lctCl" id="산" class="check01" value="산" title="25"/>
-					 <label for="c_lct_cl03">산</label>
-			<input type="checkbox" name="lctCl" id="숲" class="check01" value="숲" title="26"/>
-					 <label for="c_lct_cl04">숲</label>
-			<input type="checkbox" name="lctCl" id="계곡" class="check01" value="계곡" title="27"/>
-					 <label for="c_lct_cl05">계곡</label>
-			<input type="checkbox" name="lctCl" id="강" class="check01" value="강" title="28"/>
-					 <label for="c_lct_cl06">강</label>
-			<input type="checkbox" name="lctCl" id="호수" class="check01" value="호수" title="29"/>
-					 <label for="c_lct_cl07">호수</label>
-			<input type="checkbox" name="lctCl" id="도심" class="check01" value="도심" title="30"/>
-					 <label for="c_lct_cl08">도심</label>
-		</div>
-	</td>
-</tr>
-<tr>
-	<th>야영장 분류</th>
-	<td>
-		<div class="check_w">
-				<input type="checkbox" name="induty" id="일반야영장" value="일반야영장" title="31" class="check01"/>
-						<label for="c_induty01">일반야영장</label>
-				<input type="checkbox" name="induty" id="자동차야영장" value="자동차야영장" title="32" class="check01"/>
-		 				<label for="c_induty02">자동차야영장</label>
-				<input type="checkbox" name="induty" id="카라반" value="카라반" title="33" class="check01"/>
-						<label for="c_induty03">카라반</label>
-				<input type="checkbox" name="induty" id="글램핑" value="글램핑" title="34" class="check01"/>
-					 	<label for="c_induty04">글램핑</label>
-		</div>
-	</td>
-</tr>
-
-<tr>
-	<th>예약방식</th>
-	<td>
-		<div class="check_w">
-			<input type="checkbox" name="resveCl" id="온라인" value="온라인" title="35" class="check01"/>
-					 <label for="c_resveCl01">온라인</label>
-			<input type="checkbox" name="resveCl" id="전화" value="전화" title="36" class="check01"/>
-					 <label for="c_resveCl02">전화</label>
-			<input type="checkbox" name="resveCl" id="현장" value="현장" title="37" class="check01"/>
-					 <label for="c_resveCl03">현장</label>
-		</div>
-	</td>
-</tr>
-<tr>
-	<th>장비 대여</th>
-	<td>
-		<div class="check_w">
-			<input type="checkbox" name="eqpmnLendCl" id="eqok" value="eqok" title="38" class="check01"/>
-					<label for="c_eqpmnLendCl01">가능</label>
-		</div>
-	</td>
-</tr>
-<tr>
-	<th>반려동물 동반</th>
-	<td>
-		<div class="check_w">
-			<input type="checkbox" name="animalCmgCl" id="가능" value="가능" title="39" class="check01"/>
-					<label for="c_animalCmgCl01">가능</label>
-			<input type="checkbox" name="animalCmgCl" id="소형견" value="소형견" title="40" class="check01"/>
-					<label for="c_animalCmgCl01">가능(소형견)</label>
-			<input type="checkbox" name="animalCmgCl" id="불가능" value="불가능" title="41" class="check01"/>
-					<label for="c_animalCmgCl01">불가능</label>
-		</div>
-	</td>
-</tr>
-<tr>
-	<th>체험 프로그램</th>
-	<td>
-		<div class = "check_w">
-			<input type="checkbox" name="exprnProgrm" id="exok" value="exok" title="42" class="check01"/>
-					<label for="c_exprnProgrm01">진행</label>
-		</div>
-	</td>
-</tr>
-<tr>
-	<th>캠핑장 기본 시설</th>
-	<td>
-		<div class="check_w">
-			<input type="checkbox" name="sbrsCl" id="전기" value="전기" title="43" class="check01"/>
-					 <label for="searchSbrsClCode01">전기</label>
-			<input type="checkbox" name="sbrsCl" id="무선인터넷" value="무선인터넷" title="44" class="check01"/>
-					 <label for="searchSbrsClCode02">무선인터넷</label>
-			<input type="checkbox" name="sbrsCl" id="장작판매" value="장작판매" title="45" class="check01"/>
-					 <label for="searchSbrsClCode03">장작판매</label>
-			<input type="checkbox" name="sbrsCl" id="온수" value="온수" title="46" class="check01"/>
-					 <label for="searchSbrsClCode04">온수</label>
-		 	<input type="checkbox" name="sbrsCl" id="편의점" value="편의점" title="47" class="check01"/>
-			 		 <label for="searchSbrsClCode011">마트.편의점</label>
-			 		 
-			<div>
-			<input type="checkbox" name="sbrsCl" id="트렘폴린" value="트렘폴린" title="48" class="check01"/>
-					 <label for="searchSbrsClCode05">트렘폴린</label>
-			<input type="checkbox" name="sbrsCl" id="물놀이장" value="물놀이장" title="49" class="check01"/>
-					 <label for="searchSbrsClCode06">물놀이장</label>
-			<input type="checkbox" name="sbrsCl" id="놀이터" value="놀이터" title="50" class="check01"/>
-					 <label for="searchSbrsClCode07">놀이터</label>
-			<input type="checkbox" name="sbrsCl" id="산책로" value="산책로" title="51" class="check01"/>
-					 <label for="searchSbrsClCode08">산책로</label>
-			<input type="checkbox" name="sbrsCl" id="운동장" value="운동장" title="52" class="check01"/>
-					 <label for="searchSbrsClCode09">운동장</label>
-			<input type="checkbox" name="sbrsCl" id="운동시설" value="운동시설" title="53" class="check01"/>
-					<label for="searchSbrsClCode010">운동시설</label>
+	<!-- 여기서부터 상세검색!!!!!!!!!!!!!!!!!!!!!!!! -->
+	<form id = "searchForm2" action = "campinglist.do"method = "get">
+	<div id = "total" >
+	<table>
+	<tr colspan= "2">
+		<th>지역별</th>
+		<td>
+			<div class="cities">
+				<input type="checkbox" name="searchDo" id="서울시" class="check01" value="서울시" title="1"/>
+						<label for="c_do01">서울시</label>
+				<input type="checkbox" name="searchDo" id="부산시" class="check01" value="부산시" title="2"/>
+						 <label for="c_do02">부산시</label>
+				<input type="checkbox" name="searchDo" id="대구시" class="check01" value="대구시" title="3"/>
+						 <label for="c_do03">대구시</label>
+				<input type="checkbox" name="searchDo" id="인천시" class="check01" value="인천시" title="4"/>
+						 <label for="c_do04">인천시</label>
+				<input type="checkbox" name="searchDo" id="광주시" class="check01" value="광주시" title="5"/>
+						 <label for="c_do05">광주시</label>
+				<input type="checkbox" name="searchDo" id="대전시" class="check01" value="대전시" title="6"/>
+						<label for="c_do06">대전시</label>
+				<input type="checkbox" name="searchDo" id="울산시" class="check01" value="울산시" title="7"/>
+						 <label for="c_do07">울산시</label>
+				<input type="checkbox" name="searchDo" id="세종시" class="check01" value="세종시" title="8"/>
+						 <label for="c_do08">세종시</label>
 			</div>
+		
+		
+			<div class = "check_w">
+				<input type="checkbox" name="searchDo" id="경기도" class="check01" value="경기도" title="9"/>
+						<label for="c_do09">경기도</label>
+				<input type="checkbox" name="searchDo" id="강원도" class="check01" value="강원도" title="10"/>
+						 <label for="c_do010">강원도</label>
+				<input type="checkbox" name="searchDo" id="충청북도" class="check01" value="충청북도" title="11"/>
+						 <label for="c_do011">충청북도</label>
+				<input type="checkbox" name="searchDo" id="충청남도" class="check01" value="충청남도" title="12"/>
+						 <label for="c_do012">충청남도</label>
+				<input type="checkbox" name="searchDo" id="전라북도" class="check01" value="전라북도" title="13"/>
+						 <label for="c_do013">전라북도</label>
+				<input type="checkbox" name="searchDo" id="전라남도" class="check01" value="전라남도" title="14"/>
+						 <label for="c_do014">전라남도</label>
+				<input type="checkbox" name="searchDo" id="경상북도" class="check01" value="경상북도" title="15"/>
+						 <label for="c_do015">경상북도</label>
+				<input type="checkbox" name="searchDo" id="경상남도" class="check01" value="경상남도" title="16"/>
+						 <label for="c_do016">경상남도</label>
+				<input type="checkbox" name="searchDo" id="제주도" class="check01" value="제주도" title="17"/>
+						<label for="c_do017"> 제주도</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>운영 주체</th>
+		<td>
+			<div class="check_w">
+				<input type="checkbox" name="searchCl" id="지자체" class="check01" value="지자체" title="18"/>
+						 <label for="c_cl01">지자체</label>
+				<input type="checkbox" name="searchCl" id="국립공원" class="check01" value="국립공원" title="19"/>
+						 <label for="c_cl02">국립공원</label>
+				<input type="checkbox" name="searchCl" id="자연휴양림" class="check01" value="자연휴양림" title="20"/>
+						 <label for="c_cl03">자연휴양림</label>
+				<input type="checkbox" name="searchCl" id="국민여가" class="check01" value="국민여가" title="21"/>
+						 <label for="c_cl04">국민여가</label>
+				<input type="checkbox" name="searchCl" id="민간" class="check01" value="민간" title="22"/>
+						 <label for="c_cl05">민간</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>주변 환경</th>
+		<td>
+			<div class="check_w">
+				<input type="checkbox" name="lctCl" id="해변" class="check01" value="해변" title="23"/>
+						 <label for="c_lct_cl01">해변</label>
+				<input type="checkbox" name="lctCl" id="섬" class="check01" value="섬" title="24"/>
+						 <label for="c_lct_cl02">섬</label>
+				<input type="checkbox" name="lctCl" id="산" class="check01" value="산" title="25"/>
+						 <label for="c_lct_cl03">산</label>
+				<input type="checkbox" name="lctCl" id="숲" class="check01" value="숲" title="26"/>
+						 <label for="c_lct_cl04">숲</label>
+				<input type="checkbox" name="lctCl" id="계곡" class="check01" value="계곡" title="27"/>
+						 <label for="c_lct_cl05">계곡</label>
+				<input type="checkbox" name="lctCl" id="강" class="check01" value="강" title="28"/>
+						 <label for="c_lct_cl06">강</label>
+				<input type="checkbox" name="lctCl" id="호수" class="check01" value="호수" title="29"/>
+						 <label for="c_lct_cl07">호수</label>
+				<input type="checkbox" name="lctCl" id="도심" class="check01" value="도심" title="30"/>
+						 <label for="c_lct_cl08">도심</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>야영장 분류</th>
+		<td>
+			<div class="check_w">
+					<input type="checkbox" name="induty" id="일반야영장" value="일반야영장" title="31" class="check01"/>
+							<label for="c_induty01">일반야영장</label>
+					<input type="checkbox" name="induty" id="자동차야영장" value="자동차야영장" title="32" class="check01"/>
+			 				<label for="c_induty02">자동차야영장</label>
+					<input type="checkbox" name="induty" id="카라반" value="카라반" title="33" class="check01"/>
+							<label for="c_induty03">카라반</label>
+					<input type="checkbox" name="induty" id="글램핑" value="글램핑" title="34" class="check01"/>
+						 	<label for="c_induty04">글램핑</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>예약방식</th>
+		<td>
+			<div class="check_w">
+				<input type="checkbox" name="resveCl" id="온라인" value="온라인" title="35" class="check01"/>
+						 <label for="c_resveCl01">온라인</label>
+				<input type="checkbox" name="resveCl" id="전화" value="전화" title="36" class="check01"/>
+						 <label for="c_resveCl02">전화</label>
+				<input type="checkbox" name="resveCl" id="현장" value="현장" title="37" class="check01"/>
+						 <label for="c_resveCl03">현장</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>장비 대여</th>
+		<td>
+			<div class="check_w">
+				<input type="checkbox" name="eqpmnLendCl" id="eqok" value="eqok" title="38" class="check01"/>
+						<label for="c_eqpmnLendCl01">가능</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>반려동물 동반</th>
+		<td>
+			<div class="check_w">
+				<input type="checkbox" name="animalCmgCl" id="가능" value="가능" title="39" class="check01"/>
+						<label for="c_animalCmgCl01">가능</label>
+				<input type="checkbox" name="animalCmgCl" id="소형견" value="소형견" title="40" class="check01"/>
+						<label for="c_animalCmgCl01">가능(소형견)</label>
+				<input type="checkbox" name="animalCmgCl" id="불가능" value="불가능" title="41" class="check01"/>
+						<label for="c_animalCmgCl01">불가능</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>체험 프로그램</th>
+		<td>
+			<div class = "check_w">
+				<input type="checkbox" name="exprnProgrm" id="exok" value="exok" title="42" class="check01"/>
+						<label for="c_exprnProgrm01">진행</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>캠핑장 기본 시설</th>
+		<td>
+			<div class="check_w">
+				<input type="checkbox" name="sbrsCl" id="전기" value="전기" title="43" class="check01"/>
+						 <label for="searchSbrsClCode01">전기</label>
+				<input type="checkbox" name="sbrsCl" id="무선인터넷" value="무선인터넷" title="44" class="check01"/>
+						 <label for="searchSbrsClCode02">무선인터넷</label>
+				<input type="checkbox" name="sbrsCl" id="장작판매" value="장작판매" title="45" class="check01"/>
+						 <label for="searchSbrsClCode03">장작판매</label>
+				<input type="checkbox" name="sbrsCl" id="온수" value="온수" title="46" class="check01"/>
+						 <label for="searchSbrsClCode04">온수</label>
+			 	<input type="checkbox" name="sbrsCl" id="편의점" value="편의점" title="47" class="check01"/>
+				 		 <label for="searchSbrsClCode011">마트.편의점</label>
+				 		 
+				<div>
+				<input type="checkbox" name="sbrsCl" id="트렘폴린" value="트렘폴린" title="48" class="check01"/>
+						 <label for="searchSbrsClCode05">트렘폴린</label>
+				<input type="checkbox" name="sbrsCl" id="물놀이장" value="물놀이장" title="49" class="check01"/>
+						 <label for="searchSbrsClCode06">물놀이장</label>
+				<input type="checkbox" name="sbrsCl" id="놀이터" value="놀이터" title="50" class="check01"/>
+						 <label for="searchSbrsClCode07">놀이터</label>
+				<input type="checkbox" name="sbrsCl" id="산책로" value="산책로" title="51" class="check01"/>
+						 <label for="searchSbrsClCode08">산책로</label>
+				<input type="checkbox" name="sbrsCl" id="운동장" value="운동장" title="52" class="check01"/>
+						 <label for="searchSbrsClCode09">운동장</label>
+				<input type="checkbox" name="sbrsCl" id="운동시설" value="운동시설" title="53" class="check01"/>
+						<label for="searchSbrsClCode010">운동시설</label>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<th>캠핑장 바닥</th>
+		<td>
+			<div class="check_w">
+				<input type="checkbox" class="check01" name="siteBottomCl1" id="잔디"  title="54" value="잔디" title="잔디"/>
+					<label for="searchSiteBottomCl1" class="label_name">잔디</label>
+				<input type="checkbox" class="check01" name="siteBottomCl2" id="데크"  title="55" value="데크" title="데크"/>
+					<label for="searchSiteBottomCl2" class="label_name">데크</label>
+				<input type="checkbox" class="check01" name="siteBottomCl3" id="파쇄석" title="56" value="파쇄석" title="파쇄석"/>
+					<label for="searchSiteBottomCl3" class="label_name">파쇄석</label>
+				<input type="checkbox" class="check01" name="siteBottomCl4" id="자갈"  title="57" value="자갈" title="자갈"/>
+					<label for="searchSiteBottomCl4" class="label_name">자갈</label>
+				<input type="checkbox" class="check01" name="siteBottomCl5" id="맨흙"  title="58" value="맨흙" title="맨흙"/>
+					<label for="searchSiteBottomCl5" class="label_name">맨흙</label>
+			</div>
+		</td>
+	</tr>
+	</table>
+		<button type = "button" class = "btn btn-light" id = "resetBtn">초기화</button>
+		<button type="submit" class="btn btn-light" id = "specifiedBtn">검색하기</button>
 		</div>
-	</td>
-</tr>
-<tr>
-	<th>캠핑장 바닥</th>
-	<td>
-		<div class="check_w">
-			<input type="checkbox" class="check01" name="siteBottomCl1" id="잔디"  title="54" value="잔디" title="잔디"/>
-				<label for="searchSiteBottomCl1" class="label_name">잔디</label>
-			<input type="checkbox" class="check01" name="siteBottomCl2" id="데크"  title="55" value="데크" title="데크"/>
-				<label for="searchSiteBottomCl2" class="label_name">데크</label>
-			<input type="checkbox" class="check01" name="siteBottomCl3" id="파쇄석" title="56" value="파쇄석" title="파쇄석"/>
-				<label for="searchSiteBottomCl3" class="label_name">파쇄석</label>
-			<input type="checkbox" class="check01" name="siteBottomCl4" id="자갈"  title="57" value="자갈" title="자갈"/>
-				<label for="searchSiteBottomCl4" class="label_name">자갈</label>
-			<input type="checkbox" class="check01" name="siteBottomCl5" id="맨흙"  title="58" value="맨흙" title="맨흙"/>
-				<label for="searchSiteBottomCl5" class="label_name">맨흙</label>
-		</div>
-	</td>
-</tr>
-</table>
-	<button type = "button" class = "btn btn-light" id = "resetBtn">초기화</button>
-	<button type="submit" class="btn btn-light" id = "specifiedBtn">검색하기</button>
-</div>
-	
 		</form>
-	</div>
-</div>
+	</div><!-- 상세검색 아래 펼쳐지는 부분 끝나는 곳 -->
+</div><!-- 자세하게 검색하기 끝나는 곳 -->
 
 <!-- 캠핑장 정렬 -->
 <div class = "search_sorting">
@@ -301,118 +299,117 @@ String sigunguNm = request.getParameter("sigunguNm");
 		<option value = "read">조회순</option>
 		<option value = "like">추천순</option>
 	</select>
-<div class = "howmany">
-	${campingSearchPage}개의 캠핑장이 기다리고 있습니다
-</div>
+<br>
+	<div class = "howmany">
+		${campingSearchPage}개의 캠핑장이 기다리고 있습니다
+	</div>
 </div>
 
 <br>
 <!-- 리스트 시작 -->
 <c:choose>
-<c:when test= "${campingSearchPage != 0}">
-<c:forEach items = "${campinglist}" var = "camping" varStatus = "i">
-	<div class = "camping_search_list">
-		<ul>
-			<li style = "list-style : none;">
-				<div class = "image" style = "float : left ; margin-right : 10px" >
-					<a href = "campingdetail.do?contentid=${camping.contentid}">	
-					<img src = "${camping.firstimageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "300" height = "200"></a>
-				</div>
-				<div class = "camping_information" style = "float : left">
-					<div class = "camping_site name">
-						<h2 class = "camping_site_name">
-							<a href = "campingdetail.do?contentid=${camping.contentid}">${camping.facltnm}</a>
-							<span class = "readcount" style = "font-size : 15px">조회수 : ${camping.readcount}</span>
-							<span class = "likecount" style = "font-size : 15px">추천수 : ${camping.likecount}</span>
-						</h2>
+	<c:when test= "${campingSearchPage != 0}">
+		<c:forEach items = "${campinglist}" var = "camping" varStatus = "i">
+			<div class = "camping_search_list">
+			<ul>
+				<li style = "list-style : none;">
+					<div class = "image" style = "float : left ; margin-right : 10px" >
+						<a href = "campingdetail.do?contentid=${camping.contentid}">	
+						<img src = "${camping.firstimageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "300" height = "200">
+						</a>
 					</div>
-					<%-- <c:set var="TextValue" value="${camping.addr1}"/> --%>
-					<c:choose>
-						<c:when test = "${fn:length(camping.addr1)>40}">
-							<c:set var = "string1" value = "${fn:substring(TextValue, 0,30)}"/>
-							<h3>${string1}...</h3>
-						</c:when>
-						<c:otherwise>
-							<h4>${camping.addr1}</h4>
-						</c:otherwise>
-					</c:choose>
-					<c:if test="${camping.lineintro!='none'}">
-					<%-- 	<c:set var="TextValue" value="${camping.lineintro}"/> --%>
+					<div class = "camping_information" style = "float : left">
+						<div class = "camping_site name">
+							<h2>
+								<a href = "campingdetail.do?contentid=${camping.contentid}">${camping.facltnm}</a>
+								<span class = "readcount" style = "font-size : 15px">조회수 : ${camping.readcount}</span>
+								<span class = "likecount" style = "font-size : 15px">추천수 : ${camping.likecount}</span>
+							</h2>
+						</div>
 						<c:choose>
-							<c:when test = "${fn:length(camping.lineintro)>40}">
+							<c:when test = "${fn:length(camping.addr1)>40}">
 								<c:set var = "string1" value = "${fn:substring(TextValue, 0,30)}"/>
-								<h5>${string1}...</h5>
+								<h3>${string1}...</h3>
 							</c:when>
 							<c:otherwise>
-								<h5>${camping.lineintro}</h5>
+								<h4>${camping.addr1}</h4>
 							</c:otherwise>
 						</c:choose>
-					</c:if>
-					<c:if test="${camping.tel!='none'}">
-						<span>
-						<img src ="<%=request.getContextPath()%>/resources/images/campingsite/phone-call.png" width = "30"></span>
-						<span>${camping.tel}</span>
-					</c:if>
-					<c:choose>
-						<c:when test="${camping.homepage eq 'none'}">
-							<span><img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
-							홈페이지 준비중</span>
-						</c:when>
-						<c:otherwise>
-						<c:url value="${camping.homepage}" var="url" />
-						<img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
+						<c:if test="${camping.lineintro!='none'}">
 							<c:choose>
-							<c:when test="${fn:contains(url, 'http')}">
-								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button></c:when>
-							<c:otherwise>
-								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
-							</c:otherwise>
+								<c:when test = "${fn:length(camping.lineintro)>40}">
+									<c:set var = "string1" value = "${fn:substring(TextValue, 0,30)}"/>
+									<h5>${string1}...</h5>
+								</c:when>
+								<c:otherwise>
+									<h5>${camping.lineintro}</h5>
+								</c:otherwise>
 							</c:choose>
-						</c:otherwise>
-					</c:choose>
-					<div id = "service">
-						<c:set value = "${camping.sbrscl}" var = "service"/>
-							<c:if test="${fn:contains(service, '전기')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/plug.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '무선인터넷')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/wi-fi.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '장작판매')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/firewood.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '온수')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/hot-water.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '마트.편의점')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/shopping-cart.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '트렘폴린')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/trampoline.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '물놀이장')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/water-park.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '놀이터')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/slider.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '산책로')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/river-trail.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '운동시설')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/gym.png" width = "30"></span>
-							</c:if>
-							<c:if test="${fn:contains(service, '운동장')}">
-								<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/playground.png" width = "30"></span>
-							</c:if>
+						</c:if>
+						<c:if test="${camping.tel!='none'}">
+							<span>
+							<img src ="<%=request.getContextPath()%>/resources/images/campingsite/phone-call.png" width = "30"></span>
+							<span>${camping.tel}</span>
+						</c:if>
+						<c:choose>
+							<c:when test="${camping.homepage eq 'none'}">
+								<span><img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">홈페이지 준비중</span>
+							</c:when>
+							<c:otherwise>
+								<c:url value="${camping.homepage}" var="url" />
+								<span><img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35"></span>
+									<c:choose>
+										<c:when test="${fn:contains(url, 'http')}">
+											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button></c:when>
+										<c:otherwise>
+											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+										</c:otherwise>
+									</c:choose>
+							</c:otherwise>
+						</c:choose>
+						<div id = "service">
+							<c:set value = "${camping.sbrscl}" var = "service"/>
+								<c:if test="${fn:contains(service, '전기')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/plug.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '무선인터넷')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/wi-fi.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '장작판매')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/firewood.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '온수')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/hot-water.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '마트.편의점')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/shopping-cart.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '트렘폴린')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/trampoline.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '물놀이장')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/water-park.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '놀이터')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/slider.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '산책로')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/river-trail.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '운동시설')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/gym.png" width = "30"></span>
+								</c:if>
+								<c:if test="${fn:contains(service, '운동장')}">
+									<span class="tag tag1"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/playground.png" width = "30"></span>
+								</c:if>
+							</div>
 						</div>
-					</div>
-				<div style="clear:both"></div>
-			</li>
-		</ul>
-	</div>
-</c:forEach>
-</c:when>
+					<div style="clear:both"></div>
+				</li>
+			</ul>
+		</div>
+	</c:forEach>
+	</c:when>
 <c:otherwise>
 <img src ="<%=request.getContextPath()%>/resources/images/campingsite/nosearch.png" class = "nosearchpic" width = "500" height = "500">
 </c:otherwise>
@@ -425,7 +422,6 @@ String sigunguNm = request.getParameter("sigunguNm");
 	    </nav>
     </div>
 </div>
-
 <br>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -492,12 +488,9 @@ $(document).ready(function () {
 <%if (siteBottomCl5!= null){ %>
 	$("#<%=siteBottomCl5%>").prop("checked", true);
 	<% } %> 
-	
 <%if (searchWord!= null){ %>
 	document.getElementById("search").value="<%=searchWord%>";
 	<% } %>  
-
-
 	
 //페이지네이션
 let totalCount = ${campingSearchPage};	// 서버로부터 총글의 수를 취득
@@ -534,7 +527,6 @@ if($('#pagination').data("twbs-pagination")){
 			}else{
 				location.href = "campinglist.do?pageNumber=" + (page - 1);
 			}
-			//alert(window.location.search);;
 		}
 	}); //페이지네이션 끝
 	  
@@ -710,7 +702,6 @@ function openCloseAnswer() {
     document.getElementById(this.id + '-toggle').textContent = '-';
   }
 }
-
 items.forEach(item => item.addEventListener('click', openCloseAnswer));
 </script>
 </body>

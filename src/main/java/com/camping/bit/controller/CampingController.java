@@ -391,23 +391,6 @@ public class CampingController{
 	
 	}
 	
-	/*
-	//캠핑장 좋아요 있는지 없는지 유무 확인
-	@RequestMapping(value = "getCampingLike.do", method = {RequestMethod.GET, RequestMethod.POST})
-	@ResponseBody
-	public String getCampingLike(CampingLikeDto clike) throws Exception{
-		String result;
-		CampingLikeDto response = service.getCampingLike(clike);
-		if(response!=null) {
-			result = "success";
-		}else {
-			result = "fail";
-		}
-		return result;
-	}
-
-	*/	
-	
 	//캠핑장 좋아요 증가시키기
 	@RequestMapping(value = "plusCampingHeart.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -442,7 +425,6 @@ public class CampingController{
 			return likecount;
 	}
 
-		
 	//캠핑장 리뷰에 달린 댓글 뿌리기
 		
 	//전체 리스트 뿌리기
@@ -461,19 +443,10 @@ public class CampingController{
 		//db에서 글목록 불러오기 
 		List<CampingCommentDto>list = service.getCampingReviewComment(param);
 		//System.out.println("list : " + list.toString());
-		// get login id
-		
-		// return type :  newDto
-		/**
-		 * new dto
-		 *   list : List<CampingCommentDto>
-		 *   loginId: string? long?
-		 */
-		
-		// new NewDto(list, loginId)
+	
 		return list;
 			
-		}
+	}
 		
 	//캠핑장 리뷰에 댓글 달기 
 	@RequestMapping(value = "campingWriteComment.do", method = {RequestMethod.GET, RequestMethod.POST})
@@ -502,54 +475,54 @@ public class CampingController{
 	}	
 	
 	//캠핑장 리뷰에 댓글 수정하기
-		@RequestMapping(value = "campingUpdateComment.do", method = {RequestMethod.GET, RequestMethod.POST})
-		@ResponseBody
-		public String getCampingUpdateComment(@RequestParam int comment_seq, @RequestParam String content) throws Exception{
-			
-			CampingCommentDto comment = new CampingCommentDto();
-			
-			comment.setComment_seq(comment_seq);
-			comment.setContent(content);
-			
-			String result;
-			if(service.campingUpdateComment(comment)) {
-				result = "success";
-			}else {
-				result = "failed";
-			}
-			return result;
-		}	
+	@RequestMapping(value = "campingUpdateComment.do", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public String getCampingUpdateComment(@RequestParam int comment_seq, @RequestParam String content) throws Exception{
+		
+		CampingCommentDto comment = new CampingCommentDto();
+		
+		comment.setComment_seq(comment_seq);
+		comment.setContent(content);
+		
+		String result;
+		if(service.campingUpdateComment(comment)) {
+			result = "success";
+		}else {
+			result = "failed";
+		}
+		return result;
+	}	
 		
 	//메인 검색창 캠핑장 검색하기
-		@RequestMapping(value = "campingMainSearch.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
-		@ResponseBody
-		public List<CampingListDto>campingMainSearch(CampingParam param) throws Exception{
-			
-			int start, end;
-			start = 1 + 10 * param.getPageNumber();
-			end = 10 + 10 * param.getPageNumber();
-			//System.out.println("requestparam contentid : " + contentid);
-			param.setStart(start);
-			param.setEnd(end);
-			System.out.println(param);
-			List<CampingListDto> searchList = service.campingMainSearch(param);
-			return searchList;
+	@RequestMapping(value = "campingMainSearch.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<CampingListDto>campingMainSearch(CampingParam param) throws Exception{
 		
-		}
+		int start, end;
+		start = 1 + 10 * param.getPageNumber();
+		end = 10 + 10 * param.getPageNumber();
+		//System.out.println("requestparam contentid : " + contentid);
+		param.setStart(start);
+		param.setEnd(end);
+		System.out.println(param);
+		List<CampingListDto> searchList = service.campingMainSearch(param);
+		return searchList;
+	
+	}
 		
 	//캠핑장 도움이 됐어요 증가시키기
-		@RequestMapping(value = "plusCampingHelp.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
-		@ResponseBody
-		public int plusCampingHelp(CampingLikeDto clike) throws Exception{
-			int result = 0;
-			if(service.plusCampingHelp(clike)) {
-				result = service.getCampingHelpcount(clike.getReview_seq());
-			}else {
-				result = -1;
-			}
-			return result;
-		}	
-		
+	@RequestMapping(value = "plusCampingHelp.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public int plusCampingHelp(CampingLikeDto clike) throws Exception{
+		int result = 0;
+		if(service.plusCampingHelp(clike)) {
+			result = service.getCampingHelpcount(clike.getReview_seq());
+		}else {
+			result = -1;
+		}
+		return result;
+	}	
+	
 	//캠핑장 리뷰 페이징용 
 	@RequestMapping(value = "getCampingSearchReviewCount.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

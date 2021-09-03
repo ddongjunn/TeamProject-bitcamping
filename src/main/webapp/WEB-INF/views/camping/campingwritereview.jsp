@@ -22,11 +22,13 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 
 <div style="clear:both"></div>
 
-<div id = "writer_info">
 <input type="hidden" name="user_id" value="${login.id}">
 <input type="hidden" name = "nickname" value ="${login.nickname}">
 <input type = "hidden" name = "contentid" value = '<%=campinglist.getContentid() %>'>
+
+<div id = "writer_info">
 	<h2>${login.nickname}님의 소중한 리뷰</h2>
+	<br>
 	<h2><input name="title" id = "title" type = "text" placeholder = "제목을 입력해주세요" size = "51"></h2>
 </div>
 
