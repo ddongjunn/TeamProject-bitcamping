@@ -36,6 +36,24 @@ td{
   display: none;
   padding-bottom: 30px;
 }
+
+button:focus{
+	outline : none;
+}
+#resetBtn:focus{
+  color: #FBC853;
+  background-color: #f8f9fa;
+  border-color: #FBC853;
+  outline: none;
+  box-shadow: none;
+}
+
+#resetBtn:active{
+  color: #FBC853;
+  background-color: #f8f9fa;
+  border-color: #FBC853;
+  outline: none;
+}
 .option-content {
    /*border-bottom: 1px solid #e0e0e0;   */
    margin : 10px 100px 0 100px;

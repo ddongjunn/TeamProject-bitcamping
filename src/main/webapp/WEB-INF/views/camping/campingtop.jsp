@@ -64,6 +64,7 @@ String login_id = (String)request.getAttribute("login_id");
 			<div class = "image" style = "float : left ; margin-right : 10px" >
 				<img src = "<%=campinglist.getFirstimageurl() %>" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "500" height = "400">
 			</div>
+			<br>
 			<div class = "camping_information" style = "float : left">
 				<div class = "camping_site name">
 					<h2 class = "camping_site_name">	
@@ -73,33 +74,37 @@ String login_id = (String)request.getAttribute("login_id");
 					</h2>
 				</div>
 				<hr>
-				 <div>주소  : <%=campinglist.getAddr1() %></div>
-				 <div>전화번호 : <%=campinglist.getTel() %></div>
-				 <div>캠핑장 환경 : <%=campinglist.getLctcl() %>/<%=campinglist.getFacltdivnm() %></div>
-				 <div>캠핑장 유형 : <%=campinglist.getInduty() %></div>
-				 <div>운영기간 : <%=campingdetail.getOperpdcl() %></div>
-				 <div>운영일 : <%=campingdetail.getOperdecl() %></div>
-				 <div> 시설 : <%=campinglist.getSbrscl() %></div>
+					 <div>주소  : <%=campinglist.getAddr1() %></div>
+					 <div>전화번호 : <%=campinglist.getTel() %></div>
+					 <div>캠핑장 환경 : <%=campinglist.getLctcl() %>/<%=campinglist.getFacltdivnm() %></div>
+					 <div>캠핑장 유형 : <%=campinglist.getInduty() %></div>
+					 <div>운영기간 : <%=campingdetail.getOperpdcl() %></div>
+					 <div>운영일 : <%=campingdetail.getOperdecl() %></div>
+					 <div> 시설 : <%=campinglist.getSbrscl() %></div>
 				<c:url value="<%=campinglist.getHomepage() %>" var="url" />
 				<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
 						<c:choose>
-						<c:when test="${camping.homepage eq 'none'}">
-							<span><img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
-							홈페이지 준비중</span>
-						</c:when>
-						<c:otherwise>
-						<img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">
-							<c:choose>
-							<c:when test="${fn:contains(url, 'http')}">
-								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button>
-								</c:when>
+							<c:when test="${url eq 'none'}">
+								<span>
+								<svg height="35" viewBox="0 0 128 128" width="35" xmlns="http://www.w3.org/2000/svg">
+								<path d="m105.9 49.027-35.824-29.592a9.555 9.555 0 0 0 -12.152 0l-35.824 29.592a13.306 13.306 0 0 0 -4.85 10.291v42.841a8.6 8.6 0 0 0 8.591 
+								8.591h24.117a1.75 1.75 0 0 0 1.75-1.75v-27.353a6.757 6.757 0 0 1 6.749-6.747h11.086a6.757 6.757 0 0 1 6.749 6.749v27.351a1.75 1.75 0 0 0 1.75 
+								1.75h24.117a8.6 8.6 0 0 0 8.591-8.591v-42.841a13.306 13.306 0 0 0 -4.85-10.291zm1.348 53.132a5.1 5.1 0 0 1 -5.091 5.091h-22.365v-25.6a10.261 10.261 0 0 0 
+								-10.249-10.25h-11.086a10.261 10.261 0 0 0 -10.249 10.247v25.6h-22.367a5.1 5.1 0 0 1 -5.091-5.091v-42.838a9.817 9.817 0 0 1 3.576-7.591l35.826-29.593a6.047 
+								6.047 0 0 1 7.7 0l35.826 29.593a9.817 9.817 0 0 1 3.576 7.591z"/></svg>홈페이지 준비중</span>
+							</c:when>
 							<c:otherwise>
-								<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+								<c:choose>
+									<c:when test="${fn:contains(url, 'http')}">
+										<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button>
+										</c:when>
+									<c:otherwise>
+										<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+									</c:otherwise>
+								</c:choose>
 							</c:otherwise>
-							</c:choose>
-						</c:otherwise>
-					</c:choose>
-					<c:choose>
+						</c:choose>
+						<c:choose>
 					  	<c:when test="${url1 eq 'none'}">
 					        전화예약
 					    </c:when>
@@ -143,7 +148,7 @@ String login_id = (String)request.getAttribute("login_id");
 		<span><a href = "javascript:" class = "heart-notlogin">
 			<svg class = "heart3" xmlns = "http://www.w3.org/2000/svg" width = "30" height = "30" fill ="currentColor" class = "bi bi-suit-heart" viewBox = "0 -20 480 480">
 		<path d="m348 0c-43 .0664062-83.28125 21.039062-108 56.222656-24.71875-35.183594-65-56.1562498-108-56.222656-70.320312 0-132 65.425781-132 140 0 72.679688 41.039062 147.535156 118.6875 216.480469 35.976562 31.882812 75.441406 59.597656 117.640625 82.625 2.304687 1.1875 5.039063 1.1875 7.34375 0 42.183594-23.027344 81.636719-50.746094 117.601563-82.625 77.6875-68.945313 118.726562-143.800781 118.726562-216.480469 0-74.574219-61.679688-140-132-140zm-108 422.902344c-29.382812-16.214844-224-129.496094-224-282.902344 0-66.054688 54.199219-124 116-124 41.867188.074219 80.460938 22.660156 101.03125 59.128906 1.539062 2.351563 4.160156 3.765625 6.96875 3.765625s5.429688-1.414062 6.96875-3.765625c20.570312-36.46875 59.164062-59.054687 101.03125-59.128906 61.800781 0 116 57.945312 116 124 0 153.40625-194.617188 266.6875-224 282.902344zm0 0"/>
-		</svg></a>로그인 후 사용 가능합니다!</span>
+		</svg></a>&nbsp;로그인 후 사용 가능합니다!</span>
 	</c:otherwise>
 </c:choose><%--첫번째 choose 끝 --%>
 

@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #writer_info{
-	text-align : left;
+	text-align : center;
 	margin : 10px 200px 10px 250px;
 }
 
@@ -27,6 +27,13 @@
 /*리뷰 디테일 화면 */
 
 #review{
+	margin : 30px 200px 30px 250px;
+	border : 1px solid black;
+	border-radius : 10px;
+	padding : 20px 20px 20px 20px;
+}
+
+.reviewmanage{
 	margin : 30px 200px 30px 250px;
 }
 
