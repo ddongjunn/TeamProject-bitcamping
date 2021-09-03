@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <!-- <style type="text/css"> -->
 <link rel="stylesheet" type="text/css" href="/resources/css/community.css" />
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
 
@@ -22,13 +23,13 @@
 
 <div class="communitybox">
     <div class="freebox_top">
-    	<img src="../resources/images/book.png" height="65px" width="75px">
+    	<img src="../resources/images/deal.png" height="65px" width="75px">
         <div class="freebox_title">캠퍼모집게시판에서 자유롭게 여행메이트를 만들어보세요.</div>
     </div>
     <hr id="dotline">
     <div class="freetext">
         <ul class="bu">
-            <li>불건전성, 상업성 광고, 유언비어, 저속한 표현, 특정인 또는 단체에 대한 비방(명예훼손), 정치적 목적이나 성향, 반복적 게시물, 저작권 침해, 기타 불법
+            <li><i class="fas fa-chevron-right"> </i> 불건전성, 상업성 광고, 유언비어, 저속한 표현, 특정인 또는 단체에 대한 비방(명예훼손), 정치적 목적이나 성향, 반복적 게시물, 저작권 침해, 기타 불법
                 정보 등의 <span class="em_orange">유해게시물은 관리자에 의해 통보없이 삭제</span>될 수 있습니다.</li>
             <!-- <li>주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
                 <p class="point"><img src="../resources/images/point.png" height="30px" width="30px">개인정보가 포함되어 있는 글은 일차적으로 글쓰기시 차단되오니, 이점 유념하여 작성하여 주시기 바랍니다.</p>
@@ -80,7 +81,7 @@
 						<a href="/community/findDetail.do?community_seq=${data.community_seq }">
 							${data.title}
 							<c:if test="${data.commentcount ne 0}">
-								<span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+								<span style="font-size: 13px; color: #75AE87;">[${data.commentcount}]</span>
 							</c:if>
 						</a>
 					</td>
@@ -107,8 +108,8 @@
 </div>
 
 <!-- 글쓰기 버튼 -->
-<div align="right">
-	<a href="/community/findWrite.do">글쓰기</a> 
+<div class="buttonbox">
+	<button id="btnWrite" onclick="location.href='/community/findWrite.do'">글쓰기</button>
 </div>
 </main>
 

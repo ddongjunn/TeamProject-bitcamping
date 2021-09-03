@@ -1,12 +1,12 @@
 @charset "UTF-8";
 
-    .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+    .wrap {position: absolute;left: 0;bottom: 40px;width: 286px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
     .wrap * {padding: 0;margin: 0;}
     .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
     .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
     .info .title {padding: 5px 0 0 10px;height: 30px;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
     .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-    .info .close:hover {cursor: pointer;}
+    .info .close:hover {cursor: pointer;} 
     .info .body {position: relative;overflow: hidden;}
     .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
     .desc .address {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
@@ -39,6 +39,10 @@
     	width: 900px;
     	height: 400px;
     }
+    
+    #mapintro{
+   		margin : 30px 100px 30px 150px;
+    }
     .option-content{
     	margin : 30px 150px 0 150px;
     }
@@ -51,6 +55,7 @@
     	margin : 0 20px 0 0 ;
     	font-size : 12pt;
     	text-justify : inter-word;
+    	line-height : 150%;
     }
     
     h2{
@@ -70,6 +75,14 @@
 	text-align : center;
 	}
     
+    .smallpic{
+    width : 200px;
+    height : 150px;
+    }
+    
+    .camping_information{
+    line-height : 150%;
+    }
     
 /*슬라이더*/
     
@@ -494,8 +507,5 @@ ul.bxslider {
 	border : 1px solid; 
 	padding : 10px; 
 	background-color :#FAEAA9;
-}
-
-.smallphotos{
-	height : 200px !Important;
+	border-radius : 10px;
 }

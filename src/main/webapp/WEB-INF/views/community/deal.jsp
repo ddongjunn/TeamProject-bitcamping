@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 <!-- <style type="text/css"> -->
 <link rel="stylesheet" type="text/css" href="/resources/css/community.css" />
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
 
@@ -21,14 +22,14 @@
 
 <div class="communitybox">
     <div class="freebox_top">
-    	<img src="../resources/images/deal.png" height="65px" width="75px">
+    	<img src="../resources/images/deal1.png" height="55px" width="75px">
         <div class="freebox_title">비트캠핑 회원이라면 누구나 이용할 수 있는 중고장터입니다.</div>
     </div>
     <hr id="dotline">
     <div class="freetext">
         <ul class="bu">
-            <li>캠핑 중고 거래와 관련이 없는 글과 같은 삭제 사유에 해당하는 글은 무통보 삭제 처리됩니다.</li> 
-            <li>주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
+            <li><i class="fas fa-chevron-right"> </i> 캠핑 중고 거래와 관련이 없는 글과 같은 삭제 사유에 해당하는 글은 무통보 삭제 처리됩니다.</li> 
+            <li><i class="fas fa-chevron-right"> </i> 주민등록번호, 핸드폰번호, 이메일, 계좌번호, 신용카드번호 등 <span class="em_orange">개인정보(본인 또는 타인)가 누출되지 않도록 주의</span>하시기 바랍니다.
                 <p class="point"><img src="../resources/images/point.png" height="30px" width="30px">비트캠핑은 회원들 간 거래가 가능한 공간만을 제공할 뿐, 개인 상호간 거래에 대해 일절 책임지지 않으니 유의하시기 바랍니다.</p>
             </li>
         </ul>
@@ -99,7 +100,7 @@
 	                        </c:choose>
 	                        ${data.title} 
 	                        <c:if test="${data.commentcount ne 0}">
-	                           <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+	                           <span style="font-size: 13px; color: #75AE87;">[${data.commentcount}]</span>
 	                        </c:if>
 	                   </a>
 	                </td>
@@ -125,12 +126,13 @@
 		</div>
 	</div>
 
-	<!-- 글쓰기 버튼 -->
-	<div align="right">
-		<a href="/community/dealWrite.do">글쓰기</a>
-	</div>
-	</main>
-	<script type="text/javascript">
+<!-- 글쓰기 버튼 -->
+<div class="buttonbox">
+	<button id="btnWrite" onclick="location.href='/community/dealWrite.do'">글쓰기</button>
+</div>
+
+</main>
+<script type="text/javascript">
 $(document).ready(function () {
 
 	let choice = '${choice}';

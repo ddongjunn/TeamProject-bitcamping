@@ -322,6 +322,8 @@
 								"merchant_Uid" : rsp.merchant_uid
 						}
 						
+						// alert(JSON.stringify(orderData));
+						
 						console.log("orderData =  " + orderData);
 	
 						$.ajax({

@@ -56,6 +56,8 @@
             <mvc:mapping path="/rent/writeQna.do"/>
 
             <mvc:mapping path="/rent/order.do"/>
+            <mvc:mapping path="/cs/qnaWrite.do"/>
+            
 
             <bean id="loginInterceptor" class="com.camping.bit.interceptor.LoginInterceptor"/>
         </mvc:interceptor>

@@ -41,11 +41,6 @@ public interface CampingDao {
 	//캠핑장 자동검색어 만들기
 	public List<CampingListDto> autoSearch(String searchWord);
 	
-	/*
-	//캠핑장 리뷰 리스트 가져오기
-	public List<CampingBbsDto> campingreview(int contentid);
-	*/
-	
 	//캠핑장 리뷰 리스트 가져오기
 	public List<CampingBbsDto> getcampingreview(CampingParam param);
 	
@@ -135,7 +130,5 @@ public interface CampingDao {
 	
 	//캠핑장 검색된 글의 수 카운팅 
 	public int getCampingSearchReviewCount(CampingParam param);
-	
-	
-	
+
 }

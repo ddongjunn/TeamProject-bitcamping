@@ -486,10 +486,6 @@ public class AdminController {
 
         result.put("param", param);
 
-        // JSON으로 담아도 되지만 편한 방법인 GSON으로 사용
-        // yyyy-MM-dd hh:mm:ss
-        // Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd hh:mm:ss").create();
-
         return result;
     }
 
@@ -545,3 +541,5 @@ public class AdminController {
     }
 
 }
+
+//test
