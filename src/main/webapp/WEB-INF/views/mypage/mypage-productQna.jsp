@@ -72,8 +72,7 @@
 	
 	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
 	                    <td></td>
-	                    <td>&nbsp;&nbsp;</td>
-	                    <td colspan="" style="text-align: center">
+	                    <td colspan="2" style="text-align: center">
 	                        &nbsp;&nbsp;&nbsp;ㄴ ${qna.content}
 	                        <c:if test="${qna.status == 1}">
 	                            <br><br>

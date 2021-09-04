@@ -318,7 +318,7 @@
     <select id="orderList" parameterType="MypageParam" resultType="ProductOrderDto">
             SELECT ORDER_SEQ, USER_ID, ORDER_DATE, PRODUCT_SEQ, OPTION1_SEQ, OPTION2_SEQ, QUANTITY,
                    RENT_SEQ, RENT_SDATE, RENT_EDATE, PRODUCT_PRICE, SHIPPING_FEE, TOTAL_PRICE,
-                   RECEIVER, ADDRESS, RECEIVER_PHONE, MEMO, PAYMENT, MERCHANT_UID, ORDER_STATUS, REVIEW_STATUS,
+                   RECEIVER, ADDRESS, RECEIVER_PHONE, MEMO, PAYMENT, MERCHANT_UID, ORDER_STATUS, REVIEW_STATUS, INVOICE_NUMBER AS INVOICENUMBER,
                    (SELECT PRODUCT_NAME FROM PRODUCT WHERE PRODUCT_SEQ = P.PRODUCT_SEQ) AS PRODUCT_NAME,
                    (SELECT THUMBNAIL_NAME FROM PRODUCT WHERE PRODUCT_SEQ = P.PRODUCT_SEQ) AS THUMBNAIL_NAME,
                    (SELECT OPTION_NAME FROM PRODUCT_OPTION WHERE OPTION_SEQ = P.OPTION1_SEQ) AS OPTION1_NAME,
@@ -331,6 +331,7 @@
                             ORDER_SEQ, USER_ID, ORDER_DATE, PRODUCT_SEQ, OPTION1_SEQ, OPTION2_SEQ, QUANTITY,
                             RENT_SEQ, RENT_SDATE, RENT_EDATE, PRODUCT_PRICE, SHIPPING_FEE, TOTAL_PRICE,
                             RECEIVER, ADDRESS, RECEIVER_PHONE, MEMO, PAYMENT, MERCHANT_UID, ORDER_STATUS, REVIEW_STATUS,
+                            INVOICE_NUMBER,
                             (SELECT USERNAME FROM MEMBER WHERE ID = USER_ID) AS USERNAME,
                             (SELECT PHONE FROM MEMBER WHERE ID = USER_ID) AS PHONE
                      FROM PRODUCT_ORDER
@@ -550,11 +551,29 @@
     </select>
 
     <select id="getCommunityDetail" parameterType="int" resultType="CommunityDto">
-        SELECT * FROM COMMUNITY_BBS WHERE COMMUNITY_SEQ = #{community_seq}
+        SELECT COMMUNITY_SEQ, USER_ID, TITLE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME
+        FROM COMMUNITY_BBS WHERE COMMUNITY_SEQ = #{community_seq}
     </select>
 
     <select id="getCommunityType" parameterType="int" resultType="String">
         SELECT BBSTYPE FROM COMMUNITY_BBS WHERE COMMUNITY_SEQ = #{community_seq}
     </select>
+
+    <update id="stopMember" parameterType="String">
+        UPDATE MEMBER SET AUTH = -2 WHERE ID = #{id}
+    </update>
+
+    <update id="restoreMember" parameterType="String">
+        UPDATE MEMBER SET AUTH = 0 WHERE ID = #{id}
+    </update>
+
+    <update id="updateOrderStatus" parameterType="ProductOrderDto">
+        UPDATE PRODUCT_ORDER SET ORDER_STATUS = #{order_Status} WHERE ORDER_SEQ = #{order_Seq}
+    </update>
+
+    <update id="insertOrderInvoiceNumber" parameterType="ProductOrderDto">
+        UPDATE PRODUCT_ORDER SET ORDER_STATUS = #{order_Status}, INVOICE_NUMBER = #{invoiceNumber}
+        WHERE ORDER_SEQ = #{order_Seq}
+    </update>
 
   </mapper>

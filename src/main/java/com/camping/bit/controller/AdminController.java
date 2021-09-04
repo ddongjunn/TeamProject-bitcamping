@@ -127,6 +127,8 @@ public class AdminController {
         List<MemberDto> list = service.allMemberList(param);
         model.addAttribute("list",list);
 
+        System.out.println("list = " + list);
+
         //갯수
         int totalCount = service.memberCountSearch(param);
         model.addAttribute("totalCount", totalCount);
@@ -153,6 +155,8 @@ public class AdminController {
         //글목록 list 가져오기
         List<CommunityDto> list = service.getCommunity(param);
         model.addAttribute("list",list);
+
+
 
         //총 글의 갯수
         int totalCount = service.getCommunityCount(param);
@@ -424,6 +428,8 @@ public class AdminController {
     public String communityDetail(Model model, int community_seq) {
 
         CommunityDto dto = service.getCommunityDetail(community_seq);
+
+        System.out.println("dto = " + dto);
         model.addAttribute("community",dto);
 
         return "admin-communityDetail.tiles";
@@ -539,6 +545,51 @@ public class AdminController {
         }
         return result;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "stop-member.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String stopMember(String id) {
+
+        service.stopMember(id);
+
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "restore-member.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String restoreMember(String id) {
+
+        service.restoreMember(id);
+
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "update-orderStatus.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String updateOrderStatus(ProductOrderDto dto) {
+
+        System.out.println("상품상태 업데이트 : " + dto);
+
+        service.updateOrderStatus(dto);
+
+        return "true";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "insert-orderInvoiceNumber.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String insertOrderInvoiceNumber(ProductOrderDto dto) {
+
+        System.out.println("송장번호 입력 dto = " + dto);
+
+        try {
+            service.insertOrderInvoiceNumber(dto);
+        }catch(Exception e ){
+            e.printStackTrace();
+        }
+        return "true";
+    }
+
+
 
 }
 

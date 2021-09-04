@@ -59,7 +59,9 @@
 								<td>
 									<c:choose>
 										<c:when test="${order.order_Status eq 1}">결제완료</c:when>
-										<c:when test="${order.order_Status eq 2}">배송중</c:when>
+										<c:when test="${order.order_Status eq 2}">
+											배송중 [우체국 : ${order.invoiceNumber}]
+										</c:when>
 										<c:when test="${order.order_Status eq 3}">배송완료</c:when>
 										<c:when test="${order.order_Status eq 4}">반납완료</c:when>
 									</c:choose>
@@ -114,6 +116,10 @@
 		// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
 
 		window.open("/rent/writeQna.do?product_Seq=" + product_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
+	}
+
+	function writeQnaAf(){
+
 	}
 
 	let totalCount = ${totalCount};

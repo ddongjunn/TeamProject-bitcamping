@@ -43,4 +43,10 @@ public interface AdminDao {
     public CommunityDto getCommunityDetail(int community_seq);
 
     public String getCommunityType(int community_seq);
+
+    public void stopMember(String id);
+    public void restoreMember(String id);
+
+    public void updateOrderStatus(ProductOrderDto dto);
+    public void insertOrderInvoiceNumber(ProductOrderDto dto);
 }
