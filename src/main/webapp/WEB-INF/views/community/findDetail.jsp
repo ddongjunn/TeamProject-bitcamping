@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
 
@@ -63,29 +64,30 @@
 	<button type="button" class="btnSimple" onclick="location='/community/hello.do'">목록</button>
 </div>
 
+<!-- 좋아요 -->
 <c:choose>
    <c:when test="${data.liked_yn == 1 }">
-      <span>
+      <div style="margin: auto; text-align: center;">
          <a href="javascript:" class="likeBtn">
             <img src="../resources/images/like.png" width="30" height="30">
          </a>
-      </span>
+      </div>
    </c:when>
    <c:otherwise>
-      <span>
+      <div style="margin: auto; text-align: center;">
          <a href="javascript:" class="likeBtn">
             <img src="../resources/images/delete_like.png" width="30" height="30">
          </a>   
-      </span>
+      </div>
    </c:otherwise>
-</c:choose>
+</c:choose> 
 
 <!-- 댓글 영역 시작 -->
 <div class="commentarea">
     <form id="commentForm" name="commentForm" method="post">
         <div>
             <div class="commentcountarea">
-                <span><strong>Comments</strong></span> <span id="cCnt"></span>
+                 <span style="margin-left: 20px;"><i class="fas fa-comment-dots"> </i><strong> 댓글</strong></span> <span id="cCnt"></span>
             </div>
             <div>
                 <table class="comment_table">                    
