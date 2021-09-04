@@ -73,7 +73,7 @@
     <form id="commentForm" name="commentForm" method="post">
         <div>
             <div class="commentcountarea">
-                <span><strong>Comments</strong></span> <span id="cCnt"></span>
+                <span style="margin-left: 20px;"><i class="fas fa-comment-dots"> </i><strong> 댓글</strong></span> <span id="cCnt"></span>
             </div>
             <div>
                 <table class="comment_table">                    
