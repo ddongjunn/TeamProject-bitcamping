@@ -77,6 +77,9 @@ public class ProductOrderDto implements Serializable {
 
     // 리뷰 상태 
     private int review_Status;
+
+    //송장번호
+    private String invoiceNumber;
     
     // myOrder 페이지용
     private String product_Name;

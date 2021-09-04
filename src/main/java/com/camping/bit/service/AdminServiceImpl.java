@@ -138,4 +138,24 @@ public class AdminServiceImpl implements AdminService{
     public String getCommunityType(int community_seq) {
         return dao.getCommunityType(community_seq);
     }
+
+    @Override
+    public void stopMember(String id) {
+        dao.stopMember(id);
+    }
+
+    @Override
+    public void restoreMember(String id) {
+        dao.restoreMember(id);
+    }
+
+    @Override
+    public void updateOrderStatus(ProductOrderDto dto) {
+        dao.updateOrderStatus(dto);
+    }
+
+    @Override
+    public void insertOrderInvoiceNumber(ProductOrderDto dto) {
+        dao.insertOrderInvoiceNumber(dto);
+    }
 }

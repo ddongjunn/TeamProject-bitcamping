@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<div class="postarea">
+<div class="postarea" style=" width: 90%; margin: 30px 30px 0px 90px">
     <table class="tabledetail">
         <tbody>
         <tr>
@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <td class="detailinfo">
-                <span><i class="fas fa-user-circle fa-sm"></i> ${community.nickname}</span>
+                <span><i class="fas fa-user-circle fa-sm"></i> ${community.nickname} </span>
                 <span>
 						<i class="far fa-calendar-alt fa-sm"></i>
 						 <fmt:parseDate value="${community.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -43,10 +43,10 @@
 </div>
 
 
-<button type="button" class="btnSimple" onclick="del(${data.community_seq})">삭제</button>
+<button type="button" class="btnSimple" style="margin-left: 90px" onclick="del(${data.community_seq})">삭제</button>
 
 <!-- 댓글 영역 시작 -->
-<div class="commentarea">
+<div class="commentarea"  style="width: 90%; margin: 30px 30px 0 90px">
     <form id="commentForm" name="commentForm" method="post">
         <div>
             <div class="commentcountarea">
@@ -71,7 +71,7 @@
 </div>
 
 
-<div class="commentlistarea">
+<div class="commentlistarea" style="width: 90%; margin: 30px 30px 0 90px">
     <form id="commentListForm" name="commentListForm" method="post">
         <div class="commentlist" id="commentList" >
         </div>

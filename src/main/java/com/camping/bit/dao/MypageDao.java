@@ -37,4 +37,5 @@ public interface MypageDao {
 
     public ProductReviewDto getProductReview(int review_Seq);
     public void updateProductReview(ProductReviewDto dto);
+    public void deleteProductReview(int review_Seq);
 }

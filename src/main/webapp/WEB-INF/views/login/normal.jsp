@@ -118,37 +118,37 @@
             <%--<h2>비트캠핑</h2>--%>
 
             <div class="login_id">
-                <h4>아이디</h4>
+                <h4><b>아이디</b></h4>
                 <input type="text" name="id" id="userid" placeholder="4~15자의 영문 소문자, 숫자만 사용 가능합니다." maxlength="20" >
                 <span class="error_next_box"></span>
             </div>
             <div class="login_pw">
-                <h4>비밀번호</h4>
+                <h4><b>비밀번호</b></h4>
                 <input type="password" name="pwd" id="userpwd" placeholder="영문 대 소문+숫자+특수문자 8~16자리" maxlength="16" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_pw">
-                <h4>비밀번호 재확인</h4>
+                <h4><b>비밀번호 재확인</b></h4>
                 <input type="password" name="pwd2" id="userpwd2" placeholder="비밀번호를 다시 입력해 주세요." maxlength="16" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_id">
-                <h4>닉네임</h4>
+                <h4><b>닉네임</b></h4>
                 <input type="text" name="nickname" id="nickname" placeholder="한글, 영문만 사용 가능합니다." maxlength="20" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_id">
-                <h4>이름</h4>
+                <h4><b>이름</b></h4>
                 <input type="text" name="username" id="username" placeholder="한글, 영문만 사용 가능합니다." maxlength="20" value="">
                 <span class="error_next_box"></span>
             </div>
             <div class="login_id">
-                <h4>이메일</h4>
+                <h4><b>이메일</b></h4>
                 <input type="email" name="email" id="useremail" placeholder="@까지 정확하게 입력해주세요." maxlength="50" value="" >
                 <span class="error_next_box">이메일 주소를 다시 확인해주세요.</span>
             </div>
             <div class="login_id">
-                <h4>휴대전화</h4>
+                <h4><b>휴대전화</b></h4>
                 <input type="text" id="mobile" class="int" maxlength="13" name="phone" placeholder="'-' 제외 숫자만 입력해주세요." value="" >
                 <span class="error_next_box"></span>
             </div>

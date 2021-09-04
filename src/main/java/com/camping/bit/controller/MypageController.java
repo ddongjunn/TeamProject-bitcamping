@@ -388,4 +388,13 @@ public class MypageController {
         return "true";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "delete-review.do", method = { RequestMethod.GET })
+    public String deleteReview(int review_Seq) {
+
+        service.deleteProductReview(review_Seq);
+
+        return "true";
+    }
+
 }

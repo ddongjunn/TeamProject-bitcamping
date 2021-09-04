@@ -46,4 +46,10 @@ public interface AdminService {
 
     public String getCommunityType(int community_seq);
 
+    public void stopMember(String id);
+    public void restoreMember(String id);
+
+    public void updateOrderStatus(ProductOrderDto dto);
+    public void insertOrderInvoiceNumber(ProductOrderDto dto);
+
 }

@@ -111,4 +111,9 @@ public class MypageServieImpl implements  MypageService{
         dao.updateProductReview(dto);
     }
 
+    @Override
+    public void deleteProductReview(int review_Seq) {
+        dao.deleteProductReview(review_Seq);
+    }
+
 }

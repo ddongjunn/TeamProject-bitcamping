@@ -68,7 +68,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "callback-naver.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
+    public String naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletResponse response) throws Exception {
 
         OAuth2AccessToken oauthToken;
         // 1. 로그인 사용자 정보를 읽어온다.
@@ -97,7 +97,7 @@ public class LoginController {
 
         if(result){
             MemberDto dto = service.getMember(id);
-            System.out.println("로그인 = " + dto.toString());
+            
             session.setMaxInactiveInterval(1800); // 1800 = 60s*30 (30분)
             session.setAttribute("login",dto);
             return "main.tiles";
@@ -167,7 +167,7 @@ public class LoginController {
         MemberDto member = service.getMember(dto.getId());
         if(member == null){
             return false;
-        }else if(member.getAuth() == -1){
+        }else if(member.getAuth() == -1 || member.getAuth() == -2){
             return false;
         }
 

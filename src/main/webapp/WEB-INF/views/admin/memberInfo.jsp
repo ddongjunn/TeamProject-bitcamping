@@ -11,7 +11,11 @@
 <html>
 <head>
     <title>Title</title>
-
+    <style>
+        .swal-wide{
+            width: 700px !important;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -64,17 +68,37 @@
                             ${fn:substring(date,0,11)}
                     </td>
                     <td>
-                        <c:if test="${list.auth != '-1'}">
+                        <c:if test="${list.auth eq 0}">
                             <span class="badge badge-dot mr-4">
                                 <i class="bg-success"></i>
                                 <span class="status">활동</span>
                             </span>
                         </c:if>
-                        <c:if test="${list.auth == '-1'}">
+                        <c:if test="${list.auth eq -1}">
                             <span class="badge badge-dot mr-4">
                                 <i class="bg-warning"></i>
                                 <span class="status">탈퇴</span>
                             </span>
+                        </c:if>
+                        <c:if test="${list.auth eq 1}">
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-primary"></i>
+                                <span class="status">관리자</span>
+                            </span>
+                        </c:if>
+                        <c:if test="${list.auth eq -2}">
+                            <span class="badge badge-dot mr-4">
+                                <i class="bg-dark"></i>
+                                <span class="status">블랙</span>
+                            </span>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${list.auth eq -2}">
+                            <button type="button" class="btn btn-outline-danger btn-sm" onclick="restoreMember('${list.id}','${list.username}','${list.nickname}')">복구</button>
+                        </c:if>
+                        <c:if test="${list.auth eq 0}">
+                            <button type="button" class="btn btn-danger btn-sm" onclick="stopMember('${list.id}','${list.username}','${list.nickname}')">블랙</button>
                         </c:if>
                     </td>
                 </tr>
@@ -193,6 +217,52 @@
             location.href = "/admin/memberInfo.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
         });
     });
+
+    function stopMember(id,username,nickname){
+
+        Swal.fire({
+            title:'블랙리스트 등록',
+            html: '<div style="text-align: center"> 아이디 : ' + id  + '<br>이름 : ' + username  +'<br>닉네임 : ' + nickname + '</div>',
+            customClass: 'swal-wide',
+            showCancelButton: true,
+            confirmButtonText: `등록`,
+            cancelButtonText: '취소',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url : '/admin/stop-member.do',
+                    data : { 'id' : id } ,
+                    success : function(xh){
+                        history.go(0);
+                    },
+
+                });
+            }
+        })
+    }
+    function restoreMember(id,username,nickname){
+        Swal.fire({
+            title:'블랙리스트 복구',
+            html: '<div style="text-align: center"> 아이디 : ' + id  + '<br>이름 : ' + username  +'<br>닉네임 : ' + nickname + '</div>',
+            customClass: 'swal-wide',
+            showCancelButton: true,
+            confirmButtonText: `복구`,
+            cancelButtonText: '취소',
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                $.ajax({
+                    url : '/admin/restore-member.do',
+                    data : { 'id' : id } ,
+                    success : function(xh){
+                        history.go(0);
+                    },
+
+                });
+            }
+        })
+    }
 </script>
 </body>
 </html>

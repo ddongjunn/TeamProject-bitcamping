@@ -59,7 +59,7 @@
 	                    </td>
 						<td>
 							<button type="button" class="btn btn-primary btn-sm" onclick="updateReview(${review.review_Seq})">수정</button>
-							<button type="button" class="btn btn-primary btn-sm">삭제</button>
+							<button type="button" class="btn btn-primary btn-sm" onclick="deleteReview(${review.review_Seq})">삭제</button>
 						</td>
 	                </tr>
 	
@@ -67,9 +67,6 @@
 	                    <td></td>
 	                    <td colspan="1">
 	                        &nbsp; &nbsp; &nbsp;ㄴ ${review.content}<br>
-							<c:if test="${review.image eq null}">
-
-							</c:if>
 							<c:if test="${review.image ne null}">
 								<img src = "/resources/upload/${review.image}" alt = "상품평 이미지" height = "250px">
 							</c:if>
@@ -155,6 +152,33 @@
 		// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
 
 		window.open("/account/update-review.do?review_Seq=" + review_Seq, "_blank", "location=no, status=no, resizable=no, height=" + popupHeight  + ", width=" + popupWidth  + ", left=" + popupX + ", top=" + popupY);
+	}
+
+	function deleteReview(review_Seq) {
+		Swal.fire({
+			title: '리뷰를 정말 삭제하시겠어요?',
+			showCancelButton: true,
+			confirmButtonText: `삭제하기`,
+			cancelButtonText: '취소',
+		}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+
+				$.ajax({
+					url : '/account/delete-review.do',
+					data : { 'review_Seq' : review_Seq } ,
+					success : function(xh){
+
+						let tr = document.getElementById('tr'+review_Seq);
+						let tr2 = document.getElementById('reviewcontent'+review_Seq);
+						tr.remove();
+						tr2.remove();
+
+					},
+
+				});
+			}
+		})
 	}
 
 
