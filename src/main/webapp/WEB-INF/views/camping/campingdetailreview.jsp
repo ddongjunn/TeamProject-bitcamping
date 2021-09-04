@@ -73,7 +73,7 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 %>
 <input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
 <input type="hidden" name="user_id" value="${login.id}">
-<%-- <input type = "hidden" value = "<%=campinglist.getContentid()%>"> --%>
+<input type = "hidden" value = "<%=campinglist.getContentid()%>">
 
 <div style="clear:both"></div>
 
