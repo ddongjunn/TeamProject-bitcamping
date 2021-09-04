@@ -82,15 +82,19 @@
 			<div class="tarkikComandSlider">
 				<c:forEach items = "${campinglist}" var = "camping">
 					<article class="comandSlider__item">
+						<div class="comandSlider__item_photo">
+							<a href="/csite/campingdetail.do?contentid=${camping.contentid}">
+								<img class="" src="${camping.firstimageurl}" alt="캠핑장 이미지" />
+							</a>
+						</div>
 						<header>
 							<p class="comandSlider__item_name"><a href="/csite/campingdetail.do?contentid=${camping.contentid}">${camping.facltnm}</a></p>
 							<p class="comandSlider__item_status">${camping.addr1}</p>
 						</header>
-						<a href="/csite/campingdetail.do?contentid=${camping.contentid}">
-							<img class="comandSlider__item_photo" src="${camping.firstimageurl}" alt="캠핑장 이미지" />
-						</a>
-						<div class="comandSlider__item_contact"><span>유형</span>${camping.induty}</div>
-						<div class="comandSlider__item_contact"><span>환경</span>${camping.lctcl}/${camping.facltdivnm}</div>
+						<footer>
+							<div class="comandSlider__item_contact"><span>유형</span>${camping.induty}</div>
+							<div class="comandSlider__item_contact"><span>환경</span>${camping.lctcl}/${camping.facltdivnm}</div>
+						</footer>
 					</article>
 				</c:forEach>
 			</div>
@@ -102,7 +106,7 @@
 			<div class="product-title-box">
 				<div class="product-title">
 					추천상품
-					<p class="product-subtitle">비트캠핑과 함께 즐거운 캠핑을 준비하세요 <i class="fas fa-laugh"></i></p>
+					<p class="product-subtitle">비트캠핑과 함께 즐거운 캠핑을 준비하세요</p>
 				</div>
 				<div class="product-more">
 					<a href="/rent/list.do">
@@ -115,12 +119,13 @@
 			<div class="product-img-box">
 				<div class="item_box">
 					<ul class="content_ul">
-						<c:forEach items="${item}" var="item">
+						<c:forEach items="${item}" var="item" varStatus="status">
 						<li>
 							<a href="/rent/detail.do?product_Seq=${item.product_Seq}">
 								<img src="/resources/upload/${item.thumbnail_Name}">
 							</a>
 							<div class="product-list-name">${item.product_Name}</div>
+							<div class="product-list-count">0${status.count}</div>
 						</li>
 						</c:forEach>
 					</ul>
@@ -129,9 +134,9 @@
 		</div>
 
 		<!-- community recent start -->
-		<div class="commuity-area mt50" style="clear: both;">
-			<div class="lefttitle">
-				<span class="stroke-shadow-gray" style="font-family: 'TTTogether' !important;">최신글</span>
+		<div class="commuity-area mt70" style="clear: both;">
+			<div class="community-title">
+				커뮤니티 최신글
 			</div>
 			<div class="community-container mt10">
 				<div class="community-contents">
@@ -250,7 +255,7 @@
 				scaleColor: "rgba(255, 255, 255, 0)",
 				lineWidth: 15,
 				lineCap: 'butt',
-				barColor: '#ff7761',
+				barColor: '#fdc23e',
 				trackColor:	"#ecf0f1",
 				size: 200,
 				animate: 1000
@@ -259,7 +264,7 @@
 				scaleColor: "rgba(255, 255, 255, 0)",
 				lineWidth: 15,
 				lineCap: 'butt',
-				barColor: '#fdc23e',
+				barColor: '#ff7761',
 				trackColor:	"#ecf0f1",
 				size: 200,
 				animate: 1000
