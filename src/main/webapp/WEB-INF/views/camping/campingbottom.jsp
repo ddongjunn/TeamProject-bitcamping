@@ -21,6 +21,7 @@ ALTER TABLE CAMPING_BBS_COMMENT ADD NICKNAME VARCHAR2(20) DEFAULT '0' NOT NULL;
 <!-- bxslider -->
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-nice-select/1.1.0/js/jquery.nice-select.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.4.0/js/all.js"></script>
 <link href="/resources/css/campingsite/campingdetail.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
@@ -51,15 +52,19 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<div>
 		<c:choose>
 			<c:when test = "${empty login}">
-				<font size = "6pt">검색하신 캠핑장에 대해 알아볼까요?</font> 
+				<font size = "4pt">검색하신 캠핑장에 대해 알아볼까요?</font> 
 			</c:when>
 			<c:otherwise>
-				<font size = "6pt">${login.nickname}님이 검색하신 캠핑장에 대해 알아볼까요?</font> 
+				<font size = "4pt"><span style="color: #1FB154; font-size: 20px;">${login.nickname}</span>님이 검색하신 캠핑장에 대해 알아볼까요?</font> 
 			</c:otherwise>
 		</c:choose>
+		<hr>
 	</div>
 <br>
 	<div id = "intro" class = "layout">
+		<div class="campingdetail_subtitle">
+			<i class="far fa-compass"></i> 캠핑장 소개
+		</div>
 		<ul class = "layout_5">
 			<li class = "intro">
 				<c:choose>
@@ -75,6 +80,10 @@ String campingintro = (String)request.getAttribute("campingintro");
 	</div>
 	
 <br><br><br>
+
+	<div class="campingdetail_subtitle">
+		<i class="far fa-compass"></i> 캠핑장 시설정보
+	</div>
 
 	 <div id = "sbrscl"> 
 		<c:set value = "<%=campinglist.getSbrscl() %>" var = "service"/>
@@ -136,6 +145,10 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</div>
 
 <br><br>
+
+	<div class="campingdetail_subtitle">
+		<i class="far fa-compass"></i> 기타 주요시설
+	</div>
 <!-- 야영장 종류 -->
 	<c:set value="<%=campingdetail.getGnrlsiteco() %>" var="gnrl" />
 	<c:set value="<%=campingdetail.getAutositeco() %>" var="auto" />
@@ -319,6 +332,10 @@ String campingintro = (String)request.getAttribute("campingintro");
 	</table>
 
 <br><br>
+
+	<div class="campingdetail_subtitle">
+		<i class="far fa-compass"></i> 캠핑장 주요 서비스
+	</div>
 <!-- 야영장 서비스 -->
 	<c:set value="<%=campinglist.getResvecl()%>" var="reservation" />
 	<c:set value="<%=campingdetail.getResveurl()%>" var = "resveurl"/>
@@ -329,17 +346,18 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
 
 	<div class="row">
-		<div class="col" style = "width : 10px">
-			<div class="card" style="width: 14rem;">
-				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/social.png" height = "130px" alt="Card image cap">
+		<div class="col">
+			<div class="card">
+				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/social.png" alt="Card image cap">
 				<div class="card-block">
-					<br><h4 class="card-title" style = "text-align : center; color : #87C4B7;">체험프로그램 진행</h4>
+					<br><h4 class="card-title">체험프로그램 진행</h4>
 					<c:choose>
 						<c:when test="${program != 'none'}">
 							<p class="card-text" style = "text-align : center">${program}</p><br>
 						</c:when>
 						<c:otherwise>
 							<p class = "card-text"  style = "text-align : center">프로그램을 진행하지 않아요</p><br>
+								<div class="slash"><i class="fas fa-slash"></i></div>
 								<a href="javascript:campingexperience()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 						</c:otherwise>
 					</c:choose>
@@ -347,11 +365,11 @@ String campingintro = (String)request.getAttribute("campingintro");
 			</div>
 		</div>
 		
-		<div class="col" style = "width : 10px">
-			<div class="card" style="width: 14rem;">
+		<div class="col">
+			<div class="card">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/dog.png" height = "130px" alt="Card image cap">
 				<div class="card-block">
-					<br><h4 class="card-title"  style = "text-align : center; color : #87C4B7">반려동물 동반</h4>
+					<br><h4 class="card-title">반려동물 동반</h4>
 					<c:choose>
 						<c:when test="${animal == '가능' }">
 							<p class="card-text"  style = "text-align : center">어떤 강아지라도 환영해요</p><br>
@@ -361,6 +379,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 						</c:when>
 						<c:otherwise>
 							<p class = "card-text"  style = "text-align : center">아쉽지만 반려동물 동반이 어려워요</p><br>
+								<div class="slash"><i class="fas fa-slash"></i></div>
 								<a href="javascript:campingpet()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 						</c:otherwise>
 					</c:choose>
@@ -368,17 +387,18 @@ String campingintro = (String)request.getAttribute("campingintro");
 			</div>
 		</div>
 		
-		<div class="col" style = "width : 10px">
-			<div class="card" style="width: 14rem;">
+		<div class="col">
+			<div class="card">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/settings.png" height = "130px" alt="Card image cap">
 				<div class="card-block">
-					<br><h4 class="card-title"  style = "text-align : center; color : #87C4B7">캠핑 장비 대여</h4>
+					<br><h4 class="card-title">캠핑 장비 대여</h4>
 					<c:choose>
 						<c:when test="${equip !='none' }">
 							<p class="card-text" style = "text-align : center">${equip}</p><br>
 						</c:when>
 						<c:otherwise>
 							<p class = "card-text"  style = "text-align : center">장비 대여가 불가해요</p><br>
+								<div class="slash"><i class="fas fa-slash"></i></div>
 								<a href="javascript:campingequip()" data-name="Orange" data-price="0.5" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 						</c:otherwise>
 					</c:choose>
@@ -386,11 +406,11 @@ String campingintro = (String)request.getAttribute("campingintro");
 				</div>
 			</div>
 		
-		<div class="col" style = "width : 10px">
-			<div class="card" style="width: 14rem;">
+		<div class="col">
+			<div class="card">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/reserved.png" alt="Card image cap">
 				<div class="card-block">
-					<br><h4 class="card-title"  style = "text-align : center; color : #87C4B7">온라인 예약</h4>
+					<br><h4 class="card-title">온라인 예약</h4>
 					<c:choose>
 						<c:when test="${fn:contains(reservation, '온라인')}">
 							<p class="card-text" style = "text-align : center">온라인으로 예약이 가능해요</p><br>
@@ -401,6 +421,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 						</c:when>
 						<c:otherwise>
 							<p class = "card-text"  style = "text-align : center">현장 예약만 가능해요</p><br>
+								<div class="slash"><i class="fas fa-slash"></i></div>
 								<a href="javascript:campingreserveboth()" class="add-to-cart btn btn-primary">가능한 캠핑장 알아보기</a>
 						</c:otherwise>
 					</c:choose>
@@ -410,16 +431,27 @@ String campingintro = (String)request.getAttribute("campingintro");
 	</div>
 </div> <!-- contents div 끝나는 곳  -->
  
+ 
+
 <div id = "mapintro">
-지도를 전체적으로 보고 싶으실 땐 잠시 꺼주세요, 파란 마커를 누르면 다시 등장합니다. 
+	<div class="campingdetail_subtitle">
+		<i class="far fa-compass"></i> 캠핑장 오시는 길
+	</div>
+	지도를 전체적으로 보고 싶으실 땐 잠시 꺼주세요, 파란 마커를 누르면 다시 등장합니다. 
 </div>
  
-<div id="map"></div><!-- 지도 -->
- 
+<div id="map" style="margin: auto"></div><!-- 지도 -->
+
 <br>
 
+
 <div id = "photos">
-	<table>
+
+	<div class="campingdetail_subtitle">
+		<i class="far fa-compass"></i> 캠핑장 둘러보기
+	</div>
+	
+	<table style="width: 100%;">
 		<tr class = "smallphotos">
 			<c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i" end = "14">
 				<c:if test="${i.index%5==0}">
@@ -435,10 +467,12 @@ String campingintro = (String)request.getAttribute("campingintro");
  	<ul class = "bxslider"> 
 		<c:forEach items = "${campingimage}" var = "campingimage" varStatus = "i" end = "14">
  			<li>
- 				<img src = "${campingimage.imageurl}" data-image = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" onClick="window.open(this.src)">
+ 				<img src = "${campingimage.imageurl}" data-image = "${campingimage.imageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'">
  			</li>
  		</c:forEach>
  	</ul>
+ 	
+ 	<div class="campingdetail_subtitle" style="margin: 0px auto 30px;"></div>
 </div><!-- 사진 -->
 
 

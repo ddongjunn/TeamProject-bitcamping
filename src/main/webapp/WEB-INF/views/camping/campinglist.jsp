@@ -61,7 +61,11 @@ String sigunguNm = request.getParameter("sigunguNm");
 <link href="/resources/css/campingsite/campinglist.css" rel="stylesheet" type = "text/css">
 </head>
 <body>
-<br>
+
+<div class="campinglist_title">
+	캠핑장 검색
+	<p>'자세하기 검색하기'를 클릭해서 나에게 꼭 맞는 캠핑장을 검색해 보세요</p>
+</div>
 
 <div class = "deep-search">
 	<form id = "searchForm1" action ="campinglist.do" method = "get" class = "form-inline">
@@ -283,14 +287,19 @@ String sigunguNm = request.getParameter("sigunguNm");
 	</tr>
 	</table>
 	<br>
-		<button type = "button" class = "btn btn-light" id = "resetBtn">초기화</button>
-		<button type="submit" class="btn btn-light" id = "specifiedBtn">검색하기</button>
+			<div class="detailSearch_btn">
+				<button type = "button" class = "btn btn-light" id = "resetBtn">초기화</button>
+				<button type="submit" class="btn btn-light" id = "specifiedBtn">검색하기</button>
+			</div>
 		</div>
 		</form>
 	</div><!-- 상세검색 아래 펼쳐지는 부분 끝나는 곳 -->
 	
 	<!-- 캠핑장 정렬 -->
 <div class = "search_sorting">
+	<div class = "howmany">
+		<span class="campsite_number">${campingSearchPage}</span>개의 캠핑장이 기다리고 있습니다
+	</div>
 	<select id = "sorting" title = "정렬" class="sorting_select">
 		<option value = "image" selected = "selected">--정렬--</option>
 		<option value = "create">최신등록순</option>
@@ -298,10 +307,6 @@ String sigunguNm = request.getParameter("sigunguNm");
 		<option value = "read">조회순</option>
 		<option value = "like">추천순</option>
 	</select>
-<br>
-	<div class = "howmany">
-		${campingSearchPage}개의 캠핑장이 기다리고 있습니다
-	</div>
 </div>
 	
 </div><!-- 자세하게 검색하기 끝나는 곳 -->
@@ -322,11 +327,11 @@ String sigunguNm = request.getParameter("sigunguNm");
 					</div>
 					<div class = "camping_information">
 						<div class = "camping_site name">
-							<h2>
+							<h4 class="campsite_name">
 								<a href = "campingdetail.do?contentid=${camping.contentid}">${camping.facltnm}</a>
 								<span class = "readcount" style = "font-size : 15px">조회수 : ${camping.readcount}</span>
 								<span class = "likecount" style = "font-size : 15px">추천수 : ${camping.likecount}</span>
-							</h2>
+							</h4>
 						</div>
 						
 						<c:choose>
@@ -336,38 +341,38 @@ String sigunguNm = request.getParameter("sigunguNm");
 								<h3>${string1}...</h3>
 							</c:when>
 							<c:otherwise>
-								<h4>${camping.addr1}</h4>
+								<h5>${camping.addr1}</h5>
 							</c:otherwise>
 						</c:choose>
 						<c:if test="${camping.lineintro!='none'}">
 							<c:choose>
 								<c:when test = "${fn:length(camping.lineintro)>35}">
 									<c:set var = "TextValue1" value = "${camping.lineintro}"/>
-									<c:set var = "string1" value = "${fn:substring(TextValue1, 0,30)}"/>
-									<h5>${string1}...</h5>
+									<c:set var = "string1" value = "${fn:substring(TextValue1, 0,60)}"/>
+									<p class="lineintro">${string1}...</p>
 								</c:when>
 								<c:otherwise>
-									<h5>${camping.lineintro}</h5>
+									<p class="lineintro">${camping.lineintro}</p>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
 						<c:if test="${camping.tel!='none'}">
 							<span>
-							<img src ="<%=request.getContextPath()%>/resources/images/campingsite/phone-call.png" width = "30"></span>
-							<span>${camping.tel}</span>
+							<img src ="<%=request.getContextPath()%>/resources/images/campingsite/phone-call.png" width = "20"></span>
+							<span class="campsite_tel">${camping.tel}</span>
 						</c:if>
 						<c:choose>
 							<c:when test="${camping.homepage eq 'none'}">
-								<span><img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35">홈페이지 준비중</span>
+								<span><%-- <img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "25"> --%>홈페이지 준비중</span>
 							</c:when>
 							<c:otherwise>
 								<c:url value="${camping.homepage}" var="url" />
-								<span><img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "35"></span>
+								<span><%-- <img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "25"> --%></span>
 									<c:choose>
 										<c:when test="${fn:contains(url, 'http')}">
-											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button></c:when>
+											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" ><i class="fas fa-home"></i> 홈페이지</button></c:when>
 										<c:otherwise>
-											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" ><i class="fas fa-home"></i> 홈페이지</button>
 										</c:otherwise>
 									</c:choose>
 							</c:otherwise>
