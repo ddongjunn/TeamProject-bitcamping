@@ -202,7 +202,7 @@ button:focus{
 .pagination > li > a
 {
     background-color: white;
-    color: #5A4181;
+    color: #353535;
 }
 
 .pagination > li > a:focus,
@@ -218,14 +218,14 @@ button:focus{
 .pagination > .active > a
 {
     color: white;
-    background-color: #87C4B7 !Important;
-    border: solid 1px #87C4B7 !Important;
+    background-color: #1FB154 !Important;
+    border: solid 1px #1FB154 !Important;
 }
 
 .pagination > .active > a:hover
 {
-    background-color: #87C4B7 !Important;
-    border: solid 1px #87C4B7;
+    background-color: #1FB154 !Important;
+    border: solid 1px #1FB154;
 }
 
 .container{

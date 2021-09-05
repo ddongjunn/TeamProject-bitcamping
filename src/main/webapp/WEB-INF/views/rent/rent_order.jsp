@@ -313,7 +313,7 @@
 								"rent_Edate" : '${order.rent_Edate}',
 								"product_Price" : '${order.product_Price}',
 								"shipping_Fee" : shippingfee, 
-								"total_Price" : rsp.paid_amount, 
+								"total_Price" : $("#total_Price").val(), // rsp.paid_amount, = 아임포트에서 실결제된 금액
 								"receiver" : $("#receiver").val(),
 								"address" : rsp.buyer_postcode + ' ' + rsp.buyer_addr, 
 								"receiver_Phone" : phone, 

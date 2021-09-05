@@ -18,52 +18,51 @@
 		SELECT PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
   		CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL, (SELECT NVL(AVG(RATE), 0) FROM PRODUCT_REVIEW WHERE PRODUCT_SEQ = P.PRODUCT_SEQ) AS RATE
   		FROM (
-  			SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+  			SELECT ROW_NUMBER()OVER(ORDER BY 
+  			<if test="sort == 0">
+  				WDATE DESC
+  			</if>
+  			<if test="sort == 1">
+  				PRODUCT_NAME ASC
+  			</if>
+  			<if test="sort == 2">
+  				PRODUCT_PRICE ASC
+  			</if>
+  			<if test="sort == 3">
+  				PRODUCT_PRICE DESC
+  			</if>
+  			) AS RNUM,
 				PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
   				CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL
 			FROM PRODUCT
 			WHERE DEL = 0
+				<if test="search != null and search != ''">
+					AND PRODUCT_NAME LIKE '%'||#{search}||'%'
+				</if>
   			) P
   		WHERE RNUM BETWEEN #{start} AND #{end}
-		ORDER BY WDATE DESC
+		ORDER BY 
+			<if test="sort == 0">
+  				WDATE DESC
+  			</if>
+  			<if test="sort == 1">
+  				PRODUCT_NAME ASC
+  			</if>
+  			<if test="sort == 2">
+  				PRODUCT_PRICE ASC
+  			</if>
+  			<if test="sort == 3">
+  				PRODUCT_PRICE DESC
+  			</if>
 	</select>
-	
-	<!-- 상품 정렬 테스트 -->
-<!-- 	<select id="getProductList" parameterType="CommonsParam" resultType="ProductDetailDto">
-		SELECT PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
-  		CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL, (SELECT NVL(AVG(RATE), 0) FROM PRODUCT_REVIEW WHERE PRODUCT_SEQ = P.PRODUCT_SEQ) AS RATE
-  		FROM (
-  			SELECT
-  			<if test="sortMethod != null and sortMethod != ''">
-  				<if test="sortMethod == 1">
-                	ROW_NUMBER()OVER(ORDER BY PRODUCT_NAME DESC) AS RNUM,
-            	</if>
-            	<if test="sortMethod == 2">
-                	ROW_NUMBER()OVER(ORDER BY PRODUCT_PRICE ASC) AS RNUM,
-            	</if>
-            	<if test="sortMethod == 3">
-                	ROW_NUMBER()OVER(ORDER BY PRODUCT_PRICE DESC) AS RNUM,
-            	</if>
-            	<if test="sortMethod == 4">
-                	ROW_NUMBER()OVER(ORDER BY RATE DESC) AS RNUM,
-            	</if>
-  			</if>
-  			<if test="sortMethod == null and sortMethod == ''">
-  				ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
-  			</if>
-				PRODUCT_SEQ, PRODUCT_NAME, PRODUCT_DESC, BASE_ITEM, PRODUCT_PRICE, PRODUCT_STOCK, THUMBNAIL_NAME, 
-  				CONTENT, INCLUDE_LIGHT, INCLUDE_GRILL, RENT_TYPE, WDATE, DEL
-			FROM PRODUCT
-			WHERE DEL = 0
-  			) P
-  		WHERE RNUM BETWEEN #{start} AND #{end}
-		ORDER BY WDATE DESC
-	</select> -->
 	
 	<select id="getProductCount" parameterType="CommonsParam" resultType="java.lang.Integer">
 		SELECT COUNT(*)
 		FROM PRODUCT
 		WHERE DEL = 0
+			<if test="search != null and search != ''">
+				AND PRODUCT_NAME LIKE '%'||#{search}||'%'
+			</if>
 	</select>
 	
 	<select id="getProductDetail" parameterType="java.lang.Integer" resultType="ProductDetailDto">

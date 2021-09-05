@@ -112,7 +112,7 @@
     <select id="getTodaySales" resultType="String">
         SELECT
             (
-                SELECT TO_CHAR(SUM(PRODUCT_PRICE),'999,999,999')
+                SELECT TO_CHAR(SUM(TOTAL_PRICE),'999,999,999')
                 FROM PRODUCT_ORDER
                 WHERE TO_CHAR(ORDER_DATE,'yyyy-mm-dd') = TO_CHAR(SYSDATE,'yyyy-mm-dd')
             ) AS TODAYSALES

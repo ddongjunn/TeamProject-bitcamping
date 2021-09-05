@@ -15,13 +15,21 @@
 <body>
 
 <div class="container mydiv">
-	<div class="title">상품 목록</div>
+	<div class="title" style="display: flex; justify-content: space-between; align-items: center;">
+		상품 목록
+		<!-- 검색 -->
+		<div class="searchbox" style="float: right; display: flex; justify-content: flex-end; align-items: center; font-size: 14px">
+			<input type="text" id="_search" name="search"  placeholder="상품 검색" style="margin-right: 5px; padding: 2px; width: 220px;">
+			<button type="button" id="btnSearch">검색</button>
+		</div>
+	</div>
 	<div class="total-item">
 		총 <span class="c_point f_bold">${totalCount}</span>개의 상품이 있습니다
-		<span class="sort-item"> <a href="#none">신상품</a> / <a>상품명</a> / <a>낮은가격</a> / <a>높은가격</a></span>
+		<span class="sort-item"> <a href="/rent/list.do">신상품</a> / <a href="javascript:sorting(1);">상품명</a> / <a href="javascript:sorting(2);">낮은가격</a> / <a href="javascript:sorting(3);">높은가격</a></span>
 	</div> 
 	
 	<hr>
+	
     <div class="item-row">
     	<c:forEach items="${list}" var="list">
 	        <div class="col-md-4">       	
@@ -113,7 +121,17 @@
     </nav>
 </div>
 
+
 <script type="text/javascript">
+
+	let search ="${search}";
+	let sort = ${sort};
+	
+	$(document).ready(function () {
+		if(search != ""){
+			document.getElementById("_search").value = search;
+		}	
+	});
 
 	let totalCount = ${totalCount};
 	if(totalCount === 0){
@@ -128,8 +146,6 @@
 		_totalPages++;
 	}
 	
-	/* let sortMethod = ${param.sortMethod}; */
-	
 	$("#pagination").twbsPagination({
 		startPage: nowPage,
 		totalPages: _totalPages,
@@ -140,9 +156,17 @@
 		last:'<span sria-hidden="true">»</span>',
 		initiateStartPageClick:false,		// onPageClick 자동 실행되지 않도록 한다
 		onPageClick:function(event, page){
-			location.href = "/rent/list.do?pageNumber=" + (page - 1);	
+			location.href = "/rent/list.do?search=" + $("#_search").val() + "&sort=" + sort + "&pageNumber=" + (page - 1);	
 		}
 	});
+	
+	$("#btnSearch").click(function () {
+		location.href = "/rent/list.do?search=" + $("#_search").val();	
+	});
+	
+	function sorting(sortNumber) {
+		location.href = "/rent/list.do?sort=" + sortNumber;	
+	}
 	
 </script>
 

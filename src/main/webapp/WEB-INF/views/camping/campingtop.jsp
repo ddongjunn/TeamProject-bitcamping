@@ -104,13 +104,15 @@ String login_id = (String)request.getAttribute("login_id");
 						</div>
 					</div>
 					<hr>
-						 <div><b>주소</b>  : <%=campinglist.getAddr1() %></div>
-						 <div><b>전화번호</b> : <%=campinglist.getTel() %></div>
-						 <div><b>캠핑장 환경</b> : <%=campinglist.getLctcl() %>/<%=campinglist.getFacltdivnm() %></div>
-						 <div><b>캠핑장 유형</b> : <%=campinglist.getInduty() %></div>
-						 <div><b>운영기간</b> : <%=campingdetail.getOperpdcl() %></div>
-						 <div><b>운영일</b> : <%=campingdetail.getOperdecl() %></div>
-						 <div><b>시설</b> : <%=campinglist.getSbrscl() %></div>
+						<div class="campsite-info">
+							 <div><b>주소</b>  : <%=campinglist.getAddr1() %></div>
+							 <div><b>전화번호</b> : <%=campinglist.getTel() %></div>
+							 <div><b>캠핑장 환경</b> : <%=campinglist.getLctcl() %>/<%=campinglist.getFacltdivnm() %></div>
+							 <div><b>캠핑장 유형</b> : <%=campinglist.getInduty() %></div>
+							 <div><b>운영기간</b> : <%=campingdetail.getOperpdcl() %></div>
+							 <div><b>운영일</b> : <%=campingdetail.getOperdecl() %></div>
+							 <div><b>시설</b> : <%=campinglist.getSbrscl() %></div>
+						</div>
 					<hr>
 					<c:url value="<%=campinglist.getHomepage() %>" var="url" />
 					<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />

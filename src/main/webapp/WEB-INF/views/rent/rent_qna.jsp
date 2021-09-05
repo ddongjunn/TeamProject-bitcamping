@@ -214,8 +214,8 @@
 		}else{	
 			
 			var product_Seq = ${item.product_Seq}; // 이부분 나중에 order_Seq 넣어주기
-			var popupWidth = 480;
-			var popupHeight = 520;
+			let popupWidth = 500;
+			let popupHeight = 580;
 			
 			var popupX = (window.screen.width / 2) - (popupWidth / 2);
 			// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음

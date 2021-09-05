@@ -49,7 +49,7 @@
 </div>
 <br>
 
-<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px">
+<div class="container-fluid" style="padding-top: 10px; padding-bottom: 10px; padding-left: 0">
 	<a href="/community/deal.do" class="badge badge-pill badge-default">전체글</a>
 	<a href="/community/deal.do?kind=sell"
 		class="badge badge-pill badge-danger">팝니다</a> 
@@ -63,73 +63,72 @@
 	<i class="fas fa-layer-group"></i><span>전체게시물<strong> ${totalCount}</strong></span>
 </div> 
 <!-- 글 작성 리스트 틀-->
-	<table class="table bbstable">
-		<colgroup>
-			<col style="width: 10%;" />
-			<col style="width: auto;" />
-			<col style="width: 15%;" />
-			<col style="width: 20%;" />
-			<col style="width: 10%;" />
-		</colgroup>
-		<thead>
-			<tr class="table_top">
-				<td>글번호</td>
-				<td>제목</td>
-				<td>작성자</td>
-				<td>작성일</td>
-				<td>조회수</td>
+<table class="table bbstable">
+	<colgroup>
+		<col style="width: 10%;" />
+		<col style="width: auto;" />
+		<col style="width: 15%;" />
+		<col style="width: 20%;" />
+		<col style="width: 10%;" />
+	</colgroup>
+	<thead>
+		<tr class="table_top">
+			<td>글번호</td>
+			<td>제목</td>
+			<td>작성자</td>
+			<td>작성일</td>
+			<td>조회수</td>
+		</tr>
+		<c:if test="${empty dealList}">
+			<td colspan="5">작성된 글이 없습니다</td>
+		</c:if>
+		<c:forEach var="data" items="${dealList}">
+			<tr>
+				<td>${data.community_seq }</td>
+				<td style="text-align: left">
+					<a href="/community/dealDetail.do?community_seq=${data.community_seq }">
+                        <c:choose>
+                             <c:when test="${data.bbstype eq 'buy'}">
+                                    <span style="font-size: 13px; color: #589345;">[삽니다]</span>
+                                </c:when>
+                                <c:when test="${data.bbstype eq 'sell'}">
+                                    <span style="font-size: 13px; color: #dc3546;">[팝니다]</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span style="font-size: 13px; color: blue;">[거래완료]</span>
+                                </c:otherwise>
+                        </c:choose>
+                        ${data.title} 
+                        <c:if test="${data.commentcount ne 0}">
+                           <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
+                        </c:if>
+                   </a>
+                </td>
+				<td>${data.nickname }</td>
+				<td>
+					<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+				</td>
+				<td>${data.readcount }</td>
 			</tr>
-			<c:if test="${empty dealList}">
-				<td colspan="3">작성된 글이 없습니다</td>
-			</c:if>
-			<c:forEach var="data" items="${dealList}">
-				<tr>
-					<td>${data.community_seq }</td>
-					<td style="text-align: left">
-						<a href="/community/dealDetail.do?community_seq=${data.community_seq }">
-	                        <c:choose>
-	                             <c:when test="${data.bbstype eq 'buy'}">
-                                     <span style="font-size: 13px; color: #589345;">[삽니다]</span>
-                                 </c:when>
-                                 <c:when test="${data.bbstype eq 'sell'}">
-                                     <span style="font-size: 13px; color: #dc3546;">[팝니다]</span>
-                                 </c:when>
-                                 <c:otherwise>
-                                     <span style="font-size: 13px; color: blue;">[거래완료]</span>
-                                 </c:otherwise>
-	                        </c:choose>
-	                        ${data.title} 
-	                        <c:if test="${data.commentcount ne 0}">
-	                           <span style="font-size: 13px; color: tomato;">[${data.commentcount}]</span>
-	                        </c:if>
-	                   </a>
-	                </td>
-					<td>${data.nickname }</td>
-					<td>
-						<fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
-					</td>
-					<td>${data.readcount }</td>
-				</tr>
-			</c:forEach>
-		</thead>
-	</table>
-<br>
-
-
-	<!-- 페이지네이션 -->
-	<div class="container" style="text-align: center">
-		<div style="display: inline-block">
-			<nav aria-label="Page navigation">
-				<ul class="pagination" id="pagination"></ul>
-			</nav>
-		</div>
-	</div>
-
+		</c:forEach>
+	</thead>
+</table>
+	
 <!-- 글쓰기 버튼 -->
-<div class="buttonbox">
+<div class="buttonbox" style="width: 100%;">
 	<button id="btnWrite" onclick="location.href='/community/dealWrite.do'">글쓰기</button>
 </div>
+
+<!-- 페이지네이션 -->
+<div class="container" style="text-align: center">
+	<div style="display: inline-block">
+		<nav aria-label="Page navigation">
+			<ul class="pagination" id="pagination"></ul>
+		</nav>
+	</div>
+</div>
+
 
 </main>
 <script type="text/javascript">
@@ -138,6 +137,14 @@ $(document).ready(function () {
 	let choice = '${choice}';
 	let search = '${search}';
 	let kind = '${kind}';
+	
+	$(document).ready(function () {
+		if(search != ""){
+			$("#_choice").val( choice );
+			
+			document.getElementById("_search").value = search;
+		}	
+	});
 
 	// 페이지네이션
 	let totalCount = ${totalCount}; 	// 글의 총수

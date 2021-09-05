@@ -13,7 +13,12 @@
     <title>Title</title>
 </head>
 
-<body style="background-image: url('/resources/images/regi_background.jpg')">
+<body style="background-image: url('/resources/images/regi_background.jpg'); 
+	background-repeat: no-repeat; 
+	background-position: center center; 
+	background-size: cover; 
+	height: 100vh;">
+	
 <div id="modal_regi" class="modal-overlay">
     <div class="modal-window">
         <%--<div class="close-area"><a href="#">X</a></div>--%>

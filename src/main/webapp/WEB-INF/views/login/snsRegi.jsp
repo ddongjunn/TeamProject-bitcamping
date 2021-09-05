@@ -18,12 +18,16 @@
     <title>회원가입</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/snsRegi.css">
 </head>
-<body>
+<body style="background-image: url(/resources/images/regi_background.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 100%;
+    overflow: auto;">
+    
 <form id="snsRegiFrm" method="post" action="/regi/addMember.do">
     <div class="snsRegi_wrap">
         <div class="snsRegi_login">
-            <h2>비트캠핑</h2>
-
             <div class="snsRegi_login_id">
                 <h4>닉네임</h4>
                 <input type="text" name="nickname" id="nickname" placeholder="2~10자의 한글, 영문, 숫자만 사용 가능합니다." maxlength="10" value="${info.nickname}">

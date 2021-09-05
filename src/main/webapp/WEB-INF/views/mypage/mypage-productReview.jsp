@@ -11,7 +11,32 @@
 <html>
 <head>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypage.css">
-    <title>Title</title>
+    <title>상품 리뷰</title>
+<style type="text/css">
+.table td{
+	vertical-align: middle;
+}
+.btn-primary{
+    color: #1FB154;
+    background-color: #fff;
+    border-color: #1FB154;
+}
+.btn-primary:hover {
+    color: #fff;
+    background-color: #1FB154;
+    border-color: #1FB154;
+}
+.btn-primary:active {
+    color: #fff;
+    background-color: #1FB154;
+    border-color: #1FB154;
+}
+.btn-primary:focus {
+    color: #fff;
+    background-color: #1FB154;
+    border-color: #1FB154;
+}
+</style>
 </head>
 <body>
 <div class="mypage_board">
@@ -20,62 +45,75 @@
 	    </h2>
 	<div class="table-responsive">
 	    <div>
-	        <table class="table">
+	        <table class="table" style="text-align: center; table-layout: fixed;">
+	        
+	        	<col width="15%">
+	        	<col width="50%">
+	        	<col width="10%">
+	        	<col width="15%">
+	        	<col width="10%">
+	        	
 	            <thead>
-	            <tr class="table_top" style="text-align: left">
-	                <th>상품명</th>
-	                <th>리뷰제목</th>
-	                <th>작성일</th>
-	                <th>별점</th>
-					<th></th>
-	            </tr>
+		            <tr class="table_top" style="color: white;">
+		                <th>상품명</th>
+		                <th>리뷰제목</th>
+		                <th>작성일</th>
+		                <th>별점</th>
+						<th>리뷰관리</th>
+		            </tr>
 	            </thead>
+	            
 	            <tbody class="list">
-	            <c:if test="${empty review}">
-	                <tr>
-	                    <td colspan="4" style="text-align: center">
-	                        작성한 리뷰가 없습니다.
-	                    </td>
-	                </tr>
-	            </c:if>
-	
-	            <c:forEach items="${review}" var="review" varStatus="i">
-	                <tr id="tr${review.review_Seq}">
-	
-	                    <td>
-	                        <a href="/rent/detail.do?product_Seq=${review.product_Seq}">${review.productname}</a>
-	                    </td>
-	                    <td style="max-width: 400px">
-	                        <span id="qnatitle${review.review_Seq}" onclick="showHideQna('${review.review_Seq}')" style="">${review.title}</span>
-	                    </td>
-	                    <td>
-	                        <fmt:parseDate value="${review.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-	                        <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
-	                    </td>
-	                    <td>
-	                        <c:forEach begin="1" end="${review.rate}">
-	                            ⭐
-	                        </c:forEach>
-	                    </td>
-						<td>
-							<button type="button" class="btn btn-primary btn-sm" onclick="updateReview(${review.review_Seq})">수정</button>
-							<button type="button" class="btn btn-primary btn-sm" onclick="deleteReview(${review.review_Seq})">삭제</button>
-						</td>
-	                </tr>
-	
-	                <tr id="reviewcontent${review.review_Seq}" class="qnacontent" style="display:none;">
-	                    <td></td>
-	                    <td colspan="1">
-	                        &nbsp; &nbsp; &nbsp;ㄴ ${review.content}<br>
-							<c:if test="${review.image ne null}">
-								<img src = "/resources/upload/${review.image}" alt = "상품평 이미지" height = "250px">
-							</c:if>
-	                    </td>
-	                    <td></td>
-	                    <td></td>
-						<td></td>
-	                </tr>
-	            </c:forEach>
+		            <c:if test="${empty review}">
+		                <tr>
+		                    <td colspan="5">
+		                        작성한 리뷰가 없습니다.
+		                    </td>
+		                </tr>
+		            </c:if>
+		
+		            <c:forEach items="${review}" var="review" varStatus="i">
+		                <tr id="tr${review.review_Seq}">
+		
+		                    <td style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+		                        <a href="/rent/detail.do?product_Seq=${review.product_Seq}">${review.productname}</a>
+		                    </td>
+		                    <td style="text-align: left;">
+		                        <span id="qnatitle${review.review_Seq}" onclick="showHideQna('${review.review_Seq}')" style="">${review.title}</span>
+		                    </td>
+		                    <td>
+		                        <fmt:parseDate value="${review.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
+		                        <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+		                    </td>
+		                    <td>
+		                    	<font color="#FFA600">
+			                        <c:forEach begin="1" end="${review.rate}">
+			                        	<i class="fas fa-star"></i>
+			                        </c:forEach>
+			                    </font>
+			                    <font color="#f0f0f0">
+			                        <c:forEach begin="${review.rate + 1}" end="5">
+			                        	<i class="fas fa-star"></i>
+			                        </c:forEach>
+		                        </font>
+		                    </td>
+							<td>
+								<button type="button" class="btn btn-primary btn-sm" onclick="updateReview(${review.review_Seq})">수정</button>
+								<button type="button" class="btn btn-primary btn-sm" onclick="deleteReview(${review.review_Seq})">삭제</button>
+							</td>
+		                </tr>
+		
+		                <tr id="reviewcontent${review.review_Seq}" class="qnacontent" style="display:none; background-color: #f0f0f0;">
+		                    <td></td>
+		                    <td colspan="4" style="text-align: left; line-height: 24px;">
+		                        ${review.content}
+								<c:if test="${review.image ne null}">
+									<br><br>
+									<img src = "/resources/upload/${review.image}" alt = "상품평 이미지" height = "250px">
+								</c:if>
+		                    </td>
+		                </tr>
+		            </c:forEach>
 	            </tbody>
 	        </table>
 	    </div>
@@ -142,8 +180,8 @@
 
 	function updateReview(review_Seq){
 
-		let popupWidth = 480;
-		let popupHeight = 520;
+		let popupWidth = 500;
+		let popupHeight = 700;
 
 		let popupX = (window.screen.width / 2) - (popupWidth / 2);
 		// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음

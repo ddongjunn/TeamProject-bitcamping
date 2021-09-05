@@ -51,7 +51,7 @@
 	</tbody>
 </table>
 <div class="submitbox">
-	<input type="button" name="update" value="수정하기">
+	<input type="button" class="btnSimple" name="update" value="수정하기">
 </div>
 
 <input type="hidden" name="id" value="${data.user_id }">

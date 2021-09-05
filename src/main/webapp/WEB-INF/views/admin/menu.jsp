@@ -16,9 +16,9 @@
 <nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
     <div class="scroll-wrapper scrollbar-inner" style="position: relative;"><div class="scrollbar-inner scroll-content" style="height: 953px; margin-bottom: 0px; margin-right: 0px; max-height: none;">
         <!-- Brand -->
-        <div class="sidenav-header  align-items-center">
-            <a class="navbar-brand" href="/admin/main.do">
-                <img src="/resources/images/adminLogo.png" alt="" height="60" width="200">
+        <div class="sidenav-header align-items-center">
+            <a class="navbar-brand" href="/admin/main.do" style="height: 100%; padding: 0px;">
+                <img src="/resources/images/newlogo.png" alt="" style="width: 80%; max-height: 100%; margin: 15px auto;">
             </a>
         </div>
         <div class="navbar-inner">
