@@ -54,14 +54,14 @@
 
 <div class="buttons_wrap" id="buttons_wrap">
 	<c:if test="${login.id eq data.user_id }">
-	   <form style="display: inline" name="updateFrm" action="/community/helloUpdate.do?bbstype=hello" method="POST">
+	   <form style="display: inline" name="updateFrm" action="/community/freeUpdate.do?bbstype=free" method="POST">
 	      <input type="hidden" name="community_seq" value="${data.community_seq}">
 	      <input type="hidden" name="user_id" value='${login.id}'>
 		  <button type="button" class="btnSimple" onclick="del(${data.community_seq})">삭제</button>
 	      <button type="button" class="btnSimple" onclick="update()">수정</button>
 	   </form>
 	</c:if>
-	<button type="button" class="btnSimple" onclick="location='/community/hello.do'">목록</button>
+	<button type="button" class="btnSimple" onclick="location='/community/free.do'">목록</button>
 </div>
 
 <!-- 좋아요 -->
