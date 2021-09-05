@@ -143,7 +143,7 @@
         <div class="col-xs-6 col-sm-3">
           <span class="info">
             <span>(주)비트캠핑</span>
-            <span>대표 <i style="color: #353535">조민경</i> |</span>
+            <span>대표 <i style="color: #353535">이동준</i> |</span>
             <span>개인정보보호책임자 <i style="color: #353535">엄영신</i></span><br>
             <span class="driver">서울 마포구 백범로 23 지하1층, 3층  </span>
             <br><span>통신판매업 신고번호 제2021-서울마포-00029 | </span>
