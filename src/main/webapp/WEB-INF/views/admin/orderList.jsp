@@ -15,7 +15,7 @@
 <div class="mypage_board" style="width: 70%; margin : auto">
     <div>
         <div class="myorder-title">
-            내 주문내역
+            주문 리스트
         </div>
     </div>
     <c:forEach items="${order}" var="order">
@@ -25,7 +25,7 @@
                 <fmt:parseDate value="${order.order_Date}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
                 <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
             </div>
-            <div class="myorder-case">
+            <div class="myorder-case" style="background-color: white;">
                 <div class="myorder-item">
                     <a href="/rent/detail.do?product_Seq=${order.product_Seq}">
                             ${order.product_Name}
@@ -96,8 +96,8 @@
         <nav aria-label="Page navigation">
             <ul class="pagination justify-content-center" id="pagination"></ul>
         </nav>
+	</div>
 </div>
-
 
 <div class="row" style="justify-content: space-between; width: 350px; margin: auto; margin-bottom: 50px" >
     <select id="_choice" name="choice" class="form-control form-control-sm" style="width: 90px">

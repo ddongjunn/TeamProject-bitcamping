@@ -26,14 +26,16 @@
 	<div class="table-responsive">
 	    <div>
 	        <table class="table align-items-center">
-	
+				<col width="10%">
+				<col width="10%">
+				<col width="60%">
+				<col width="20%">
 	            <thead>
-	            <tr class="table_top">
-	                <td width="90px">글번호</td> <td width="120px">답변상태</td> <td width="400px" >문의내용</td>
-	                <td>작성일</td>
+	            <tr class="table_top" style="color: white; text-align: center;">
+	                <td>글번호</td> <td>답변상태</td> <td>문의내용</td> <td>작성일</td>
 	            </thead>
 	
-	            <tbody class="">
+	            <tbody style="text-align: center;">
 	            <c:if test="${empty qna}">
 	                <tr>
 	                    <td colspan="5" style="text-align: center">
@@ -54,7 +56,7 @@
 	                            </c:otherwise>
 	                        </c:choose>
 	                    </td>
-	                    <td style="max-width: 400px">
+	                    <td style="text-align: left;">
 	                        <c:choose>
 	                            <c:when test="${qna.secret eq 0}">
 	                                <span id="qnatitle${qna.qna_Seq}" onclick="showHideQna('${qna.qna_Seq}')"> ${qna.title}</span>
@@ -70,16 +72,15 @@
 	                    </td>
 	                </tr>
 	
-	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
-	                    <td></td>
-	                    <td colspan="2" style="text-align: center">
-	                        &nbsp;&nbsp;&nbsp;ㄴ ${qna.content}
+	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none; background-color: #f0f0f0;">
+	                    <td></td><td></td>
+	                    <td colspan="2" style="text-align: left; line-height: 24px;">
+	                        <!-- &nbsp;&nbsp;&nbsp; -->${qna.content}
 	                        <c:if test="${qna.status == 1}">
 	                            <br><br>
-	                            <span class="badge badge-secondary">비트캠핑 </span> ${qna.answercontent}
+	                            ㄴ<span class="badge badge-secondary">비트캠핑 </span> ${qna.answercontent}
 	                        </c:if>
 	                    </td>
-	                    <td></td>
 	                </tr>
 	
 	            </c:forEach>

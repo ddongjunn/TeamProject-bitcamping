@@ -91,8 +91,8 @@
 	/* 리뷰작성 popup open */
 	function writereview(order_Seq){
 
-		let popupWidth = 480;
-		let popupHeight = 520;
+		let popupWidth = 500;
+		let popupHeight = 700;
 
 		let popupX = (window.screen.width / 2) - (popupWidth / 2);
 		// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
@@ -106,8 +106,8 @@
 	/* QnA 작성 popup open */
 	function writeqna(product_Seq){
 
-		let popupWidth = 480;
-		let popupHeight = 520;
+		let popupWidth = 500;
+		let popupHeight = 580;
 
 		let popupX = (window.screen.width / 2) - (popupWidth / 2);
 		// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음

@@ -345,8 +345,8 @@ String campingintro = (String)request.getAttribute("campingintro");
 	<c:url value="<%=campinglist.getHomepage() %>" var="url" />
 	<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
 
-	<div class="row">
-		<div class="col">
+	<div class="row card_row">
+		<div class="col card_col">
 			<div class="card">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/social.png" alt="Card image cap">
 				<div class="card-block">
@@ -365,7 +365,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 			</div>
 		</div>
 		
-		<div class="col">
+		<div class="col card_col">
 			<div class="card">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/dog.png" height = "130px" alt="Card image cap">
 				<div class="card-block">
@@ -387,7 +387,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 			</div>
 		</div>
 		
-		<div class="col">
+		<div class="col card_col">
 			<div class="card">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/settings.png" height = "130px" alt="Card image cap">
 				<div class="card-block">
@@ -406,7 +406,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 				</div>
 			</div>
 		
-		<div class="col">
+		<div class="col card_col">
 			<div class="card">
 				<img class="card-img-top" src ="<%=request.getContextPath()%>/resources/images/campingsite/reserved.png" alt="Card image cap">
 				<div class="card-block">
@@ -485,7 +485,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 			<option value = "like">추천순</option>
 		</select>
 	</div>
-	<button type = "button" class="btn btn-lignt btn-sm" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>">리뷰 작성하기</button>
+	<button type = "button" class="btn btn-lignt btn-sm" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>" style="float: right; color: #1FB154; font-size: 14px; border-color: #1FB154;">리뷰 작성하기</button>
 
 	<table class="table table-hover">
 	    <thead>
@@ -528,8 +528,6 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</a>
 	</div>	
 </div> <!-- review div 끝나는 부분 -->
-
-
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=105020d5be336948ef903114d3711ff8"></script>
 	<script>	    

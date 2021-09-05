@@ -72,7 +72,7 @@
 			<td>조회수</td>
 		</tr>
 			<c:if test="${empty findList}">
-				<td colspan="3">작성된 글이 없습니다</td>			
+				<td colspan="5">작성된 글이 없습니다</td>			
 			</c:if>
 			<c:forEach var="data" items="${findList}">
 				<tr>
@@ -95,8 +95,11 @@
 			</c:forEach>
 	</thead>
 	</table>
-<br>
 
+<!-- 글쓰기 버튼 -->
+<div class="buttonbox" style="width: 100%;">
+	<button id="btnWrite" onclick="location.href='/community/findWrite.do'">글쓰기</button>
+</div>
 
 <!-- 페이지네이션 -->
 <div class="container" style="text-align: center" >
@@ -107,10 +110,6 @@
 	</div>
 </div>
 
-<!-- 글쓰기 버튼 -->
-<div class="buttonbox">
-	<button id="btnWrite" onclick="location.href='/community/findWrite.do'">글쓰기</button>
-</div>
 </main>
 
 <script type="text/javascript">
@@ -119,6 +118,14 @@ $(document).ready(function () {
 
 	let choice = '${choice}';
 	let search = '${search}';
+	
+	$(document).ready(function () {
+		if(search != ""){
+			$("#_choice").val( choice );
+			
+			document.getElementById("_search").value = search;
+		}	
+	});
 
 	// 페이지네이션
 	let totalCount = ${totalCount}; 	// 글의 총수

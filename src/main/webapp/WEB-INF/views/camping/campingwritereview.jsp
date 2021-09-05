@@ -18,6 +18,12 @@
 CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfordetail");
 %>
 
+<div class="campingreview_title">
+	캠핑장 리뷰 작성하기
+	<p>캠핑장 이용 경험을 다른 분들과 공유해주세요</p>
+	<hr style="margin: 0 auto 30px;">
+</div>
+
 <form id = "writeform" name = "write_review_form" method="post" action="campingwritereviewAf.do" enctype = "multipart/form-data" autocomplete = "off">
 
 <div style="clear:both"></div>

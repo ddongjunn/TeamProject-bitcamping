@@ -18,7 +18,7 @@
         <c:forEach items="${list}" var="list">
             <div class="col-md-4">
                 <!-- bbb_deals -->
-                <div class="bbb_deals" style="margin-bottom: 50px;">
+                <div class="bbb_deals" style="margin-bottom: 50px; background-color: white;">
                     <!-- <div class="ribbon ribbon-top-right"><span><small class="cross">x </small>4</span></div> -->
                     <!-- <div class="bbb_deals_title">Today's Combo Offer</div> -->
                     <div style="float: right; z-index: 1;">

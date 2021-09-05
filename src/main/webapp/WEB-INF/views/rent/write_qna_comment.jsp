@@ -12,18 +12,24 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <!-- sweetalert2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css">
+
 
 </head>
 <body>
 <form id="qnaCommentForm" action="/rent/writeQnaCommentAf.do" method="post" autocomplete="off">
-	<h2>상품 Q&A 답변</h2>
+	<div class="pop-title">상품 Q&A 답변</div>
+	
+	<div class="pop-subtitle">답변 내용</div>
 	<div id="contentbox" style="width: 100%; margin: auto;">
-		<textarea id="content" rows="8" name="content" style="width: 100%"></textarea>
+		<textarea id="content" rows="25" name="content" placeholder="답변을 입력하세요"></textarea>
 	</div>
 
 		<input type="hidden" name="qna_Seq" value="${qna_Seq}">
 		<input type="hidden" name="user_Id" value="${login.id}">
-	<div>
+		
+	<div class="submit-box">
 		<input type="button" id="sendQnaComment" value="확인">
 	</div>
 </form>

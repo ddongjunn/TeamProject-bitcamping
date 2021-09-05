@@ -12,22 +12,29 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <!-- sweetalert2 -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- css -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css">
+    
 
 </head>
 <body>
 <form id="qnaCommentForm" action="/rent/writeCsQnaAf.do" method="post" autocomplete="off">
-    <h2>고객센터 Q&A 답변</h2>
-    <div id="contentbox" style="width: 100%; margin: auto;">
-        <input type="text" id="title" name="title" value="비트캠핑 고객센터입니다." style="width: 100%">
+    <div class="pop-title">고객센터 Q&A 답변</div>
+    
+    <div class="pop-subtitle">제목</div>
+    <div id="contentbox">
+        <input type="text" id="title" name="title" value="비트캠핑 고객센터입니다.">
     </div>
-    <p></p>
-    <div id="contentbox2" style="width: 100%; margin: auto;">
-        <textarea id="content" rows="8" name="content" style="width: 100%"></textarea>
+    
+    <div class="pop-subtitle">답변 내용</div>
+    <div id="contentbox2">
+        <textarea id="content" rows="20" name="content" placeholder="답변을 입력하세요"></textarea>
     </div>
 
     <input type="hidden" name="qna_Seq" value="${qna_Seq}">
     <input type="hidden" name="user_Id" value="${login.id}">
-    <div>
+    
+    <div class="submit-box">
         <input type="button" id="sendQnaComment" value="확인">
     </div>
 </form>

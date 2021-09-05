@@ -55,8 +55,9 @@
 			<div style="text-align: center; position: relative; top:40px;justify-content: center ">
 				<div style="position: relative; top:-1px">
 					<div style="font-size: 30px; font-weight: bold; color: white; padding-right: 15px; display: inline; position: relative; top: 6px">어디로 떠날까?</div>
-					<div style="display: inline">
+					<div style="display: inline; position: relative;">
 						<input class="search__input" type="text" placeholder="지역을 입력하세요">
+						<div class="search__input_btn"></div>
 					</div>
 				</div>
 			</div>
@@ -227,8 +228,8 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-		$('.search-btn.shadow').click(function(){
-			const searchWord = $(".shadow").val();
+		$('.search__input_btn').click(function(){
+			const searchWord = $(".search__input").val();
 			location.href = "./csite/campinglist.do?searchWord=" + searchWord;
 		});
 		

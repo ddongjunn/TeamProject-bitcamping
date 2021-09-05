@@ -15,13 +15,14 @@
    .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
    .info .link {color: #5085BB;}
    
-.campingtop_border {
-	padding: 30px 0;
+/* .campingtop_border {
+	height: auto;
+	padding: 0 0 30px;
 	border-top: 2px solid #353535;
 	border-bottom: 2px solid #353535;
-/* 	display: table-cell;
-	vertical-align: middle; */
-}
+ 	display: table-cell;
+	vertical-align: middle;
+} */
    
 /*위에 사진이랑 정보부분 움직이는 div*/    
 .campingdetail_subtitle {
@@ -52,6 +53,9 @@ h2{
 .camping_site_name{
 	position: relative;
 	font-size: 24px;
+}
+.campsite-info{
+	font-size: 16px;
 }
 .heart-notlogin{
 	position: relative;
@@ -117,11 +121,11 @@ h2{
 }
 /*카드형식*/
 
-.row {
-	width: 75%;
+.card_row {
+	width: 85%;
 	margin: auto;
 }
-.col{
+.card_col{
 	width: 5px;
 	padding: 0;
 }
@@ -159,7 +163,7 @@ h2{
 .add-to-cart {
 	background-color : #1FB154;
 	color: white !important;
-	border : 0; 
+	border: 1px solid #1FB154; 
 	outline : 0;
 	align-self : center;
 	display : block;
@@ -383,7 +387,7 @@ ul.bxslider {
 .pagination > li > a
 {
     background-color: white;
-    color: #5A4181;
+    color: #353535;
 }
 
 .pagination > li > a:focus,
@@ -399,14 +403,14 @@ ul.bxslider {
 .pagination > .active > a
 {
     color: white;
-    background-color: #87C4B7 !Important;
-    border: solid 1px #2c6639 !Important;
+    background-color: #1FB154 !Important;
+    border: solid 1px #1FB154 !Important;
 }
 
 .pagination > .active > a:hover
 {
-    background-color: #87C4B7 !Important;
-    border: solid 1px #2c6639;
+    background-color: #1FB154 !Important;
+    border: solid 1px #1FB154;
 }
 
 .container{

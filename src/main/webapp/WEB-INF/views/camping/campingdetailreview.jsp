@@ -73,9 +73,15 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 %>
 <input type = "hidden" name = "contentid" value = "${campingbbs.contentid}">
 <input type="hidden" name="user_id" value="${login.id}">
-<input type = "hidden" value = "<%=campinglist.getContentid()%>">
+<%-- <input type = "hidden" value = "<%=campinglist.getContentid()%>"> --%>
 
 <div style="clear:both"></div>
+
+<div class="campingreview_title" style="width: 60%;">
+	캠핑장 리뷰
+	<p>캠핑장 이용 경험을 다른 분들과 공유해주세요</p>
+	<hr style="margin: 0 auto 30px;">
+</div>
 
 <div id = "review"><!-- 리뷰 뿌려지는 영역 -->
 	<h2 class = "titless" style = "text-align : center"><%=campinglist.getFacltnm()%>에 대한 <%=campingbbs.getNickname() %>님의 소중한 리뷰
@@ -92,17 +98,17 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 	<br>
 	<table class = "table">
 		<tr>
-			<th scope = "row">제목</th>
+			<th scope = "row" style="background-color: #f0f0f0;">제목</th>
 			<td><%=campingbbs.getTitle() %></td>
 		</tr>
 		<c:set var="writtendate" value="<%=campingbbs.getWdate()%>" />
 		<tr>
-			<th scope = "row">작성일</th>
+			<th scope = "row" style="background-color: #f0f0f0;">작성일</th>
 			<td><fmt:formatDate value="${writtendate}" type="both"/></td>
 		</tr>
 		<tr>
-			<th scope = "row">내용</th>
-			<td><%=campingbbs.getContent() %></td>
+			<th scope = "row" style="vertical-align: middle; background-color: #f0f0f0;">내용</th>
+			<td style="height: 200px;"><%=campingbbs.getContent() %></td>
 		</tr>
 	</table>
 </div><!-- review div 끝나는 곳 -->
@@ -145,9 +151,9 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 	<div id = "writer">
 		<c:choose>
 			<c:when test="${not empty useridx}">
-				<div>${login.nickname}님 댓글을 남겨주세요!</div>
+				<div style="text-align: left;">${login.nickname}님 댓글을 남겨주세요!</div>
 				<br/>
-				<textarea name = "comment" id = "content" placeholder="댓글을 입력해주세요" style = "width : 98%;" ></textarea>
+				<textarea name = "comment" id = "content" placeholder="댓글을 입력해주세요"></textarea>
 				<div class = "writecommentsec"><button type = "button" id = "writeCommentBtn" class = "btn btn-light btn-sm" >등록</button></div>
 			</c:when>
 			<c:otherwise>
@@ -156,18 +162,21 @@ CampingListDto campinglist = (CampingListDto)request.getAttribute("campinglistfo
 		</c:choose>
 	</div>
 <br>
-	 <table>
-	    <thead>
-	        <tr>
-	          <td></td>
-	          <td></td>
-	        </tr>
-	    </thead>
-	    <tbody id="commentlisting"> <!-- ajax로 불러와서 뿌려주는 공간 -->
-	   		
-	    </tbody>	
-	</table>
-
+	<div class="comment_table">
+		 <table style="width: 100%;">
+		 	<col width="85%">
+		 	<col width="15%">	 	
+		    <thead>
+		        <tr>
+		          <td></td>
+		          <td></td>
+		        </tr>
+		    </thead>
+		    <tbody id="commentlisting"> <!-- ajax로 불러와서 뿌려주는 공간 -->
+		   		
+		    </tbody>	
+		</table>
+	</div>
  
 	<div class="container"><!-- 페이지네이션 들어가는 곳 -->
 	    <div style = "display : inline-block">
@@ -268,16 +277,16 @@ $(document).ready(function(){
 				success : function(response){
 					if(response != -1){
 						
-						let conditionalname = nickname=='<%=campingbbs.getNickname()%>'? `<font color = #64bd20>${'${nickname}'}💚</font>`:nickname;
+						let conditionalname = nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${nickname}'} <i class="fas fa-heart"></i></font>`:nickname;
 						//alert(conditionalname);
-						let str = "<tr class = commentArea" + response + ">"
-							+ "<td width = '670px'  height = '15px' style = 'font-weight : bold; padding-bottom : 1%'>" + conditionalname + "</td>"
-							+ "<td>" + year + "-" + month + "-" + date + "</td>"
+						let str = "<tr class = commentArea" + response + " style='height: 30px;'>"
+							+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
+							+ "<td style='text-align: right;'>" + year + "-" + month + "-" + date + "</td>"
 							+ "</tr>"
-							+ "<tr class = commentArea" + response + " id = commentUpdate" + response + ">"
+							+ "<tr class = commentArea" + response + " id = commentUpdate" + response + " style='border-bottom: 1px solid rgb(0,0,0,.1); height: 30px;'>"
 							+ "<td>" + content + "</td>"
-							+ "<td>" + "<a href = 'javascript:commentUpdate(" + response + ",&#34;" +  content + "&#34;);'>수정</a>/" 
-							+ "<a href = 'javascript:commentDelete(" + response + ");'>삭제</a>" 
+							+ "<td style='text-align: right;'>" + "<a href = 'javascript:commentUpdate(" + response + ",&#34;" +  content + "&#34;);'  style='color: #1FB154'>수정</a> / " 
+							+ "<a href = 'javascript:commentDelete(" + response + ");' style='color: #1FB154'>삭제</a>" 
 							+ "</td>" + "</tr>";
 						$(".nodata").html("");
 						document.getElementById("content").value='';
@@ -430,7 +439,7 @@ $(document).ready(function(){
 	
 	function commentUpdate(comment_seq,content){ //폼보여주는 function
 			console.log("commentUpdateBtn 클릭");
-			let str = `<textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요" style = "width : 98%">${'${content}'}</textarea>
+			let str = `<textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요" style = "width : 80%">${'${content}'}</textarea>
 		        <button type="button" id="sendUpdateBtn" onClick="update(${'${comment_seq}'})" class = "btn btn-light btn-sm" >수정</button>`;
 			//console.log(str);
 			//$("#updateform").append(str);
@@ -496,13 +505,13 @@ $(document).ready(function(){
 					}
 					
 					parsedResponse.forEach( (item, idx) => {
-						let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #64bd20>${'${item.nickname}'}💚</font>` : item.nickname;
-						let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);'>수정</a>/<a href = 'javascript:commentDelete(${'${item.comment_seq}'});'>삭제</a></td>` : "";
-						let str = "<tr class = commentArea" + item.comment_seq+ ">"
-							+ "<td width = '670px'  height = '15px' style = 'font-weight : bold; padding-bottom : 1%;'>" + conditionalname + "</td>"
-							+ "<td>" + item.wdate+ "</td>"
+						let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'} <i class='fas fa-heart'></i></font>` : item.nickname;
+						let conditionalString = item.user_id == user_id ? `<td style='text-align: right;'><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);' style='color: #1FB154'>수정</a> / <a href = 'javascript:commentDelete(${'${item.comment_seq}'});' style='color: #1FB154'>삭제</a></td>` : "";
+						let str = "<tr class = commentArea" + item.comment_seq+ " style='height: 30px; vertical-align: middle;'>"
+							+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
+							+ "<td style='text-align: right;'>" + item.wdate+ "</td>"
 							+ "</tr>"
-							+ "<tr class = commentArea" + item.comment_seq + " id = commentUpdate" + item.comment_seq + ">"
+							+ "<tr class = commentArea" + item.comment_seq + " id = commentUpdate" + item.comment_seq + " style='border-bottom: 1px solid rgb(0,0,0,.1); height: 30px;'>"
 							+ "<td>" + item.content + "</td>"
 							+ conditionalString + "</tr>";
 							//console.log(item.user_id);
@@ -543,10 +552,10 @@ $(document).ready(function(){
 					    $("#commentlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
-							let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #64bd20>${'${item.nickname}'}💚</font>` : item.nickname;
+							let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'} <i class="fas fa-heart"></i></font>` : item.nickname;
 							let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);'>수정</a>/<a href = 'javascript:commentDelete(${'${item.comment_seq}'});'>삭제</a></td>` : "";
 							let str = "<tr class = commentArea" + item.comment_seq+ ">"
-								+ "<td width = '670px'  height = '15px' style = 'font-weight : bold; padding-bottom : 1%'>" + conditionalname + "</td>"
+								+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
 								+ "<td>" + item.wdate+ "</td>"
 								+ "</tr>"
 								+ "<tr class = commentArea" + item.comment_seq + " id = commentUpdate" + item.comment_seq + ">"

@@ -1,0 +1,90 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: 'S-CoreDream-3Light';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+	font-family: 'S-CoreDream-3Light';
+}
+input[type=button] {
+	color: white;
+	background-color: #1FB154;
+	border-radius: 3px;
+	border: 1px solid #1FB154;
+	cursor: pointer;
+	font-size: 14px;
+	padding: 7px;
+}
+.pop-title{
+	width: 100%;
+	color: #1FB154;
+	font-size: 24px;
+	font-weight: bold;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+	margin-bottom: 15px;
+}
+.pop-subtitle{
+	width: 95%;
+	color: #353535;
+	font-size: 18px;
+	margin-top: 10px;
+}
+input[type=text] {
+	width: 95%;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	margin-bottom: 15px;
+}
+textarea {
+	width: 95%;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	resize: none;
+}
+.pop-stars {
+	width: 95%;
+	height: 30px;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 10px;
+}
+.image-container {
+	width: 95%;
+	border-radius: 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	display: flex;
+	align-items: center;
+}
+#preview-image {
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+input[type=file] {
+	margin-left: 15px;
+}
+.pop-notice-short {
+	width: 100%;
+	color: #353535;
+	font-size: 12px;
+}
+.submit-box {
+	text-align: center;
+	margin: 20px auto;
+}
+.pop-notice-long {
+	width: 100%;
+	color: #353535;
+	font-size: 12px;
+	background-color: #f0f0f0;
+	line-height: 20px;
+}
+.pop-notice-title {
+	font-weight: bold;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
+}

@@ -62,6 +62,9 @@ public class RentController {
 		List<ProductDetailDto> list = service.getProductList(param);		
 		model.addAttribute("list", list);
 		
+		model.addAttribute("search", param.getSearch());
+		model.addAttribute("sort", param.getSort());
+		
 		return "rentList.tiles";
 	}
 	
