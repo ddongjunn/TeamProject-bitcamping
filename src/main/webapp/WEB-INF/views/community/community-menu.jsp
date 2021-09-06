@@ -29,7 +29,7 @@
 		<a href="/community/find.do">> 캠퍼모집</a>
 	</div>
 	<div class="childmenu">
-		<a href="/community/review.do">> 캠핑여행&후기</a>
+		<a href="/community/review.do">> 캠핑&여행후기</a>
 	</div>
 </div>
 

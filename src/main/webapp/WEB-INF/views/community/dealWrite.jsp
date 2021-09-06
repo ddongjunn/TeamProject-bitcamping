@@ -36,7 +36,7 @@
 <body>
 
 <form id="dealWriteForm" action="/community/dealWriteAf.do" method="post" enctype="multipart/form-data" >
-<table class="dealwWrite">
+<table class="dealWrite">
 	<tbody>
 		<tr>
 			<td>
@@ -53,16 +53,15 @@
 		<tr>
 			<td>
 				<textarea id="summernote" name="content">
-					<p>※ 판매글 제목 양식: 제품명과 컬러/그외 단어 첨부 삼가(예: ~팝니다, 급처, 가격인하 등)<br /> <br /> 
-					   ※ 1 판매글 1 제품만 등록/1일 판매글 3개까지 가능/1일 동일 제품 중복판매 금지/1개월간 신용 및 거래확인을 위해 판매글 삭제금지(판매 후 개인정보 삭제 가능)-규정 위반 시 제재 대상&nbsp;</p> <p><br /> <br /> <br />&nbsp;</p> 
-					<p>1. 활동명(닉네임):</p> <p><br />&nbsp;</p> 
-					<p>2. 연락처(전화번호 필수-한글차용 가능/카톡만 등록 불가능/해외거주자 경우 국제 전화번호 등록):</p> <p><br />&nbsp;</p> 
-					<p>3. 거래지역:&nbsp;</p> <p><br />&nbsp;</p> 
-					<p>4. 제품명:</p><p><br />&nbsp;</p>  
-					<p>5. 제품상태(상세하게):&nbsp;</p> <p><br />&nbsp;</p> 
-					<p>6. 희망가격(협의/경매금지):</p> <p><br />&nbsp;</p> 
-					<p>7. 거래방법:&nbsp;</p> <p><br />&nbsp;</p> 
-					<p>8. 제품 이미지(네임택 첨부 필수-카페명+닉네임/중고제품 상세사진 필수):&nbsp;</p>
+				<p>※ 판매글 제목 양식: 제품명과 컬러/그외 단어 첨부 삼가(예: ~팝니다, 급처, 가격인하 등)<br /> <br /> 
+                  ※ 1 판매글 1 제품만 등록/1일 판매글 3개까지 가능/1일 동일 제품 중복판매 금지/1개월간 신용 및 거래확인을 위해 판매글 삭제금지(판매 후 개인정보 삭제 가능)-규정 위반 시 제재 대상</p><br>
+               <p>1. 연락처(전화번호 필수-한글차용 가능/카톡만 등록 불가능/해외거주자 경우 국제 전화번호 등록):</p><br>
+               <p>2. 거래지역:&nbsp;</p> <br>
+               <p>3. 제품명:</p> <br>  
+               <p>4. 제품상태(상세하게):&nbsp;</p> <br>  
+               <p>5. 희망가격(협의/경매금지):</p><br>  
+               <p>6. 거래방법:&nbsp;</p> <br>  
+               <p>7. 제품 이미지(네임택 첨부 필수-카페명+닉네임/중고제품 상세사진 필수):</p>
 				</textarea>
 			</td>
 		</tr>
@@ -87,18 +86,15 @@
 			lang: "ko-KR",
 			disableResizeEditor: true,	// 크기 조절 기능 삭제
 			toolbar: [
-			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
-			    ['fontname', ['fontname']],
 			    ['color', ['color']],
+			    ['para', ['paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],
-			    ['view', ['fullscreen', 'codeview']],
+			    ['view', ['codeview']],
 			    ['help', ['help']]
 			  ],
-			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
-			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
 			placeholder: '내용을 입력해 주세요',
 			
@@ -136,7 +132,7 @@
 		// alert($("input[name=bbstype]:radio:checked").val());
 		
 		var content = $("#summernote").val();
-		//alert("content" + content.length);
+		alert("content" + content.length);
 		
 		if($("input[name=bbstype]:radio:checked").length == 0){
 			Swal.fire({
@@ -158,7 +154,7 @@
 			});	
 			return;
 			
-		}else if(content.length < 567) {
+		}else if(content.length === 564) {
 			Swal.fire({
 				icon : 'warning',
 				text : '내용을 입력해주세요',

@@ -81,7 +81,7 @@ String sigunguNm = request.getParameter("sigunguNm");
 	    	<input type = "text" id = "search" name = "searchWord" placeholder = "캠핑장을 검색해볼까요?" onkeypress="if( event.keyCode == 13 ){searchData();}">
 	   	</div>
 		<br>
-		    <a href = "#" onClick = "document.getElementById('searchForm1').submit();"><img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "50"></a>
+		    <a href = "#" onClick = "document.getElementById('searchForm1').submit();" style="color: #1FB154; font-size: 26px;"><i class="fas fa-search" style="margin-left: 10px;"></i></a>
 	</form>
 </div>
 

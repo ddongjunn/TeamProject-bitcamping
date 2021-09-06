@@ -52,8 +52,12 @@
             background-color: lightblue;
         }
     </style>--%>
+<title>비트캠핑</title>
 
-    <title>admin</title>
+<!-- favicon -->
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
+    
 </head>
 <body>
 <div class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white">

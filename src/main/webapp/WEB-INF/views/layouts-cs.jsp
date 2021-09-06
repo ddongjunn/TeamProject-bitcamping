@@ -31,7 +31,12 @@
 }
 </style>
     
-<title>bitcamping</title>
+<title>비트캠핑</title>
+
+<!-- favicon -->
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">
+    
 </head>
 <body>
 

@@ -447,9 +447,7 @@ a.active {
 .review-image > img {
 	max-width: 100%;
 }
-.fa-star{
-	color: #FFA600;
-}
+
 .qna-write {
 	float: right;
 	padding-right: 18px;

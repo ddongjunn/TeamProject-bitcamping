@@ -36,5 +36,11 @@ public interface MypageService {
     public ProductReviewDto getProductReview(int review_Seq);
     public void updateProductReview(ProductReviewDto dto);
     public void deleteProductReview(int review_Seq);
+    
+	public int getMyPostCount(MypageParam param);
+	public int getMyCommentCount(MypageParam param);
+	public int getMyorderStatus(MypageParam param);
+	public List<CommunityDto> getMyAllCommunity(MypageParam param);
+	public List<CsQnaDto> getMyAllQna(MypageParam param);
 
 }

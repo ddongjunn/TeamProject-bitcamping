@@ -8,6 +8,13 @@
     
 } */
 
+/* 로그인 모달 글씨 바뀌는 것 방지 */
+h4 {
+	font-size: 16px;
+	margin: 0;
+	padding: 0;
+}
+
 /* 최상단 제목 */
 .campinglist_title {
 	width: 70%;
@@ -33,12 +40,25 @@
 /*검색창 둥글게하기*/
 #search {
     width: 100%;
-    border-radius: 20px;
-    border: 1px solid #bbb; 
+    border-radius: 5px;
+    border: 1px solid #f0f0f0; 
     margin: 10px 0;
     padding: 10px 12px;
     display: inline;
     max-width: 400px;
+    width: 300px;
+}
+#searchForm1{
+	width: 630px;
+	margin: auto;
+	border-radius: 5px;
+}
+#addressRegion1,
+#addressDo1,
+#addressSiGunGu1 {
+	height: 46px;
+	border: 1px solid #f0f0f0;
+	border-radius: 5px;
 }
 /* .fa-search {
     position: absolute;
@@ -115,6 +135,7 @@ td{
 	position: absolute;
 	bottom: 0;
 }
+
 /*실제 캠핑장들 주르륵 보이는 부분*/
 
 .camping_search_list{
@@ -137,12 +158,15 @@ td{
 }
 
 /*캠핑 리스트에서 조회수, 추천수만 검정색으로 보이게 하기*/
-h2{
+/* h2{
     color : black;
-}
+} */
 /*캠핑장 크게 나오는 이름*/
-a, a:link, a:visited{
-	color : #FBC853;
+.campsite_name > a, 
+.campsite_name > a:link, 
+.campsite_name > a:visited{
+	color : #1FB154;
+	font-size: 24px;
 }
 .campsite_name{
 	padding-bottom: 5px;
@@ -164,37 +188,38 @@ a, a:link, a:visited{
 	background-color: #f0f0f0;
 	margin: 10px auto auto;
 	padding: 10px;
+	min-height: 52px;
 }
 #service img{
 	margin-right: 5px;
 }
 
 .btn-light{
-	color : #FBC853;
-	border-color : #FBC853;
+	color : #1FB154;
+	border-color : #1FB154;
 	background-color: white;
 }
 .btn-light:hover{
 	color : white;
-	border-color : #FBC853;
-	background-color: #FBC853;
+	border-color : #1FB154;
+	background-color: #1FB154;
 }
 
 button:focus{
 	outline : none;
 }
 #resetBtn:focus{
-  color: #FBC853;
+  color: #1FB154;
   background-color: #f8f9fa;
-  border-color: #FBC853;
+  border-color: #1FB154;
   outline: none;
   box-shadow: none;
 }
 
 #resetBtn:active{
-  color: #FBC853;
+  color: #1FB154;
   background-color: #f8f9fa;
-  border-color: #FBC853;
+  border-color: #1FB154;
   outline: none;
 }
 

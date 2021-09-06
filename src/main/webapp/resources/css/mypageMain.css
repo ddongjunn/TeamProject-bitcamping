@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* #1FB154 */
+
+.mymain-box{
+	width: 85%;
+	margin-top: 15px;
+}
+.mymain-title{
+	width: 100%;
+	font-size: 32px;
+	font-weight: bold;
+	margin: 15px auto;
+}
+.mymain-subtitle {
+	width: 100%;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 50px auto 15px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #353535;
+}
+.mymain-more {
+	float: right;
+	font-size: 14px;
+	font-weight: bold;
+	margin-left: 10px;
+}
+.mymain-more a,
+.mymain-more a:hover,
+.mymain-more a:visited,
+.mymain-more a:active {
+	text-decoration: none;
+	color: #1FB154;
+}
+.mymain-profile{
+	width: 100%;
+	margin: auto;
+	padding: 15px 100px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.mymain-id {
+	font-size: 18px;
+	display: flex;
+	align-items: center;
+}
+.mymain-info {
+	line-height: 24px;
+}
+.mymain-summary {
+	width: 100%;
+	margin: auto;
+	padding: 15px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-around;
+	font-size: 18px;
+}
+.mymain-count {
+	text-align: center;
+	line-height: 30px;
+}
+.mymain-orderstatus {
+	width: 100%;
+	margin: auto;
+	padding: 15px 30px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	font-size: 18px;
+}
+.mymain-status {
+	text-align: center;
+	line-height: 30px;
+}
+.mymain-arrow {
+	font-size: 22px;
+}
+.mymain-table {
+	width: 100%;
+	text-align: center;
+}
+.mymain-thead {
+	font-weight: bold;
+}
+.mymain-table td{
+	height: 30px;
+	vertical-align: middle;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.mymain-comment {
+	color: #1FB154;
+	font-weight: bold;
+	font-size: 14px;
+}
+.mymain-qna {
+	margin-bottom: 50px;
+}

@@ -151,7 +151,8 @@
 		}
 
 		Handlebars.registerHelper('rating', function (rate) {
-			let stars = "<i class='fas fa-star'></i>".repeat(rate) + "<i class='far fa-star'></i>".repeat(5-rate);
+			let stars = "<font color='#FFA600'>" + "<i class='fas fa-star'></i>".repeat(rate) + "</font>" +
+						"<font color='#e3e3e3'>" + "<i class='fas fa-star'></i>".repeat(5-rate) + "</font>";
 			return new Handlebars.SafeString(stars);
 		});
 

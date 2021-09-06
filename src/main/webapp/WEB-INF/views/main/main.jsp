@@ -110,7 +110,7 @@
 					<p class="product-subtitle">비트캠핑과 함께 즐거운 캠핑을 준비하세요</p>
 				</div>
 				<div class="product-more">
-					<a href="/rent/list.do">
+					<a href="/rent/list.do" style="text-decoration: none;">
 						더 많은 상품 보러가기
 						<span class="product-more-icon"><i class="fas fa-chevron-circle-right"></i></span>
 					</a>
@@ -138,13 +138,14 @@
 		<div class="commuity-area mt70" style="clear: both;">
 			<div class="community-title">
 				커뮤니티 최신글
+				<p class="subtitle">따끈따끈한 캠핑 새소식</p>
 			</div>
 			<div class="community-container mt10">
 				<div class="community-contents">
 					<div class="sub-title" style="display: block; overflow:hidden;">
 						<span class="fl">자유게시판</span>
 						<span class="fr">
-                           <a href="/community/free.do">+</a>
+                           <a href="/community/free.do" style="text-decoration: none;">+</a>
                         </span>
 					</div>
 					<div class="community-contents-list">
@@ -160,10 +161,10 @@
 					</div>
 				</div>
 				<div class="community-contents">
-					<div class="sub-title" style="display: block;overflow:hidden">
+					<div class="sub-title" style="display: block; overflow:hidden">
 						<span class="fl">캠퍼모집</span>
 						<span class="fr">
-                           <a href="/community/find.do">+</a>
+                           <a href="/community/find.do" style="text-decoration: none;">+</a>
                         </span>
 					</div>
 
@@ -183,7 +184,7 @@
 					<div class="sub-title" style="display: block;overflow:hidden">
 						<span class="fl">캠핑여행&후기</span>
 						<span class="fr">
-                           <a href="/community/review.do">+</a>
+                           <a href="/community/review.do" style="text-decoration: none;">+</a>
                         </span>
 					</div>
 					<div class="community-contents-list">
@@ -202,7 +203,7 @@
 					<div class="sub-title" style="display: block;overflow:hidden">
 						<span class="fl">중고거래</span>
 						<span class="fr">
-                           <a href="/community/deal.do">+</a>
+                           <a href="/community/deal.do" style="text-decoration: none;">+</a>
                         </span>
 					</div>
 					<div class="community-contents-list">

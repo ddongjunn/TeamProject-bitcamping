@@ -134,7 +134,8 @@
 	width: 90%;
 
 }
-.recommendslide  a:link, a:visited{
+.recommendslide a:link,
+.recommendslide a:visited{
 	/* text-decoration: none; */
 	color: #F28729;
 }
@@ -379,6 +380,11 @@
 	color: #353535;
 	line-height: 30px;
 }
+.community-title > .subtitle{
+	font-size: 18px;
+    font-weight: bold;
+    color: #1FB154;
+}
 .community-container {
   display: flex;
   justify-content: space-evenly;
@@ -393,7 +399,9 @@
   font-weight: bold;
   font-size: 18px;
 }
-.community-container > a, a:link, a:visited{
+.community-container > a, 
+.community-container > a:link, 
+.community-container > a:visited{
 	color: black;
 }
 

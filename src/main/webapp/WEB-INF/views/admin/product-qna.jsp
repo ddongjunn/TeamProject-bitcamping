@@ -19,7 +19,7 @@
 <div class="container-fluid">
     <a href="/admin/product-qna.do" class="badge badge-pill badge-default">전체글</a>
     <a href="/admin/product-qna.do?kind=wait" class="badge badge-pill badge-danger">답변대기중</a>
-    <a href="/admin/product-qna.do?kind=complete" class="badge badge-pill badge-success">답변완료</a>
+    <a href="/admin/product-qna.do?kind=complete" class="badge badge-pill badge-success" >답변완료</a>
 </div>
 <br>
 
@@ -29,8 +29,8 @@
 
             <thead>
             <tr>
-                <th width="70px">글번호</th> <th width="120px">답변상태</th> <th width="400px" >문의내용</th>
-                <th>작성자</th> <th>작성일</th> <th></th>
+                <th width="70px">글번호</th> <th width="120px">답변상태</th> <th>상품명</th> <th width="400px" >문의내용</th>
+                <th>작성자</th> <th>작성일</th>
             </tr>
             </thead>
 
@@ -45,16 +45,19 @@
             <c:forEach items="${qna}" var="qna" varStatus="i">
                 <tr id="tr${qna.qna_Seq}">
                     <td>${qna.qna_Seq}</td>
-                    <td>
-                        <c:choose>
-                            <c:when test="${qna.status eq 0}">
-                                [답변대기중]
-                            </c:when>
-                            <c:otherwise>
-                                [답변완료]
-                            </c:otherwise>
-                        </c:choose>
-                    </td>
+                    <c:if test="${qna.status == 0}">
+                        <td>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="writeqna('${qna.qna_Seq}')">답변</button>
+                        </td>
+                    </c:if>
+                    <c:if test="${qna.status == 1}">
+                        <td>
+                            <button type="button" class="btn btn-secondary btn-sm" disabled>답변완료</button>
+                        </td>
+                    </c:if>
+                    <td style="width: 200px;">
+                    	<a href="/rent/detail.do?product_Seq=${qna.product_Seq}" style="color: #525f7f;">${qna.product_Name}</a>
+                    </td>                    
                     <td style="max-width: 400px">
                         <c:choose>
                             <c:when test="${qna.secret eq 0}">
@@ -77,16 +80,7 @@
                         <fmt:parseDate value="${qna.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
                         <fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
                     </td>
-                    <c:if test="${qna.status == 0}">
-                        <td>
-                            <button type="button" class="btn btn-primary btn-sm" onclick="writeqna('${qna.qna_Seq}')">답변</button>
-                        </td>
-                    </c:if>
-                    <c:if test="${qna.status == 1}">
-                        <td>
-                            <button type="button" class="btn btn-secondary btn-sm" disabled)>답변완료</button>
-                        </td>
-                    </c:if>
+                    
                 </tr>
 
                 <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
@@ -94,11 +88,13 @@
                     </td>
                     <td>
                     </td>
+                    <td>
+                    </td>
                     <td colspan="3">
-                        &nbsp;&nbsp;&nbsp;ㄴ ${qna.content}
+                        ${qna.content}
                         <c:if test="${qna.status == 1}">
                             <br><br>
-                            <span class="badge badge-secondary">${login.nickname}</span> : ${qna.answercontent}
+                            ㄴ<span class="badge badge-secondary">${login.nickname}</span> : ${qna.answercontent}
                         </c:if>
                     </td>
                 </tr>
