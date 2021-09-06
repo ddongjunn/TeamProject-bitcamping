@@ -129,10 +129,10 @@ String login_id = (String)request.getAttribute("login_id");
 								<c:otherwise>
 									<c:choose>
 										<c:when test="${fn:contains(url, 'http')}">
-											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" >홈페이지</button>
+											<button type = button  class="btn btn-light btn-sm" onclick = "window.open('${url}')" >홈페이지</button>
 											</c:when>
 										<c:otherwise>
-											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" >홈페이지</button>
+											<button type = button  class="btn btn-light btn-sm" onclick = "window.open('http://${url}')" >홈페이지</button>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>
@@ -144,10 +144,10 @@ String login_id = (String)request.getAttribute("login_id");
 						    <c:otherwise>
 						    <c:choose>
 								<c:when test="${fn:contains(url1, 'http')}">
-						       		 <button type = button onclick = "location.href ='${url1}'" class = "btn btn-light btn-sm" target = "_blank">예약하기</button>
+						       		 <button type = button onclick = "window.open('${url1}')" class = "btn btn-light btn-sm" target = "_blank">예약하기</button>
 								</c:when>
 								<c:otherwise>	
-									<button type = button onclick = "location.href ='http://${url1}'" class = "btn btn-light btn-sm" target = "_blank">예약하기</button>			    
+									<button type = button onclick = "window.open('http://${url1}')" class = "btn btn-light btn-sm" target = "_blank">예약하기</button>			    
 						    	</c:otherwise>
 						    </c:choose>
 						    </c:otherwise>
@@ -167,6 +167,7 @@ $(document).ready(function(){
 		 const contentid = "${campingidx}";
 		 const user_id = "${useridx}";
 		 const likecount = "${likecount}";
+		 alert(likecount);
 		var paramData = {"contentid" : contentid, "user_id" : user_id}
 		console.log(paramData);
 		 if($(this).children('svg').attr('class')=="bi bi-suit-heart"){
@@ -177,6 +178,7 @@ $(document).ready(function(){
 		data : paramData,
 		dataType : 'text',
 		success : function(result){
+			alert("더하기" + result)
 			if(result !=-1){
 				$('.likecount').html("");
 				$('.likecount').html('추천수 : ' + result);
@@ -195,6 +197,7 @@ $(document).ready(function(){
 		data : paramData,
 		dataType : 'text',
 		success : function(result){
+			alert("빼기" + result);
 			if(result != -1){
 				$('.likecount').html("");	
 				$('.likecount').html('추천수 : ' + result);
