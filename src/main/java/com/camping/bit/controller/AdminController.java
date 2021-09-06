@@ -407,6 +407,9 @@ public class AdminController {
 
         List<ProductOrderDto> order = service.orderList(param);
         model.addAttribute("order", order);
+        model.addAttribute("status", param.getStatus());
+
+        System.out.println("테이블 조회 = " + order);
 
         return "admin-orderlist.tiles";
     }

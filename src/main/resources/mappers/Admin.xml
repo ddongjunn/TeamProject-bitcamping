@@ -336,6 +336,20 @@
                             (SELECT PHONE FROM MEMBER WHERE ID = USER_ID) AS PHONE
                      FROM PRODUCT_ORDER
                      WHERE 1=1
+                    <if test="status != null and status != ''">
+                        <if test="status == 1">
+                            AND ORDER_STATUS = 1
+                        </if>
+                        <if test="status == 2">
+                            AND ORDER_STATUS = 2
+                        </if>
+                        <if test="status == 3">
+                            AND ORDER_STATUS = 3
+                        </if>
+                        <if test="status == 4">
+                            AND ORDER_STATUS = 4
+                        </if>
+                    </if>
                     <if test="choice != null and choice != '' and search != null and search != ''">
                         <if test="choice == 'name'">
                             AND (SELECT USERNAME FROM MEMBER WHERE ID = USER_ID) = #{search}
@@ -353,6 +367,20 @@
         SELECT NVL(COUNT(*), 0)
         FROM PRODUCT_ORDER
         WHERE 1=1
+        <if test="status != null and status != ''">
+            <if test="status == 1">
+                AND ORDER_STATUS = 1
+            </if>
+            <if test="status == 2">
+                AND ORDER_STATUS = 2
+            </if>
+            <if test="status == 3">
+                AND ORDER_STATUS = 3
+            </if>
+            <if test="status == 4">
+                AND ORDER_STATUS = 4
+            </if>
+        </if>
         <if test="choice != null and choice != '' and search != null and search != ''">
             <if test="choice == 'name'">
                 AND (SELECT USERNAME FROM MEMBER WHERE ID = USER_ID) = #{search}

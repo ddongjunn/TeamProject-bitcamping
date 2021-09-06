@@ -221,9 +221,9 @@ String campingintro = (String)request.getAttribute("campingintro");
 			<td rowspan = "2" style = "vertical-align: middle;">캠핑장 바닥</td>
 			<td>잔디</td>
 			<td>파쇄석</td>
+			<td>테크</td>
 			<td>자갈</td>
 			<td>맨흙</td>
-			<td>툴팁</td>
 		</tr>
 	
 		<tr align = "center">
@@ -966,6 +966,7 @@ function campingreservenow(){
 		}
 	}
 };
+
 </script>
 </body>
 </html>

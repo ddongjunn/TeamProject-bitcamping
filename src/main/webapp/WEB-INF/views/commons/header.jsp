@@ -34,7 +34,9 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/board.css"/>
     
     <meta charset="UTF-8">
+
     <title>비트캠핑</title>
+
 </head>
 <body>
 
@@ -132,12 +134,14 @@
                 <div class="modal_login">
                     <h2>아이디 찾기</h2>
                     <div class="modal_login_id">
+
                         <h4><b>이름</b></h4>
-                        <input type="text" name="" id="find_name" placeholder="이름을 입력하세요.">
+                        <input type="text" name="" id="find_name" placeholder="이름을 입력해주세요.">
                     </div>
                     <div class="modal_login_pw">
                         <h4><b>이메일</b></h4>
-                        <input type="text" name="" id="find_email" placeholder="이메일">
+                        <input type="text" name="" id="find_email" placeholder="이메일을 입력해주세요.">
+
                     </div>
 
                     <div style="height: 30px; margin-top: 15px">
@@ -160,12 +164,14 @@
 
                     <h2>비밀번호 찾기</h2>
                     <div class="modal_login_id">
+
                         <h4><b>아이디</b></h4>
-                        <input type="text" name="" id="findPw_id" placeholder="이름을 입력하세요.">
+                        <input type="text" name="" id="findPw_id" placeholder="아이디를 입력해주세요.">
                     </div>
                     <div class="modal_login_pw">
                         <h4><b>이메일</b></h4>
-                        <input type="text" name="" id="findPw_email" placeholder="이메일">
+                        <input type="text" name="" id="findPw_email" placeholder="이메일을 입력해주세요.">
+
                     </div>
 
                     <div style="height: 30px; margin-top: 15px">

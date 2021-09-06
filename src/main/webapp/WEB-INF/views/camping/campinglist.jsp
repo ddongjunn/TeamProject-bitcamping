@@ -274,10 +274,10 @@ String sigunguNm = request.getParameter("sigunguNm");
 			<div class="check_w">
 				<input type="checkbox" class="check01" name="siteBottomCl1" id="잔디"  title="54" value="잔디" title="잔디"/>
 					<label for="searchSiteBottomCl1" class="label_name">잔디</label>
-				<input type="checkbox" class="check01" name="siteBottomCl2" id="데크"  title="55" value="데크" title="데크"/>
-					<label for="searchSiteBottomCl2" class="label_name">데크</label>
-				<input type="checkbox" class="check01" name="siteBottomCl3" id="파쇄석" title="56" value="파쇄석" title="파쇄석"/>
-					<label for="searchSiteBottomCl3" class="label_name">파쇄석</label>
+				<input type="checkbox" class="check01" name="siteBottomCl2" id="파쇄석"  title="55" value="파쇄석" title="파쇄석"/>
+					<label for="searchSiteBottomCl2" class="label_name">파쇄석</label>
+				<input type="checkbox" class="check01" name="siteBottomCl3" id="테크" title="56" value="테크" title="테크"/>
+					<label for="searchSiteBottomCl3" class="label_name">테크</label>
 				<input type="checkbox" class="check01" name="siteBottomCl4" id="자갈"  title="57" value="자갈" title="자갈"/>
 					<label for="searchSiteBottomCl4" class="label_name">자갈</label>
 				<input type="checkbox" class="check01" name="siteBottomCl5" id="맨흙"  title="58" value="맨흙" title="맨흙"/>
@@ -370,9 +370,10 @@ String sigunguNm = request.getParameter("sigunguNm");
 								<span><%-- <img src ="<%=request.getContextPath()%>/resources/images/campingsite/home.png" width = "25"> --%></span>
 									<c:choose>
 										<c:when test="${fn:contains(url, 'http')}">
-											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='${url}'" ><i class="fas fa-home"></i> 홈페이지</button></c:when>
+											<button type = button  class="btn btn-light btn-sm" onclick = "window.open('${url}')" ><i class="fas fa-home"></i> 홈페이지</button>
+										</c:when>
 										<c:otherwise>
-											<button type = button  class="btn btn-light btn-sm" onclick = "location.href ='http://${url}'" ><i class="fas fa-home"></i> 홈페이지</button>
+											<button type = button  class="btn btn-light btn-sm" onclick = "window.open('http://${url}')" ><i class="fas fa-home"></i> 홈페이지</button>
 										</c:otherwise>
 									</c:choose>
 							</c:otherwise>

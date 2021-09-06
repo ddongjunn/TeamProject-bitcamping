@@ -34,6 +34,8 @@
                 <th scope="col">핸드폰</th>
                 <th scope="col">이메일</th>
                 <th scope="col">가입일</th>
+                <th scope="col">상태</th>
+                <th scope="col"></th>
             </tr>
             </thead>
             <tbody class="list">
