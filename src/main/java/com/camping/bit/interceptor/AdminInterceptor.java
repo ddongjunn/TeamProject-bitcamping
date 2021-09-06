@@ -28,7 +28,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             out.println("<body>");
             out.println("<script>");
             out.println("alert('로그인이 필요한 서비스입니다.');");
-            out.println("location.href='http://localhost:8090/main.do';");
+            out.println("location.href='http://192.168.0.12:8090/main.do';");
             out.println("</script>");
             out.println("</body>");
             out.println("</html>");

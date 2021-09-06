@@ -38,7 +38,6 @@ import com.camping.bit.commons.FileUploadUtil;
 @RequestMapping(value = "/community/*")
 public class CommunityController {
 
-   private static final int community_seq = 0;
    @Autowired
    CommunityService service;
    

@@ -46,7 +46,7 @@
                         <td>${data.review_seq}</td>
                         <td>${data.campingName}</td>
                         <td>
-                            <a href="">
+                            <a href='${pageContext.request.contextPath}/csite/campingdetailreview.do?review_seq=${data.review_seq}&contentid=${data.contentid}'>
                                     ${data.title}
                             </a>
                             <span style="font-size: 13px; color: tomato;">[${data.commentCount}]</span>
