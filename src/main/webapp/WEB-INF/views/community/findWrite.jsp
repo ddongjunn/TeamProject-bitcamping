@@ -48,14 +48,12 @@
 			<td>
 				<textarea id="summernote" name="content">
 					<p><br /> ※ 제목 양식 : [지역] ~모집합니다/그외 단어 첨부 삼가</p> <p><br /><br /></p>
-					<p>&nbsp;</p> <p>&nbsp;</p> 
-					<p>1. 활동명(닉네임):</p> <p><br />&nbsp;</p> 
-					<p>2. 연락처(전화번호 필수-한글차용 가능/카톡만 등록 불가능/해외거주자 경우 국제 전화번호 등록):</p> <p><br />&nbsp;</p> 
-					<p>3. 캠핑지역:</p> <p><br />&nbsp;</p> 
-					<p>4. 캠핑날짜(ex: 21/06/29- 21/06/30):</p> <p><br />&nbsp;</p> 
-					<p>5. 캠핑유형(글램핑,차박 etc) :</p> <p><br />&nbsp;</p> 
-					<p>6. 모집인원:</p> <p><br />&nbsp;</p> 
-					<p>7. 모집소개:</p>
+               <p>1. 연락처(전화번호 필수-한글차용 가능/카톡만 등록 불가능/해외거주자 경우 국제 전화번호 등록):</p> <p><br />&nbsp;</p> 
+               <p>2. 캠핑지역:</p> <p><br />&nbsp;</p> 
+               <p>3. 캠핑날짜(ex: 21/06/29- 21/06/30):</p> <p><br />&nbsp;</p> 
+               <p>4. 캠핑유형(글램핑,차박 etc) :</p> <p><br />&nbsp;</p> 
+               <p>5. 모집인원:</p> <p><br />&nbsp;</p> 
+               <p>6. 모집소개:</p>
 				</textarea>
 			</td>
 		</tr>
@@ -80,18 +78,15 @@
 			lang: "ko-KR",
 			disableResizeEditor: true,	// 크기 조절 기능 삭제
 			toolbar: [
-			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
-			    ['fontname', ['fontname']],
 			    ['color', ['color']],
+			    ['para', ['paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],
-			    ['view', ['fullscreen', 'codeview']],
+			    ['view', ['codeview']],
 			    ['help', ['help']]
 			  ],
-			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
-			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
 			placeholder: '내용을 입력해 주세요',
 			
@@ -129,6 +124,7 @@
 			//alert($('input[name=title]').val()); 
 			//alert($('#summernote').val());
 			var content = $("#summernote").val();
+			alert("content" + content.length);
 			
 		    if($('input[name=title]').val() == "") {
 				Swal.fire({
@@ -140,7 +136,7 @@
 				});	
 				return;
 				
-			}else if(content.length < 378) {
+			}else if(content.length === 427) {
 				Swal.fire({
 					icon : 'warning',
 					text : '내용을 입력해주세요',

@@ -19,6 +19,9 @@ public class ProductQnaDto {
 
     // 상품 SEQ 
     private int product_Seq;
+    
+    // 상품명
+    private String product_Name;
 
     // 작성자 ID 
     private String user_Id;

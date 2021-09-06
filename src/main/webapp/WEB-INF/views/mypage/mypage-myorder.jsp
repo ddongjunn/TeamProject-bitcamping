@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
@@ -17,6 +17,11 @@
 			내 주문내역
 		</div>
 	</div>
+	<c:if test="${empty order}">
+		<div class="myorder-empty">
+			주문/대여 내역이 없습니다
+		</div>
+	</c:if>
 	<c:forEach items="${order}" var="order">
 		<div class="myorder-box">
 			<div class="myorder-date">

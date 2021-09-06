@@ -589,7 +589,13 @@ public class AdminController {
         return "true";
     }
 
-
+	@RequestMapping(value = "qnaDelete.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String qnaDelete(int qna_Seq) {
+		
+		csService.qnaDelete(qna_Seq);
+		
+		return "redirect:/admin/qna.do";
+	}
 
 }
 

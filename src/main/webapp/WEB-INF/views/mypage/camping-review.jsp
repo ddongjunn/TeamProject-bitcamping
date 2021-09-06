@@ -24,21 +24,31 @@
 	<div class="table-responsive">
 	    <div>
 	        <table class="table align-items-center">
-	            <thead class="">
-	            <tr class="table_top">
-	                <td>번호</td>
-	                <td>캠핑장</td>
-	                <td>제목</td>
-	                <td>작성자</td>
-	                <td>조회수</td>
-	                <td>좋아요</td>
-	                <td>작성일</td>
-	            </tr>
+	        
+	        	<col width="5%">
+	        	<col width="15%">
+	        	<col width="auto">
+	        	<col width="10%">
+	        	<col width="7%">
+	        	<col width="7%">
+	        	<col width="15%">
+	        	
+	            <thead>
+		            <tr class="table_top" style="text-align: center; color: white;">
+		                <td>번호</td>
+		                <td>캠핑장</td>
+		                <td>제목</td>
+		                <td>작성자</td>
+		                <td>조회수</td>
+		                <td>좋아요</td>
+		                <td>작성일</td>
+		            </tr>
 	            </thead>
-	            <tbody class="list">
+	            
+	            <tbody class="list" style="text-align: center;">
 	            <c:if test="${empty list}">
 	                <tr>
-	                    <td colspan="5" style="text-align: center">
+	                    <td colspan="7">
 	                        작성된 게시글이 없습니다.
 	                    </td>
 	                </tr>
@@ -47,7 +57,7 @@
 	                <tr>
 	                    <td>${data.review_seq}</td>
 	                    <td>${data.campingName}</td>
-	                    <td>
+	                    <td style="text-align: left;">
 	                        <a href='${pageContext.request.contextPath}/csite/campingdetailreview.do?review_seq=${data.review_seq}&contentid=${data.contentid}'>
 	                                ${data.title}
 	                        </a>
@@ -83,7 +93,7 @@
 	        <option value="name">캠핑장</option>
 	    </select>
 	    <input type="text" id="_search" name="search" placeholder="검색" class="form-control form-control-sm" style="width: 200px">
-	    <button type="button" id="btnSearch" class="btn btn-outline-primary btn-sm">검색</button>
+	    <button type="button" id="btnSearch">검색</button>
 	</div>
 </div>
 <script type="text/javascript">

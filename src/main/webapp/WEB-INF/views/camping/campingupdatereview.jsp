@@ -53,18 +53,15 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 			dialogsInBody: true,
 			lang: "ko-KR",
 			toolbar: [
-			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
-			    ['fontname', ['fontname']],
 			    ['color', ['color']],
+			    ['para', ['paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],
-			    ['view', ['fullscreen', 'codeview']],
+			    ['view', ['codeview']],
 			    ['help', ['help']]
 			  ],
-			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
-			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
 			placeholder: '소중한 리뷰는 다른 캠핑러에게 큰 도움이 됩니다!',
 			

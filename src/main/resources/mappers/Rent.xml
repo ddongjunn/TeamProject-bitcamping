@@ -107,9 +107,9 @@
 				   ORDER_SEQ, TITLE, CONTENT, IMAGE, RATE, WDATE, DEL, STATUS FROM PRODUCT_REVIEW
 		    WHERE DEL = 0
 			  AND PRODUCT_SEQ = #{product_Seq}
-			 ORDER BY WDATE
 			)
 		WHERE RNUM BETWEEN #{start} AND #{end}
+		ORDER BY WDATE DESC
 	</select>
 	
 	<select id="getReviewCount" parameterType="ProductParam" resultType="java.lang.Integer">

@@ -6,8 +6,8 @@
 
     <select id="getMyCommunity" parameterType="MypageParam" resultType="CommunityDto">
         SELECT COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
-               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = #{id} ) AS NICKNAME
-
+               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = #{id} ) AS NICKNAME,
+			   (SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
         FROM (
             SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
             COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE
@@ -25,8 +25,24 @@
                         </if>
                     </if>
             ORDER BY WDATE DESC
-            )
+            ) C
         WHERE RNUM BETWEEN #{start} AND #{end}
+    </select>
+    
+	<select id="getMyAllCommunity" parameterType="MypageParam" resultType="CommunityDto">
+        SELECT COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE,
+               ( SELECT MEMBER.NICKNAME FROM MEMBER WHERE MEMBER.ID = #{id} ) AS NICKNAME,
+			   (SELECT COUNT(*) FROM COMMUNITY_BBS_COMMENT WHERE COMMUNITY_SEQ = C.COMMUNITY_SEQ AND DEL = 0) AS COMMENTCOUNT
+        FROM (
+            SELECT ROW_NUMBER()OVER(ORDER BY WDATE DESC) AS RNUM,
+            COMMUNITY_SEQ, TITLE, WDATE, CONTENT, READCOUNT, LIKECOUNT, DEL, BBSTYPE
+            FROM COMMUNITY_BBS
+            WHERE 1=1
+                AND USER_ID = #{id}
+                AND DEL = 0
+            ORDER BY WDATE DESC
+            ) C
+        WHERE RNUM BETWEEN 1 AND 5
     </select>
 
     <!--글의 총수 -->
@@ -298,6 +314,25 @@
         ) P
         WHERE RNUM BETWEEN #{start} AND #{end}
     </select>
+    
+    <select id="getMyAllQna" parameterType="MypageParam" resultType="CsQnaDto">
+        SELECT QNA_SEQ, USER_ID, (SELECT NICKNAME FROM MEMBER WHERE ID = USER_ID) AS NICKNAME, REF, STEP, DEPTH,
+	        TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL,
+	        NVL(( SELECT TITLE FROM QNA WHERE REF = P.REF AND STEP = 1),0)AS ANSWERTITLE,
+	        NVL(( SELECT CONTENT FROM QNA WHERE REF = P.REF AND STEP = 1),0)AS ANSWERCONTENT,
+	        ( SELECT WDATE FROM QNA WHERE REF = P.REF AND STEP = 1 ) AS ANSWERWDATE
+        FROM (
+	        SELECT ROW_NUMBER()OVER(ORDER BY REF DESC, STEP ASC) AS RNUM, QNA_SEQ, USER_ID, REF, STEP, DEPTH,
+	        TITLE, CONTENT, WDATE, READCOUNT, STATUS, SECRET, DEL
+	        FROM QNA
+	        WHERE 1=1
+		        AND STEP = 0
+		        AND DEL = 0
+		        AND (SELECT ID FROM MEMBER WHERE QNA.USER_ID = MEMBER.ID) = #{id}
+	        ORDER BY REF DESC, STEP ASC
+        ) P
+        WHERE RNUM BETWEEN 1 AND 5
+    </select>
 
     <select id="csQnaCount" parameterType="MypageParam" resultType="int">
         SELECT NVL(COUNT(*),0)
@@ -338,5 +373,25 @@
     <update id="deleteProductReview" parameterType="int">
         UPDATE PRODUCT_REVIEW SET DEL = 1 WHERE REVIEW_SEQ = #{review_Seq}
     </update>
+    
+    <select id="getMyPostCount" parameterType="MypageParam" resultType="int">
+	    SELECT SUM(COMM.COMM_COUNT + CAMP.CAMP_COUNT)
+	    FROM (SELECT COUNT(*) AS COMM_COUNT FROM COMMUNITY_BBS WHERE USER_ID = #{id} AND DEL = 0) COMM,
+	    	 (SELECT COUNT(*) AS CAMP_COUNT FROM CAMPING_BBS WHERE USER_ID  = #{id} AND DEL = 0) CAMP
+    </select>
+    
+    <select id="getMyCommentCount" parameterType="MypageParam" resultType="int">
+    	SELECT SUM(COMM.COMM_COUNT + CAMP.CAMP_COUNT)
+	    FROM (SELECT COUNT(*) AS COMM_COUNT FROM COMMUNITY_BBS_COMMENT WHERE USER_ID = #{id} AND DEL = 0) COMM,
+	    	 (SELECT COUNT(*) AS CAMP_COUNT FROM CAMPING_BBS_COMMENT WHERE USER_ID  = #{id}) CAMP
+    </select>
 
+	<select id="getMyorderStatus" parameterType="MypageParam" resultType="int">
+		SELECT COUNT(*) 
+		FROM PRODUCT_ORDER
+		WHERE USER_ID = #{id}
+			AND ORDER_STATUS = #{status}		
+	</select>
+	
+	
 </mapper>

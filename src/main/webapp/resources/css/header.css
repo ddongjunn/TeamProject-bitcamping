@@ -38,6 +38,10 @@
 *{
   font-family: S-CoreDream-3Light !important;
 }
+a,
+a:hover {
+	color: #353535;
+}
 .note-editable{
 	font-family: '맑은 고딕' !important;
 }

@@ -32,19 +32,18 @@
 	        <colgroup>
 	            <col style="width: 10%;" />
 	            <col style="width: auto;" />
-	            <col style="width: 15%;" />
 	            <col style="width: 10%;" />
 	            <col style="width: 15%;" />
 	        </colgroup>
 	        <thead>
-	        <tr class="table_top">
+	        <tr class="table_top" style="text-align: center; color: white;">
 	            <td>번호</td>
 	            <td>제목</td>
 	            <td>조회수</td>
 	            <td>작성일</td>
 	        </tr>
 	        <c:if test="${empty dealList}">
-	            <td colspan="3">작성된 글이 없습니다</td>
+	            <td colspan="4" style="text-align: center;">작성된 글이 없습니다</td>
 	        </c:if>
 	        <c:forEach var="data" items="${dealList}">
 	            <tr>
@@ -101,10 +100,6 @@
 	    </div>
 	</div>
 	
-	<!-- 글쓰기 버튼 -->
-	<div align="right">
-	    <a href="/community/dealWrite.do">글쓰기</a>
-	</div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {

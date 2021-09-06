@@ -52,7 +52,7 @@
 </div>	
 
 <div class="update_buttons_wrap">
-	<c:if test="${login.id eq qna.user_Id}">
+	<c:if test="${login.id eq qna.user_Id || login.auth eq 1}">
 		<button type="button" class="btnSimple" id="btnUpdate" onclick="location.href='/cs/qnaUpdate.do?qna_Seq=${qna.qna_Seq}'">수정</button>
 		<button type="button" class="btnSimple" id="btnDelete" onclick="confirm()">삭제</button>	
 	</c:if>

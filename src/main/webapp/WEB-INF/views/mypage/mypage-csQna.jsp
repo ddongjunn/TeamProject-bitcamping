@@ -25,19 +25,23 @@
 	
 	<div class="table-responsive">
 	    <div>
-	        <table class="table align-items-center">
+	        <table class="table align-items-center" style="text-align: center;">
+	        
+	        	<col width="10%">
+	        	<col width="10%">
+	        	<col width="60%">
+	        	<col width="20%">
 	
 	            <thead>
-	            <tr class="table_top">
-	                <td width="90px">글번호</td> <td width="120px">답변상태</td> <td width="400px" >문의내용</td>
-	                <td>작성일</td>
+	            <tr class="table_top" style="color: white;">
+	                <td>글번호</td> <td>답변상태</td> <td>문의내용</td> <td>작성일</td>
 	            </tr>
 	            </thead>
 	
 	            <tbody class="list">
 	            <c:if test="${empty qna}">
 	                <tr>
-	                    <td colspan="6" style="text-align: center">
+	                    <td colspan="4" style="text-align: center">
 	                        작성된 게시글이 없습니다.
 	                    </td>
 	                </tr>
@@ -55,7 +59,7 @@
 	                            </c:otherwise>
 	                        </c:choose>
 	                    </td>
-	                    <td style="max-width: 400px">
+	                    <td style="text-align: left;">
 	                        <c:choose>
 	                            <c:when test="${qna.secret eq 0}">
 	                                <span id="qnatitle${qna.qna_Seq}" onclick="showHideQna('${qna.qna_Seq}')" style=""> ${qna.title}</span>
@@ -71,14 +75,14 @@
 	                    </td>
 	                </tr>
 	
-	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
+	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none; background-color: #f0f0f0;">
 	                    <td></td>
-	                    <td>&nbsp;&nbsp;</td>
-	                    <td colspan="">
-	                        &nbsp;&nbsp;&nbsp; ${qna.content}
+	                    <td></td>
+	                    <td colspan="2" style="text-align: left; line-height: 24px;">
+	                        ${qna.content}
 	                        <c:if test="${qna.status == 1}">
-	                            <hr>
-	                            <span class="badge badge-secondary" style="align-content: flex-start">관리자</span> ${qna.answercontent}
+	                             <br>
+	                            ㄴ<span class="badge badge-secondary">비트캠핑 </span> ${qna.answercontent}
 	                        </c:if>
 	                    </td>
 	                </tr>

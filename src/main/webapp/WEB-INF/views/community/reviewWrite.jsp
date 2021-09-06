@@ -70,18 +70,15 @@
 			lang: "ko-KR",
 			disableResizeEditor: true,	// 크기 조절 기능 삭제
 			toolbar: [
-			    ['style', ['style']],
 			    ['font', ['bold', 'italic', 'underline', 'clear']],
-			    ['fontname', ['fontname']],
 			    ['color', ['color']],
+			    ['para', ['paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],
-			    ['view', ['fullscreen', 'codeview']],
+			    ['view', ['codeview']],
 			    ['help', ['help']]
 			  ],
-			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
-			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
 			placeholder: '내용을 입력해 주세요',
 			
