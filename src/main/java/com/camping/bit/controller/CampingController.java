@@ -85,6 +85,7 @@ public class CampingController{
 		Map<String, Object> contentidMap = new HashMap<>();
 		int campingidx = contentid; //캠핑장 고유번호
 		String useridx;  //사용자 아이디 받아올 변수
+
 	
 		try {
 			if(session.getAttribute("login") != null) { //로그인을 한 경우에
@@ -93,9 +94,9 @@ public class CampingController{
 			MemberDto userInfo = (MemberDto)session.getAttribute("login");
 			//System.out.println(userInfo);
 			useridx = userInfo.getId();
-			
+
 			resultMap = service.getCampingLikeInfo(campingidx); //CAMPING_LIST에서 해당 CONTENTID를 가진 캠핑장의 CONTENTID와 LIKECOUNT를 가져옴
-			
+
 			//System.out.println("resultMap : " + resultMap);
 			contentidMap.put("campingidx", campingidx); //CAMPING_LIKE테이블에서 검사할 CONTENTID
 			contentidMap.put("useridx", useridx);//CAMPING_LIKE테이블에서 검사할 USERID
@@ -395,9 +396,13 @@ public class CampingController{
 	@RequestMapping(value = "plusCampingHeart.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public int plusCampingHeart(CampingLikeDto clike) throws Exception{
+
+		System.out.println("plus before = " + service.getCampingLikecount(clike.getContentid()));
+
 		int result = 0;
 		if(service.plusCampingHeart(clike)) {
 			result = service.getCampingLikecount(clike.getContentid());
+			System.out.println("plus after = " + result);
 		}else {
 			result = -1;
 		}
@@ -408,9 +413,12 @@ public class CampingController{
 	@RequestMapping(value = "minusCampingHeart.do", method = {RequestMethod.GET, RequestMethod.POST}, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public int minusCampingHeart(CampingLikeDto clike) throws Exception{
+		System.out.println("minus before = " + service.getCampingLikecount(clike.getContentid()));
+
 		int result = 0;
 		if(service.minusCampingHeart(clike)) {
 			result = service.getCampingLikecount(clike.getContentid());
+			System.out.println("minus after = " + result);
 		}else {
 			result = -1;
 		}

@@ -29,9 +29,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <typeAlias type="com.camping.bit.dto.CsParam" alias="CsParam" />
         <typeAlias type="com.camping.bit.dto.CsNoticeCommentDto" alias="CsNoticeCommentDto" />
         <typeAlias type="com.camping.bit.dto.CsQnaDto" alias="CsQnaDto" />
-	<typeAlias type="com.camping.bit.dto.CsCommentParam" alias="CsCommentParam" />
-	<typeAlias type="com.camping.bit.dto.ProductOrderDto" alias="ProductOrderDto" />
-	<typeAlias type="com.camping.bit.dto.CommonsParam" alias="CommonsParam" />
+	    <typeAlias type="com.camping.bit.dto.CsCommentParam" alias="CsCommentParam" />
+	    <typeAlias type="com.camping.bit.dto.ProductOrderDto" alias="ProductOrderDto" />
+	    <typeAlias type="com.camping.bit.dto.CommonsParam" alias="CommonsParam" />
         <typeAlias type="com.camping.bit.dto.ProductParam" alias="ProductParam" />
 
 

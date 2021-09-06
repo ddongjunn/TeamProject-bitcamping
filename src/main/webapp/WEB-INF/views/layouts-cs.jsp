@@ -31,7 +31,7 @@
 }
 </style>
     
-<title>Insert title here</title>
+<title>bitcamping</title>
 </head>
 <body>
 

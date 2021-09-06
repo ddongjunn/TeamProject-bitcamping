@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>bitcamping</title>
     <style>
         @media (max-width: 1300px) {
             #bluebterms, #bluebterms1 {
