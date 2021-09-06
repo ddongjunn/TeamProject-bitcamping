@@ -233,13 +233,12 @@ public class RentController {
     public String writeReviewAf(ProductReviewDto review, @RequestParam(value = "reviewImage", required = false) MultipartFile reviewImage, HttpServletRequest req) {
 		
 		// System.out.println(reviewImage.isEmpty());
-		System.out.println(review.getOrder_Seq());
 		
 		// if(!reviewImage.isEmpty() || reviewImage != null) 이경우 nullpointException 발생
 		
-		System.out.println(reviewImage.isEmpty());
+		System.out.println("리뷰 이미지 empty 여부 : " + reviewImage.isEmpty());
 		
-		if(reviewImage != null) {
+		if(!reviewImage.isEmpty()) {
 		
 			String fileUpload = req.getServletContext().getRealPath("/resources/upload");
 			

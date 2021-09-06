@@ -30,14 +30,14 @@
             <thead>
             <tr>
                 <th width="70px">글번호</th> <th width="120px">답변상태</th> <th width="400px" >문의내용</th>
-                <th>작성자</th> <th>작성일</th> <th></th>
+                <th>작성자</th> <th>작성일</th> <th>답변상태</th> <th>삭제</th>
             </tr>
             </thead>
 
             <tbody class="list">
             <c:if test="${empty qna}">
                 <tr>
-                    <td colspan="6" style="text-align: center">
+                    <td colspan="7" style="text-align: center">
                         작성된 게시글이 없습니다.
                     </td>
                 </tr>
@@ -84,9 +84,10 @@
                     </c:if>
                     <c:if test="${qna.status == 1}">
                         <td>
-                            <button type="button" class="btn btn-secondary btn-sm" disabled)>답변완료</button>
+                            <button type="button" class="btn btn-secondary btn-sm" disabled>답변완료</button>
                         </td>
                     </c:if>
+                    <td><button type="button" class="btn btn-secondary btn-sm" onclick="location.href='/admin/qnaDelete.do?qna_Seq=${qna.qna_Seq}'">삭제</button></td>
                 </tr>
 
                 <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none;">
@@ -94,7 +95,7 @@
                     </td>
                     <td>
                     </td>
-                    <td colspan="3">
+                    <td colspan="5">
                         &nbsp;&nbsp;&nbsp; ${qna.content}
                         <c:if test="${qna.status == 1}">
                             <hr>
@@ -102,7 +103,6 @@
                         </c:if>
                     </td>
                 </tr>
-
             </c:forEach>
             </tbody>
         </table>

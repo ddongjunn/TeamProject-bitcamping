@@ -116,4 +116,29 @@ public class MypageServieImpl implements  MypageService{
         dao.deleteProductReview(review_Seq);
     }
 
+	@Override
+	public int getMyPostCount(MypageParam param) {
+		return dao.getMyPostCount(param);
+	}
+
+	@Override
+	public int getMyCommentCount(MypageParam param) {
+		return dao.getMyCommentCount(param);
+	}
+
+	@Override
+	public int getMyorderStatus(MypageParam param) {
+		return dao.getMyorderStatus(param);
+	}
+
+	@Override
+	public List<CommunityDto> getMyAllCommunity(MypageParam param) {
+		return dao.getMyAllCommunity(param);
+	}
+
+	@Override
+	public List<CsQnaDto> getMyAllQna(MypageParam param) {
+		return dao.getMyAllQna(param);
+	}
+
 }

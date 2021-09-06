@@ -41,7 +41,46 @@ public class MypageController {
     AdminService adminService;
 
     @RequestMapping(value = "main.do", method = RequestMethod.GET)
-    public String main() {
+    public String main(HttpSession session, Model model) {
+    	
+    	MemberDto user = (MemberDto) session.getAttribute("login");
+    	
+    	MypageParam param = new MypageParam();
+    	param.setId(user.getId());    	
+    	
+    	int myPostCount = service.getMyPostCount(param);
+    	model.addAttribute("myPostCount", myPostCount);
+    	
+    	int myCommentCount = service.getMyCommentCount(param);
+    	model.addAttribute("myCommentCount", myCommentCount);
+    	
+    	int myQuestionCount = service.csQnaCount(param);
+    	model.addAttribute("myQuestionCount", myQuestionCount);
+    	
+    	int myOrderCount = service.getMyOrderCount(param);
+    	model.addAttribute("myOrderCount", myOrderCount);
+    	
+    	param.setStatus(1);
+    	int orderStatus1 = service.getMyorderStatus(param);
+    	model.addAttribute("orderStatus1", orderStatus1);
+    	
+    	param.setStatus(2);
+    	int orderStatus2 = service.getMyorderStatus(param);
+    	model.addAttribute("orderStatus2", orderStatus2);
+    	
+    	param.setStatus(3);
+    	int orderStatus3 = service.getMyorderStatus(param);
+    	model.addAttribute("orderStatus3", orderStatus3);
+    	
+    	param.setStatus(4);
+    	int orderStatus4 = service.getMyorderStatus(param);
+    	model.addAttribute("orderStatus4", orderStatus4);
+    	
+    	List<CommunityDto> myCommunity = service.getMyAllCommunity(param);
+    	model.addAttribute("myCommunity", myCommunity);
+    	
+    	List<CsQnaDto> myQna = service.getMyAllQna(param);
+    	model.addAttribute("myQna", myQna);
 
         return "mypagemain.tiles";
     }
@@ -63,7 +102,7 @@ public class MypageController {
         //글목록 list 가져오기
         List<CommunityDto> list = service.getMyCommunity(param);
         model.addAttribute("list",list);
-
+        
         //총 글의 갯수
         int totalCount = service.getMyCommunityCount(param);
         model.addAttribute("totalCount",totalCount);

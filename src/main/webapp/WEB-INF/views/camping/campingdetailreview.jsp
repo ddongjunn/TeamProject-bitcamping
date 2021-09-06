@@ -439,8 +439,8 @@ $(document).ready(function(){
 	
 	function commentUpdate(comment_seq,content){ //폼보여주는 function
 			console.log("commentUpdateBtn 클릭");
-			let str = `<textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요" style = "width : 80%">${'${content}'}</textarea>
-		        <button type="button" id="sendUpdateBtn" onClick="update(${'${comment_seq}'})" class = "btn btn-light btn-sm" >수정</button>`;
+			let str = `<div style="width: 100%; text-align: center; margin: auto;"><textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요">${'${content}'}</textarea>
+		        <button type="button" id="sendUpdateBtn" onClick="update(${'${comment_seq}'})" class = "btn btn-light btn-sm">수정</button></div>`;
 			//console.log(str);
 			//$("#updateform").append(str);
 			$('#commentUpdate' + comment_seq).html(str);
@@ -466,7 +466,7 @@ $(document).ready(function(){
 					if(result == "success"){
 						//alert("수정 성공");
 						let str = `<td>${'${updateContent}'}</td>`;
-						str += `<td><a href = 'javascript:commentUpdate(${'${comment_seq}'}, &quot;${'${updateContent}'}&quot;);'>수정</a>/<a href = 'javascript:commentDelete(${'${comment_seq}'});'>삭제</a></td>`;
+						str += `<td style='text-align: right;'><a href = 'javascript:commentUpdate(${'${comment_seq}'}, &quot;${'${updateContent}'}&quot;);' style='color: #1FB154;'>수정</a> / <a href = 'javascript:commentDelete(${'${comment_seq}'});' style='color: #1FB154;'>삭제</a></td>`;
 						$('#commentUpdate' + comment_seq).html("");
 						$('#commentUpdate' + comment_seq).html(str);
 					}

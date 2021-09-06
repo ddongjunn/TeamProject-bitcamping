@@ -265,10 +265,10 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</tr>
 	
 		<tr align = "center">
-			<td colspan = "2" align = "center" style = "font-weight : bold">사이트 크기</td>
+			<td align = "center" style = "font-weight : bold">사이트 크기</td>
 				<c:choose>
 					<c:when test= "${width1==0 && vertical1==0 && width2==0 && vertical2==0}">
-						<td colspan = "4" align = "center">
+						<td colspan = "5" align = "center">
 							캠핑장에서 제공하지 않는 정보입니다. 
 						</td>
 					</c:when>
@@ -281,6 +281,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 								${vertical1}
 							</c:if>
 						</td>
+						<td></td>
 						<td colspan = "2">
 							<c:if test="${width2 !=0}">
 								${width2} * 
@@ -294,10 +295,10 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</tr>
 	
 		<tr align = "center">
-			<td colspan = "2" align = "center" style = "font-weight : bold">개수</td>
+			<td align = "center" style = "font-weight : bold">개수</td>
 				<c:choose>
 					<c:when test = "${count1==0 && count2==0}">
-						<td colspan = "4" align = "center">
+						<td colspan = "5" align = "center">
 							캠핑장에서 제공하지 않는 정보입니다. 
 						</td>
 					</c:when>
@@ -307,6 +308,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 								${count1}개
 							</c:if>
 						</td>
+						<td></td>
 						<td colspan = "2" align = "center">
 							<c:if test="${count2 !=0}">
 								${count2}개
@@ -317,8 +319,8 @@ String campingintro = (String)request.getAttribute("campingintro");
 		</tr>
 	
 		<tr align = "center">
-			<td colspan = "2" align = "center" style = "font-weight : bold">사이트 간격</td>
-			<td colspan = "4" align = "center">
+			<td align = "center" style = "font-weight : bold">사이트 간격</td>
+			<td colspan = "5" align = "center">
 				<c:choose>
 					<c:when test = "${sitedistance!=0}">
 						${sitedistance}M

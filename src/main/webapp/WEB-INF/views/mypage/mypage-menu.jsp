@@ -23,7 +23,7 @@
 		        	<i class="fas fa-user"></i>
 		        </span>
 		        <span style="margin-bottom: 10px; font-weight: bold;">
-		        	${login.nickname}
+		        	<a href="/account/main.do" style="text-decoration: none;">${login.nickname}</a>
 		        </span>
 	    </div>
 	
@@ -32,7 +32,7 @@
 	        <a href="/account/community.do?bbstype=hello">가입인사</a>
 	        <a href="/account/community.do?bbstype=free">자유게시판</a>
 	        <a href="/account/community-deal.do?">중고거래</a>
-	        <a href="/account/community.do?bbstype=review">캠핑&여행 후기</a>
+	        <a href="/account/community.do?bbstype=review">캠핑&여행후기</a>
 	        <a href="/account/community.do?bbstype=find">캠퍼 모집</a>
 	        <a href="/account/camping-review.do">캠핑장 리뷰</a>
 	    </div>

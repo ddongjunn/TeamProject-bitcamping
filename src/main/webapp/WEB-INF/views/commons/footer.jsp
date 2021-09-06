@@ -32,7 +32,7 @@
             margin: 0 auto 0 auto;
         }
 
-        .info {
+        .footer-info {
             color: #353535;
             font-size: 11px;
             padding: 16px 0 25px;
@@ -84,34 +84,46 @@
         .row a:hover {
           color : #9e9b95;
         }
-
-
-
+        
+        .footer_subtitle, 
+        .footer_subtitle a {
+        	margin: auto;
+        	color: #75644a;
+        	font-weight: bold;
+        	font-size: 13px;
+        	text-align: left;
+        }
+        .footer_subtitle a:hover {
+        	color: #bfbbb4;
+        }
+        .text-align-center {
+        	text-align: center;
+        }
     </style>
 </head>
 
 <footer style="width: 100%">
-    <div class="row" style="background-color: #DCD9D4; padding: 16px 0; margin-right: 0px; margin-left: 0px; border-bottom: solid 0.1rem #fff; ">
-        <div class="col"></div>
+    <div class="row" style="background-color: #DCD9D4; padding: 16px 0px 16px 100px; margin-right: 0px; margin-left: 0px; border-bottom: solid 0.1rem #fff; ">
+		<div class="col"></div>
         <div class="col">
-          <span class="footer_content">
-            <span><p> <a href="" style="color: #9e9b95; font-size: 13px">위치안내</a></p></span>
+          <div class="footer_subtitle">
+            	  <p><a href="" style="font-size: 13px">위치안내</a></p><br>
               <c:if test="${empty login}">
-                  <p><span style="color: #9e9b95"><a onclick="modalOn()" style="color: #9e9b95; font-size: 13px">로그인</a></span></p>
-                  <p style="color: #9e9b95"><a href="/regi/normal.do" style="color: #9e9b95; font-size: 13px">회원가입</a></p>
+                  <p><a onclick="modalOn()" style="cursor: pointer;">로그인</a></p><br>
+                  <p><a href="/regi/normal.do">회원가입</a></p><br>
               </c:if>
               <c:if test="${login.auth == 0}">
-                  <p style="color: #9e9b95"><a href="/account/main.do" style="color: #9e9b95; font-size: 13px">마이페이지</a></p>
-                  <p style="color: #9e9b95"><a href="/login/logout.do" style="color: #9e9b95; font-size: 13px">로그아웃</a></p>
+                  <p><a href="/account/main.do">마이페이지</a></p><br>
+                  <p><a href="/login/logout.do">로그아웃</a></p><br>
               </c:if>
               <c:if test="${login.auth == 1}">
-                  <p style="color: #9e9b95"><a href="/admin/main.do" style="color: #9e9b95; font-size: 13px">관리자페이지</a></p>
+                  <p><a href="/admin/main.do">관리자페이지</a></p>
               </c:if>
-          </span>
+          </div>
         </div>
         <div class="col">
           <span class="footer_content">
-            <p><span style="color: #9e9b95">고객센터</span></p>
+            <p><span  class="footer_subtitle">고객센터</span></p>
             <p><a href="/cs/notice.do">공지사항</a></p>
             <p><a href="/agreement.do">이용약관</a></p>
             <p><a href="/personalInfo.do">개인정보취급방침</a></p>
@@ -120,14 +132,14 @@
         </div>
         <div class="col">
           <span class="footer_content">
-            <span style="color: #9e9b95">ABOUT BITCAMPING</span><br>
+            <span  class="footer_subtitle">ABOUT BITCAMPING</span><br>
             <p><a href="tel:010-3258-0508">비트캠핑 소개</a></p>
           </span>
         </div>
         <div class="col">
           <span class="footer_content">
-            <span style="color: #9e9b95">SOCIAL</span><br>
-              <span class="footer_sns" style="cursor:pointer; font-size: 20px; color: #9e9b95;" >
+            <span class="footer_subtitle">SOCIAL</span><br>
+              <span class="footer_sns" style="cursor:pointer; font-size: 20px; color: #827e78;" >
                   <span class="footer_facebook">
                 <i class="fab fa-facebook fa-fw"></i>&nbsp;
                   </span>
@@ -141,7 +153,7 @@
     <div class="row" style="background-color: #DCD9D4; padding: 16px 0 25px; margin-right: 0px; margin-left: 0px">
         <div class="col-xs-6 col-sm-3"></div>
         <div class="col-xs-6 col-sm-3">
-          <span class="info">
+          <span class="footer-info">
             <span>(주)비트캠핑</span>
             <span>대표 <i style="color: #353535">이동준</i> |</span>
             <span>개인정보보호책임자 <i style="color: #353535">엄영신</i></span><br>
@@ -158,7 +170,7 @@
         <div class="clearfix visible-xs-block"></div>
 
         <div class="col-xs-6 col-sm-3">
-          <span class="info">
+          <span class="footer-info">
             <span class="insurance_info">
                 안전거래를 위해 현금 등으로 결제 시 저희 쇼핑몰에서 가입한 <br>
                 KG 이니시스의 구매안전 서비스 (채무지급보증)를 이용하실 수 있습니다.

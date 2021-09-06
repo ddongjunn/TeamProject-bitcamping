@@ -38,7 +38,7 @@
 	            <tbody style="text-align: center;">
 	            <c:if test="${empty qna}">
 	                <tr>
-	                    <td colspan="5" style="text-align: center">
+	                    <td colspan="4" style="text-align: center">
 	                        작성된 게시글이 없습니다.
 	                    </td>
 	                </tr>
@@ -72,8 +72,9 @@
 	                    </td>
 	                </tr>
 	
-	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display:none; background-color: #f0f0f0;">
-	                    <td></td><td></td>
+	                <tr id="qnacontent${qna.qna_Seq}" class="qnacontent" style="display: none; background-color: #f0f0f0;">
+	                    <td></td>
+	                    <td></td>
 	                    <td colspan="2" style="text-align: left; line-height: 24px;">
 	                        <!-- &nbsp;&nbsp;&nbsp; -->${qna.content}
 	                        <c:if test="${qna.status == 1}">

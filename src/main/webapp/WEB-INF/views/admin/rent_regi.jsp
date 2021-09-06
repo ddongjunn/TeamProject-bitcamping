@@ -80,19 +80,15 @@
 			dialogsInBody: true,
 			lang: "ko-KR",
 			toolbar: [
-				['style', ['bold', 'italic', 'underline', 'clear']],
-			    ['font', ['strikethrough', 'superscript', 'subscript']],
-			    ['fontsize', ['fontsize']],
+			    ['font', ['bold', 'italic', 'underline', 'clear']],
 			    ['color', ['color']],
-			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['para', ['paragraph']],
 			    ['height', ['height']],
 			    ['table', ['table']],
 			    ['insert', ['link', 'picture', 'hr']],
-			    ['view', ['fullscreen', 'codeview']],
+			    ['view', ['codeview']],
 			    ['help', ['help']]
 			  ],
-			fontNames : [ '맑은고딕', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
-			fontNamesIgnoreCheck : [ '맑은고딕' ],
 			focus: false,
 			placeholder: '상품 설명을 입력해 주세요',
 			

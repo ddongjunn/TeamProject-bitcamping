@@ -46,6 +46,27 @@
 			<tr>
 				<td class="detailcontent">
 					<span id="text">${data.content }</span>
+					
+					<!-- 좋아요 -->
+					<div style="margin-top: 70px">
+						<c:choose>
+						   <c:when test="${data.liked_yn == 1 }">   
+						         
+						         <a href="javascript:" class="likeBtn">
+						         	<div class="likeBtn-box"> 좋아요 <span style="color: white;"><i class="fas fa-heart"></i></span></div>
+						         </a>
+						     
+						   </c:when>
+						   <c:otherwise>
+						         
+						         <a href="javascript:" class="likeBtn">
+						         	<div class="dislikeBtn-box">좋아요 <span color: #eb4034;><i class="fas fa-heart"></i></span></div>
+						         </a>   
+						     
+						   </c:otherwise>
+						</c:choose> 
+					</div>
+					
 				</td>
 			</tr>
 		</tbody>
@@ -63,25 +84,6 @@
 	</c:if>
 	<button type="button" class="btnSimple" onclick="location='/community/hello.do'">목록</button>
 </div>
-
-<!-- 좋아요 -->
-<c:choose>
-   <c:when test="${data.liked_yn == 1 }">
-      <div style="margin: auto; text-align: center;">
-         <a href="javascript:" class="likeBtn">
-            <img src="../resources/images/like.png" width="30" height="30">
-         </a>
-      </div>
-   </c:when>
-   <c:otherwise>
-      <div style="margin: auto; text-align: center;">
-         <a href="javascript:" class="likeBtn">
-            <img src="../resources/images/delete_like.png" width="30" height="30">
-         </a>   
-      </div>
-   </c:otherwise>
-</c:choose> 
-
 
 
 
@@ -143,12 +145,12 @@
 
                if(data.result){
                   $('.likeBtn').empty();
-                  $('.likeBtn').html('<img src="../resources/images/like.png" width="30" height="30">');
+                  $('.likeBtn').html('<div class="likeBtn-box">좋아요 <span style="color: white;"><i class="fas fa-heart"></i></span></div>');
                   $('.likeCount').html(data.likeCount);
                   return;
                }
                $('.likeBtn').empty();
-               $('.likeBtn').html('<img src="../resources/images/delete_like.png" width="30" height="30">');
+               $('.likeBtn').html('<div class="dislikeBtn-box">좋아요 <span style="color: #eb4034;"><i class="fas fa-heart"></i></span></div>');
                $('.likeCount').html(data.likeCount);
 
             },

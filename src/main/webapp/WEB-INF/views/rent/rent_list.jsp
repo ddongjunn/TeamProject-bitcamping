@@ -97,7 +97,12 @@
 
 										    </div>                                    	
 	                                    </div>
-	                                    <span class="item-rate">리뷰 ${list.rate}점</span>
+	                                    <c:if test="${list.rate ne 0}">
+	                                    	<span class="item-rate">리뷰 <fmt:formatNumber value="${list.rate}" pattern="#.#"/>점</span>
+	                                    </c:if>
+	                                    <c:if test="${list.rate eq 0}">
+	                                    	<span class="item-rate">리뷰 없음</span>
+	                                    </c:if>
 	                                </div>
 	                                
 	                                <div class="available_bar">
