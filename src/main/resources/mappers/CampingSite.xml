@@ -7,7 +7,7 @@
 	<!-- 캠핑장 리스트 출력 -->
 	<select id="getCampingList" parameterType="CampingParam" resultType="CampingListDto">
 		SELECT * FROM
-		(SELECT ROW_NUMBER()OVER(ORDER BY FIRSTIMAGEURL ASC) AS
+		(SELECT ROW_NUMBER()OVER(ORDER BY READCOUNT DESC, LIKECOUNT DESC) AS
 		RNUM,
 		CONTENTID, FACLTNM, ADDR1, FIRSTIMAGEURL, LINEINTRO, TEL, HOMEPAGE, SBRSCL,
 		READCOUNT, LIKECOUNT, CREATEDTIME, MODIFIEDTIME
@@ -373,13 +373,13 @@
 	<!-- 캠핑장 좋아요 하트 감소시키기 -->
 	<delete id="minusCampingHeart" parameterType="CampingLike">
 		DELETE FROM CAMPING_LIKE WHERE CONTENTID = #{contentid} AND USER_ID =
-		#{user_id}
+		#{user_id} AND CONTENT_TYPE=1
 	</delete>
 
 	<!-- 캠핑장 좋아요수 갯수(likecount) -->
 	<select id="getCampingLikecount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
 		select count(*) FROM
-		CAMPING_LIKE WHERE CONTENTID = #{contentid}
+		CAMPING_LIKE WHERE CONTENTID = #{contentid} AND CONTENT_TYPE = 1
 	</select>
 
 	<!-- 캠핑장 좋아요 수 늘리기 -->

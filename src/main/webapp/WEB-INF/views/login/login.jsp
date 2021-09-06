@@ -38,7 +38,7 @@
         </div>
         <div class="login_id">
             <h4>아이디</h4>
-            <input type="email" name="" id="" placeholder="Email">
+            <input type="email" name="" id="" placeholder="Identification">
         </div>
         <div class="login_pw">
             <h4>비밀번호</h4>

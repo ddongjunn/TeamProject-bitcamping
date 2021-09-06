@@ -53,7 +53,7 @@
         }
     </style>--%>
 
-    <title>Insert title here</title>
+    <title>admin</title>
 </head>
 <body>
 <div class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white">

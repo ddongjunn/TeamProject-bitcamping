@@ -15,9 +15,22 @@
 <div class="mypage_board" style="width: 70%; margin : auto">
     <div>
         <div class="myorder-title">
-            주문 리스트
+            <h2>중고거래</h2>
+        </div>
+        <div style="margin-top:-30px; margin-bottom: 30px">
+            <a href="/admin/order-list.do" class="badge badge-pill badge-default">전체</a>
+            <a href="/admin/order-list.do?status=1" class="badge badge-pill badge-info">결제완료</a>
+            <a href="/admin/order-list.do?status=2" class="badge badge-pill badge-primary">배송중</a>
+            <a href="/admin/order-list.do?status=3" class="badge badge-pill badge-success">배송완료</a>
+            <a href="/admin/order-list.do?status=4" class="badge badge-pill badge-danger">반납완료</a>
         </div>
     </div>
+
+    <c:if test="${empty order}">
+        <div class="myorder-title">
+            <h2>검색된 결과가 없습니다.</h2>
+        </div>
+    </c:if>
     <c:forEach items="${order}" var="order">
         <div class="myorder-box">
             <div class="myorder-date">
@@ -102,7 +115,7 @@
 <div class="row" style="justify-content: space-between; width: 350px; margin: auto; margin-bottom: 50px" >
     <select id="_choice" name="choice" class="form-control form-control-sm" style="width: 90px">
         <option value="" selected="selected">선택</option>
-        <option value="name">이름</option>
+        <option value="name">주문자</option>
         <option value="phone">연락처</option>
     </select>
     <input type="text" id="_search" name="search" placeholder="검색" class="form-control form-control-sm" style="width: 200px">
@@ -193,6 +206,7 @@
         }
     }
 
+    let status = '${status}';
     let choice = '${choice}';
     let search = '${search}';
 
@@ -219,7 +233,7 @@
         last:'<span sria-hidden="true">»</span>',
         initiateStartPageClick:false,		// onPageClick 자동 실행되지 않도록 한다
         onPageClick:function(event, page){
-            location.href = "/admin/order-list.do?choice=" + choice + "&search=" + search + "pageNumber=" + (page - 1);
+            location.href = "/admin/order-list.do?status=" + status + "&choice=" + choice + "&search=" + search + "pageNumber=" + (page - 1);
         }
     });
 
@@ -265,7 +279,7 @@
             return;
         }
 
-        location.href = "/admin/order-list.do?choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
+        location.href = "/admin/order-list.do?status=" + status + "&choice=" + $("#_choice").val() + "&search=" + $("#_search").val();
     });
 
 </script>
