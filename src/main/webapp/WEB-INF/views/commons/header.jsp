@@ -51,7 +51,7 @@
                 </a>
             </div>
 			<ul id="menu">
-				<li><a href="#none">ABOUT US</a></li>
+				<li><a href="/aboutUs.do">ABOUT US</a></li>
                 <li><a href="/csite/campinglist.do">캠핑장 검색</a></li>
                 <li><a href="/rent/list.do">캠핑장비 대여</a></li>
                 <li><a href="/community/main.do">캠핑커뮤니티</a></li>

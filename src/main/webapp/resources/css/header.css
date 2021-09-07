@@ -50,7 +50,7 @@ a:hover {
 	height: 100%;
 }
 #ground > #header {
-  height: 230px;
+  height: 270px;
   padding:0 6.8%;
   /* transition:all 0.3s; */ /*메뉴효과 */
   background-color: rgba(255, 255, 255, 1);  /* 헤더 색상 */
@@ -87,7 +87,7 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 10px;
+  padding-top: 60px;
   color: #ff6e6f;
   text-align: center;
   margin: 0 0 30px;

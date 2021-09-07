@@ -295,7 +295,7 @@ $(document).ready(function(){
 				success : function(response){
 					if(response != -1){
 						
-						let conditionalname = nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${nickname}'} <i class="fas fa-heart"></i></font>`:nickname;
+						let conditionalname = nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${nickname}'}</font>`:nickname;
 						//alert(conditionalname);
 						let str = "<tr class = commentArea" + response + " style='height: 30px;'>"
 							+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
@@ -541,7 +541,7 @@ $(document).ready(function(){
 					}
 					
 					parsedResponse.forEach( (item, idx) => {
-						let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'} <i class='fas fa-heart'></i></font>` : item.nickname;
+						let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'}</font>` : item.nickname;
 						let conditionalString = item.user_id == user_id ? `<td style='text-align: right;'><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);' style='color: #FFA600'>수정</a> / <a href = 'javascript:commentDelete(${'${item.comment_seq}'});' style='color: #FFA600'>삭제</a></td>` : "";
 						let str = "<tr class = commentArea" + item.comment_seq+ " style='height: 30px; vertical-align: middle;'>"
 							+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
@@ -588,13 +588,13 @@ $(document).ready(function(){
 					    $("#commentlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
-							let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'} <i class="fas fa-heart"></i></font>` : item.nickname;
-							let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);' style='color: #FFA600'>수정</a>/<a href = 'javascript:commentDelete(${'${item.comment_seq}'});' style='color: #FFA600'>삭제</a></td>` : "";
+							let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'}</font>` : item.nickname;
+							let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);' style='color: #FFA600'>수정</a> / <a href = 'javascript:commentDelete(${'${item.comment_seq}'});' style='color: #FFA600'>삭제</a></td>` : "";
 							let str = "<tr class = commentArea" + item.comment_seq+ ">"
 								+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
 								+ "<td>" + item.wdate+ "</td>"
 								+ "</tr>"
-								+ "<tr class = commentArea" + item.comment_seq + " id = commentUpdate" + item.comment_seq + ">"
+								+ "<tr class = commentArea" + item.comment_seq + " id = commentUpdate" + item.comment_seq + " style='border-bottom: 1px solid rgb(0,0,0,.1); height: 30px;'>"
 								+ "<td>" + item.content + "</td>"
 								+ conditionalString + "</tr>";
 						$("#commentlisting").append(str);

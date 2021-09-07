@@ -45,8 +45,18 @@
 
                                 <div class="available">
                                     <div class="available_line d-flex flex-row justify-content-start">
-                                        <div class="available_title">현재 상품 재고 <span>${list.product_Stock}</span>개</div>
-                                        <div class="sold_stars ml-auto"> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> </div>
+                                        <div class="available_title">상품 재고 <span>${list.product_Stock}</span>개</div>
+                                        <div class="sold_stars ml-auto"> 
+	                                    	<div id="rating${list.product_Seq}">
+
+										    </div>                                    	
+	                                    </div>
+                                        <c:if test="${list.rate ne 0}">
+	                                    	<span class="item-rate">리뷰 <fmt:formatNumber value="${list.rate}" pattern="#.#"/>점</span>
+	                                    </c:if>
+	                                    <c:if test="${list.rate eq 0}">
+	                                    	<span class="item-rate">리뷰 없음</span>
+	                                    </c:if>
                                     </div>
                                     <div class="available_bar"><span style="width:17%"></span></div>
                                 </div>
