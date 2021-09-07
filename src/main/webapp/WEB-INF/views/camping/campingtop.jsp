@@ -72,7 +72,7 @@ String login_id = (String)request.getAttribute("login_id");
 							<span class = "readcount" style = "font-size : 15px; color: gray;">조회수 : <%=campinglist.getReadcount()%></span>
 							<span class = "likecount" style = "font-size : 15px; color: gray;">추천수 : <%=campinglist.getLikecount()%></span>
 							
-							<div id = "like_heart" style="position: absolute; right: 10px; bottom: 0;">
+							<div id = "like_heart" style="position: absolute; right: 45px; bottom: 0;">
 							<c:choose>
 								<%--첫번째 choose(로그인 했는지 안 했는지) --%>
 								<c:when test="${not empty useridx}">

@@ -86,6 +86,12 @@ public class MainController {
 
         return "personalInfo.tiles";
     }
+    
+    @RequestMapping(value = "aboutUs.do", method = RequestMethod.GET)
+    public String aboutUs(){
+
+        return "aboutUs.tiles";
+    }
 
 
 }

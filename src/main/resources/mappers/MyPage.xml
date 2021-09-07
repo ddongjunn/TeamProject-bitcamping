@@ -231,7 +231,7 @@
                  FROM PRODUCT_REVIEW
                  WHERE DEL = 0
                    AND (SELECT ID FROM MEMBER WHERE PRODUCT_REVIEW.USER_ID = MEMBER.ID) = #{id}
-                 ORDER BY WDATE
+                 ORDER BY WDATE DESC
              )
         WHERE RNUM BETWEEN #{start} AND #{end}
     </select>

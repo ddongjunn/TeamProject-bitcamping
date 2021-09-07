@@ -19,6 +19,10 @@
    <definition name="personalInfo.tiles" extends="main.tiles">
       <put-attribute name="main" value="/WEB-INF/views/commons/personalInfo.jsp" />
    </definition>
+   
+   <definition name="aboutUs.tiles" extends="main.tiles">
+      <put-attribute name="main" value="/WEB-INF/views/main/about-us.jsp" />
+   </definition>
 
    <!-- 동준 -->
    <definition name="login.tiles" extends="main.tiles">
