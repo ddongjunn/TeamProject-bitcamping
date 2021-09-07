@@ -171,14 +171,14 @@ $(document).ready(function(){
 		var paramData = {"contentid" : contentid, "user_id" : user_id}
 		console.log(paramData);
 		 if($(this).children('svg').attr('class')=="bi bi-suit-heart"){
-			 console.log('빈 하트 클릭' + contentid)
+			 /*console.log('빈 하트 클릭' + contentid)*/
 		$.ajax({
 		url : '/csite/plusCampingHeart.do',
 		type : 'get',
 		data : paramData,
 		dataType : 'text',
 		success : function(result){
-			alert("더하기" + result)
+			/*alert("더하기" + result)*/
 			if(result !=-1){
 				$('.likecount').html("");
 				$('.likecount').html('추천수 : ' + result);
@@ -197,7 +197,7 @@ $(document).ready(function(){
 		data : paramData,
 		dataType : 'text',
 		success : function(result){
-			alert("빼기" + result);
+			/*alert("빼기" + result);*/
 			if(result != -1){
 				$('.likecount').html("");	
 				$('.likecount').html('추천수 : ' + result);

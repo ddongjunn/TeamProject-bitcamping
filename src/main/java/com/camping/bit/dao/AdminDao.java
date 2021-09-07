@@ -49,4 +49,6 @@ public interface AdminDao {
 
     public void updateOrderStatus(ProductOrderDto dto);
     public void insertOrderInvoiceNumber(ProductOrderDto dto);
+
+    public Map<String, Integer> getOrderStatus();
 }

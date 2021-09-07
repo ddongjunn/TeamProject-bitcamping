@@ -15,7 +15,7 @@
     <title>Title</title>
 </head>
 <body>
-<div class="bg-primary pb-1" style="margin-top : -15px">
+<div class="bg-primary pb-4" style="margin-top : -15px">
     <div class="container-fluid">
         <!-- Card stats -->
         <div class="row">
@@ -106,6 +106,17 @@
                         </p>--%>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mymain-orderstatus">
+                <div class="mymain-status"><span style="color: #8898aa; font-size: .9500rem"><b>결제완료</b></span><br><b><a href="/admin/order-list.do?status=1" style="color: black">${orderStatus.ORDERSTATUS1}</a></b></div>
+                <div class="mymain-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="mymain-status"><span style="color: #8898aa; font-size: .9500rem"><b>배송중</b></span><br><b><a href="/admin/order-list.do?status=2" style="color: black">${orderStatus.ORDERSTATUS2}</a></b></div>
+                <div class="mymain-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="mymain-status"><span style="color: #8898aa; font-size: .9500rem"><b>배송완료</b><br></span><b><a href="/admin/order-list.do?status=3" style="color: black">${orderStatus.ORDERSTATUS3}</a></b></div>
+                <div class="mymain-arrow"><i class="fas fa-chevron-right"></i></div>
+                <div class="mymain-status"><span style="color: #8898aa; font-size: .9500rem"><b>반납완료</b><br></span><b><a href="/admin/order-list.do?status=4" style="color: black">${orderStatus.ORDERSTATUS4}</a></b></div>
             </div>
         </div>
     </div>
@@ -289,6 +300,7 @@
     <%--<div class="container-fluid" style="margin-bottom: 15px; padding : 0 15px">
         <h2>최근 게시물</h2>
     </div>--%>
+
     <div class="row">
         <div class="col-xl-3">
             <div class="card">

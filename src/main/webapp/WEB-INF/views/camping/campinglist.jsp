@@ -288,7 +288,7 @@ String sigunguNm = request.getParameter("sigunguNm");
 	</table>
 	<br>
 			<div class="detailSearch_btn">
-				<button type = "button" class = "btn btn-light" id = "resetBtn">초기화</button>
+				<button type = "button" class ="btn btn-light" id = "resetBtn">초기화</button>
 				<button type="submit" class="btn btn-light" id = "specifiedBtn">검색하기</button>
 			</div>
 		</div>

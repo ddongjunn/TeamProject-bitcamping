@@ -52,4 +52,6 @@ public interface AdminService {
     public void updateOrderStatus(ProductOrderDto dto);
     public void insertOrderInvoiceNumber(ProductOrderDto dto);
 
+    public Map<String, Integer> getOrderStatus();
+
 }

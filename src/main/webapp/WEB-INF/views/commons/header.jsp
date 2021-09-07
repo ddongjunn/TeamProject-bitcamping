@@ -103,7 +103,7 @@
                         </div>
                         <div class="modal_login_id">
                             <h4>아이디</h4>
-                            <input type="email" name="" id="id" placeholder="Email">
+                            <input type="email" name="" id="id" placeholder="ID">
                         </div>
                         <div class="modal_login_pw">
                             <h4>비밀번호</h4>
@@ -114,7 +114,7 @@
 
                             </div>
                             <div class="modal_forgot_pw">
-                                <a href="#none" id="findId">아이디</a> / <a href="#none" id="findPw">비밀번호찾기</a>
+                                <a href="#none" id="findId" style="color: #353535">아이디</a> / <a href="#none" id="findPw" style="color: #353535">비밀번호찾기</a>
                             </div>
                         </div>
                         <div class="modal_submit">
@@ -453,8 +453,7 @@ $(document).ready(function(){
                     console.log("data = " + data);
 
                     Swal.fire({
-                        text: '이메일 : ' + $('#findPw_email').val() + '            ' +
-                            ' 임시 비밀번호가 발송되었습니다.',
+                        html: '이메일 : ' + $('#findPw_email').val() + '<br>임시 비밀번호가 발송되었습니다.',
                         width: 500,
                         padding: 10
                     });
