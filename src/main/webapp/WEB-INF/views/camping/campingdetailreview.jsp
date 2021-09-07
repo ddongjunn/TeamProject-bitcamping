@@ -197,28 +197,40 @@ $(document).ready(function(){
 	$("#updateBtn").click(function(){ //리뷰 수정하기
 		location.href = "campingupdatereview.do?review_seq=" +<%=campingbbs.getReview_seq()%> + "&contentid=" + <%=campingbbs.getContentid()%>;
 	}); //updateBtn 끝나는 곳
-	
-	$("#deleteBtn").click(function(){ //리뷰 삭제하기
+
+	$("#deleteBtn").click(function () { //리뷰 삭제하기
 		//console.log("click");
-		if(confirm("삭제하시겠습니까?")){
-			var paramData = {"review_seq" : <%=campingbbs.getReview_seq()%> };
-		$.ajax({
-			url : '/csite/campingdeletereview.do',
-			type : 'post',
-			data : paramData,
-			dataType : 'text',
-			success : function(result){
-				if(result =='success'){
-					//alert("성공적으로 삭제되었습니다");
-				 	location.href = "campingdetail.do?contentid=" + <%=campingbbs.getContentid()%>;	
-				}
-			}, 
-			error:function(request,status,error){
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+		swal.fire({
+			icon: 'warning',
+			text: '삭제하시겠습니까?',
+			showCancelButton: true,
+			cancelButtonText: '취소',
+			confirmButtonText: `확인`,
+		}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+
+				var paramData = {"review_seq": <%=campingbbs.getReview_seq()%>};
+
+				$.ajax({
+					url: '/csite/campingdeletereview.do',
+					type: 'post',
+					data: paramData,
+					dataType: 'text',
+					success: function (result) {
+						if (result == 'success') {
+							//alert("성공적으로 삭제되었습니다");
+							location.href = "campingdetail.do?contentid=" + <%=campingbbs.getContentid()%>;
+						}
+					},
+					error: function (request, status, error) {
+						alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 					}
 				}); //ajax (delete)끝나는 곳
-			} //삭제여부 물어보는 곳
-		}); //deleteBtn 끝나는 곳
+			}
+		})
+	}); //deleteBtn 끝나는 곳
 
 	////////////////////////////////////////////페이징////////////////////////////////////////////////
 	let totalCount = ${commentPage};	// 서버로부터 총글의 수를 취득
@@ -267,7 +279,13 @@ $(document).ready(function(){
 		var paramData = {"user_id" : user_id, "nickname" : nickname, "review_seq" : review_seq, "content" : content};
 		console.log(paramData);
 			if(content ==""){
-				alert("내용을 입력하지 않으셨네요!");
+				swal.fire({
+					icon: 'warning',
+					text: '내용을 입력하지 않으셨네요!',
+					didClose: () =>{
+					}
+				})
+
 			}else{
 			$.ajax({
 				url : '/csite/campingWriteComment.do',
@@ -372,69 +390,80 @@ $(document).ready(function(){
 }); //document.ready 끝나는곳
 
 	function commentDelete(comment_seq){	
-		console.log("delete되나요click");
+		/*console.log("delete되나요click");*/
 		const review_seq = new URLSearchParams(location.search).get('review_seq');
 		var paramData = {"comment_seq" : comment_seq, "review_seq" : review_seq};
-		console.log(paramData);
-		if(confirm("삭제하시겠습니까?")){
-		 $.ajax({
-			url : '/csite/campingDeleteComment.do',
-			type : 'post',
-			dataType : 'text',
-			data : paramData,
-			success : function(result){
-				console.log(result);
-				if(result !=-1){
-					//alert("삭제 성공");
-					$('.commentArea' + result).remove();
-				}
-			}, //success 끝나는 곳
-			error:function(request,status,error){
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			    console.log("실패");
-			}
-		}); //ajax sendUpdateBtn 끝나는 곳  
-	
-		$.ajax({
-			url : '/csite/minusCampingReviewCommentCount.do',
-			type : 'get',
-			dataType : 'text',
-			data : paramData,
-			success : function(response){
-				let totalCount = response;	// 서버로부터 총글의 수를 취득
-				//alert(totalCount);
-				let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
-				//alert(nowPage);
-		
-				let pageSize = 10;//페이지의 크기(1~10) [1] ~ [10]
-		
-				let _totalPages = totalCount / pageSize;
-		
-				if(totalCount % pageSize > 0){
-					_totalPages++;
-				}
-				 if($('#pagination').data("twbs-pagination")){
-					  $('#pagination').twbsPagination('destroy');}// 페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.
-		
-					 $("#pagination").twbsPagination({ 
-						startPage : nowPage,
-						totalPages : (_totalPages==0)?1:_totalPages, //전체 페이지
-						visiblePages: 10, //최대로 보여줄 페이지
-						first: '<span sria-hidden="true">«</span>',
-						prev: "이전",
-						next: "다음",
-						last: '<span sria-hidden="true">»</span>',
-						initiateStartPageClick:false,
-						onPageClick: function(event,page){
-							pagemove(page);
+		/*console.log(paramData);*/
+
+		swal.fire({
+			icon: 'warning',
+			text: '삭제하시겠습니까?',
+			showCancelButton: true,
+			cancelButtonText: '취소',
+			confirmButtonText: `확인`,
+		}).then((result) => {
+			/* Read more about isConfirmed, isDenied below */
+			if (result.isConfirmed) {
+				$.ajax({
+					url : '/csite/campingDeleteComment.do',
+					type : 'post',
+					dataType : 'text',
+					data : paramData,
+					success : function(result){
+						console.log(result);
+						if(result !=-1){
+							//alert("삭제 성공");
+							$('.commentArea' + result).remove();
 						}
-					}); //페이지네이션 끝 
-			}, 
-			error:function(request,status,error){
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				}
-			}); //ajax minusCommentCount 끝나는 곳
-		}//삭제하겠다고 했을 때 function 끝나는 곳
+					}, //success 끝나는 곳
+					error:function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						console.log("실패");
+					}
+				}); //ajax sendUpdateBtn 끝나는 곳
+
+				$.ajax({
+					url : '/csite/minusCampingReviewCommentCount.do',
+					type : 'get',
+					dataType : 'text',
+					data : paramData,
+					success : function(response){
+						let totalCount = response;	// 서버로부터 총글의 수를 취득
+						//alert(totalCount);
+						let nowPage = ${pageNumber};	// 서버로부터 현재 페이지를 취득
+						//alert(nowPage);
+
+						let pageSize = 10;//페이지의 크기(1~10) [1] ~ [10]
+
+						let _totalPages = totalCount / pageSize;
+
+						if(totalCount % pageSize > 0){
+							_totalPages++;
+						}
+						if($('#pagination').data("twbs-pagination")){
+							$('#pagination').twbsPagination('destroy');}// 페이지 갱신 : 페이징을 갱신해 줘야 번호가 재설정된다.
+
+						$("#pagination").twbsPagination({
+							startPage : nowPage,
+							totalPages : (_totalPages==0)?1:_totalPages, //전체 페이지
+							visiblePages: 10, //최대로 보여줄 페이지
+							first: '<span sria-hidden="true">«</span>',
+							prev: "이전",
+							next: "다음",
+							last: '<span sria-hidden="true">»</span>',
+							initiateStartPageClick:false,
+							onPageClick: function(event,page){
+								pagemove(page);
+							}
+						}); //페이지네이션 끝
+					},
+					error:function(request,status,error){
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				}); //ajax minusCommentCount 끝나는 곳
+			}
+		})
+		//삭제하겠다고 했을 때 function 끝나는 곳
 	}//commentDelete 끝나는 곳
 	
 	function commentUpdate(comment_seq,content){ //폼보여주는 function
@@ -448,13 +477,20 @@ $(document).ready(function(){
 		
 	
 	function update(comment_seq){//실제 수정하는 function
-		console.log("update되나요click");
+		/*console.log("update되나요click");*/
 		var updateContent = $('[name=content_'+comment_seq+']').val();
 		var paramData = {"comment_seq" : comment_seq, "content" : updateContent};
 		console.log(updateContent);
 		console.log(paramData);
 		if(updateContent ==""){
-			alert("내용을 입력하지 않으셨네요!");
+			swal.fire({
+				icon: 'warning',
+				text: '내용을 입력하지 않으셨네요!',
+				didClose: () =>{
+				}
+			})
+			return;
+
 		}else{
 			 $.ajax({
 				url : '/csite/campingUpdateComment.do',
@@ -565,7 +601,7 @@ $(document).ready(function(){
 						});
 					},//success 끝나는 곳
 				error:function(request,status,error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}//error 끝나는 곳
 			}); //pagemove ajax 끝나는 곳
 		}; //pagemove function 끝나는 곳

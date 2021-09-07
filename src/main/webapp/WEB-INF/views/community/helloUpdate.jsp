@@ -127,13 +127,13 @@
 			});	
 			return;
 			
-		}else if(content.length < 12) {
+		}else if($('#summernote').val() == "") {
 			Swal.fire({
 				icon : 'warning',
 				text : '내용을 입력해주세요',
 				didClose: () => {
 					$('#summernote').focus();
-				}			
+				}
 			});
 			return;
 		}

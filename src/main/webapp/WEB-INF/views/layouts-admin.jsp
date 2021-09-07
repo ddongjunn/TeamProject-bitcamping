@@ -52,7 +52,7 @@
             background-color: lightblue;
         }
     </style>--%>
-<title>비트캠핑</title>
+<title>비트캠핑관리자</title>
 
 <!-- favicon -->
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" type="image/x-icon">

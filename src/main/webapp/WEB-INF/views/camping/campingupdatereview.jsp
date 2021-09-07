@@ -79,12 +79,25 @@ CampingBbsDto campingbbs = (CampingBbsDto)request.getAttribute("campingdetailrev
 			var content = $("#summernote").val();
 			
 			if(title == ""){
-				alert("제목을 입력하지 않으셨네요!");
-				$("#title").focus();
+				swal.fire({
+					icon: 'warning',
+					text: '제목을 입력하지 않으셨네요!',
+					didClose: () =>{
+						$("#title").focus();
+					}
+				})
+				return;
 			}
+
 			if(content == ""){
-				alert("수정할 내용을 적어주세요");
-				$("#summernote").focus();
+				swal.fire({
+					icon: 'warning',
+					text: '수정할 내용을 적어주세요!',
+					didClose: () =>{
+						$("#summernote").focus();
+					}
+				})
+				return;
 			}
 			if(title != "" && content != ""){
 			document.getElementById("updateform").submit();

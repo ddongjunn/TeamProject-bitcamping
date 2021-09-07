@@ -35,7 +35,7 @@
 					<span>
 						<i class="far fa-calendar-alt fa-sm"></i>
 						 <fmt:parseDate value="${data.wdate}" var="formatedDate" pattern="yyyy-MM-dd HH:mm:ss"/>
-						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd"/>
+						<fmt:formatDate value="${formatedDate}" pattern="yyyy/MM/dd HH:mm"/>
 					</span>
 					<span><i class="far fa-eye"></i> ${data.readcount }</span> 
 					<i class="fas fa-heart"></i>
@@ -338,16 +338,23 @@ $(function(){
                       
                       /* 댓글 내용 div */
                       if(data.comment[i].depth == 0){
-                      	html += "<span style='color: #75AE87; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
-                      	html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_seq+");'>답글</a></span>";
-                          html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
-                         	html += "<div id='cmt"+data.comment[i].comment_seq+"'>";
-	                        html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
+						  if(data.comment[i].del == 0){
+							  html += "<span style='color: #75AE87; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+							  html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_seq+");'>답글</a></span>";
+							  html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
+							  html += "<div id='cmt"+data.comment[i].comment_seq+"'>";
+							  html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
+						  }else{
+							  html += "<span style='color: #75AE87; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+							  html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
+							  html += "<div id='cmt"+data.comment[i].comment_Seq+"'>";
+							  html += "<div style='margin: 10px 0; color: #ABABAB;'>삭제된 댓글입니다</div>";
+						  }
                       
                       /* 대댓글 내용 div */
                       }else{
                       	html += "<div style='float: left; color: #DBDBDB; margin-right: 5px;'><i class='fas fa-arrow-right fa-sm'></i></div>";
-                      	html += "<span style='color: tomato; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
+                      	html += "<span style='color: #ff8a75; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
                           html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>"+wdate+"</span>";
                       	html += "<div id='cmt"+data.comment[i].comment_seq+"' style='margin-left: 15px;'>";
                           html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";

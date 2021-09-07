@@ -343,7 +343,7 @@
                             <h3 class="mb-0">캠퍼모집</h3>
                         </div>
                         <div class="col text-right">
-                            <a href="admin/community.do?bbstype=find" class="btn btn-sm btn-primary">더 보기</a>
+                            <a href="/admin/community.do?bbstype=find" class="btn btn-sm btn-primary">더 보기</a>
                         </div>
                     </div>
                 </div>
@@ -376,7 +376,7 @@
                             <h3 class="mb-0">캠핑여행&후기</h3>
                        </div>
                         <div class="col text-right">
-                            <a href="/admin/memberInfo.do" class="btn btn-sm btn-primary">더 보기</a>
+                            <a href="/admin/community.do?bbstype=review" class="btn btn-sm btn-primary">더 보기</a>
                         </div>
                     </div>
                 </div>
@@ -410,7 +410,7 @@
                             <h3 class="mb-0">중고거래</h3>
                         </div>
                         <div class="col text-right">
-                            <a href="/admin/memberInfo.do" class="btn btn-sm btn-primary">더 보기</a>
+                            <a href="/admin/community-deal.do" class="btn btn-sm btn-primary">더 보기</a>
                         </div>
                     </div>
                 </div>

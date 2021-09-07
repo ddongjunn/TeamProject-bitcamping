@@ -124,7 +124,7 @@
 			//alert($('input[name=title]').val()); 
 			//alert($('#summernote').val());
 			var content = $("#summernote").val();
-			alert("content" + content.length);
+			/*alert("content" + content.length);*/
 			
 		    if($('input[name=title]').val() == "") {
 				Swal.fire({
