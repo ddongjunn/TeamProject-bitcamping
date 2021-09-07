@@ -55,7 +55,7 @@ String campingintro = (String)request.getAttribute("campingintro");
 				<font size = "4pt">검색하신 캠핑장에 대해 알아볼까요?</font> 
 			</c:when>
 			<c:otherwise>
-				<font size = "4pt"><span style="color: #1FB154; font-size: 20px;">${login.nickname}</span>님이 검색하신 캠핑장에 대해 알아볼까요?</font> 
+				<font size = "4pt"><span style="color: #1FB154; font-size: 20px; font-weight: bold;">${login.nickname}</span>님이 검색하신 캠핑장에 대해 알아볼까요?</font> 
 			</c:otherwise>
 		</c:choose>
 		<hr>

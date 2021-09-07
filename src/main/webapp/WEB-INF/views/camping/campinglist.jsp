@@ -322,7 +322,7 @@ String sigunguNm = request.getParameter("sigunguNm");
 				<li style = "list-style : none;">
 					<div class = "mainimage">
 						<a href = "campingdetail.do?contentid=${camping.contentid}">	
-						<img src = "${camping.firstimageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "300" height = "200">
+						<img src = "${camping.firstimageurl}" onerror="this.src='<%=request.getContextPath()%>/resources/images/campingsite/csite_alt_image.png'" width = "450" height = "300">
 						</a>
 					</div>
 					<div class = "camping_information">

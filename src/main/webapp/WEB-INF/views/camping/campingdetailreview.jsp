@@ -534,7 +534,7 @@ $(document).ready(function(){
 	
 					if(response == '[]'){
 						let str = "<tr>"
-					    +"<td colspan='2' class='nodata'>아직 아무도 댓글을 달지 않았어요! 첫 댓글을 달아볼까요?</td>"
+					    +"<td colspan='2' class='nodata' style='text-align: center; border: 1px solid rgba(0, 0, 0, 0.1);'>아직 아무도 댓글을 달지 않았어요! 첫 댓글을 달아볼까요?</td>"
 					    +"</tr>"
 					    $("#commentlisting").append(str);
 					    //$(".container").remove();
