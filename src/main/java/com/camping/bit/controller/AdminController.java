@@ -111,6 +111,10 @@ public class AdminController {
         Map<String,Object> sales = service.weeklySales();
         model.addAttribute("sales",sales);
 
+        //배송상태
+        Map<String, Integer> orderStatus = service.getOrderStatus();
+        model.addAttribute("orderStatus",orderStatus);
+
         return "adminmain.tiles";
     }
 

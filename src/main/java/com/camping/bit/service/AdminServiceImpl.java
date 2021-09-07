@@ -158,4 +158,9 @@ public class AdminServiceImpl implements AdminService{
     public void insertOrderInvoiceNumber(ProductOrderDto dto) {
         dao.insertOrderInvoiceNumber(dto);
     }
+
+    @Override
+    public Map<String, Integer> getOrderStatus() {
+        return dao.getOrderStatus();
+    }
 }

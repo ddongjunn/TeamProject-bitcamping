@@ -15,3 +15,25 @@
     width : 100%;
     display: inline-block;
 }
+
+.mymain-orderstatus {
+    width: 98%;
+    margin: auto;
+    padding: 15px 30px;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 18px;
+}
+.mymain-status {
+    text-align: center;
+    line-height: 30px;
+    color: #0a0c0d;
+}
+.mymain-arrow {
+    font-size: 22px;
+    color: #8898aa;
+}

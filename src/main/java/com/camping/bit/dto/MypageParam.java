@@ -22,5 +22,4 @@ public class MypageParam implements Serializable {
     private int start;
     private int end;
 
-    private int status;
 }

@@ -22,24 +22,24 @@
 		<div class="faqmenu">
 			<p class="faqmenutitle">나의 정보 조회</p>
 			<span class="faqmenulist">
-				<p>아이디 찾기</p>
-				<p>패스워드 찾기</p>
-				<p>회원정보 변경 및 탈퇴 안내</p>
+				<p> <a href="/cs/noticeDetail.do?notice_Seq=2">아이디 찾기</a></p>
+				<p> <a href="/cs/noticeDetail.do?notice_Seq=3">패스워드 찾기</a></p>
+				<p> <a href="/cs/noticeDetail.do?notice_Seq=4">회원정보 변경 및 탈퇴 안내</a></p>
 			</span>
 		</div>
 		<div class="faqmenu">
 			<p class="faqmenutitle">주문/배송/반품 안내</p>
 			<span class="faqmenulist">
 				<p> <a href="/account/myOrder.do"> 주문 내역 조회</a></p>
-				<p><a href="/cs/noticeDetail.do?notice_Seq=3"> 주문 방법 및 결제 </a></p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=5"> 주문 방법 및 결제 </a></p>
 			</span>
 		</div>
 		<div class="faqmenu">
 			<p class="faqmenutitle">기타문의</p>
 			<span class="faqmenulist">
-				<p><a href="/cs/noticeDetail.do?notice_Seq=4"> 고객센터 이용 안내 </a></p>
-				<p><a href="/cs/noticeDetail.do?notice_Seq=5"> pc문제해결/오류 안내 </a></p>
-				<p><a href="/cs/noticeDetail.do?notice_Seq=6">현금영수증 및 전자 영수증안내</a></p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=1"> 고객센터 이용 안내 </a></p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=6"> pc문제해결/오류 안내 </a></p>
+				<p><a href="/cs/noticeDetail.do?notice_Seq=7">현금영수증 및 전자 영수증안내</a></p>
 			</span>
 		</div>
 	</div>	

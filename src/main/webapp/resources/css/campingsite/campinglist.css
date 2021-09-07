@@ -98,19 +98,19 @@ td{
   font-size: 19px;
   padding: 10px;
   cursor: pointer;
-  border: 1px solid #64bd20;
+  border: 1px solid #6C3201;
   background-color: #64bd20;
   outline: none;
   background: none;
   width: 100%;
   text-align: left;
 }
-.category:hover {
+/*.category:hover {
   color: #64bd20;
-}
+}*/
 
 #total{
-	border: 1px solid #dbdbdb;
+	border: 1px solid #6C3201;
 	border-top: none;
 	padding: 30px;
 }
@@ -128,7 +128,8 @@ td{
 	font-size: 18px;
 }
 .campsite_number{
-	color: #64bd20;
+	color: red;
+    font-weight: bold;
 }
 .sorting_select{
 	float: right;
@@ -165,8 +166,9 @@ td{
 .campsite_name > a, 
 .campsite_name > a:link, 
 .campsite_name > a:visited{
-	color : #1FB154;
+	color : #FFBF00;
 	font-size: 24px;
+    font-weight: bold;
 }
 .campsite_name{
 	padding-bottom: 5px;
@@ -195,14 +197,14 @@ td{
 }
 
 .btn-light{
-	color : #1FB154;
-	border-color : #1FB154;
-	background-color: white;
+	color : #FFBF00;
+	border-color : #FFBF00;
+    background-color: white;
 }
 .btn-light:hover{
-	color : white;
-	border-color : #1FB154;
-	background-color: #1FB154;
+	color : #FFF;
+	border-color : #FFBF00;
+	background-color: #FFBF00;
 }
 
 button:focus{
@@ -404,3 +406,14 @@ button:focus{
   .nosearchpic{
   	margin : 0 0 5% 37%;
   }
+
+/*.search btn-light{
+    color : #6C3201;
+    border-color : #6C3201;
+    background-color: white;
+}
+.search btn-light:hover{
+    color : white;
+    border-color : #6C3201;
+    background-color: #6C3201;
+}*/
