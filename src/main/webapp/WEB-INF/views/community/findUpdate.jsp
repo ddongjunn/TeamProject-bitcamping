@@ -115,7 +115,7 @@
 		//alert($('#summernote').val());
 		
 		var content = $("#summernote").val();
-		//alert("content" + content.length);
+		/*alert("content" + content.length);*/
 		
 		if($('input[name=title]').val() == "") {
 			Swal.fire({
@@ -127,13 +127,13 @@
 			});	
 			return;
 			
-		}else if(content.length < 378) {
+		}else if($('#summernote').val() == "") {
 			Swal.fire({
 				icon : 'warning',
 				text : '내용을 입력해주세요',
 				didClose: () => {
 					$('#summernote').focus();
-				}			
+				}
 			});
 			return;
 		}

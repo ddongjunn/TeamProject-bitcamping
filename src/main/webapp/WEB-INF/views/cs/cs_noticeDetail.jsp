@@ -313,7 +313,6 @@
 		                        html += "<div style='margin: 10px 0; font-weight: bold;'>"+data.comment[i].content+"</div>";
                         	}else{
 		                    	html += "<span style='color: black; font-weight: bold;'>"+data.comment[i].nickname+"</span>";
-	                        	html += "<span style='margin: 0 5px 5px 0; float: right;'><a href='javascript:showAnswer("+data.comment[i].comment_Seq+");'>답글</a></span>";
 	                            html += "<span style='color: #ABABAB; font-size: 13px; margin-left: 10px;'>" + wdate + "</span>";
 	                           	html += "<div id='cmt"+data.comment[i].comment_Seq+"'>";
 		                        html += "<div style='margin: 10px 0; color: #ABABAB;'>삭제된 댓글입니다</div>";

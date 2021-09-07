@@ -50,9 +50,9 @@
 		</tr>
 	</tbody>
 </table>
-<div class="submitbox">
-	<input type="button" name="update" value="수정하기">
-</div>
+	<div class="submitbox" >
+		<input type="button" class="btnSimple" name="update" value="수정하기">
+	</div>
 
 <input type="hidden" name="id" value="${data.user_id }">
 <input type="hidden" name="bbstype" value="free">
@@ -127,13 +127,13 @@
 			});	
 			return;
 			
-		}else if(content.length < 12) {
+		}else if($('#summernote').val() == "") {
 			Swal.fire({
 				icon : 'warning',
 				text : '내용을 입력해주세요',
 				didClose: () => {
 					$('#summernote').focus();
-				}			
+				}
 			});
 			return;
 		}

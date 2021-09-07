@@ -132,7 +132,7 @@
 		// alert($("input[name=bbstype]:radio:checked").val());
 		
 		var content = $("#summernote").val();
-		alert("content" + content.length);
+		/*alert("content" + content.length);*/
 		
 		if($("input[name=bbstype]:radio:checked").length == 0){
 			Swal.fire({

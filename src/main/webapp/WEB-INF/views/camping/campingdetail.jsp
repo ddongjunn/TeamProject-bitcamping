@@ -423,7 +423,7 @@ $("#mapBtn").click(function(){
 					});
 				}, 
 				error:function(request,status,error){
-				    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 			
@@ -466,7 +466,7 @@ $("#mapBtn").click(function(){
 						});
 					}, 
 					error:function(request,status,error){
-					    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					}
 				}); //ajax searchBtn 끝나는 곳
 		});//searchBtn function 끝나는 곳
@@ -510,7 +510,7 @@ $("#mapBtn").click(function(){
 							});
 						}, 
 						error:function(request,status,error){
-						    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+						    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
 					}); //ajax searchBtn 끝나는 곳
 			});//searchBtn function 끝나는 곳
