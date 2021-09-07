@@ -66,14 +66,14 @@
 /*버튼*/
 
 .btn-light{
-	color : #FBC853;
-	border-color : #FBC853;
+	color : #FFA600;
+	border-color : #FFA600;
 	background-color: white;
 }
 .btn-light:hover{
 	color : white;
-	border-color : #FBC853;
-	background-color: #FBC853;
+	border-color : #FFA600;
+	background-color: #FFA600;
 }
 
 .updatebutton{
@@ -150,6 +150,7 @@
 .commentlisting tr, td{
 	padding: 10px;
 	vertical-align: middle;
+	font-weight: bold;
 }
 
 

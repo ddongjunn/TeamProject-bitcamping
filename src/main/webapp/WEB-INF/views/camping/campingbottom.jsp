@@ -487,9 +487,9 @@ String campingintro = (String)request.getAttribute("campingintro");
 			<option value = "like">추천순</option>
 		</select>
 	</div>
-	<button type = "button" class="btn btn-lignt btn-sm" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>" style="float: right; color: #1FB154; font-size: 14px; border-color: #1FB154;">리뷰 작성하기</button>
+	<button type = "button" class="btn btn-light" onclick = "location.href ='campingwritereview.do?contentid=' + <%=campinglist.getContentid()%>" style="float: right;">리뷰 작성하기</button>
 
-	<table class="table table-hover">
+	<table class="table table-hover" style="font-weight: bold;">
 	    <thead>
 	        <tr>
 	            <td>글번호</td>
@@ -523,10 +523,10 @@ String campingintro = (String)request.getAttribute("campingintro");
 			</select>
 		</div>
 		<div class = "col_second" style = "display : inline-block">
-			<input type = "text" id = "search" name = "searchWord" placeholder = "검색어를 입력해주세요" onkeypress="if( event.keyCode == 13 ){searchData();}"/>	   	
+			<input type = "text" id = "search" name = "searchWord" placeholder = "검색어를 입력해주세요" onkeypress="if( event.keyCode == 13 ){searchData();}" style="margin-left: 10px;" />	   	
 		</div>
-		<a href = "javascript:campingsearchlist(this)">
-			<img src ="<%=request.getContextPath()%>/resources/images/campingsite/searchicon.PNG" width = "40">
+		<a href = "javascript:campingsearchlist(this)" style="color: #1FB154; font-size: 26px; margin-left: 20px;">
+			<i class="fas fa-search"></i>
 		</a>
 	</div>	
 </div> <!-- review div 끝나는 부분 -->
@@ -656,7 +656,7 @@ $(document).ready(function(){
 					}
 					parsedResponse.forEach( (item, idx) => {
 						
-						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : "";
+						let commentCount = item.commentCount >0 ? " [" + item.commentCount + "]" : "";
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
@@ -702,7 +702,7 @@ $(document).ready(function(){
 					    $("#reviewlisting").append(str);
 					}
 					parsedResponse.forEach( (item, idx) => {
-						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
+						let commentCount = item.commentCount >0 ? " [" + item.commentCount + "]" : ""
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	
@@ -749,7 +749,7 @@ $(document).ready(function(){
 					}
 					parsedResponse.forEach( (item, idx) => {
 						
-						let commentCount = item.commentCount >0 ? "[" + item.commentCount + "]" : ""
+						let commentCount = item.commentCount >0 ? " [" + item.commentCount + "]" : ""
 						let str = "<tr>"
 							+ "<td>" + (idx + 1) + "</td>"
 							+ "<td><a href='campingdetailreview.do?review_seq=" + item.review_seq + "&contentid=" + item.contentid +"'>" + item.title + "</a><font color = 'green'>" + commentCount + "</font></td>"	

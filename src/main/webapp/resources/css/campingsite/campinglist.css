@@ -27,7 +27,7 @@ h4 {
 .campinglist_title > p {
 	font-size: 16px;
 	font-weight: bold;
-	color: #64bd20;
+	color: #1FB154;
 }
 .deep-search {
 	width: 100%;
@@ -72,7 +72,7 @@ h4 {
 }
 /*자세하게 검색하기*/
 th{
-	color : #64bd20;
+	color : #1FB154;
 	width : 20%;
 	text-align : left;
 	vertical-align: middle;
@@ -98,26 +98,26 @@ td{
   font-size: 19px;
   padding: 10px;
   cursor: pointer;
-  border: 1px solid #6C3201;
-  background-color: #64bd20;
+  border: 1px solid #f0f0f0;
+  background-color: #1FB154;
   outline: none;
   background: none;
   width: 100%;
   text-align: left;
 }
 /*.category:hover {
-  color: #64bd20;
+  color: #75AE87;
 }*/
 
 #total{
-	border: 1px solid #6C3201;
+	border: 1px solid #f0f0f0;
 	border-top: none;
 	padding: 30px;
 }
 .search_sorting{
 	height: 50px;
 	position: relative;
-	margin-top: 15px;
+	margin-top: 50px;
 	padding-bottom: 10px;
 	border-bottom: 1px solid rgba(0,0,0,.1);
 }
@@ -128,7 +128,7 @@ td{
 	font-size: 18px;
 }
 .campsite_number{
-	color: red;
+	color: #1FB154;
     font-weight: bold;
 }
 .sorting_select{

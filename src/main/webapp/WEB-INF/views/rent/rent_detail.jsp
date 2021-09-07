@@ -142,7 +142,10 @@ $("#buybutton").click(function(){
 		Swal.fire({
 			icon : 'warning',
 			text : '로그인 후 이용해주세요',
-			width: '32rem'
+			width: '32rem',
+			didClose: () => {
+				modalOn();
+			}
 		});
 		return;
 	}else if($("#rent_Sdate").val() == ""){

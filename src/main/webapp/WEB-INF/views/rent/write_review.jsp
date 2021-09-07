@@ -20,37 +20,37 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css">
 
 <style type="text/css">
-
+   /* 리뷰 별점 주는 부분 */
 @import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 
 fieldset, label { margin: 0; padding: 0; }
-body{ margin: 20px; }
+body{ margin: 10px; }
 h1 { font-size: 1.5em; margin: 10px; }
 
 /****** Style Star Rating Widget *****/
 
-.rating { 
-  border: none;
-  float: left;
+.rating {
+    border: none;
+    float: left;
 }
 
-.rating > input { display: none; } 
-.rating > label:before { 
-  margin: 5px;
-  font-size: 1.25em;
-  font-family: FontAwesome;
-  display: inline-block;
-  content: "\f005";
+.rating > input { display: none; }
+.rating > label:before {
+    margin: 5px;
+    font-size: 1.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005";
 }
 
-.rating > .half:before { 
-  content: "\f089";
-  position: absolute;
+.rating > .half:before {
+    content: "\f089";
+    position: absolute;
 }
 
-.rating > label { 
-  color: #ddd; 
- float: right; 
+.rating > label {
+    color: #ddd;
+    float: right;
 }
 
 /***** CSS Magic to Highlight Stars on Hover *****/
@@ -62,9 +62,10 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > input:checked + label:hover, /* hover current star when changing rating */
 .rating > input:checked ~ label:hover,
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
-
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+    
 </style>
+
 </head>
 <body>
 <form id="reviewForm" action="/rent/writeReviewAf.do" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -89,8 +90,8 @@ h1 { font-size: 1.5em; margin: 10px; }
 		<input type="text" id="title" name="title" placeholder="제목을 입력해 주세요">
 	</div>
 	<div class="pop-subtitle">후기 작성</div>
-	<div id="contentbox">
-		<textarea id="content" name="content" placeholder="리뷰를 입력해 주세요" ></textarea>
+	<div id="contentbox2">
+		<textarea id="content" name="content" placeholder="리뷰를 입력해 주세요" rows="5"></textarea>
 	</div>
 	<div class="pop-subtitle">사진 등록</div>
 	<div class="image-container">

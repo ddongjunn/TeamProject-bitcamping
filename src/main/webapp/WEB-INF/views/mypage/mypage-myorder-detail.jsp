@@ -9,6 +9,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/mypageRent.css">
+<style type="text/css">
+.btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show>.btn-outline-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #1FB154;
+    border-color: #1FB154;
+}
+.btn-outline-primary:hover {
+    color: #fff;
+    background-color: #1FB154;
+    border-color: #1FB154;
+}
+</style>
+
 </head>
 <body>
 

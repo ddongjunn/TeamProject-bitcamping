@@ -21,6 +21,14 @@
 <!-- sweetAlert2 -->
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<style type="text/css">
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background-color: #1FB154;
+    border-color: #1FB154;
+}
+</style>
+
 </head>
 <body>
 	<main class="page payment-page">

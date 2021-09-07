@@ -47,6 +47,7 @@ textarea {
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	padding: 10px;
 	resize: none;
+	font-family: 'S-CoreDream-3Light';
 }
 .pop-stars {
 	width: 95%;
@@ -89,3 +90,5 @@ input[type=file] {
 	font-weight: bold;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1); 
 }
+
+
