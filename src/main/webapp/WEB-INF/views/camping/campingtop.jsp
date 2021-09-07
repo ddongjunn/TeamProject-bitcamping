@@ -103,17 +103,33 @@ String login_id = (String)request.getAttribute("login_id");
 						
 						</div>
 					</div>
-					<hr>
 						<div class="campsite-info">
-							 <div><b>주소</b>  : <%=campinglist.getAddr1() %></div>
-							 <div><b>전화번호</b> : <%=campinglist.getTel() %></div>
-							 <div><b>캠핑장 환경</b> : <%=campinglist.getLctcl() %>/<%=campinglist.getFacltdivnm() %></div>
-							 <div><b>캠핑장 유형</b> : <%=campinglist.getInduty() %></div>
-							 <div><b>운영기간</b> : <%=campingdetail.getOperpdcl() %></div>
-							 <div><b>운영일</b> : <%=campingdetail.getOperdecl() %></div>
-							 <div><b>시설</b> : <%=campinglist.getSbrscl() %></div>
-						</div>
-					<hr>
+							<table class="campsite-info-table">
+								<col width="30%">
+								<col width="70%">
+								<tr>
+									<th>주소</th> <td><%=campinglist.getAddr1() %></td>
+								</tr>
+								<tr>
+									<th>전화번호</th> <td><%=campinglist.getTel() %></td>
+								</tr>
+								<tr>
+									<th>캠핑장 환경</th> <td><%=campinglist.getLctcl() %>/<%=campinglist.getFacltdivnm() %></td>
+								</tr>
+								<tr>
+									<th>캠핑장 유형</th> <td><%=campinglist.getInduty() %></td>
+								</tr>
+								<tr>
+									<th>운영기간</th> <td><%=campingdetail.getOperpdcl() %></td>
+								</tr>
+								<tr>
+									<th>운영일</th> <td><%=campingdetail.getOperdecl() %></td>
+								</tr>
+								<tr>
+									<th>시설</th> <td><%=campinglist.getSbrscl() %></td>
+								</tr>
+							</table>
+						</div>	
 					<c:url value="<%=campinglist.getHomepage() %>" var="url" />
 					<c:url value="<%=campingdetail.getResveurl() %>" var="url1" />
 							<c:choose>

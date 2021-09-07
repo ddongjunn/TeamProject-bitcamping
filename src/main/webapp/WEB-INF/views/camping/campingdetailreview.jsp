@@ -303,8 +303,8 @@ $(document).ready(function(){
 							+ "</tr>"
 							+ "<tr class = commentArea" + response + " id = commentUpdate" + response + " style='border-bottom: 1px solid rgb(0,0,0,.1); height: 30px;'>"
 							+ "<td>" + content + "</td>"
-							+ "<td style='text-align: right;'>" + "<a href = 'javascript:commentUpdate(" + response + ",&#34;" +  content + "&#34;);'  style='color: #1FB154'>수정</a> / " 
-							+ "<a href = 'javascript:commentDelete(" + response + ");' style='color: #1FB154'>삭제</a>" 
+							+ "<td style='text-align: right;'>" + "<a href = 'javascript:commentUpdate(" + response + ",&#34;" +  content + "&#34;);' style='color: #FFA600'>수정</a> / " 
+							+ "<a href = 'javascript:commentDelete(" + response + ");' style='color: #FFA600'>삭제</a>" 
 							+ "</td>" + "</tr>";
 						$(".nodata").html("");
 						document.getElementById("content").value='';
@@ -468,8 +468,8 @@ $(document).ready(function(){
 	
 	function commentUpdate(comment_seq,content){ //폼보여주는 function
 			console.log("commentUpdateBtn 클릭");
-			let str = `<div style="width: 100%; text-align: center; margin: auto;"><textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요">${'${content}'}</textarea>
-		        <button type="button" id="sendUpdateBtn" onClick="update(${'${comment_seq}'})" class = "btn btn-light btn-sm">수정</button></div>`;
+			let str = `<td colspan='2'><div style="width: 100%; text-align: center; margin: auto;"><textarea name ="content_${'${comment_seq}'}" id ="contentupdate" value="${'${content}'}'" placeholder="수정내용을 입력해주세요">${'${content}'}</textarea>
+		        <button type="button" id="sendUpdateBtn" onClick="update(${'${comment_seq}'})" class = "btn btn-light btn-sm" style="float: right;">수정</button></div></td>`;
 			//console.log(str);
 			//$("#updateform").append(str);
 			$('#commentUpdate' + comment_seq).html(str);
@@ -502,7 +502,7 @@ $(document).ready(function(){
 					if(result == "success"){
 						//alert("수정 성공");
 						let str = `<td>${'${updateContent}'}</td>`;
-						str += `<td style='text-align: right;'><a href = 'javascript:commentUpdate(${'${comment_seq}'}, &quot;${'${updateContent}'}&quot;);' style='color: #1FB154;'>수정</a> / <a href = 'javascript:commentDelete(${'${comment_seq}'});' style='color: #1FB154;'>삭제</a></td>`;
+						str += `<td style='text-align: right;'><a href = 'javascript:commentUpdate(${'${comment_seq}'}, &quot;${'${updateContent}'}&quot;);' style='color: #FFA600'>수정</a> / <a href = 'javascript:commentDelete(${'${comment_seq}'});' style='color: #FFA600'>삭제</a></td>`;
 						$('#commentUpdate' + comment_seq).html("");
 						$('#commentUpdate' + comment_seq).html(str);
 					}
@@ -542,7 +542,7 @@ $(document).ready(function(){
 					
 					parsedResponse.forEach( (item, idx) => {
 						let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'} <i class='fas fa-heart'></i></font>` : item.nickname;
-						let conditionalString = item.user_id == user_id ? `<td style='text-align: right;'><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);' style='color: #1FB154'>수정</a> / <a href = 'javascript:commentDelete(${'${item.comment_seq}'});' style='color: #1FB154'>삭제</a></td>` : "";
+						let conditionalString = item.user_id == user_id ? `<td style='text-align: right;'><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);' style='color: #FFA600'>수정</a> / <a href = 'javascript:commentDelete(${'${item.comment_seq}'});' style='color: #FFA600'>삭제</a></td>` : "";
 						let str = "<tr class = commentArea" + item.comment_seq+ " style='height: 30px; vertical-align: middle;'>"
 							+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
 							+ "<td style='text-align: right;'>" + item.wdate+ "</td>"
@@ -589,7 +589,7 @@ $(document).ready(function(){
 					}
 					parsedResponse.forEach( (item, idx) => {
 							let conditionalname = item.nickname=='<%=campingbbs.getNickname()%>'? `<font color = #1FB154>${'${item.nickname}'} <i class="fas fa-heart"></i></font>` : item.nickname;
-							let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);'>수정</a>/<a href = 'javascript:commentDelete(${'${item.comment_seq}'});'>삭제</a></td>` : "";
+							let conditionalString = item.user_id == user_id ? `<td><a href = 'javascript:commentUpdate(${'${item.comment_seq}'}, &quot;${'${item.content}'}&quot;);' style='color: #FFA600'>수정</a>/<a href = 'javascript:commentDelete(${'${item.comment_seq}'});' style='color: #FFA600'>삭제</a></td>` : "";
 							let str = "<tr class = commentArea" + item.comment_seq+ ">"
 								+ "<td style = 'font-weight : bold;'>" + conditionalname + "</td>"
 								+ "<td>" + item.wdate+ "</td>"

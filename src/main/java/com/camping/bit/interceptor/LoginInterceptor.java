@@ -48,7 +48,7 @@ public class LoginInterceptor implements HandlerInterceptor{
         out.println("<body>");
         out.println("<script>");
         out.println("alert('로그인이 필요한 서비스입니다.');");
-        out.println("location.href='http://192.168.0.12:8090/main.do?move=" + url + query + "';");
+        out.println("location.href='http://localhost:8090/main.do?move=" + url + query + "';"); // http://192.168.0.12:8090
         out.println("</script>");
         out.println("</body>");
         out.println("</html>");

@@ -16,7 +16,7 @@
 	<span>
 		<a href="/main.do"><i class="fas fa-home fa-sm"></i></a> > 
 		<a href="/cs/csMain.do">고객센터</a> > 
-		<a href="/cs/notice.do">Q & A</a> > 
+		<a href="/cs/qna.do">Q & A</a> > 
 		<a href="/cs/qnaDetail.do?qna_Seq=${qna.qna_Seq}" style="color: #75AE87;">${qna.qna_Seq}</a>
 	</span>
 </div>

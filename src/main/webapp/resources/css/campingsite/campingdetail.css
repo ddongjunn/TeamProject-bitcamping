@@ -37,7 +37,7 @@ h2{
 	color : #1FB154;
 }
 h4 {
-	font-size: 19px;
+	font-size: 16px;
 }
 .camping_top_information{
 	margin : 5% 12% 0 12%;
@@ -55,10 +55,26 @@ h4 {
 }
 .camping_site_name{
 	position: relative;
-	font-size: 24px;
+	font-size: 28px;
+	font-weight: bold;
 }
 .campsite-info{
 	font-size: 16px;
+	width: 100%;
+}
+.campsite-info-table {
+	width: 100%;
+	margin: 15px auto;
+	border-top: 2px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+.campsite-info-table th, 
+.campsite-info-table td {
+	height: 40px;
+	border-top: 1px solid rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	vertical-align: center;
+	padding: 5px;
 }
 .heart-notlogin{
 	position: relative;

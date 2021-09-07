@@ -9,6 +9,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+<style type="text/css">
+.page-link {
+    color: #75AE87;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+.page-link:hover {
+    color: #75AE87;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}
+</style>
+
 </head>
 <body>
 
