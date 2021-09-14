@@ -397,22 +397,16 @@ public class MypageController {
     @RequestMapping(value = "update-reviewAf.do", method = { RequestMethod.GET, RequestMethod.POST })
     public String updateReviewAf(ProductReviewDto review, @RequestParam(value = "reviewImage", required = false) MultipartFile reviewImage, HttpServletRequest req) {
 
-        System.out.println("updateReview : " + review);
-        System.out.println("reviewImage : " + reviewImage);
         if(reviewImage != null) {
 
             String fileUpload = req.getServletContext().getRealPath("/resources/upload");
-
             System.out.println("리뷰 사진 업로드 경로 : " + fileUpload);
 
             String newFileName = FileUploadUtil.getNewFileName(reviewImage.getOriginalFilename());
-
             System.out.println("변환 파일명 : " + newFileName);
-
             review.setImage(newFileName);
 
             File file = new File(fileUpload + "/" + newFileName);
-
             try {
                 FileUtils.writeByteArrayToFile(file, reviewImage.getBytes());
                 service.updateProductReview(review);
@@ -422,8 +416,6 @@ public class MypageController {
         }else {
             service.updateProductReview(review);
         }
-
-
         return "true";
     }
 
