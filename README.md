@@ -17,7 +17,7 @@
   - 엄영신 : 캠핑 용품 대여, 고객센터
   - 조민경 : 커뮤니티 <br>
 
-#### 개발기술서 (https://url.kr/1xibgr)
+#### Portfolio (https://url.kr/1xibgr)
  
   
 
