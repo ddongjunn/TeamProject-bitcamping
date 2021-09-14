@@ -28,7 +28,7 @@
 	}
 	.submitbox{
 		width: 85%;
-		margin: 10px;
+		margin: 10px 0;
 		text-align: right;
 	}
 </style>

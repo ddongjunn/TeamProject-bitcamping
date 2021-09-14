@@ -8,7 +8,7 @@
     <select id="allMemberList" parameterType="MypageParam" resultType="MemberDto">
         SELECT ID, USERNAME, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE ,AUTH
         FROM (
-        SELECT ROW_NUMBER()OVER(ORDER BY USERNAME DESC) AS RNUM,
+        SELECT ROW_NUMBER()OVER(ORDER BY USERNAME ASC) AS RNUM,
         ID, USERNAME, NICKNAME, PHONE, EMAIL, CREATE_DATE, SNS_TYPE, AUTH
         FROM MEMBER
         WHERE 1=1
@@ -23,7 +23,7 @@
                 AND NICKNAME = #{search}
             </if>
         </if>
-        ORDER BY USERNAME DESC
+        ORDER BY USERNAME ASC
         )
         WHERE RNUM BETWEEN #{start} AND #{end}
     </select>
@@ -102,11 +102,15 @@
     </select>
 
     <select id="getQnaWaitTotalCount" resultType="int">
-        SELECT SUM( (SELECT COUNT(*) FROM QNA WHERE STATUS = 0 AND STEP = 0) + (SELECT COUNT(*) FROM PRODUCT_QNA WHERE STATUS = 0 AND STEP = 0 ) ) AS WAIT_QNA FROM DUAL
+        SELECT SUM( (SELECT COUNT(*) FROM QNA WHERE STATUS = 0 AND STEP = 0) + (SELECT COUNT(*) FROM PRODUCT_QNA WHERE STATUS = 0 AND STEP = 0 ) ) AS WAIT_QNA
+        FROM DUAL
     </select>
 
     <select id="regiPathCount" resultType="map">
-        SELECT (SELECT count(*) FROM MEMBER WHERE AUTH = 0) AS TOTAL ,(SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'none' AND AUTH = 0) AS BITCAMPING, (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'kakao' AND AUTH = 0) AS KAKAO, (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'naver' AND AUTH = 0) AS NAVER FROM DUAL
+        SELECT (SELECT count(*) FROM MEMBER WHERE AUTH = 0) AS TOTAL ,(SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'none' AND AUTH = 0) AS BITCAMPING,
+               (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'kakao' AND AUTH = 0) AS KAKAO,
+               (SELECT count(*) FROM MEMBER WHERE SNS_TYPE = 'naver' AND AUTH = 0) AS NAVER
+        FROM DUAL
     </select>
 
     <select id="getTodaySales" resultType="String">

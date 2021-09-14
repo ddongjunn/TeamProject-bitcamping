@@ -75,6 +75,9 @@ public class LoginController {
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
 
         apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
+
+        System.out.println(apiResult);
+
         /**
          * apiResult json 구조 {"resultcode":"00", "message":"success",
          * "response":{"id":"33666449","nickname":"shinn****","age":"20-29","gender":"M","email":"sh@naver.com","name":"\uc2e0\ubc94\ud638"}}
@@ -222,7 +225,6 @@ public class LoginController {
         //임시 비밀번호 생성
         String tempPw = UUID.randomUUID().toString().replace("-","");
         tempPw = tempPw.substring(0,10);
-
 
         //임시 비밀번호로 변경
         member.setPwd(tempPw);

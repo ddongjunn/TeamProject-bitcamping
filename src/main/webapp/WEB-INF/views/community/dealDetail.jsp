@@ -92,9 +92,11 @@
 	   <form style="display: inline" name="updateFrm" action="/community/dealUpdate.do?bbstype=deal" method="POST">
 	      <input type="hidden" name="community_seq" value="${data.community_seq}">
 	      <input type="hidden" name="user_id" value='${login.id}'>
-		  <button type="button" class="btnSimple" onclick="del(${data.community_seq})">삭제</button>
-	      <button type="button" class="btnSimple" onclick="update()">수정</button>
-	      <button type="button" class="btnSimple" onclick="soldout(${data.community_seq})" >거래완료</button>
+		  <button type="button" class="btnSimple" onclick="del(${data.community_seq})">삭제</button>	      
+	      <c:if test="${data.bbstype ne 'soldout'}">
+	      		<button type="button" class="btnSimple" onclick="update()">수정</button>
+				<button type="button" class="btnSimple" onclick="soldout(${data.community_seq})" >거래완료</button>
+	      </c:if>
 	   </form>
 	</c:if>
 	<button type="button" class="btnSimple" onclick="location='/community/deal.do'">목록</button>

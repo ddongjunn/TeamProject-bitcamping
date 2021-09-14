@@ -447,7 +447,17 @@
         $('#regiFrm').submit();
 
     });
+
+    let idPattern = /^[a-zA-Z0-9]{4,12}$/;
+    let pwPattern = /[a-zA-Z0-9~!@#$%^&*()_+|<>?:{}]{8,16}/;
+    let namePattern = /^[가-힣a-zA-Z]+$/;
+    let nicknamePattern = RegExp(/^[가-힣a-zA-Z0-9]{2,10}$/);
+    let emailPattern = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/i;
+
+
 </script>
+
+
 
 </body>
 </html>

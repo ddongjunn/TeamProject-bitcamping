@@ -195,14 +195,14 @@ h4 {
 
 /*버튼들*/
 .btn-light{
-	color : #1FB154;
-	border-color : #1FB154;
+	color : #FFA600;
+	border-color : #FFA600;
 	background-color: white;
 }
 .btn-light:hover{
 	color : white;
-	border-color : #1FB154;
-	background-color: #1FB154;
+	border-color : #FFA600;
+	background-color: #FFA600;
 }
    
 /*리뷰*/
