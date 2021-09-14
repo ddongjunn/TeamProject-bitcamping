@@ -15,7 +15,7 @@
 <div class="mypage_board" style="width: 70%; margin : auto">
     <div>
         <div class="myorder-title">
-            <h2>중고거래</h2>
+            <h2>주문내역</h2>
         </div>
         <div style="margin-top:-30px; margin-bottom: 30px">
             <a href="/admin/order-list.do" class="badge badge-pill badge-default">전체</a>
