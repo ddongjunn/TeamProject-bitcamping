@@ -13,14 +13,11 @@
   - API : KakaoMap, KakaoLogin, NaverLogin, Summernote, Chart.js, i'mport 
 + 역할분담
   - 이동준(팀장) : 로그인, 회원가입, 마이페이지, 관리자페이지
-  <br> https://github.com/ddongjunn
   - 한효경 : 지역별 캠핑장 메뉴
-  <br> https://github.com/hkyep
   - 엄영신 : 캠핑 용품 대여, 고객센터
-  <br> https://github.com/youngzziny
-  - 조민경 : 커뮤니티
-  <br> https://github.com/cmingg
-+ 개발기술서 : 
+  - 조민경 : 커뮤니티 <br>
+
+#### 개발기술서 (https://url.kr/1xibgr)
  
   
 
