@@ -6,7 +6,7 @@
 + 개발기간 : 2021.07.24 ~ 2021.09.06 (약 6주)
 + 참여인원 : 4명
 + 개발환경  
-  - FRONT : html, css, sass, javaScript, jQuery, BootStrap, ajax, Tiles3
+  - FRONT : Jsp, html, css, sass, javaScript, jQuery, BootStrap, ajax, Tiles3
   - BACK : Spring5.3.6, SpringSecurity, MyBatis, HikariCP, Maven, Lombok
   - SERVER : Apache tomcat 9.0
   - DATABASE : Oracle 11g 
