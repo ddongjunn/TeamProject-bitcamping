@@ -11,7 +11,7 @@
   - SERVER : Apache tomcat 9.0
   - DATABASE : Oracle 11g 
   - API : KakaoMap, KakaoLogin, NaverLogin, Summernote, Chart.js, i'mport 
-+ 담당 구현 파트(팀장)
++ 담당 구현 파트 (팀장)
   - 프로젝트 개발환경 구축, 설계
   - 로그인 / 회원가입
   - 마이페이지
