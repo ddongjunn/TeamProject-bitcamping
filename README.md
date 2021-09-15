@@ -11,12 +11,14 @@
   - SERVER : Apache tomcat 9.0
   - DATABASE : Oracle 11g 
   - API : KakaoMap, KakaoLogin, NaverLogin, Summernote, Chart.js, i'mport 
-+ 역할분담
-  - 이동준(팀장) : 로그인, 회원가입, 마이페이지, 관리자페이지
-  - 엄영신 : 캠핑 용품 대여, 고객센터
-  - 조민경 : 커뮤니티 <br> 
-  - 한효경 : 지역별 캠핑장 메뉴
-
++ 담당 구현 파트(팀장)
+  - 프로젝트 개발환경 구축, 설계
+  - 로그인 / 회원가입
+  - 마이페이지
+  - 관리자페이지
+  - 메인 페이지 
+  - GitHub 레포지토리 전체 관리
+  - 팀원들의 Git Conflict 해결
 #### Portfolio ( https://url.kr/1xibgr )
  
   
