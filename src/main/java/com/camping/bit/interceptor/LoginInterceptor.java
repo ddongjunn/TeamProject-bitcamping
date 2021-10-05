@@ -23,13 +23,9 @@ public class LoginInterceptor implements HandlerInterceptor{
         String query = request.getQueryString();
 
         if (query == null || query.equals("null")) {
-
             query = "";
-
         } else {
-
             query = "?" + query;
-
         }
 
         if(dto != null){
